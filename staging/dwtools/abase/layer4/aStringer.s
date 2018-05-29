@@ -1,12 +1,30 @@
-(function _gStringer_s_() {
+(function _aStringer_s_() {
 
 'use strict';
 
-/*
-- remove old code
-- off \u coding for big chars
-- explain wrap mode in details
-*/
+if( typeof module !== 'undefined' )
+{
+
+  if( typeof _global_ === 'undefined' || !_global_.wBase )
+  {
+    let toolsPath = '../../../dwtools/Base.s';
+    let toolsExternal = 0;
+    try
+    {
+      require.resolve( toolsPath );
+    }
+    catch( err )
+    {
+      toolsExternal = 1;
+      require( 'wTools' );
+    }
+    if( !toolsExternal )
+    require( toolsPath );
+  }
+
+  var _ = _global_.wTools;
+
+}
 
 //
 
@@ -1667,6 +1685,8 @@ var Proto =
 
   toJson : toJson,
   toJs : toJs,
+
+  Stringer : 1,
 
 }
 
