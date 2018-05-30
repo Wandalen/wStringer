@@ -2799,6 +2799,46 @@ toStrRoutine.cover = [ _.toStr ];
 
 //
 
+function toStrMethods( test )
+{
+  test.description = 'converts routine to string default options';
+  var got = _.toStrMethods( function route() {} );
+  var expected = '[ routine route ]';
+  test.identical( got,expected );
+
+  test.description = 'converts routine to string, levels:0';
+  var got = _.toStrMethods( function route() {}, { levels : 0 } );
+  var expected = '[ routine route ]';
+  test.identical( got,expected );
+
+  test.description = 'different input data types';
+  var got = _.toStrMethods( [ function route() {}, 0, '1', null ] );
+  var expected = '';
+  test.identical( got,expected );
+
+
+  /**/
+
+  test.description = 'invalid argument type';
+  test.shouldThrowError( function()
+  {
+    _.toStrMethods( 'one','two' );
+  });
+
+  test.description = 'wrong arguments count';
+  test.shouldThrowError( function()
+  {
+    _.toStrMethods( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
+  });
+
+  test.description = 'onlyRoutines & noRoutine both true';
+  test.shouldThrowError( function()
+  {
+    _.toStrMethods( function f () {},{ noRoutine : 1 } );
+  });
+
+}
+
 //
 
 function toStrFields( test )
@@ -3100,6 +3140,138 @@ function _toStrFromNumber( test )
 
   }
 }
+
+//
+
+function _toStrFromNumber2( test )
+{
+
+  test.description = 'returns with precision until 5';
+  var options = { precision : 5 };
+  var got = _._toStrFromNumber( 3.123456, options );
+  var expected = '3.1235';
+  test.identical( got, expected );
+
+  test.description = 'returns with precision until 2';
+  var options = { precision : 2 };
+  var got = _._toStrFromNumber( 3.123456, options );
+  var expected = '3.1';
+  test.identical( got, expected );
+
+  test.description = 'is returned with four numbers after dot';
+  var options = { fixed : 4 };
+  var got = _._toStrFromNumber( 13.75, options );
+  var expected = '13.7500';
+  test.identical( got, expected );
+
+  test.description = 'is returned the rounded number to the top';
+  var options = { fixed : 0 };
+  var got = _._toStrFromNumber( 13.50, options );
+  var expected = '14';
+  test.identical( got, expected );
+
+  test.description = 'is returned the rounded number to the bottom';
+  var options = { fixed : 0 };
+  var got = _._toStrFromNumber( 13.49, options );
+  var expected = '13';
+  test.identical( got, expected );
+
+  test.description = 'returns string';
+  var options = {  };
+  var got = _._toStrFromNumber( 13.75, options );
+  var expected = '13.75';
+  test.identical( got, expected );
+
+  /**/
+
+  if( !Config.debug )
+  return;
+
+  test.description = 'no arguments';
+  test.shouldThrowError( function( )
+  {
+    _._toStrFromNumber( );
+  } );
+
+  test.description = 'first argument is wrong';
+  test.shouldThrowError( function( )
+  {
+    _._toStrFromNumber( 'wrong argument', { fixed : 3 } );
+  } );
+
+  test.description = 'second argument is not provided';
+  test.shouldThrowError( function( )
+  {
+    _._toStrFromNumber( 13.75 );
+  } );
+
+  test.description = 'second argument is wrong precision must be between 1 and 21';
+  test.shouldThrowError( function( )
+  {
+    _._toStrFromNumber( 13.75, { precision : 0 } );
+  } );
+
+};
+
+//
+
+function _toStrIsSimpleElement2( test )
+{
+
+  test.description = 'argument\'s length is less than 40 symbols';
+  var got = _._toStrIsSimpleElement( 'test' );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.description = 'argument is number';
+  var got = _._toStrIsSimpleElement( 13 );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.description = 'argument is boolean';
+  var got = _._toStrIsSimpleElement( true );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.description = 'argument is null';
+  var got = _._toStrIsSimpleElement( null );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.description = 'argument is undefined';
+  var got = _._toStrIsSimpleElement( undefined );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.description = 'argument\'s length is greater than 40 symbols';
+  var got = _._toStrIsSimpleElement( 'test,test,test,test,test,test,test,test,test.' );
+  var expected = false;
+  test.identical( got, expected );
+
+  test.description = 'argument is an object';
+  var got = _._toStrIsSimpleElement( { a: 33 } );
+  var expected = false;
+  test.identical( got, expected );
+
+  test.description = 'argument is an array';
+  var got = _._toStrIsSimpleElement( [ 1, 2, 3 ] );
+  var expected = false;
+  test.identical( got, expected );
+
+  test.description = 'argument is an array-like';
+  var arrLike = ( function( ) { return arguments; } )( 1, 2, 3 );
+  var got = _._toStrIsSimpleElement( arrLike );
+  var expected = false;
+  test.identical( got, expected );
+
+  /**/
+
+  if( !Config.debug )
+  return;
+
+  xxx
+
+};
 
 //
 
@@ -3409,6 +3581,7 @@ var Self =
 
   tests :
   {
+
     toStrUnwrapped : toStrUnwrapped,
     toStrError : toStrError,
     toStrArray : toStrArray,
@@ -3437,10 +3610,11 @@ var Self =
     _toStrIsSimpleElement : _toStrIsSimpleElement,
     _toStrFromRoutine : _toStrFromRoutine,
     _toStrFromNumber : _toStrFromNumber,
+    _toStrFromNumber2 : _toStrFromNumber2,
+    _toStrIsSimpleElement2 : _toStrIsSimpleElement2,
     _toStrFromStr : _toStrFromStr,
     _toStrFromArray : _toStrFromArray,
     _toStrFromObject : _toStrFromObject,
-    _toStrFromContainer : _toStrFromContainer,
     _toStrFromContainer : _toStrFromContainer,
 
   }

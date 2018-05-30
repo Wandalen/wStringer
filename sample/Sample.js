@@ -1,6 +1,6 @@
 
 if( typeof module !== 'undefined' )
-require( '..' );
+require( 'wstringer' );
 
 var _ = wTools;
 
