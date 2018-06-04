@@ -432,8 +432,8 @@ function toStrFine_functor()
   Object.preventExtensions( restricts );
 
   var def;
-  if( _.protoUnitedInterface )
-  def = _.protoUnitedInterface([ primeFilter,composes,optional ]);
+  if( _.prototypeUnitedInterface )
+  def = _.prototypeUnitedInterface([ primeFilter,composes,optional ]);
   else
   def = _.mapExtend( null,primeFilter,composes,optional );
 
@@ -445,7 +445,7 @@ function toStrFine_functor()
 
     var o = o || Object.create( null );
     var toStrDefaults = Object.create( null );
-    if( !_.atomicIs( src ) && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod && _.objectIs( src.toStr.defaults ) )
+    if( !_.primitiveIs( src ) && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod && _.objectIs( src.toStr.defaults ) )
     toStrDefaults = src.toStr.defaults;
 
     if( o.levels === undefined && ( o.jsonLike || o.jstructLike ) )
@@ -522,7 +522,7 @@ function _toStr( src,o )
   if( !_toStrIsVisibleElement( src,o ) )
   return;
 
-  var isAtomic = _.atomicIs( src );
+  var isAtomic = _.primitiveIs( src );
   var isArray = _.arrayLike( src );
   var isObject = !isArray && _.objectIs( src );
   var isObjectLike = !isArray && _.objectLike( src ) && !( 'toString' in src );
@@ -759,7 +759,7 @@ function _toStrShort( src,o )
 function _toStrIsVisibleElement( src,o )
 {
 
-  var isAtomic = _.atomicIs( src );
+  var isAtomic = _.primitiveIs( src );
   var isArray = _.arrayLike( src );
   var isObject = !isArray && _.objectLike( src );
   var type = _.strPrimitiveTypeOf( src );
@@ -902,7 +902,7 @@ function _toStrIsSimpleElement( element,o )
   else if( _.objectIs( element ) || _.objectLike( element ) )
   return !_.entityLength( element );
   else
-  return _.atomicIs( element );
+  return _.primitiveIs( element );
 
 }
 

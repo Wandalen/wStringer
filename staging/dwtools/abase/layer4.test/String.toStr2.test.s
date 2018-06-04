@@ -3578,6 +3578,7 @@ var Self =
 
   name : 'wTools/toStr2',
   silencing : 1,
+  enabled : 0, // !!! refactoring
 
   tests :
   {

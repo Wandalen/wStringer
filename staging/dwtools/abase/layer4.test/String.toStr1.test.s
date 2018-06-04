@@ -533,6 +533,7 @@ var Self =
 
   name : 'wTools/toStr',
   silencing : 1,
+  enabled : 0, // !!! refactoring
 
   tests :
   {
