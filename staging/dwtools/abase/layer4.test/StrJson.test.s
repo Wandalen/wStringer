@@ -1,6 +1,6 @@
 ( function _StrJson_test_s_( ) {
 
-'use strict'; 
+'use strict';
 
 if( typeof module !== 'undefined' )
 {
@@ -2116,7 +2116,6 @@ var complexData =
 
 function toJson( test )
 {
-  debugger;
 
   test.description = 'trivial'; //
 
@@ -2125,7 +2124,7 @@ function toJson( test )
   var json = _.toJson( src );
   test.identical( json , expected );
 
-  var got = _.exec( json );
+  var got = _.exec({ code : json, prependingReturn : 1 });
   var expected = src;
   test.identical( got , expected );
 
@@ -2154,7 +2153,7 @@ function toJson( test )
   }
 
   var json = _.toJson( src );
-  var got = _.exec( json );
+  var got = _.exec({ code : json, prependingReturn : 1 });
   var expected = src;
   test.identical( got , expected );
 
@@ -2164,11 +2163,8 @@ function toJson( test )
   src.length = 4;
   src.object = {};
 
-  debugger;
   var json = _.toJson( src );
-  debugger;
-  var got = _.exec( json );
-  debugger;
+  var got = _.exec({ code : json, prependingReturn : 1 });
   var expected = src;
   test.identical( got , expected );
 
@@ -2193,11 +2189,8 @@ function toJson( test )
   src.length = 4;
   src.object = object;
 
-  debugger;
   var json = _.toJson( src );
-  debugger;
-  var got = _.exec( json );
-  debugger;
+  var got = _.exec({ code : json, prependingReturn : 1 });
   var expected = src;
   test.identical( got , expected );
 
@@ -2205,11 +2198,10 @@ function toJson( test )
 
   var src = complexData;
   var json = _.toJson( src );
-  var got = _.exec( json );
+  var got = _.exec({ code : json, prependingReturn : 1 });
   var expected = src;
   test.identical( got , expected );
 
-  debugger;
 }
 
 //
