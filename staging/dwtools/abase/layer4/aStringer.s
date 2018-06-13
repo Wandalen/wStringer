@@ -1650,7 +1650,7 @@ function toJs( src,o )
 }
 
 // --
-// prototype
+// define class
 // --
 
 var Proto =
