@@ -1,6 +1,6 @@
 ( function _String_toStr2_test_s_( ) {
 
-'use strict'; 
+'use strict';
 
 if( typeof module !== 'undefined' )
 {
@@ -26,11 +26,13 @@ if( typeof module !== 'undefined' )
 
   _.include( 'wTesting' );
 
+  if( Config.platform === 'nodejs' )
   var File = require( 'fs' );
 
 }
 
-var _global = _global_; var _ = _global_.wTools;
+var _global = _global_;
+var _ = _global_.wTools;
 
 //
 /*
