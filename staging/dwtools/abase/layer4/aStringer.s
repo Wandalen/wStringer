@@ -982,9 +982,10 @@ function _toStrFromRoutine( src,o )
 
 function _toStrFromNumber( src,o )
 {
+  var result = '';
+
   _.assert( arguments.length === 2, 'expects exactly two argument' );
   _.assert( _.numberIs( src ) && _.objectIs( o ) );
-  var result = '';
 
   if( _.numberIs( o.precision ) )
   result += src.toPrecision( o.precision );
@@ -992,6 +993,9 @@ function _toStrFromNumber( src,o )
   result += src.toFixed( o.fixed );
   else
   result += String( src );
+
+  if( Object.is( src, -0 ) )
+  result = '-' + result;
 
   return result;
 }
