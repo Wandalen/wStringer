@@ -2209,7 +2209,7 @@ function toJson( test )
 var Self =
 {
 
-  name : 'StrJson',
+  name : 'Tools/base/layer4/String/ToJson',
   silencing : 1,
   // verbosity : 7,
 

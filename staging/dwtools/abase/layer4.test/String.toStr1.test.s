@@ -1,6 +1,6 @@
 ( function _String_toStr_test_s_( ) {
 
-'use strict'; 
+'use strict';
 
 if( typeof module !== 'undefined' )
 {
@@ -531,7 +531,7 @@ function toStr( test )
 var Self =
 {
 
-  name : 'wTools/toStr',
+  name : 'Tools/base/layer4/String/1',
   silencing : 1,
   enabled : 0, // !!! refactoring
 

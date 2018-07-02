@@ -3578,7 +3578,7 @@ function _toStrFromContainer( test )
 var Self =
 {
 
-  name : 'wTools/toStr2',
+  name : 'Tools/base/layer4/String/2',
   silencing : 1,
   enabled : 0, // !!! refactoring
 
