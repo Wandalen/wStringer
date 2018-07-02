@@ -663,7 +663,7 @@ function _toStr( src,o )
 
 function _toStrShort( src,o )
 {
-  _.assert( arguments.length === 2, 'expects exactly two argument' );
+  _.assert( arguments.length === 2, 'expects exactly two arguments' );
   _.assert( _.objectIs( o ),'expects map ( o )' );
 
   var result = '';
@@ -886,7 +886,7 @@ function _toStrIsVisibleElement( src,o )
 
 function _toStrIsSimpleElement( element,o )
 {
-  _.assert( arguments.length === 2, 'expects exactly two argument' );
+  _.assert( arguments.length === 2, 'expects exactly two arguments' );
   _.assert( _.objectIs( o ) || o === undefined,'expects map ( o )' );
 
   if( _.strIs( element ) )
@@ -930,7 +930,7 @@ function _toStrFromRoutine( src,o )
   var result = '';
 
   // debugger;
-  _.assert( arguments.length === 2, 'expects exactly two argument' );
+  _.assert( arguments.length === 2, 'expects exactly two arguments' );
   _.assert( _.routineIs( src ),'expects routine ( src )' );
 
   if( o.jstructLike )
@@ -984,7 +984,7 @@ function _toStrFromNumber( src,o )
 {
   var result = '';
 
-  _.assert( arguments.length === 2, 'expects exactly two argument' );
+  _.assert( arguments.length === 2, 'expects exactly two arguments' );
   _.assert( _.numberIs( src ) && _.objectIs( o ) );
 
   if( _.numberIs( o.precision ) )
@@ -1040,7 +1040,7 @@ function _toStrFromStr( src,o )
 {
   var result = '';
 
-  _.assert( arguments.length === 2, 'expects exactly two argument' );
+  _.assert( arguments.length === 2, 'expects exactly two arguments' );
   _.assert( _.strIs( src ), 'expects string ( src )'  );
   _.assert( _.objectIs( o ) || o === undefined,'expects map ( o )' );
 
