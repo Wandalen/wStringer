@@ -464,7 +464,7 @@ function toStrFine_functor()
     if( o.stringWrapper === undefined && o.multilinedString )
     o.stringWrapper = '`';
 
-    _.assertMapHasOnly( o,composes,primeFilter,optional );
+    _.assertMapHasOnly( o,[ composes,primeFilter,optional ] );
     o = _.mapSupplement( null,o,toStrDefaults,composes,primeFilter );
 
     if( o.onlyRoutines )
