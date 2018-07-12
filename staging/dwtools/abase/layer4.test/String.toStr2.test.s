@@ -102,11 +102,11 @@ function testFunction( test, desc, src, options, expected )
   var exp = null;
   for( var k = 0; k < src.length; ++k  )
   {
-    test.description = desc ;
+    test.case = desc ;
     var optionsTest = options[ k ] || options[ 0 ];
     got = _.toStr( src[ k ],optionsTest );
 
-    if( test.description.slice( 0,4 ) === 'json' && optionsTest.json )
+    if( test.case.slice( 0,4 ) === 'json' && optionsTest.json )
     {
 
       // good
@@ -2624,43 +2624,43 @@ function toStrThrow( test )
 {
   if( Config.debug )
   {
-    test.description = 'wrong type of argument';
+    test.case = 'wrong type of argument';
     test.shouldThrowError( function()
     {
       _.toStr( { a : 1 }, null );
     });
 
-    test.description = '( o.precision ) is not between 1 and 21';
+    test.case = '( o.precision ) is not between 1 and 21';
     test.shouldThrowError( function()
     {
       _.toStr( { a : 1 }, { precision : 0 } );
     });
 
-    test.description = '( o.fixed ) is not between 0 and 20';
+    test.case = '( o.fixed ) is not between 0 and 20';
     test.shouldThrowError( function()
     {
       _.toStr( { a : 1 }, { fixed : 22 } );
     });
 
-    test.description = 'if jsonLike : 1, multilinedString 1 " ';
+    test.case = 'if jsonLike : 1, multilinedString 1 " ';
     test.shouldThrowError( function()
     {
       _.toStr( { a : 1 }, { jsonLike : 1, multilinedString : 1 } );
     });
 
-    test.description = 'wrong arguments count';
+    test.case = 'wrong arguments count';
     test.shouldThrowError( function()
     {
       _.toStr( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
     });
 
-    test.description = 'invalid json if multilinedString is true`';
+    test.case = 'invalid json if multilinedString is true`';
     test.shouldThrowError( function()
     {
       _.toStr( { a : 1, b : "text" }, { jsonLike : 1, multilinedString : 1 } );
     });
 
-    test.description = 'onlyRoutines & noRoutine both true';
+    test.case = 'onlyRoutines & noRoutine both true';
     test.shouldThrowError( function()
     {
       _.toStr( { a : function f(){}, b : "text" }, { onlyRoutines : 1, noRoutine : 1 } );
@@ -2803,17 +2803,17 @@ toStrRoutine.cover = [ _.toStr ];
 
 function toStrMethods( test )
 {
-  test.description = 'converts routine to string default options';
+  test.case = 'converts routine to string default options';
   var got = _.toStrMethods( function route() {} );
   var expected = '[ routine route ]';
   test.identical( got,expected );
 
-  test.description = 'converts routine to string, levels:0';
+  test.case = 'converts routine to string, levels:0';
   var got = _.toStrMethods( function route() {}, { levels : 0 } );
   var expected = '[ routine route ]';
   test.identical( got,expected );
 
-  test.description = 'different input data types';
+  test.case = 'different input data types';
   var got = _.toStrMethods( [ function route() {}, 0, '1', null ] );
   var expected = '';
   test.identical( got,expected );
@@ -2821,19 +2821,19 @@ function toStrMethods( test )
 
   /**/
 
-  test.description = 'invalid argument type';
+  test.case = 'invalid argument type';
   test.shouldThrowError( function()
   {
     _.toStrMethods( 'one','two' );
   });
 
-  test.description = 'wrong arguments count';
+  test.case = 'wrong arguments count';
   test.shouldThrowError( function()
   {
     _.toStrMethods( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
   });
 
-  test.description = 'onlyRoutines & noRoutine both true';
+  test.case = 'onlyRoutines & noRoutine both true';
   test.shouldThrowError( function()
   {
     _.toStrMethods( function f () {},{ noRoutine : 1 } );
@@ -2845,22 +2845,22 @@ function toStrMethods( test )
 
 function toStrFields( test )
 {
-  test.description = 'Fields default options';
+  test.case = 'Fields default options';
   var got = _.toStrFields( [ 1, 2, 'text', undefined ] );
   var expected = '[ 1, 2, "text", undefined ]';
   test.identical( got,expected );
 
-  test.description = 'Fields, levels : 0';
+  test.case = 'Fields, levels : 0';
   var got = _.toStrFields( [ 1, 2, 'text', undefined ], { levels : 0 } );
   var expected = '[ Array with 4 elements ]';
   test.identical( got,expected );
 
-  test.description = 'Ignore routine';
+  test.case = 'Ignore routine';
   var got = _.toStrFields( [ function f () {}, 1, 2, 3 ] );
   var expected = '[ 1, 2, 3 ]';
   test.identical( got,expected );
 
-  test.description = 'no arguments';
+  test.case = 'no arguments';
   var got = _.toStrFields();
   var expected = 'undefined';
   test.identical( got,expected );
@@ -2871,19 +2871,19 @@ function toStrFields( test )
 
   if( Config.debug )
   {
-    test.description = 'invalid argument type';
+    test.case = 'invalid argument type';
     test.shouldThrowError( function()
     {
       _.toStrFields( 'one','two' );
     });
 
-    test.description = 'wrong arguments count';
+    test.case = 'wrong arguments count';
     test.shouldThrowError( function()
     {
       _.toStrFields( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
     });
 
-    test.description = 'onlyRoutines & noRoutine both true';
+    test.case = 'onlyRoutines & noRoutine both true';
     test.shouldThrowError( function()
     {
       _.toStrFields( function f () {}, { onlyRoutines : 1 } );
@@ -2896,27 +2896,27 @@ function toStrFields( test )
 
 function _toStrShort( test )
 {
-  test.description = 'Array length test';
+  test.case = 'Array length test';
   var got = _._toStrShort( [ 1, 2, 'text', undefined ], { } );
   var expected = '[ Array with 4 elements ]';
   test.identical( got,expected );
 
-  test.description = 'date to string';
+  test.case = 'date to string';
   var got = _._toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), { }  );
   var expected = '1994-01-12T00:00:00.000Z';
   test.identical( got,expected );
 
-  test.description = 'string length > 40';
+  test.case = 'string length > 40';
   var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
   var expected = '[ "toxtndmtmdbmmlzoirmf" ... "pyhnrrqfuvybuuvixyrx" ]';
   test.identical( got,expected );
 
-  test.description = 'string with options';
+  test.case = 'string with options';
   var got = _._toStrShort( '\toxtndmtmdb', { escaping : 1 } );
   var expected = '\\toxtndmtmdb';
   test.identical( got,expected );
 
-  test.description = 'error to string ';
+  test.case = 'error to string ';
   var got = _._toStrShort( new Error( 'err' ), { } );
   var expected = '[object Error]';
   test.identical( got,expected );
@@ -2926,19 +2926,19 @@ function _toStrShort( test )
   if( Config.debug )
   {
 
-    test.description = 'invalid second argument type';
+    test.case = 'invalid second argument type';
     test.shouldThrowError( function()
     {
       _._toStrShort( '1', 2 );
     });
 
-    test.description = 'only one argument provided';
+    test.case = 'only one argument provided';
     test.shouldThrowError( function()
     {
       _._toStrShort( '1' );
     });
 
-    test.description = 'no arguments';
+    test.case = 'no arguments';
     test.shouldThrowError( function()
     {
       _._toStrShort( );
@@ -2951,17 +2951,17 @@ function _toStrShort( test )
 
 function _toStrIsVisibleElement( test )
 {
-  test.description = 'default options';
+  test.case = 'default options';
   var got = _._toStrIsVisibleElement( 123, {} );
   var expected = true;
   test.identical( got,expected );
 
-  test.description = 'noAtomic';
+  test.case = 'noAtomic';
   var got = _._toStrIsVisibleElement( 'test', { noAtomic : 1 } );
   var expected = false;
   test.identical( got,expected );
 
-  test.description = 'noObject';
+  test.case = 'noObject';
   var got = _._toStrIsVisibleElement( { a : 'test' }, { noObject : 1 } );
   var expected = false;
   test.identical( got,expected );
@@ -2971,19 +2971,19 @@ function _toStrIsVisibleElement( test )
   if( Config.debug )
   {
 
-    test.description = 'invalid arguments count';
+    test.case = 'invalid arguments count';
     test.shouldThrowError( function()
     {
       _._toStrIsVisibleElement( '1' );
     });
 
-    // test.description = 'second argument is not a object';
+    // test.case = 'second argument is not a object';
     // test.shouldThrowError( function()
     // {
     //   _._toStrIsVisibleElement( '1', 2 );
     // });
 
-    test.description = 'no arguments';
+    test.case = 'no arguments';
     test.shouldThrowError( function()
     {
       _._toStrIsVisibleElement();
@@ -2996,27 +2996,27 @@ function _toStrIsVisibleElement( test )
 
 function _toStrIsSimpleElement( test )
 {
-  test.description = 'default options';
+  test.case = 'default options';
   var got = _._toStrIsSimpleElement( 123, {} );
   var expected = true;
   test.identical( got,expected );
 
-  test.description = 'string length > 40';
+  test.case = 'string length > 40';
   var got = _._toStrIsSimpleElement( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', {} );
   var expected = false;
   test.identical( got,expected );
 
-  test.description = 'object test';
+  test.case = 'object test';
   var got = _._toStrIsSimpleElement( { a : 1 }, {} );
   var expected = false;
   test.identical( got,expected );
 
-  test.description = 'atomic test';
+  test.case = 'atomic test';
   var got = _._toStrIsSimpleElement( undefined, {} );
   var expected = true;
   test.identical( got,expected );
 
-  test.description = 'escaping test';
+  test.case = 'escaping test';
   var got = _._toStrIsSimpleElement( '\naaa', { escaping : 1 } );
   var expected = true;
   test.identical( got,expected );
@@ -3026,19 +3026,19 @@ function _toStrIsSimpleElement( test )
   if( Config.debug )
   {
 
-    test.description = 'invalid arguments count';
+    test.case = 'invalid arguments count';
     test.shouldThrowError( function()
     {
       _._toStrIsSimpleElement( '1' );
     });
 
-    test.description = 'second argument is not a object';
+    test.case = 'second argument is not a object';
     test.shouldThrowError( function()
     {
       _._toStrIsSimpleElement( '1', 2 );
     });
 
-    test.description = 'no arguments';
+    test.case = 'no arguments';
     test.shouldThrowError( function()
     {
       _._toStrIsSimpleElement();
@@ -3051,12 +3051,12 @@ function _toStrIsSimpleElement( test )
 
 function _toStrFromRoutine( test )
 {
-  test.description = 'routine test';
+  test.case = 'routine test';
   var got = _._toStrFromRoutine( function a () {} );
   var expected = '[ routine a ]';
   test.identical( got,expected );
 
-  test.description = 'routine without name';
+  test.case = 'routine without name';
   var got = _._toStrFromRoutine( function() {} );
   var expected = '[ routine without name ]';
   test.identical( got,expected );
@@ -3066,13 +3066,13 @@ function _toStrFromRoutine( test )
   if( Config.debug )
   {
 
-    test.description = 'invalid argument type';
+    test.case = 'invalid argument type';
     test.shouldThrowError( function()
     {
       _._toStrFromRoutine( '1' );
     });
 
-    test.description = 'no arguments';
+    test.case = 'no arguments';
     test.shouldThrowError( function()
     {
       _._toStrFromRoutine();
@@ -3085,22 +3085,22 @@ function _toStrFromRoutine( test )
 
 function _toStrFromNumber( test )
 {
-  test.description = 'default options';
+  test.case = 'default options';
   var got = _._toStrFromNumber( 123, {} );
   var expected = '123';
   test.identical( got,expected );
 
-  test.description = 'number precision test';
+  test.case = 'number precision test';
   var got = _._toStrFromNumber( 123, { precision : 2 } );
   var expected = '1.2e+2';
   test.identical( got,expected );
 
-  test.description = 'number fixed test';
+  test.case = 'number fixed test';
   var got = _._toStrFromNumber( 123, { fixed : 2 } );
   var expected = '123.00';
   test.identical( got,expected );
 
-  test.description = 'invalid option type';
+  test.case = 'invalid option type';
   var got = _._toStrFromNumber( 123, { fixed : '2' } );
   var expected = '123';
   test.identical( got,expected );
@@ -3110,31 +3110,31 @@ function _toStrFromNumber( test )
   if( Config.debug )
   {
 
-    test.description = 'invalid first argument type';
+    test.case = 'invalid first argument type';
     test.shouldThrowError( function()
     {
       _._toStrFromNumber( '1',{} );
     });
 
-    test.description = 'invalid second argument type';
+    test.case = 'invalid second argument type';
     test.shouldThrowError( function()
     {
       _._toStrFromNumber( 1, 2 );
     });
 
-    test.description = 'no arguments';
+    test.case = 'no arguments';
     test.shouldThrowError( function()
     {
       _._toStrFromNumber();
     });
 
-    test.description = 'precision out of range';
+    test.case = 'precision out of range';
     test.shouldThrowError( function()
     {
       _._toStrFromNumber( 1, { precision : 22 });
     });
 
-    test.description = 'fixed out of range';
+    test.case = 'fixed out of range';
     test.shouldThrowError( function()
     {
       _._toStrFromNumber( 1, { precision : 22 });
@@ -3148,37 +3148,37 @@ function _toStrFromNumber( test )
 function _toStrFromNumber2( test )
 {
 
-  test.description = 'returns with precision until 5';
+  test.case = 'returns with precision until 5';
   var options = { precision : 5 };
   var got = _._toStrFromNumber( 3.123456, options );
   var expected = '3.1235';
   test.identical( got, expected );
 
-  test.description = 'returns with precision until 2';
+  test.case = 'returns with precision until 2';
   var options = { precision : 2 };
   var got = _._toStrFromNumber( 3.123456, options );
   var expected = '3.1';
   test.identical( got, expected );
 
-  test.description = 'is returned with four numbers after dot';
+  test.case = 'is returned with four numbers after dot';
   var options = { fixed : 4 };
   var got = _._toStrFromNumber( 13.75, options );
   var expected = '13.7500';
   test.identical( got, expected );
 
-  test.description = 'is returned the rounded number to the top';
+  test.case = 'is returned the rounded number to the top';
   var options = { fixed : 0 };
   var got = _._toStrFromNumber( 13.50, options );
   var expected = '14';
   test.identical( got, expected );
 
-  test.description = 'is returned the rounded number to the bottom';
+  test.case = 'is returned the rounded number to the bottom';
   var options = { fixed : 0 };
   var got = _._toStrFromNumber( 13.49, options );
   var expected = '13';
   test.identical( got, expected );
 
-  test.description = 'returns string';
+  test.case = 'returns string';
   var options = {  };
   var got = _._toStrFromNumber( 13.75, options );
   var expected = '13.75';
@@ -3189,25 +3189,25 @@ function _toStrFromNumber2( test )
   if( !Config.debug )
   return;
 
-  test.description = 'no arguments';
+  test.case = 'no arguments';
   test.shouldThrowError( function( )
   {
     _._toStrFromNumber( );
   } );
 
-  test.description = 'first argument is wrong';
+  test.case = 'first argument is wrong';
   test.shouldThrowError( function( )
   {
     _._toStrFromNumber( 'wrong argument', { fixed : 3 } );
   } );
 
-  test.description = 'second argument is not provided';
+  test.case = 'second argument is not provided';
   test.shouldThrowError( function( )
   {
     _._toStrFromNumber( 13.75 );
   } );
 
-  test.description = 'second argument is wrong precision must be between 1 and 21';
+  test.case = 'second argument is wrong precision must be between 1 and 21';
   test.shouldThrowError( function( )
   {
     _._toStrFromNumber( 13.75, { precision : 0 } );
@@ -3220,47 +3220,47 @@ function _toStrFromNumber2( test )
 function _toStrIsSimpleElement2( test )
 {
 
-  test.description = 'argument\'s length is less than 40 symbols';
+  test.case = 'argument\'s length is less than 40 symbols';
   var got = _._toStrIsSimpleElement( 'test' );
   var expected = true;
   test.identical( got, expected );
 
-  test.description = 'argument is number';
+  test.case = 'argument is number';
   var got = _._toStrIsSimpleElement( 13 );
   var expected = true;
   test.identical( got, expected );
 
-  test.description = 'argument is boolean';
+  test.case = 'argument is boolean';
   var got = _._toStrIsSimpleElement( true );
   var expected = true;
   test.identical( got, expected );
 
-  test.description = 'argument is null';
+  test.case = 'argument is null';
   var got = _._toStrIsSimpleElement( null );
   var expected = true;
   test.identical( got, expected );
 
-  test.description = 'argument is undefined';
+  test.case = 'argument is undefined';
   var got = _._toStrIsSimpleElement( undefined );
   var expected = true;
   test.identical( got, expected );
 
-  test.description = 'argument\'s length is greater than 40 symbols';
+  test.case = 'argument\'s length is greater than 40 symbols';
   var got = _._toStrIsSimpleElement( 'test,test,test,test,test,test,test,test,test.' );
   var expected = false;
   test.identical( got, expected );
 
-  test.description = 'argument is an object';
+  test.case = 'argument is an object';
   var got = _._toStrIsSimpleElement( { a: 33 } );
   var expected = false;
   test.identical( got, expected );
 
-  test.description = 'argument is an array';
+  test.case = 'argument is an array';
   var got = _._toStrIsSimpleElement( [ 1, 2, 3 ] );
   var expected = false;
   test.identical( got, expected );
 
-  test.description = 'argument is an array-like';
+  test.case = 'argument is an array-like';
   var arrLike = ( function( ) { return arguments; } )( 1, 2, 3 );
   var got = _._toStrIsSimpleElement( arrLike );
   var expected = false;
@@ -3279,22 +3279,22 @@ function _toStrIsSimpleElement2( test )
 
 function _toStrFromStr( test )
 {
-  test.description = 'default options';
+  test.case = 'default options';
   var got = _._toStrFromStr( '123', {} );
   var expected = '123';
   test.identical( got,expected );
 
-  test.description = 'escaping';
+  test.case = 'escaping';
   var got = _._toStrFromStr( '\n123\u001b', { escaping : 1 } );
   var expected = '\\n123\\u001b';
   test.identical( got,expected );
 
-  test.description = 'stringWrapper';
+  test.case = 'stringWrapper';
   var got = _._toStrFromStr( 'string', { stringWrapper : '"' } );
   var expected = '"string"';
   test.identical( got,expected );
 
-  test.description = 'multilinedString';
+  test.case = 'multilinedString';
   var got = _._toStrFromStr( 'string\nstring2', { stringWrapper : '`' } );
   var expected = "`string\nstring2`";
   test.identical( got,expected );
@@ -3305,19 +3305,19 @@ function _toStrFromStr( test )
   if( Config.debug )
   {
 
-    test.description = 'invalid first argument type';
+    test.case = 'invalid first argument type';
     test.shouldThrowError( function()
     {
       _._toStrFromStr( 2, {} );
     });
 
-    test.description = 'invalid second argument type';
+    test.case = 'invalid second argument type';
     test.shouldThrowError( function()
     {
       _._toStrFromStr( '1', 2 );
     });
 
-    test.description = 'no arguments';
+    test.case = 'no arguments';
     test.shouldThrowError( function()
     {
       _._toStrFromStr();
@@ -3331,22 +3331,22 @@ function _toStrFromStr( test )
 function _toStrFromArray( test )
 {
 
-  test.description = 'default options';
+  test.case = 'default options';
   var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 1 } ).text;
   var expected = '[ 1, 2, 3 ]';
   test.identical( got,expected );
 
-  test.description = 'wrap test';
+  test.case = 'wrap test';
   var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 0 } ).text;
   var expected = '   1, 2, 3';
   test.identical( got,expected );
 
-  test.description = 'levels 0 test';
+  test.case = 'levels 0 test';
   var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 0, levels : 0, comma : ', ', wrap : 1 } ).text;
   var expected = '[ Array with 3 elements ]';
   test.identical( got,expected );
 
-  test.description = 'dtab & multiline test';
+  test.case = 'dtab & multiline test';
   var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab: '-', level : 0, comma : ', ', wrap : 1, multiline : 1 } ).text;
   var expected =
   [
@@ -3363,19 +3363,19 @@ function _toStrFromArray( test )
   if( Config.debug )
   {
 
-    test.description = 'invalid first argument type';
+    test.case = 'invalid first argument type';
     test.shouldThrowError( function()
     {
       _._toStrFromArray( 2, {} );
     });
 
-    test.description = 'invalid second argument type';
+    test.case = 'invalid second argument type';
     test.shouldThrowError( function()
     {
       _._toStrFromArray( [], 2 );
     });
 
-    test.description = 'no arguments';
+    test.case = 'no arguments';
     test.shouldThrowError( function()
     {
       _._toStrFromArray();
@@ -3390,31 +3390,31 @@ function _toStrFromObject( test )
 {
   var def = { tab : ' ', dtab : '   ',level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0};
 
-  test.description = 'default options';
+  test.case = 'default options';
   var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );
   var expected = '{ a : 1, b : 2, c : text }';
   test.identical( got.text,expected );
 
-  test.description = 'levels 0 test';
+  test.case = 'levels 0 test';
   def.levels = 0;
   var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );
   var expected = '[ Object with 3 elements ]';
   test.identical( got.text,expected );
 
-  test.description = 'wrap 0 test';
+  test.case = 'wrap 0 test';
   def.levels = 1;
   def.wrap = 0;
   var got = _._toStrFromObject( { a : 1, b : 2, c : 'text' }, def );
   var expected = 'a : 1, b : 2, c : text';
   test.identical( got.text,expected );
 
-  test.description = 'noObject test';
+  test.case = 'noObject test';
   def.noObject = 1;
   var got = _._toStrFromObject( { a : 1, b : 2, c : 'text' }, def );
   var expected = undefined;
   test.identical( got,expected );
 
-  test.description = 'dtab & prependTab & multiline test';
+  test.case = 'dtab & prependTab & multiline test';
   def.noObject = 0;
   def.dtab = '*';
   def.multiline  = 1;
@@ -3433,25 +3433,25 @@ function _toStrFromObject( test )
   if( Config.debug )
   {
 
-    test.description = 'invalid first argument type';
+    test.case = 'invalid first argument type';
     test.shouldThrowError( function()
     {
       _._toStrFromObject( 1, {} );
     });
 
-    test.description = 'empty options';
+    test.case = 'empty options';
     test.shouldThrowError( function()
     {
       _._toStrFromObject( { a : 1 }, {} );
     });
 
-    test.description = 'invalid second argument type';
+    test.case = 'invalid second argument type';
     test.shouldThrowError( function()
     {
       _._toStrFromObject( { a : 1 }, 2 );
     });
 
-    test.description = 'no arguments';
+    test.case = 'no arguments';
     test.shouldThrowError( function()
     {
       _._toStrFromObject();
@@ -3478,7 +3478,7 @@ function _toStrFromContainer( test )
   optionsItem.prependTab = 0;
   };
 
-  test.description = 'default options';
+  test.case = 'default options';
   item_options();
   var got = _._toStrFromContainer
   ({
@@ -3493,7 +3493,7 @@ function _toStrFromContainer( test )
   var expected = ' { a : 1, b : 2, c : "text" }';
   test.identical( got,expected );
 
-  test.description = 'wrap 0,comma ,dtab, multiline test';
+  test.case = 'wrap 0,comma ,dtab, multiline test';
 
   o.wrap = 0;
   o.comma = '_';
@@ -3521,7 +3521,7 @@ function _toStrFromContainer( test )
 
   test.identical( got,expected );
 
-  test.description = 'json test';
+  test.case = 'json test';
 
   o.wrap = 1;
   o.comma = ', ';
@@ -3551,19 +3551,19 @@ function _toStrFromContainer( test )
   if( Config.debug )
   {
 
-    test.description = 'invalid  argument type';
+    test.case = 'invalid  argument type';
     test.shouldThrowError( function()
     {
       _._toStrFromContainer( 1 );
     });
 
-    test.description = 'empty object';
+    test.case = 'empty object';
     test.shouldThrowError( function()
     {
       _._toStrFromContainer( { } );
     });
 
-    test.description = 'no arguments';
+    test.case = 'no arguments';
     test.shouldThrowError( function()
     {
       _._toStrFromContainer();

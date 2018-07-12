@@ -2117,7 +2117,7 @@ var complexData =
 function toJson( test )
 {
 
-  test.description = 'trivial'; /* */
+  test.case = 'trivial'; /* */
 
   var expected = '[ ' + _.arrayFromRange([ 1,100 ]).join( ', ' ) + ' ]';
   var src = _.arrayFromRange([ 1,100 ]);
@@ -2128,7 +2128,7 @@ function toJson( test )
   var expected = src;
   test.identical( got , expected );
 
-  test.description = 'long object'; /* */
+  test.case = 'long object'; /* */
 
   var object =
   {
@@ -2157,7 +2157,7 @@ function toJson( test )
   var expected = src;
   test.identical( got , expected );
 
-  test.description = 'object with length'; /* */
+  test.case = 'object with length'; /* */
 
   var src = {};
   src.length = 4;
@@ -2168,7 +2168,7 @@ function toJson( test )
   var expected = src;
   test.identical( got , expected );
 
-  test.description = 'object with length'; /* */
+  test.case = 'object with length'; /* */
 
   var object =
   {
@@ -2194,7 +2194,7 @@ function toJson( test )
   var expected = src;
   test.identical( got , expected );
 
-  test.description = 'comlex'; /* */
+  test.case = 'comlex'; /* */
 
   var src = complexData;
   var json = _.toJson( src );

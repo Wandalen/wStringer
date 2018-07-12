@@ -516,7 +516,7 @@ function toStr( test )
     var sample = samples[ s ];
     var got = _.toStr( sample.in,sample.options );
 
-    test.description = sample.description;
+    test.case = sample.description;
     test.identical( got,sample.out );
 
   }
