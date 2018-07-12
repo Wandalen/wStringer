@@ -1,6 +1,6 @@
 {
   "name": "wstringer",
-  "version": "0.3.15",
+  "version": "0.3.16",
   "description": "Stringify entity to string",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
   "license": "MIT",
