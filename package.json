@@ -2,7 +2,7 @@
   "name": "wstringer",
   "version": "0.3.16",
   "description": "Stringify entity to string",
-  "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
+  "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
   "main": "staging/dwtools/abase/layer4/aStringer.s",
   "files": [
