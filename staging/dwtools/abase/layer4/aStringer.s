@@ -1610,22 +1610,23 @@ function toJson( src,o )
 {
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
-  var defs =
-  {
-    jsonLike : 1,
-    levels : 1 << 20,
-    cloning : 1,
-  }
-
-  o = _.mapSupplement( o || {},defs );
+  o = _.routineOptions( toJson, o );
 
   if( o.cloning )
   src = _.cloneData({ src : src });
 
   delete o.cloning;
+
   var result = _.toStr( src,o );
 
   return result;
+}
+
+toJson.defaults =
+{
+  jsonLike : 1,
+  levels : 1 << 20,
+  cloning : 1,
 }
 
 //
@@ -1634,23 +1635,21 @@ function toJs( src,o )
 {
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
-  o = o || Object.create( null );
-
-  var def =
-  {
-    escaping : 1,
-    multilinedString : 1,
-    levels : 1 << 20,
-    stringWrapper : '`',
-    keyWrapper : '"',
-    jstructLike : 1,
-  }
-
-  _.mapSupplement( o,def );
+  o = _.routineOptions( toJs, o );
 
   var result = _.toStr( src,o );
 
   return result;
+}
+
+toJs.defaults =
+{
+  escaping : 1,
+  multilinedString : 1,
+  levels : 1 << 20,
+  stringWrapper : '`',
+  keyWrapper : '"',
+  jstructLike : 1,
 }
 
 // --
