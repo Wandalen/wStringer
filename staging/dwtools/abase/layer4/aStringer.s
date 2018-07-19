@@ -37,7 +37,7 @@ var _ObjectToString = Object.prototype.toString;
 var _ObjectHasOwnProperty = Object.hasOwnProperty;
 
 var _assert = _.assert;
-var _arraySlice = _.arraySlice;
+var _arraySlice = _.longSlice;
 var strTypeOf = _.strTypeOf;
 
 //
@@ -523,7 +523,7 @@ function _toStr( src,o )
   return;
 
   var isAtomic = _.primitiveIs( src );
-  var isArray = _.arrayLike( src );
+  var isArray = _.longIs( src );
   var isObject = !isArray && _.objectIs( src );
   var isObjectLike = !isArray && _.objectLike( src ) && !( 'toString' in src );
 
@@ -760,7 +760,7 @@ function _toStrIsVisibleElement( src,o )
 {
 
   var isAtomic = _.primitiveIs( src );
-  var isArray = _.arrayLike( src );
+  var isArray = _.longIs( src );
   var isObject = !isArray && _.objectLike( src );
   var type = _.strPrimitiveTypeOf( src );
 
@@ -1187,7 +1187,7 @@ function _toStrFromArrayFiltered( src,o )
   {
     var i2 = 0;
     var i = 0;
-    var src2 = _.arrayMakeSimilar( src,v );
+    var src2 = _.longMakeSimilar( src,v );
     while( i < length )
     {
       if( _toStrIsVisibleElement( src[ i ],optionsItem ) )
