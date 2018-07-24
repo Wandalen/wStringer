@@ -2894,30 +2894,30 @@ function toStrFields( test )
 
 //
 
-function _toStrShort( test )
+function toStrShort( test )
 {
   test.case = 'Array length test';
-  var got = _._toStrShort( [ 1, 2, 'text', undefined ], { } );
+  var got = _.toStrShort( [ 1, 2, 'text', undefined ], { } );
   var expected = '[ Array with 4 elements ]';
   test.identical( got,expected );
 
   test.case = 'date to string';
-  var got = _._toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), { }  );
+  var got = _.toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), { }  );
   var expected = '1994-01-12T00:00:00.000Z';
   test.identical( got,expected );
 
   test.case = 'string length > 40';
-  var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
+  var got = _.toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
   var expected = '[ "toxtndmtmdbmmlzoirmf" ... "pyhnrrqfuvybuuvixyrx" ]';
   test.identical( got,expected );
 
   test.case = 'string with options';
-  var got = _._toStrShort( '\toxtndmtmdb', { escaping : 1 } );
+  var got = _.toStrShort( '\toxtndmtmdb', { escaping : 1 } );
   var expected = '\\toxtndmtmdb';
   test.identical( got,expected );
 
   test.case = 'error to string ';
-  var got = _._toStrShort( new Error( 'err' ), { } );
+  var got = _.toStrShort( new Error( 'err' ), { } );
   var expected = '[object Error]';
   test.identical( got,expected );
 
@@ -2929,19 +2929,19 @@ function _toStrShort( test )
     test.case = 'invalid second argument type';
     test.shouldThrowError( function()
     {
-      _._toStrShort( '1', 2 );
+      _.toStrShort( '1', 2 );
     });
 
     test.case = 'only one argument provided';
     test.shouldThrowError( function()
     {
-      _._toStrShort( '1' );
+      _.toStrShort( '1' );
     });
 
     test.case = 'no arguments';
     test.shouldThrowError( function()
     {
-      _._toStrShort( );
+      _.toStrShort( );
     });
 
   }
@@ -3608,7 +3608,7 @@ var Self =
     toStrMethods : toStrMethods,
     toStrFields : toStrFields,
 
-    _toStrShort : _toStrShort,
+    toStrShort : toStrShort,
     _toStrIsVisibleElement : _toStrIsVisibleElement,
     _toStrIsSimpleElement : _toStrIsSimpleElement,
     _toStrFromRoutine : _toStrFromRoutine,

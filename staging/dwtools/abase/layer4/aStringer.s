@@ -508,6 +508,15 @@ function toStrFine_functor()
 
 //
 
+function toStrShort( src )
+{
+  _.assert( arguments.length === 1 );
+  var result = _.toStr( src, { levels : 0 } );
+  return result;
+}
+
+//
+
 function _toStr( src,o )
 {
   var result = '';
@@ -654,7 +663,7 @@ function _toStr( src,o )
  *
  * @example
  * //returns [ Array with 3 elements ]
- * _.toStrShort( [ function del(){}, 0, 'a' ], { levels : 0 } )
+ * _._toStrShort( [ function del(){}, 0, 'a' ], { levels : 0 } )
  *
  * @method _toStrShort
  * @memberof wTools
@@ -1049,7 +1058,7 @@ function _toStrFromStr( src,o )
 
   if( o.limitStringLength )
   {
-    result = _.strShort({ src : src, limit : o.limitStringLength, wrap : q, escaping : 1 });
+    result = _.strShortSrt({ src : src, limit : o.limitStringLength, wrap : q, escaping : 1 });
     if( result.length > o.limitStringLength )
     {
       result = '[ ' + result + ' ]';
@@ -1663,6 +1672,7 @@ var Proto =
   toStrFields : toStrFields,
 
   toStrFine_functor : toStrFine_functor,
+  toStrShort : toStrShort,
 
   _toStr : _toStr,
   _toStrShort : _toStrShort,
