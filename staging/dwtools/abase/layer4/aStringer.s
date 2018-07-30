@@ -677,69 +677,78 @@ function _toStrShort( src,o )
 
   var result = '';
 
-  if( _.vectorIs( src ) )
-  {
-    result += '[ Row with ' + src.length + ' elements' + ' ]';
-  }
-  else if( _.errIs( src ) )
-  {
-    result += _ObjectToString.call( src );
-  }
-  else if( _.routineIs( src ) )
-  {
-    result += _toStrFromRoutine( src,o );
-  }
-  else if( _.numberIs( src ) )
-  {
-    result += _toStrFromNumber( src,o );
-  }
-  else if( _.strIs( src ) )
+  try
   {
 
-    var optionsStr =
+    if( _.vectorIs( src ) )
     {
-      limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength,40 ) : 40,
-      stringWrapper : o.stringWrapper,
-      escaping : 1,
+      result += '[ Row with ' + src.length + ' elements' + ' ]';
+    }
+    else if( _.errIs( src ) )
+    {
+      result += _ObjectToString.call( src );
+    }
+    else if( _.routineIs( src ) )
+    {
+      result += _toStrFromRoutine( src,o );
+    }
+    else if( _.numberIs( src ) )
+    {
+      result += _toStrFromNumber( src,o );
+    }
+    else if( _.strIs( src ) )
+    {
+
+      var optionsStr =
+      {
+        limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength,40 ) : 40,
+        stringWrapper : o.stringWrapper,
+        escaping : 1,
+      }
+
+      result = _toStrFromStr( src,optionsStr );
+
+      // var maxStringLength = 40;
+      // var nl = src.substr( 0,Math.min( src.length,maxStringLength ) ).indexOf( '\n' );
+      // if( nl === -1 ) nl = src.length;
+      // if( src.length > maxStringLength || nl !== src.length )
+      // {
+      //   src = src.substr( 0,Math.min( maxStringLength,nl ) );
+      //   src = _toStrFromStr( src,o );
+      //   result += '[ ' + src + ' ...' + ' ]';
+      // }
+      // else
+      // {
+      //   src = _toStrFromStr( src,o );
+      //   result += src;
+      // }
+
+    }
+    else if( src && !_.objectIs( src ) && _.numberIs( src.length ) )
+    {
+
+      result += '[ ' + strTypeOf( src ) + ' with ' + src.length + ' elements ]';
+
+    }
+    else if( _.objectIs( src ) || _.objectLike( src ) )
+    {
+
+      result += '[ ' + strTypeOf( src ) + ' with ' + _.entityLength( src ) + ' elements' + ' ]';
+
+    }
+    else if( src instanceof Date )
+    {
+      result += src.toISOString();
+    }
+    else
+    {
+      result += String( src );
     }
 
-    result = _toStrFromStr( src,optionsStr );
-
-    // var maxStringLength = 40;
-    // var nl = src.substr( 0,Math.min( src.length,maxStringLength ) ).indexOf( '\n' );
-    // if( nl === -1 ) nl = src.length;
-    // if( src.length > maxStringLength || nl !== src.length )
-    // {
-    //   src = src.substr( 0,Math.min( maxStringLength,nl ) );
-    //   src = _toStrFromStr( src,o );
-    //   result += '[ ' + src + ' ...' + ' ]';
-    // }
-    // else
-    // {
-    //   src = _toStrFromStr( src,o );
-    //   result += src;
-    // }
-
   }
-  else if( src && !_.objectIs( src ) && _.numberIs( src.length ) )
+  catch( err )
   {
-
-    result += '[ ' + strTypeOf( src ) + ' with ' + src.length + ' elements ]';
-
-  }
-  else if( _.objectIs( src ) || _.objectLike( src ) )
-  {
-
-    result += '[ ' + strTypeOf( src ) + ' with ' + _.entityLength( src ) + ' elements' + ' ]';
-
-  }
-  else if( src instanceof Date )
-  {
-    result += src.toISOString();
-  }
-  else
-  {
-    result += String( src );
+    result = String( err );
   }
 
   return result;
