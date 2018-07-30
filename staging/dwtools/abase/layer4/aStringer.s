@@ -441,7 +441,7 @@ function toStrFine_functor()
   {
 
     _.assert( arguments.length === 1 || arguments.length === 2 );
-    _.assert( _.objectIs( o ) || o === undefined,'expects map ( o )' );
+    _.assert( _.objectIs( o ) || o === undefined,'expects map {-o-}' );
 
     var o = o || Object.create( null );
     var toStrDefaults = Object.create( null );
@@ -469,7 +469,7 @@ function toStrFine_functor()
 
     if( o.onlyRoutines )
     {
-      _.assert( !o.noRoutine,'expects ( o.noRoutine ) false if( o.onlyRoutines ) is true' );
+      _.assert( !o.noRoutine,'expects {-o.noRoutine-} false if( o.onlyRoutines ) is true' );
       for( var f in primeFilter )
       o[ f ] = 1;
       o.noRoutine = 0;
@@ -484,12 +484,12 @@ function toStrFine_functor()
     if( o.stringWrapper === '`' && o.multilinedString === undefined )
     o.multilinedString = 1;
 
-    _.assert( _.strIs( o.stringWrapper ),'expects string ( o.stringWrapper )' );
+    _.assert( _.strIs( o.stringWrapper ),'expects string {-o.stringWrapper-}' );
 
     if( o.jsonLike )
     {
       _.assert( o.stringWrapper === '"','expects double quote ( o.stringWrapper ) true if either ( o.jsonLike ) or ( o.jstructLike ) is true' );
-      _.assert( !o.multilinedString,'expects ( o.multilinedString ) false if either ( o.jsonLike ) or ( o.jstructLike ) is true to make valid JSON' );
+      _.assert( !o.multilinedString,'expects {-o.multilinedString-} false if either ( o.jsonLike ) or ( o.jstructLike ) is true to make valid JSON' );
     }
 
     var r = _toStr( src,o );
@@ -673,7 +673,7 @@ function _toStr( src,o )
 function _toStrShort( src,o )
 {
   _.assert( arguments.length === 2, 'expects exactly two arguments' );
-  _.assert( _.objectIs( o ),'expects map ( o )' );
+  _.assert( _.objectIs( o ),'expects map {-o-}' );
 
   var result = '';
 
@@ -896,7 +896,7 @@ function _toStrIsVisibleElement( src,o )
 function _toStrIsSimpleElement( element,o )
 {
   _.assert( arguments.length === 2, 'expects exactly two arguments' );
-  _.assert( _.objectIs( o ) || o === undefined,'expects map ( o )' );
+  _.assert( _.objectIs( o ) || o === undefined,'expects map {-o-}' );
 
   if( _.strIs( element ) )
   {
@@ -940,7 +940,7 @@ function _toStrFromRoutine( src,o )
 
   // debugger;
   _.assert( arguments.length === 2, 'expects exactly two arguments' );
-  _.assert( _.routineIs( src ),'expects routine ( src )' );
+  _.assert( _.routineIs( src ),'expects routine {-src-}' );
 
   if( o.jstructLike )
   {
@@ -1050,8 +1050,8 @@ function _toStrFromStr( src,o )
   var result = '';
 
   _.assert( arguments.length === 2, 'expects exactly two arguments' );
-  _.assert( _.strIs( src ), 'expects string ( src )'  );
-  _.assert( _.objectIs( o ) || o === undefined,'expects map ( o )' );
+  _.assert( _.strIs( src ), 'expects string {-src-}'  );
+  _.assert( _.objectIs( o ) || o === undefined,'expects map {-o-}' );
 
   //var q = o.multilinedString ? '`' : o.stringWrapper;
   var q = o.stringWrapper;
@@ -1257,7 +1257,7 @@ function _toStrFromArray( src,o )
 
   _assert( arguments.length === 2 );
   _assert( src && _.numberIs( src.length ) );
-  _.assert( _.objectIs( o ) || o === undefined,'expects map ( o )' );
+  _.assert( _.objectIs( o ) || o === undefined,'expects map {-o-}' );
 
 
   if( o.level >= o.levels )
@@ -1340,7 +1340,7 @@ function _toStrFromContainer( o )
   var result = '';
 
   _.assert( arguments.length );
-  _.assert( _.objectIs( o ) || o === undefined,'expects map ( o )' );
+  _.assert( _.objectIs( o ) || o === undefined,'expects map {-o-}' );
   _.assert( _.arrayIs( o.names ) || !o.names );
 
   var values = o.values;
@@ -1551,7 +1551,7 @@ function _toStrFromObject( src,o )
 
   _assert( arguments.length === 2 );
   _assert( _.objectLike( src ) );
-  _.assert( _.objectIs( o ) || o === undefined,'expects map ( o )' );
+  _.assert( _.objectIs( o ) || o === undefined,'expects map {-o-}' );
 
 
   if( o.level >= o.levels )
