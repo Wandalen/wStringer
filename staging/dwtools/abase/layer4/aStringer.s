@@ -36,7 +36,7 @@ var _FunctionBind = Function.prototype.bind;
 var _ObjectToString = Object.prototype.toString;
 var _ObjectHasOwnProperty = Object.hasOwnProperty;
 
-var _assert = _.assert;
+// var __assert = _.assert;
 var _arraySlice = _.longSlice;
 var strTypeOf = _.strTypeOf;
 
@@ -549,7 +549,7 @@ function _toStr( src,o )
     var r = src.toStr( o );
     if( _.objectIs( r ) )
     {
-      _assert( r.simple !== undefined && r.text !== undefined );
+      _.assert( r.simple !== undefined && r.text !== undefined );
       simple = r.simple;
       result += r.text;
     }
@@ -1099,7 +1099,7 @@ function _toStrFromHashMap( src,o )
   var simple = 0;
 
   // throw _.err( 'not implemented' );
-  _assert( src instanceof Map ); debugger;
+  _.assert( src instanceof Map ); debugger;
 
   src.forEach( function( e,k )
   {
@@ -1185,7 +1185,7 @@ function _toStrFromArrayFiltered( src,o )
 {
   var result = '';
 
-  _assert( arguments.length === 2 );
+  _.assert( arguments.length === 2 );
 
   /* item options */
 
@@ -1264,8 +1264,8 @@ function _toStrFromArray( src,o )
 {
   var result = '';
 
-  _assert( arguments.length === 2 );
-  _assert( src && _.numberIs( src.length ) );
+  _.assert( arguments.length === 2 );
+  _.assert( src && _.numberIs( src.length ) );
   _.assert( _.objectIs( o ) || o === undefined,'expects map {-o-}' );
 
 
@@ -1415,16 +1415,16 @@ function _toStrFromContainer( o )
   for( var n = 0 ; n < l ; n++ )
   {
 
-    _assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
-    _assert( optionsItem.level === optionsContainer.level + 1 );
+    _.assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
+    _.assert( optionsItem.level === optionsContainer.level + 1 );
 
     if( names )
     r = _toStr( values[ names[ n ] ],optionsItem );
     else
     r = _toStr( values[ n ],optionsItem );
 
-    _assert( _.objectIs( r ) && _.strIs( r.text ) );
-    _assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
+    _.assert( _.objectIs( r ) && _.strIs( r.text ) );
+    _.assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
 
     if( written > 0 )
     {
@@ -1494,7 +1494,7 @@ function _toStrFromObjectKeysFiltered( src,o )
 {
   var result = '';
 
-  _assert( arguments.length === 2 );
+  _.assert( arguments.length === 2 );
 
   /* item options */
 
@@ -1558,8 +1558,8 @@ function _toStrFromObject( src,o )
 {
   var result = '';
 
-  _assert( arguments.length === 2 );
-  _assert( _.objectLike( src ) );
+  _.assert( arguments.length === 2 );
+  _.assert( _.objectLike( src ) );
   _.assert( _.objectIs( o ) || o === undefined,'expects map {-o-}' );
 
 
