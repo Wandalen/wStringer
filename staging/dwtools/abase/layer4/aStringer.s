@@ -2,6 +2,14 @@
 
 'use strict';
 
+/**
+  @module Tools/base/Stringer - Stringer nicely stringifies structures does not matter how complex or cycled them are. Convenient tool for fast diagnostic and inspection of data during development and in production. Use it to see more, faster. Refactoring required.
+*/
+
+/**
+ * @file aStringer.s.
+ */
+
 if( typeof module !== 'undefined' )
 {
 
@@ -29,7 +37,8 @@ if( typeof module !== 'undefined' )
 //
 
 var Self = _global_.wTools;
-var _global = _global_; var _ = _global_.wTools;
+var _global = _global_;
+var _ = _global_.wTools;
 
 var _ArraySlice = Array.prototype.slice;
 var _FunctionBind = Function.prototype.bind;

@@ -1,7 +1,7 @@
 {
   "name": "wstringer",
   "version": "0.3.27",
-  "description": "Stringify entity to string",
+  "description": "Stringer nicely stringifies structures does not matter how complex or cycled them are. Convenient tool for fast diagnostic and inspection of data during development and in production. Use it to see more, faster. Refactoring required.",
   "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
   "main": "staging/dwtools/abase/layer4/aStringer.s",
