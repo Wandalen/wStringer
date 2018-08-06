@@ -608,7 +608,7 @@ function _toStr( src,o )
     if( o.jsonLike )
     result += '"' + src.toISOString() + '"';
     else if( o.jstructLike )
-    result += 'new Date( ' + src.toISOString() + ' )';
+    result += 'new Date( \'' + src.toISOString() + '\' )';
     else
     result += src.toISOString();
   }
