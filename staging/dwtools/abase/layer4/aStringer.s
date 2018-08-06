@@ -1427,6 +1427,12 @@ function _toStrFromContainer( o )
     _.assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
     _.assert( optionsItem.level === optionsContainer.level + 1 );
 
+    // if( _global.gc )
+    // _global.gc();
+    // else
+    // xxx;
+    // console.log( _.appMemoryUsageInfo() );
+
     if( names )
     r = _toStr( values[ names[ n ] ],optionsItem );
     else
