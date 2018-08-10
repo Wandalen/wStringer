@@ -1686,7 +1686,7 @@ toJs.defaults =
 }
 
 // --
-// define class
+// declare
 // --
 
 var Proto =

@@ -525,7 +525,7 @@ function toStr( test )
 }
 
 // --
-// define class
+// declare
 // --
 
 var Self =
