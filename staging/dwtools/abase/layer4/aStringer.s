@@ -599,6 +599,14 @@ function _toStr( src,o )
   {
     result += _toStrFromNumber( src,o );
   }
+  else if( type === 'BigInt' )
+  {
+    if( o.jsonLike )
+    result += '"' + src.toString() + 'n"';
+    else
+    if( o.jstructLike )
+    result += 'BigInt( \'' + src.toString() + '\' )';
+  }
   else if( type === 'String' )
   {
     result += _toStrFromStr( src,o );
