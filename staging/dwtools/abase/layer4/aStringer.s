@@ -156,7 +156,7 @@ function toStrFields( src,o )
 * @property {boolean} [ o.multiline=false ] - Writes each object property in new line.
 * @property {boolean} [ o.escaping=false ] - enable escaping of special characters.
 * @property {boolean} [ o.jsonLike=false ] - enable conversion to JSON string.
-* @property {boolean} [ o.jstructLike=false ] - enable conversion to JS string.
+* @property {boolean} [ o.jsLike=false ] - enable conversion to JS string.
 */
 
 /**
@@ -426,7 +426,7 @@ function toStrFine_functor()
     multilinedString : 0,
     escaping : 0,
     jsonLike : 0,
-    jstructLike : 0,
+    jsLike : 0,
 
   }
 
@@ -457,10 +457,10 @@ function toStrFine_functor()
     if( !_.primitiveIs( src ) && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod && _.objectIs( src.toStr.defaults ) )
     toStrDefaults = src.toStr.defaults;
 
-    if( o.levels === undefined && ( o.jsonLike || o.jstructLike ) )
+    if( o.levels === undefined && ( o.jsonLike || o.jsLike ) )
     o.levels = 1 << 20;
 
-    if( o.jsonLike || o.jstructLike )
+    if( o.jsonLike || o.jsLike )
     {
       if( o.escaping === undefined )
       o.escaping = 1;
@@ -497,8 +497,8 @@ function toStrFine_functor()
 
     if( o.jsonLike )
     {
-      _.assert( o.stringWrapper === '"','expects double quote ( o.stringWrapper ) true if either ( o.jsonLike ) or ( o.jstructLike ) is true' );
-      _.assert( !o.multilinedString,'expects {-o.multilinedString-} false if either ( o.jsonLike ) or ( o.jstructLike ) is true to make valid JSON' );
+      _.assert( o.stringWrapper === '"','expects double quote ( o.stringWrapper ) true if either ( o.jsonLike ) or ( o.jsLike ) is true' );
+      _.assert( !o.multilinedString,'expects {-o.multilinedString-} false if either ( o.jsonLike ) or ( o.jsLike ) is true to make valid JSON' );
     }
 
     var r = _toStr( src,o );
@@ -601,11 +601,7 @@ function _toStr( src,o )
   }
   else if( type === 'BigInt' )
   {
-    if( o.jsonLike )
-    result += '"' + src.toString() + 'n"';
-    else
-    if( o.jstructLike )
-    result += 'BigInt( \'' + src.toString() + '\' )';
+    result += _toStrFromBigInt( src,o );
   }
   else if( type === 'String' )
   {
@@ -615,7 +611,7 @@ function _toStr( src,o )
   {
     if( o.jsonLike )
     result += '"' + src.toISOString() + '"';
-    else if( o.jstructLike )
+    else if( o.jsLike )
     result += 'new Date( \'' + src.toISOString() + '\' )';
     else
     result += src.toISOString();
@@ -968,7 +964,7 @@ function _toStrFromRoutine( src,o )
   _.assert( arguments.length === 2, 'expects exactly two arguments' );
   _.assert( _.routineIs( src ),'expects routine {-src-}' );
 
-  if( o.jstructLike )
+  if( o.jsLike )
   {
     if( _.routineSourceGet )
     result = _.routineSourceGet( src );
@@ -1031,6 +1027,23 @@ function _toStrFromNumber( src,o )
 
   if( Object.is( src, -0 ) )
   result = '-' + result;
+
+  return result;
+}
+
+//
+
+function _toStrFromBigInt( src,o )
+{
+
+  debugger;
+
+  if( o.jsonLike )
+  result += '"' + src.toString() + 'n"';
+  else if( o.jsLike )
+  result += src.toString() + 'n';
+
+  // result += 'BigInt( \'' + src.toString() + '\' )';
 
   return result;
 }
@@ -1690,7 +1703,7 @@ toJs.defaults =
   levels : 1 << 20,
   stringWrapper : '`',
   keyWrapper : '"',
-  jstructLike : 1,
+  jsLike : 1,
 }
 
 // --
@@ -1714,6 +1727,7 @@ var Proto =
 
   _toStrFromRoutine : _toStrFromRoutine,
   _toStrFromNumber : _toStrFromNumber,
+  _toStrFromBigInt : _toStrFromBigInt,
   _toStrFromStr : _toStrFromStr,
 
   _toStrFromHashMap : _toStrFromHashMap,
