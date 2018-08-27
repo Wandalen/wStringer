@@ -1035,6 +1035,7 @@ function _toStrFromNumber( src,o )
 
 function _toStrFromBigInt( src,o )
 {
+  let result = '';
 
   debugger;
 
@@ -1042,6 +1043,8 @@ function _toStrFromBigInt( src,o )
   result += '"' + src.toString() + 'n"';
   else if( o.jsLike )
   result += src.toString() + 'n';
+  else
+  result += String( src );
 
   // result += 'BigInt( \'' + src.toString() + '\' )';
 
