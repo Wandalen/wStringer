@@ -24,6 +24,9 @@ if( typeof module !== 'undefined' )
   var _global = _global_;
   var _ = _global_.wTools;
 
+  _.include( 'wExternalFundamentals' );
+  _.include( 'wCopyable' );
+  _.include( 'wStringer' );
   _.include( 'wTesting' );
 
 }

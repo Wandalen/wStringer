@@ -373,7 +373,7 @@ function toStrUnwrapped( test )
 
 }
 
-toStrUnwrapped.cover = [ _.toStr ];
+// toStrUnwrapped.cover = [ _.toStr ];
 
 //
 
@@ -468,7 +468,7 @@ function toStrError( test )
 
 }
 
-toStrError.cover = [ _.toStr ];
+// toStrError.cover = [ _.toStr ];
 
 //
 
@@ -1136,7 +1136,7 @@ function toStrArray( test )
 
   testFunction( test,desc,src,options,expected );
 }
-toStrArray.cover = [ _.toStr ];
+// toStrArray.cover = [ _.toStr ];
 
 //
 
@@ -1807,7 +1807,7 @@ function toStrObject( test )
 
 }
 
-toStrObject.cover = [ _.toStr ];
+// toStrObject.cover = [ _.toStr ];
 
 //
 
@@ -2005,7 +2005,7 @@ function toStrJson( test )
 
 }
 
-toStrJson.cover = [ _.toStr ];
+// toStrJson.cover = [ _.toStr ];
 
 //
 
@@ -2055,7 +2055,7 @@ function toStrJsonFromFileU( test )
 
 }
 
-toStrJsonFromFileU.cover = [ _.toStr ];
+// toStrJsonFromFileU.cover = [ _.toStr ];
 
 //
 
@@ -2066,7 +2066,7 @@ function toStrJsonFromFileA( test )
 
 }
 
-toStrJsonFromFileA.cover = [ _.toStr ];
+// toStrJsonFromFileA.cover = [ _.toStr ];
 
 //
 
@@ -2186,7 +2186,7 @@ function toStrstringWrapper( test )
   testFunction( test,desc,src,options,expected );
 
 }
-toStrstringWrapper.cover = [ _.toStr ];
+// toStrstringWrapper.cover = [ _.toStr ];
 
 //
 
@@ -2243,7 +2243,7 @@ function toStrLevel( test )
    ]
   testFunction( test,desc,src,options,expected );
 }
-toStrLevel.cover = [ _.toStr ];
+// toStrLevel.cover = [ _.toStr ];
 
 //
 
@@ -2377,7 +2377,7 @@ function toStrEnumerable( test )
    ]
   testFunction( test,desc,src,options,expected );
 }
-toStrEnumerable.cover = [ _.toStr ];
+// toStrEnumerable.cover = [ _.toStr ];
 //
 
 function toStrEmptyArgs( test )
@@ -2389,7 +2389,7 @@ function toStrEmptyArgs( test )
 
   testFunction( test,desc,src,options,expected );
 }
-toStrEmptyArgs.cover = [ _.toStr ];
+// toStrEmptyArgs.cover = [ _.toStr ];
 //
 
 function toStrSymbol( test )
@@ -2420,7 +2420,7 @@ function toStrSymbol( test )
 
   testFunction( test,desc,src,options,expected );
 }
-toStrSymbol.cover = [ _.toStr ];
+// toStrSymbol.cover = [ _.toStr ];
 //
 
 function toStrNumber( test )
@@ -2465,7 +2465,7 @@ function toStrNumber( test )
 
   testFunction( test,desc,src,options,expected );
 }
-toStrNumber.cover = [ _.toStr ];
+// toStrNumber.cover = [ _.toStr ];
 //
 
 function toStrString( test )
@@ -2509,7 +2509,7 @@ function toStrString( test )
   testFunction( test,desc,src,options,expected );
 }
 
-toStrString.cover = [ _.toStr ];
+// toStrString.cover = [ _.toStr ];
 
 //
 
@@ -2558,7 +2558,7 @@ function toStrAtomic( test )
   ]
   testFunction( test,desc,src,options,expected );
 }
-toStrAtomic.cover = [ _.toStr ];
+// toStrAtomic.cover = [ _.toStr ];
 
 //
 
@@ -2588,7 +2588,7 @@ function toStrDate( test )
   ]
   testFunction( test,desc,src,options,expected );
 }
-toStrDate.cover = [ _.toStr ];
+// toStrDate.cover = [ _.toStr ];
 
 //
 
@@ -2616,7 +2616,7 @@ function toStrRoutine( test )
   ]
   testFunction( test,desc,src,options,expected );
 }
-toStrRoutine.cover = [ _.toStr ];
+// toStrRoutine.cover = [ _.toStr ];
 
 //
 
@@ -2669,7 +2669,7 @@ function toStrThrow( test )
 
   }
 }
-toStrThrow.cover = [ _.toStr ];
+// toStrThrow.cover = [ _.toStr ];
 
 //
 
@@ -2797,7 +2797,7 @@ function toStrLimitElements( test )
   testFunction( test,desc,src,options,expected );
 }
 
-toStrRoutine.cover = [ _.toStr ];
+// toStrRoutine.cover = [ _.toStr ];
 
 //
 
