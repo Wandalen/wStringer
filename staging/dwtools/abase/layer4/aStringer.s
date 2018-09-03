@@ -541,9 +541,10 @@ function _toStr( src,o )
   return;
 
   var isAtomic = _.primitiveIs( src );
-  var isArray = _.longIs( src );
-  var isObject = !isArray && _.objectIs( src );
-  var isObjectLike = !isArray && _.objectLike( src ) && !( 'toString' in src );
+  var isLong = _.longIs( src );
+  var isArray = _.arrayIs( src );
+  var isObject = !isLong && _.objectIs( src );
+  var isObjectLike = !isLong && _.objectLike( src ) && !( 'toString' in src );
 
   /* */
 
@@ -616,7 +617,19 @@ function _toStr( src,o )
     else
     result += src.toISOString();
   }
-  else if( isArray )
+  else if( _.bufferRawIs( src ) )
+  {
+    var r = _toStrFromBufferRaw( src,o );
+    result += r.text;
+    simple = r.simple;
+  }
+  else if( _.bufferTypedIs( src ) )
+  {
+    var r = _toStrFromBufferTyped( src,o );
+    result += r.text;
+    simple = r.simple;
+  }
+  else if( isLong )
   {
     var r = _toStrFromArray( src,o );
     result += r.text;
@@ -631,12 +644,6 @@ function _toStr( src,o )
   else if( type === 'Map' )
   {
     var r = _toStrFromHashMap( src,o );
-    result += r.text;
-    simple = r.simple;
-  }
-  else if( _.bufferRawIs( src ) )
-  {
-    var r = _toStrFromBufferRaw( src,o );
     result += r.text;
     simple = r.simple;
   }
@@ -1194,7 +1201,27 @@ function _toStrFromHashMap( src,o )
 
 //
 
-function _toStrFromBufferRaw( src,o )
+function _toStrFromBufferTyped( src, o )
+{
+  var result = '';
+
+  _.assert( _.bufferTypedIs( src ) );
+
+  src.forEach( function( e,k )
+  {
+    if( k !== 0 )
+    result += ',';
+    result += _toStrFromNumber( e, o );
+  });
+
+  result = '( new ' + src.constructor.name + '([ ' + result + ' ]) )';
+
+  return { text : result, simple : true };
+}
+
+//
+
+function _toStrFromBufferRaw( src, o )
 {
   var result = '';
 
@@ -1736,6 +1763,7 @@ var Proto =
   _toStrFromHashMap : _toStrFromHashMap,
 
   _toStrFromBufferRaw : _toStrFromBufferRaw,
+  _toStrFromBufferTyped : _toStrFromBufferTyped,
 
   _toStrFromArrayFiltered : _toStrFromArrayFiltered,
   _toStrFromArray : _toStrFromArray,
