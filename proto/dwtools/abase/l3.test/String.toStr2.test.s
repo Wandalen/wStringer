@@ -3578,7 +3578,7 @@ function _toStrFromContainer( test )
 var Self =
 {
 
-  name : 'Tools/base/layer4/String/2',
+  name : 'Tools/base/l4/String/2',
   silencing : 1,
   enabled : 0, // !!! refactoring
 
@@ -3626,6 +3626,6 @@ var Self =
 
 Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
-_.Tester.test( Self.name );
+/*_.*/wTester.test( Self.name );
 
 } )( );

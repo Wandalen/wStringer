@@ -531,7 +531,7 @@ function toStr( test )
 var Self =
 {
 
-  name : 'Tools/base/layer4/String/1',
+  name : 'Tools/base/l4/String/1',
   silencing : 1,
   enabled : 1, // !!! refactoring
 
@@ -546,6 +546,6 @@ var Self =
 
 Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
-_.Tester.test( Self.name );
+/*_.*/wTester.test( Self.name );
 
 } )( );

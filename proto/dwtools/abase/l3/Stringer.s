@@ -1,4 +1,4 @@
-(function _aStringer_s_() {
+(function _Stringer_s_() {
 
 'use strict';
 
@@ -1780,7 +1780,9 @@ var Proto =
 
 }
 
+debugger;
 _.mapExtend( Self, Proto );
+debugger;
 
 //
 

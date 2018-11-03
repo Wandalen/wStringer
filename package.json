@@ -4,13 +4,13 @@
   "description": "Stringer nicely stringifies structures does not matter how complex or cycled them are. Convenient tool for fast diagnostic and inspection of data during development and in production. Use it to see more, faster. Refactoring required.",
   "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
-  "main": "staging/dwtools/abase/layer4/aStringer.s",
+  "main": "proto/dwtools/abase/l3/Stringer.s",
   "files": [
-    "staging/dwtools/abase/layer4",
+    "proto/dwtools/abase/l3",
     "production"
   ],
   "scripts": {
-    "test": "wtest staging",
+    "test": "wtest proto",
     "make_doc": "./doc.sh"
   },
   "repository": {

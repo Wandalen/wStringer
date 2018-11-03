@@ -2212,7 +2212,7 @@ function toJson( test )
 var Self =
 {
 
-  name : 'Tools/base/layer4/String/ToJson',
+  name : 'Tools/base/l4/String/ToJson',
   silencing : 1,
   // verbosity : 7,
 
@@ -2225,6 +2225,6 @@ var Self =
 
 Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
-_.Tester.test( Self.name );
+/*_.*/wTester.test( Self.name );
 
 })();
