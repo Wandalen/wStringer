@@ -441,6 +441,8 @@ function toStrFine_functor()
   Object.preventExtensions( restricts );
 
   var def;
+
+  /* !!! : remove dependency of prototypeUnitedInterface */
   if( _.prototypeUnitedInterface )
   def = _.prototypeUnitedInterface([ primeFilter,composes,optional ]);
   else
@@ -1780,9 +1782,7 @@ var Proto =
 
 }
 
-debugger;
 _.mapExtend( Self, Proto );
-debugger;
 
 //
 
