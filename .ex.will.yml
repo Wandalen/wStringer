@@ -1,9 +1,9 @@
 
 about :
 
-  name : wStringer
-  description : 'Stringer nicely stringifies structures does not matter how complex or cycled them are. Convenient tool for fast diagnostic and inspection of data during development and in production. Use it to see more, faster. Refactoring required.'
-  version : 0.3.54
+  name : "wStringer"
+  description : "Stringer nicely stringifies structures does not matter how complex or cycled them are. Convenient tool for fast diagnostic and inspection of data during development and in production. Use it to see more, faster. Refactoring required."
+  version : "0.3.55"
   enabled : 1
   interpreters :
   - nodejs >= 6.0.0
