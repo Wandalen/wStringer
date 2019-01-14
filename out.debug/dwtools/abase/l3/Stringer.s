@@ -3,7 +3,8 @@
 'use strict';
 
 /**
-  @module Tools/base/Stringer - Stringer nicely stringifies structures does not matter how complex or cycled them are. Convenient tool for fast diagnostic and inspection of data during development and in production. Use it to see more, faster. Refactoring required.
+ * Stringer nicely stringifies structures does not matter how complex or cycled them are. Convenient tool for fast diagnostic and inspection of data during development and in production. Use it to see more, faster. Refactoring required.
+  @module Tools/base/Stringer
 */
 
 /**

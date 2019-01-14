@@ -61,8 +61,6 @@ path:
       - ./dwtools/abase/l3.test/String.toStr1.test.s
       - ./dwtools/abase/l3.test/String.toStr2.test.s
       - ./dwtools/abase/l3.test/StrJson.test.s
-      - ./dwtools/amid
-      - ./dwtools/atop
     criterion:
       default: 1
       debug: 1
