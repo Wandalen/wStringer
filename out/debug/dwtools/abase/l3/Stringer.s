@@ -516,7 +516,7 @@ function _toStr( src,o )
 {
   var result = '';
   var simple = 1;
-  var type = _.strPrimitiveTypeOf( src );
+  var type = _.strPrimitiveType( src );
 
   if( o.level >= o.levels )
   {
@@ -714,21 +714,6 @@ function _toStrShort( src,o )
 
       result = _toStrFromStr( src,optionsStr );
 
-      // var maxStringLength = 40;
-      // var nl = src.substr( 0,Math.min( src.length,maxStringLength ) ).indexOf( '\n' );
-      // if( nl === -1 ) nl = src.length;
-      // if( src.length > maxStringLength || nl !== src.length )
-      // {
-      //   src = src.substr( 0,Math.min( maxStringLength,nl ) );
-      //   src = _toStrFromStr( src,o );
-      //   result += '[ ' + src + ' ...' + ' ]';
-      // }
-      // else
-      // {
-      //   src = _toStrFromStr( src,o );
-      //   result += src;
-      // }
-
     }
     else if( src && !_.objectIs( src ) && _.numberIs( src.length ) )
     {
@@ -786,7 +771,7 @@ function _toStrIsVisibleElement( src,o )
   var isAtomic = _.primitiveIs( src );
   var isArray = _.longIs( src );
   var isObject = !isArray && _.objectLike( src );
-  var type = _.strPrimitiveTypeOf( src );
+  var type = _.strPrimitiveType( src );
 
   /* */
 
