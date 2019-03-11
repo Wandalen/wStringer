@@ -615,6 +615,12 @@ function _toStr( src,o )
     result += r.text;
     simple = r.simple;
   }
+  else if( _.bufferNodeIs( src ) )
+  {
+    var r = _toStrFromBufferNode( src,o );
+    result += r.text;
+    simple = r.simple;
+  }
   else if( isLong )
   {
     var r = _toStrFromArray( src,o );
@@ -1212,6 +1218,28 @@ function _toStrFromBufferRaw( src, o )
 
 //
 
+function _toStrFromBufferNode( src, o )
+{
+  var result = '';
+
+  _.assert( _.bufferNodeIs( src ) );
+
+  let k = 0;
+  for ( let value of src.values() )
+  {
+    if( k !== 0 )
+    result += ',';
+    result += value;
+    ++k;
+  }
+
+  result = '( Buffer.from([ ' + result + ' ]) )';
+
+  return { text : result, simple : true };
+}
+
+//
+
 function _toStrFromArrayFiltered( src,o )
 {
   var result = '';
@@ -1734,6 +1762,7 @@ var Proto =
   _toStrFromHashMap : _toStrFromHashMap,
 
   _toStrFromBufferRaw : _toStrFromBufferRaw,
+  _toStrFromBufferNode : _toStrFromBufferNode,
   _toStrFromBufferTyped : _toStrFromBufferTyped,
 
   _toStrFromArrayFiltered : _toStrFromArrayFiltered,
