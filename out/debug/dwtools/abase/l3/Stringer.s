@@ -11,6 +11,13 @@
  * @file aStringer.s.
  */
 
+/**
+ * Collection of tools for fast diagnostic and inspection of data during development and in production.
+  @namespace Stringer
+  @memberof module:Tools/base/Stringer
+  @augments wTools
+*/
+
 if( typeof module !== 'undefined' )
 {
 
@@ -41,7 +48,7 @@ var strType = _.strType;
  * options provided by argument( o ).
  *
  * @param {object} src - Source object.
- * @param {wTools~toStrOptions} o - conversion o {@link wTools~toStrOptions}.
+ * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
  * @param {boolean} [ options.onlyRoutines=true ] - makes object behavior Routine only.
  * @see {@link wTools.toStrFine} Check out main function for more usage options and details.
  * @returns {string} Returns string that represents object data.
@@ -54,8 +61,8 @@ var strType = _.strType;
  * //returns { routine noname }
  * _.toStrMethods( ( function(){} ), { } )
  *
- * @method toStrMethods
- * @memberof wTools
+ * @function toStrMethods
+ * @memberof module:Tools/base/Stringer.Stringer
  *
  */
 
@@ -75,7 +82,7 @@ function toStrMethods( src,o )
  * options provided by argument( o ).
  *
  * @param {object} src - Source object.
- * @param {wTools~toStrOptions} o - conversion o {@link wTools~toStrOptions}.
+ * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
  * @param {boolean} [ options.noRoutine=false ] - Ignores all entities of type Routine.
  * @see {@link wTools.toStrFine} Check out main function for more usage options and details.
  * @returns {string} Returns string that represents object data.
@@ -88,8 +95,8 @@ function toStrMethods( src,o )
  * //returns { c : 1, d : "2" }
  * _.toStrFields( { a : function b(){},  c : 1 , d : '2' }, {} )
  *
- * @method toStrFields
- * @memberof wTools
+ * @function toStrFields
+ * @memberof module:Tools/base/Stringer.Stringer
  *
  */
 
@@ -103,8 +110,8 @@ function toStrFields( src,o )
 
 //
 /**
-* Options object for toStr function.
-* @typedef {Object} wTools~toStrOptions
+* @summary Options object for toStr function.
+* @typedef {Object} toStrOptions
 * @property {boolean} [ o.wrap=true ] - Wrap array-like and object-like entities
 * into "[ .. ]" / "{ .. }" respecitvely.
 * @property {boolean} [ o.stringWrapper='\'' ] - Wrap string into specified string.
@@ -141,6 +148,7 @@ function toStrFields( src,o )
 * @property {boolean} [ o.escaping=false ] - enable escaping of special characters.
 * @property {boolean} [ o.jsonLike=false ] - enable conversion to JSON string.
 * @property {boolean} [ o.jsLike=false ] - enable conversion to JS string.
+* @memberof module:Tools/base/Stringer.Stringer
 */
 
 /**
@@ -148,7 +156,7 @@ function toStrFields( src,o )
  * by argument( o ).If object ( src ) has own ( toStr ) method defined function uses it for conversion.
  *
  * @param {object} src - Source object for representing it as string.
- * @param {wTools~toStrOptions} o - conversion o {@link wTools~toStrOptions}.
+ * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
  * @returns {string} Returns string that represents object data.
  *
  * @example
@@ -341,13 +349,13 @@ function toStrFields( src,o )
  * // }"
  * _.toStr( { a : "line1\nline2\nline3" }, { levels: 2, multilinedString : 1 } );
  *
- * @method toStr
+ * @function toStr
  * @throws { Exception } Throw an exception if( o ) is not a Object.
  * @throws { Exception } Throw an exception if( o.stringWrapper ) is not equal true when ( o.jsonLike ) is true.
  * @throws { Exception } Throw an exception if( o.multilinedString ) is not equal false when ( o.jsonLike ) is true.
  * @throws { RangeError } Throw an exception if( o.precision ) is not between 1 and 21.
  * @throws { RangeError } Throw an exception if( o.fixed ) is not between 0 and 20.
- * @memberof wTools
+ * @memberof module:Tools/base/Stringer.Stringer
  *
  */
 
@@ -615,6 +623,12 @@ function _toStr( src,o )
     result += r.text;
     simple = r.simple;
   }
+  else if( _.bufferNodeIs( src ) )
+  {
+    var r = _toStrFromBufferNode( src,o );
+    result += r.text;
+    simple = r.simple;
+  }
   else if( isLong )
   {
     var r = _toStrFromArray( src,o );
@@ -664,15 +678,15 @@ function _toStr( src,o )
  * For object,array and row returns count of elemets, example: '[ Row with 3 elements ]'.
  *
  * @param {object} src - Source object.
- * @param {wTools~toStrOptions} o - Conversion options {@link wTools~toStrOptions}.
+ * @param {Object} o - Conversion options {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
  * @returns {string} Returns string that represents object data.
  *
  * @example
  * //returns [ Array with 3 elements ]
  * _._toStrShort( [ function del(){}, 0, 'a' ], { levels : 0 } )
  *
- * @method _toStrShort
- * @memberof wTools
+ * @function _toStrShort
+ * @memberof module:Tools/base/Stringer.Stringer
  *
  */
 
@@ -753,15 +767,15 @@ function _toStrShort( src,o )
  * Returns false if object must be ignored.
  *
  * @param {object} src - Source object.
- * @param {wTools~toStrOptions} o - Filters {@link wTools~toStrOptions}.
+ * @param {Object} o - Filters {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
  * @returns {boolean} Returns result of filter check.
  *
  * @example
  * //returns false
  * _.toStrIsVisibleElement( function del(){}, { noRoutine : 1 } );
  *
- * @method _toStrIsVisibleElement
- * @memberof wTools
+ * @function _toStrIsVisibleElement
+ * @memberof module:Tools/base/Stringer.Stringer
  *
  */
 
@@ -875,7 +889,7 @@ function _toStrIsVisibleElement( src,o )
  * Returns true if object can be represented as one line.
  *
  * @param {object} element - Source object.
- * @param {wTools~toStrOptions} o - Check options {@link wTools~toStrOptions}.
+ * @param {Object} o - Check options {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
  * @param {boolean} [ o.escaping=false ] - enable escaping of special characters.
  * @returns {boolean} Returns result of length check.
  *
@@ -887,9 +901,9 @@ function _toStrIsVisibleElement( src,o )
  * //returns false
  * _.toStrIsSimpleElement( { a : 1, b : 2, c : 3, d : 4, e : 5 }, { } );
  *
- * @method _toStrIsSimpleElement
+ * @function _toStrIsSimpleElement
  * @throws { Exception } Throw an exception if( arguments.length ) is not equal 2.
- * @memberof wTools
+ * @memberof module:Tools/base/Stringer.Stringer
  *
  */
 
@@ -922,15 +936,15 @@ function _toStrIsSimpleElement( element,o )
  * from argument( o ).
  *
  * @param {object} src - Source object.
- * @param {wTools~toStrOptions} o - conversion options {@link wTools~toStrOptions}.
+ * @param {Object} o - conversion options {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
  * @returns {string} Returns routine as string.
  *
  * @example
  * //returns [ routine a ]
  * _.toStrFromRoutine( function a(){}, {} );
  *
- * @method _toStrFromRoutine
- * @memberof wTools
+ * @function _toStrFromRoutine
+ * @memberof module:Tools/base/Stringer.Stringer
  *
  */
 
@@ -964,7 +978,7 @@ function _toStrFromRoutine( src,o )
  * If no option specified returns source( src ) as simple string.
  *
  * @param {Number} src - Number to convert.
- * @param {wTools~toStrOptions} o - Contains conversion options {@link wTools~toStrOptions}.
+ * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
  * @returns {String} Returns number converted to the string.
  *
  * @example
@@ -979,13 +993,13 @@ function _toStrFromRoutine( src,o )
  * //returns 8.92
  * _._toStrFromNumber( 8.92, { } );
  *
- * @method _toStrFromNumber
+ * @function _toStrFromNumber
  * @throws {Exception} If no arguments provided.
  * @throws {Exception} If( src ) is not a Number.
  * @throws {Exception} If( o ) is not a Object.
  * @throws {RangeError} If( o.precision ) is not between 1 and 21.
  * @throws {RangeError} If( o.fixed ) is not between 0 and 20.
- * @memberof wTools
+ * @memberof module:Tools/base/Stringer.Stringer
  *
 */
 
@@ -1038,7 +1052,7 @@ function _toStrFromBigInt( src,o )
  * Returns result as new string or source string if no changes maded.
  *
  * @param {object} src - String to parse.
- * @param {wTools~toStrOptions} o - Contains conversion  options {@link wTools~toStrOptions}.
+ * @param {Object} o - Contains conversion  options {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
  * @returns {String} Returns result of adjustments as new string.
  *
  * @example
@@ -1057,11 +1071,11 @@ function _toStrFromBigInt( src,o )
  * //returns `test`
  * _._toStrFromStr( 'test', { stringWrapper : '`' } );
  *
- * @method _toStrFromStr
+ * @function _toStrFromStr
  * @throws {Exception} If no arguments provided.
  * @throws {Exception} If( src ) is not a String.
  * @throws {Exception} If( o ) is not a Object.
- * @memberof wTools
+ * @memberof module:Tools/base/Stringer.Stringer
  *
 */
 
@@ -1212,6 +1226,28 @@ function _toStrFromBufferRaw( src, o )
 
 //
 
+function _toStrFromBufferNode( src, o )
+{
+  var result = '';
+
+  _.assert( _.bufferNodeIs( src ) );
+
+  let k = 0;
+  for ( let value of src.values() )
+  {
+    if( k !== 0 )
+    result += ',';
+    result += value;
+    ++k;
+  }
+
+  result = '( Buffer.from([ ' + result + ' ]) )';
+
+  return { text : result, simple : true };
+}
+
+//
+
 function _toStrFromArrayFiltered( src,o )
 {
   var result = '';
@@ -1259,7 +1295,7 @@ function _toStrFromArrayFiltered( src,o )
  * Converts array provided by argument( src ) into string representation using options provided by argument( o ).
  *
  * @param {object} src - Array to convert.
- * @param {wTools~toStrOptions} o - Contains conversion options {@link wTools~toStrOptions}.
+ * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
  * @returns {String} Returns string representation of array.
  *
  * @example
@@ -1283,11 +1319,11 @@ function _toStrFromArrayFiltered( src,o )
  * // ]
  * _.toStrFromArray( [ 1, [ 2, 3, 4 ], 5 ], { levels : 2, multiline : 1 } );
  *
- * @method _toStrFromArray
+ * @function _toStrFromArray
  * @throws { Exception } If( src ) is undefined.
  * @throws { Exception } If no arguments provided.
  * @throws { Exception } If( o ) is not a Object.
- * @memberof wTools
+ * @memberof module:Tools/base/Stringer.Stringer
  *
  */
 
@@ -1364,14 +1400,14 @@ function _toStrFromArray( src,o )
  * @param {array} [ o.names ] - Source object keys.
  * @param {string} [ o.prefix ] - Denotes begin of container.
  * @param {string} [ o.postfix ] - Denotes end of container.
- * @param {wTools~toStrOptions} o.optionsContainer - Options for container {@link wTools~toStrOptions}.
- * @param {wTools~toStrOptions} o.optionsItem - Options for item {@link wTools~toStrOptions}.
+ * @param {Object} o.optionsContainer - Options for container {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
+ * @param {Object} o.optionsItem - Options for item {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
  * @returns {String} Returns string representation of container.
  *
- * @method _toStrFromContainer
+ * @function _toStrFromContainer
  * @throws { Exception } If no argument provided.
  * @throws { Exception } If( o ) is not a Object.
- * @memberof wTools
+ * @memberof module:Tools/base/Stringer.Stringer
  *
  */
 
@@ -1567,7 +1603,7 @@ function _toStrFromObjectKeysFiltered( src,o )
  * Converts object provided by argument( src ) into string representation using options provided by argument( o ).
  *
  * @param {object} src - Object to convert.
- * @param {wTools~toStrOptions} o - Contains conversion options {@link wTools~toStrOptions}.
+ * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Stringer.toStrOptions}.
  * @returns {String} Returns string representation of object.
  *
  * @example
@@ -1583,11 +1619,11 @@ function _toStrFromObjectKeysFiltered( src,o )
  * //returns ''
  * _.toStrFromObject( { h : { d : 1 }, g : 'c', c : [2] }, { levels : 2, noObject : 1 } );
  *
- * @method _toStrFromObject
+ * @function _toStrFromObject
  * @throws { Exception } If( src ) is not a object-like.
  * @throws { Exception } If not all arguments provided.
  * @throws { Exception } If( o ) is not a Object.
- * @memberof wTools
+ * @memberof module:Tools/base/Stringer.Stringer
  *
 */
 
@@ -1734,6 +1770,7 @@ var Proto =
   _toStrFromHashMap : _toStrFromHashMap,
 
   _toStrFromBufferRaw : _toStrFromBufferRaw,
+  _toStrFromBufferNode : _toStrFromBufferNode,
   _toStrFromBufferTyped : _toStrFromBufferTyped,
 
   _toStrFromArrayFiltered : _toStrFromArrayFiltered,
