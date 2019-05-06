@@ -21,8 +21,8 @@ execution :
 
 path :
 
-  repository : git+https://github.com/Wandalen/wStringer.git
-  bugs : https://github.com/Wandalen/wStringer/issues
+  repository : git+https:///github.com/Wandalen/wStringer.git
+  bugs : https:///github.com/Wandalen/wStringer/issues
 
 step :
 
