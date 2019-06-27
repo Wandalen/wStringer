@@ -1744,13 +1744,13 @@ toJs.defaults =
 
 //
 
-function toStrNice( src,o )
+function toStrNice( src, o )
 {
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
-  o = _.routineOptions( toJs, o );
+  o = _.routineOptions( toStrNice, o );
 
-  var result = _.toStr( src,o );
+  var result = _.toStr( src, o );
 
   return result;
 }
