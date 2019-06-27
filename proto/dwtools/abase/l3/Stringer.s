@@ -1742,6 +1742,30 @@ toJs.defaults =
   jsLike : 1,
 }
 
+//
+
+function toStrNice( src,o )
+{
+  _.assert( arguments.length === 1 || arguments.length === 2 );
+
+  o = _.routineOptions( toJs, o );
+
+  var result = _.toStr( src,o );
+
+  return result;
+}
+
+toStrNice.defaults =
+{
+  escaping : 0,
+  multilinedString : 0,
+  multiline : 1,
+  levels : 9,
+  stringWrapper : '',
+  keyWrapper : '',
+  wrap : 0
+}
+
 // --
 // declare
 // --
@@ -1782,6 +1806,7 @@ var Proto =
 
   toJson : toJson,
   toJs : toJs,
+  toStrNice : toStrNice,
 
   Stringer : 1,
 
