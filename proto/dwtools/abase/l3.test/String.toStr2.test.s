@@ -2128,8 +2128,8 @@ function toStrstringWrapper( test )
       [
 
        '{',
-       '  a : a, ',
-       '  b : b, ',
+       '  /*ttt*/a, ',
+       '  /*ttt*/b, ',
        '  c : [ Object with 1 elements ]',
        '}'
 
@@ -2140,8 +2140,8 @@ function toStrstringWrapper( test )
 
        '{',
        '  a : { h : a }, ',
-       '  b : b, ',
-       '  c : { d : d }',
+       '  /*ttt*/b, ',
+       '  c : { /*ttt*/d }',
        '}'
 
      ].join( '\n' ),
@@ -3466,9 +3466,9 @@ function _toStrFromContainer( test )
   var got = _._toStrFromContainer
   ({
     values : src,
-    names : names,
+    /*ttt*/names,
     optionsContainer : o,
-    optionsItem : optionsItem,
+    /*ttt*/optionsItem,
     simple : !o.multiline,
     prefix : '{',
     postfix : '}',
@@ -3488,9 +3488,9 @@ function _toStrFromContainer( test )
   var got = _._toStrFromContainer
   ({
     values : src,
-    names : names,
+    /*ttt*/names,
     optionsContainer : o,
-    optionsItem : optionsItem,
+    /*ttt*/optionsItem,
     simple : !o.multiline,
     prefix : '{',
     postfix : '}',
@@ -3518,9 +3518,9 @@ function _toStrFromContainer( test )
   var got = _._toStrFromContainer
   ({
     values : src,
-    names : names,
+    /*ttt*/names,
     optionsContainer : o,
-    optionsItem : optionsItem,
+    /*ttt*/optionsItem,
     simple : !o.multiline,
     prefix : '{',
     postfix : '}',
@@ -3568,40 +3568,40 @@ var Self =
   tests :
   {
 
-    toStrUnwrapped : toStrUnwrapped,
-    toStrError : toStrError,
-    toStrArray : toStrArray,
-    toStrObject : toStrObject,
-    toStrJson : toStrJson,
-    toStrJsonFromFileU : toStrJsonFromFileU,
-    toStrJsonFromFileA : toStrJsonFromFileA,
-    toStrstringWrapper : toStrstringWrapper,
-    toStrLevel : toStrLevel,
-    toStrEnumerable : toStrEnumerable,
-    toStrEmptyArgs : toStrEmptyArgs,
-    toStrSymbol : toStrSymbol,
-    toStrNumber : toStrNumber,
-    toStrString : toStrString,
-    toStrAtomic : toStrAtomic,
-    toStrDate : toStrDate,
-    toStrRoutine : toStrRoutine,
-    toStrThrow : toStrThrow,
-    toStrLimitElements : toStrLimitElements,
+    /*ttt*/toStrUnwrapped,
+    /*ttt*/toStrError,
+    /*ttt*/toStrArray,
+    /*ttt*/toStrObject,
+    /*ttt*/toStrJson,
+    /*ttt*/toStrJsonFromFileU,
+    /*ttt*/toStrJsonFromFileA,
+    /*ttt*/toStrstringWrapper,
+    /*ttt*/toStrLevel,
+    /*ttt*/toStrEnumerable,
+    /*ttt*/toStrEmptyArgs,
+    /*ttt*/toStrSymbol,
+    /*ttt*/toStrNumber,
+    /*ttt*/toStrString,
+    /*ttt*/toStrAtomic,
+    /*ttt*/toStrDate,
+    /*ttt*/toStrRoutine,
+    /*ttt*/toStrThrow,
+    /*ttt*/toStrLimitElements,
 
-    toStrMethods : toStrMethods,
-    toStrFields : toStrFields,
+    /*ttt*/toStrMethods,
+    /*ttt*/toStrFields,
 
-    toStrShort : toStrShort,
-    _toStrIsVisibleElement : _toStrIsVisibleElement,
-    _toStrIsSimpleElement : _toStrIsSimpleElement,
-    _toStrFromRoutine : _toStrFromRoutine,
-    _toStrFromNumber : _toStrFromNumber,
-    _toStrFromNumber2 : _toStrFromNumber2,
-    _toStrIsSimpleElement2 : _toStrIsSimpleElement2,
-    _toStrFromStr : _toStrFromStr,
-    _toStrFromArray : _toStrFromArray,
-    _toStrFromObject : _toStrFromObject,
-    _toStrFromContainer : _toStrFromContainer,
+    /*ttt*/toStrShort,
+    /*ttt*/_toStrIsVisibleElement,
+    /*ttt*/_toStrIsSimpleElement,
+    /*ttt*/_toStrFromRoutine,
+    /*ttt*/_toStrFromNumber,
+    /*ttt*/_toStrFromNumber2,
+    /*ttt*/_toStrIsSimpleElement2,
+    /*ttt*/_toStrFromStr,
+    /*ttt*/_toStrFromArray,
+    /*ttt*/_toStrFromObject,
+    /*ttt*/_toStrFromContainer,
 
   }
 

@@ -2136,7 +2136,7 @@ function toJson( test )
 
   var src =
   {
-    object : { object : { object : { object : { object : { object : object }}}}}
+    object : { object : { object : { object : { object : { /*ttt*/object }}}}}
   }
 
   var json = _.toJson( src );
@@ -2202,7 +2202,7 @@ var Self =
 
   tests :
   {
-    toJson : toJson,
+    /*ttt*/toJson,
   }
 
 }

@@ -665,7 +665,7 @@ function _toStr( src,o )
     }
   }
 
-  return { text : result, simple : simple };
+  return { text : result, /*ttt*/simple };
 }
 
 //
@@ -1091,7 +1091,7 @@ function _toStrFromStr( src,o )
 
   if( o.limitStringLength )
   {
-    result = _.strStrShort({ src : src, limit : o.limitStringLength, wrap : q, escaping : 1 });
+    result = _.strStrShort({ /*ttt*/src, limit : o.limitStringLength, wrap : q, escaping : 1 });
     if( result.length > o.limitStringLength )
     {
       result = '[ ' + result + ' ]';
@@ -1100,7 +1100,7 @@ function _toStrFromStr( src,o )
   }
   else if( o.escaping )
   {
-    result = _.strEscape({ src : src, stringWrapper : o.stringWrapper });
+    result = _.strEscape({ /*ttt*/src, stringWrapper : o.stringWrapper });
   }
   else
   {
@@ -1174,13 +1174,13 @@ function _toStrFromHashMap( src,o )
     values : src,
     names : keys,
     optionsContainer : o,
-    optionsItem : optionsItem,
-    simple : simple,
+    /*ttt*/optionsItem,
+    /*ttt*/simple,
     prefix : '{',
     postfix : '}',
   });
 
-  return { text : result, simple : simple };
+  return { text : result, /*ttt*/simple };
 }
 
 //
@@ -1378,13 +1378,13 @@ function _toStrFromArray( src,o )
   ({
     values : src,
     optionsContainer : o,
-    optionsItem : optionsItem,
-    simple : simple,
+    /*ttt*/optionsItem,
+    /*ttt*/simple,
     prefix : '[',
     postfix : ']',
   });
 
-  return { text : result, simple : simple };
+  return { text : result, /*ttt*/simple };
 }
 
 //
@@ -1685,13 +1685,13 @@ function _toStrFromObject( src,o )
     values : src,
     names : keys,
     optionsContainer : o,
-    optionsItem : optionsItem,
-    simple : simple,
+    /*ttt*/optionsItem,
+    /*ttt*/simple,
     prefix : '{',
     postfix : '}',
   });
 
-  return { text : result, simple : simple };
+  return { text : result, /*ttt*/simple };
 }
 
 //
@@ -1703,7 +1703,7 @@ function toJson( src,o )
   o = _.routineOptions( toJson, o );
 
   if( o.cloning )
-  src = _.cloneData({ src : src });
+  src = _.cloneData({ /*ttt*/src });
 
   delete o.cloning;
 
@@ -1773,40 +1773,40 @@ toStrNice.defaults =
 var Proto =
 {
 
-  toStrMethods : toStrMethods,
-  toStrFields : toStrFields,
+  /*ttt*/toStrMethods,
+  /*ttt*/toStrFields,
 
-  toStrFine_functor : toStrFine_functor,
-  toStrShort : toStrShort,
+  /*ttt*/toStrFine_functor,
+  /*ttt*/toStrShort,
 
-  _toStr : _toStr,
-  _toStrShort : _toStrShort,
+  /*ttt*/_toStr,
+  /*ttt*/_toStrShort,
 
-  _toStrIsVisibleElement : _toStrIsVisibleElement,
-  _toStrIsSimpleElement : _toStrIsSimpleElement,
+  /*ttt*/_toStrIsVisibleElement,
+  /*ttt*/_toStrIsSimpleElement,
 
-  _toStrFromRoutine : _toStrFromRoutine,
-  _toStrFromNumber : _toStrFromNumber,
-  _toStrFromBigInt : _toStrFromBigInt,
-  _toStrFromStr : _toStrFromStr,
+  /*ttt*/_toStrFromRoutine,
+  /*ttt*/_toStrFromNumber,
+  /*ttt*/_toStrFromBigInt,
+  /*ttt*/_toStrFromStr,
 
-  _toStrFromHashMap : _toStrFromHashMap,
+  /*ttt*/_toStrFromHashMap,
 
-  _toStrFromBufferRaw : _toStrFromBufferRaw,
-  _toStrFromBufferNode : _toStrFromBufferNode,
-  _toStrFromBufferTyped : _toStrFromBufferTyped,
+  /*ttt*/_toStrFromBufferRaw,
+  /*ttt*/_toStrFromBufferNode,
+  /*ttt*/_toStrFromBufferTyped,
 
-  _toStrFromArrayFiltered : _toStrFromArrayFiltered,
-  _toStrFromArray : _toStrFromArray,
+  /*ttt*/_toStrFromArrayFiltered,
+  /*ttt*/_toStrFromArray,
 
-  _toStrFromContainer : _toStrFromContainer,
+  /*ttt*/_toStrFromContainer,
 
-  _toStrFromObjectKeysFiltered : _toStrFromObjectKeysFiltered,
-  _toStrFromObject : _toStrFromObject,
+  /*ttt*/_toStrFromObjectKeysFiltered,
+  /*ttt*/_toStrFromObject,
 
-  toJson : toJson,
-  toJs : toJs,
-  toStrNice : toStrNice,
+  /*ttt*/toJson,
+  /*ttt*/toJs,
+  /*ttt*/toStrNice,
 
   Stringer : 1,
 
