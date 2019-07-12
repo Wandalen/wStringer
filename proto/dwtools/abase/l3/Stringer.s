@@ -665,7 +665,7 @@ function _toStr( src,o )
     }
   }
 
-  return { text : result, /*ttt*/simple };
+  return { text : result, simple };
 }
 
 //
@@ -734,15 +734,18 @@ function _toStrShort( src,o )
       result += '[ ' + strType( src ) + ' with ' + src.length + ' elements ]';
 
     }
-    else if( _.objectIs( src ) || _.objectLike( src ) )
-    {
-
-      result += '[ ' + strType( src ) + ' with ' + _.entityLength( src ) + ' elements' + ' ]';
-
-    }
     else if( src instanceof Date )
     {
       result += src.toISOString();
+    }
+    else if( _.objectLike( src ) )
+    {
+
+      if( _.routineIs( src.infoExport ) )
+      result += src.infoExport({ verbosity : 1 });
+      else
+      result += '[ ' + strType( src ) + ' with ' + _.entityLength( src ) + ' elements' + ' ]'; 
+
     }
     else
     {
@@ -1091,7 +1094,7 @@ function _toStrFromStr( src,o )
 
   if( o.limitStringLength )
   {
-    result = _.strStrShort({ /*ttt*/src, limit : o.limitStringLength, wrap : q, escaping : 1 });
+    result = _.strStrShort({ src, limit : o.limitStringLength, wrap : q, escaping : 1 });
     if( result.length > o.limitStringLength )
     {
       result = '[ ' + result + ' ]';
@@ -1100,7 +1103,7 @@ function _toStrFromStr( src,o )
   }
   else if( o.escaping )
   {
-    result = _.strEscape({ /*ttt*/src, stringWrapper : o.stringWrapper });
+    result = _.strEscape({ src, stringWrapper : o.stringWrapper });
   }
   else
   {
@@ -1174,13 +1177,13 @@ function _toStrFromHashMap( src,o )
     values : src,
     names : keys,
     optionsContainer : o,
-    /*ttt*/optionsItem,
-    /*ttt*/simple,
+    optionsItem,
+    simple,
     prefix : '{',
     postfix : '}',
   });
 
-  return { text : result, /*ttt*/simple };
+  return { text : result, simple };
 }
 
 //
@@ -1378,13 +1381,13 @@ function _toStrFromArray( src,o )
   ({
     values : src,
     optionsContainer : o,
-    /*ttt*/optionsItem,
-    /*ttt*/simple,
+    optionsItem,
+    simple,
     prefix : '[',
     postfix : ']',
   });
 
-  return { text : result, /*ttt*/simple };
+  return { text : result, simple };
 }
 
 //
@@ -1685,13 +1688,13 @@ function _toStrFromObject( src,o )
     values : src,
     names : keys,
     optionsContainer : o,
-    /*ttt*/optionsItem,
-    /*ttt*/simple,
+    optionsItem,
+    simple,
     prefix : '{',
     postfix : '}',
   });
 
-  return { text : result, /*ttt*/simple };
+  return { text : result, simple };
 }
 
 //
@@ -1703,7 +1706,7 @@ function toJson( src,o )
   o = _.routineOptions( toJson, o );
 
   if( o.cloning )
-  src = _.cloneData({ /*ttt*/src });
+  src = _.cloneData({ src });
 
   delete o.cloning;
 
@@ -1773,40 +1776,40 @@ toStrNice.defaults =
 var Proto =
 {
 
-  /*ttt*/toStrMethods,
-  /*ttt*/toStrFields,
+  toStrMethods,
+  toStrFields,
 
-  /*ttt*/toStrFine_functor,
-  /*ttt*/toStrShort,
+  toStrFine_functor,
+  toStrShort,
 
-  /*ttt*/_toStr,
-  /*ttt*/_toStrShort,
+  _toStr,
+  _toStrShort,
 
-  /*ttt*/_toStrIsVisibleElement,
-  /*ttt*/_toStrIsSimpleElement,
+  _toStrIsVisibleElement,
+  _toStrIsSimpleElement,
 
-  /*ttt*/_toStrFromRoutine,
-  /*ttt*/_toStrFromNumber,
-  /*ttt*/_toStrFromBigInt,
-  /*ttt*/_toStrFromStr,
+  _toStrFromRoutine,
+  _toStrFromNumber,
+  _toStrFromBigInt,
+  _toStrFromStr,
 
-  /*ttt*/_toStrFromHashMap,
+  _toStrFromHashMap,
 
-  /*ttt*/_toStrFromBufferRaw,
-  /*ttt*/_toStrFromBufferNode,
-  /*ttt*/_toStrFromBufferTyped,
+  _toStrFromBufferRaw,
+  _toStrFromBufferNode,
+  _toStrFromBufferTyped,
 
-  /*ttt*/_toStrFromArrayFiltered,
-  /*ttt*/_toStrFromArray,
+  _toStrFromArrayFiltered,
+  _toStrFromArray,
 
-  /*ttt*/_toStrFromContainer,
+  _toStrFromContainer,
 
-  /*ttt*/_toStrFromObjectKeysFiltered,
-  /*ttt*/_toStrFromObject,
+  _toStrFromObjectKeysFiltered,
+  _toStrFromObject,
 
-  /*ttt*/toJson,
-  /*ttt*/toJs,
-  /*ttt*/toStrNice,
+  toJson,
+  toJs,
+  toStrNice,
 
   Stringer : 1,
 
