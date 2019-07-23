@@ -521,7 +521,7 @@ var Self =
   tests :
   {
 
-    /*ttt*/toStr,
+    toStr,
 
   },
 

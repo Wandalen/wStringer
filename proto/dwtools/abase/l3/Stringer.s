@@ -744,7 +744,7 @@ function _toStrShort( src,o )
       if( _.routineIs( src.infoExport ) )
       result += src.infoExport({ verbosity : 1 });
       else
-      result += '[ ' + strType( src ) + ' with ' + _.entityLength( src ) + ' elements' + ' ]'; 
+      result += '[ ' + strType( src ) + ' with ' + _.entityLength( src ) + ' elements' + ' ]';
 
     }
     else
@@ -1825,10 +1825,6 @@ var toStr = Self.toStr = Self.strFrom = toStrFine;
 // --
 // export
 // --
-
-if( typeof module !== 'undefined' )
-if( _global_.WTOOLS_PRIVATE )
-{ /* delete require.cache[ module.id ]; */ }
 
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
