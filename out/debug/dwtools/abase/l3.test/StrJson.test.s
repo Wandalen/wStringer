@@ -7,7 +7,7 @@ if( typeof module !== 'undefined' )
 
   let _ = require( '../../Tools.s' );
 
-  _.include( 'wExternalFundamentals' );
+  _.include( 'wAppBasic' );
   _.include( 'wCopyable' );
   _.include( 'wStringer' );
   _.include( 'wTesting' );

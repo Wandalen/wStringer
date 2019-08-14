@@ -1031,16 +1031,12 @@ function _toStrFromBigInt( src,o )
 {
   let result = '';
 
-  debugger;
-
   if( o.jsonLike )
   result += '"' + src.toString() + 'n"';
   else if( o.jsLike )
   result += src.toString() + 'n';
   else
   result += String( src );
-
-  // result += 'BigInt( \'' + src.toString() + '\' )';
 
   return result;
 }
