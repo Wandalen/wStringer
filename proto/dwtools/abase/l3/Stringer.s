@@ -564,7 +564,7 @@ function _toStr( src,o )
     else throw _.err( 'unexpected' );
 
   }
-  else if( _.vectorIs( src ) )
+  else if( _.vectorAdapterIs( src ) )
   {
     result += _.vector.toStr( src,o );
   }
@@ -640,9 +640,15 @@ function _toStr( src,o )
     result += r.text;
     simple = r.simple;
   }
-  else if( type === 'Map' )
+  else if( _.hashMapLike( src ) )
   {
     var r = _toStrFromHashMap( src,o );
+    result += r.text;
+    simple = r.simple;
+  }
+  else if( _.setLike( src ) )
+  {
+    var r = _toStrFromSet( src,o );
     result += r.text;
     simple = r.simple;
   }
@@ -689,73 +695,99 @@ function _toStr( src,o )
  *
  */
 
-function _toStrShort( src,o )
+function _toStrShort( src, o )
 {
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
-  _.assert( _.objectIs( o ),'Expects map {-o-}' );
+  _.assert( _.objectIs( o ), 'Expects map {-o-}' );
 
   var result = '';
 
   try
   {
 
-    if( _.vectorIs( src ) )
-    {
-      result += '[ Row with ' + src.length + ' elements' + ' ]';
-    }
-    else if( _.errIs( src ) )
-    {
-      result += _ObjectToString.call( src );
-    }
-    else if( _.routineIs( src ) )
-    {
-      result += _toStrFromRoutine( src,o );
-    }
-    else if( _.numberIs( src ) )
-    {
-      result += _toStrFromNumber( src,o );
-    }
-    else if( _.strIs( src ) )
+    if( _.strIs( src ) )
     {
 
-      var optionsStr =
+      var o2 =
       {
-        limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength,40 ) : 40,
+        limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength, 40 ) : 40,
         stringWrapper : o.stringWrapper,
         escaping : 1,
       }
 
-      result = _toStrFromStr( src,optionsStr );
-
-    }
-    else if( src && !_.objectIs( src ) && _.numberIs( src.length ) )
-    {
-
-      result += '[ ' + strType( src ) + ' with ' + src.length + ' elements ]';
-
-    }
-    else if( src instanceof Date )
-    {
-      result += src.toISOString();
-    }
-    else if( _.objectLike( src ) )
-    {
-
-      if( _.routineIs( src.infoExport ) )
-      result += src.infoExport({ verbosity : 1 });
-      else
-      result += '[ ' + strType( src ) + ' with ' + _.entityLength( src ) + ' elements' + ' ]';
+      result = _toStrFromStr( src, o2 );
 
     }
     else
     {
-      result += String( src );
+      result = _.strShort( src );
     }
+
+    // if( _.vectorAdapterIs( src ) )
+    // {
+    //   result += '{- VectorAdapter with ' + src.length + ' elements' + ' -}';
+    // }
+    // else if( _.errIs( src ) )
+    // {
+    //   result += _ObjectToString.call( src );
+    // }
+    // else if( _.routineIs( src ) )
+    // {
+    //   result += _toStrFromRoutine( src,o );
+    // }
+    // else if( _.numberIs( src ) )
+    // {
+    //   result += _toStrFromNumber( src,o );
+    // }
+    // else if( _.strIs( src ) )
+    // {
+    //
+    //   var optionsStr =
+    //   {
+    //     limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength, 40 ) : 40,
+    //     stringWrapper : o.stringWrapper,
+    //     escaping : 1,
+    //   }
+    //
+    //   result = _toStrFromStr( src,optionsStr );
+    //
+    // }
+    // else if( _.setLike( src ) || _.hashMapLike( src ) )
+    // {
+    //
+    //   result += '{- ' + strType( src ) + ' with ' + _.entityLength( src ) + ' elements -}';
+    //
+    // }
+    // else if( src && !_.objectIs( src ) && _.numberIs( src.length ) )
+    // {
+    //
+    //   result += '{- ' + strType( src ) + ' with ' + src.length + ' elements -}';
+    //
+    // }
+    // else if( src instanceof Date )
+    // {
+    //   result += src.toISOString();
+    // }
+    // else if( _.objectLike( src ) )
+    // {
+    //
+    //   if( _.routineIs( src.infoExport ) )
+    //   result += src.infoExport({ verbosity : 1 });
+    //   else
+    //   result += '{- ' + strType( src ) + ' with ' + _.entityLength( src ) + ' elements' + ' -}';
+    //
+    // }
+    // else
+    // {
+    //   result += String( src );
+    // }
 
   }
   catch( err )
   {
-    result = String( err );
+    // result = String( err );
+    debugger;
+    throw _.err( err );
   }
 
   return result;
@@ -800,7 +832,7 @@ function _toStrIsVisibleElement( src,o )
 
     return true;
   }
-  else if( _.vectorIs( src ) )
+  else if( _.vectorAdapterIs( src ) )
   {
     if( o.noRow )
     return false;
@@ -1118,11 +1150,10 @@ function _toStrFromStr( src,o )
 
 function _toStrFromHashMap( src,o )
 {
-  var result = '';
+  var result = 'HashMap\n';
   var simple = 0;
 
-  // throw _.err( 'not implemented' );
-  _.assert( src instanceof Map ); debugger;
+  _.assert( src instanceof HashMap ); debugger;
 
   src.forEach( function( e,k )
   {
@@ -1184,6 +1215,15 @@ function _toStrFromHashMap( src,o )
 
 //
 
+function _toStrFromSet( src, o )
+{
+  let result = _._toStrFromArray( _.arrayFrom( src ), o );
+  result.text = `new Set(${result.text})` ;
+  return result;
+}
+
+//
+
 function _toStrFromBufferTyped( src, o )
 {
   var result = '';
@@ -1210,14 +1250,14 @@ function _toStrFromBufferRaw( src, o )
 
   _.assert( _.bufferRawIs( src ) );
 
-  ( new Uint8Array( src ) ).forEach( function( e,k )
+  ( new U8x( src ) ).forEach( function( e,k )
   {
     if( k !== 0 )
     result += ',';
     result += '0x' + e.toString( 16 );
   });
 
-  result = '( new Uint8Array([ ' + result + ' ]) ).buffer';
+  result = '( new U8x([ ' + result + ' ]) ).buffer';
 
   return { text : result, simple : true };
 }
@@ -1239,7 +1279,7 @@ function _toStrFromBufferNode( src, o )
     ++k;
   }
 
-  result = '( Buffer.from([ ' + result + ' ]) )';
+  result = '( BufferNode.from([ ' + result + ' ]) )';
 
   return { text : result, simple : true };
 }
@@ -1270,7 +1310,7 @@ function _toStrFromArrayFiltered( src,o )
   {
     var i2 = 0;
     var i = 0;
-    var src2 = _.longMake( src,v );
+    var src2 = _.longMakeUndefined( src,v );
     while( i < length )
     {
       if( _toStrIsVisibleElement( src[ i ],optionsItem ) )
@@ -1363,6 +1403,8 @@ function _toStrFromArray( src,o )
 
   var length = src.length;
   var simple = !optionsItem.multiline;
+  if( simple )
+  simple = length < 8;
   if( simple )
   for( var i = 0 ; i < length ; i++ )
   {
@@ -1487,7 +1529,7 @@ function _toStrFromContainer( o )
     // _global.gc();
     // else
     // xxx;
-    // console.log( _.appMemoryUsageInfo() );
+    // console.log( _.process.memoryUsageInfo() );
 
     if( names )
     r = _toStr( values[ names[ n ] ],optionsItem );
@@ -1790,6 +1832,7 @@ var Proto =
   _toStrFromStr,
 
   _toStrFromHashMap,
+  _toStrFromSet,
 
   _toStrFromBufferRaw,
   _toStrFromBufferNode,

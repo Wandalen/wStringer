@@ -2196,7 +2196,7 @@ function toJson( test )
 var Self =
 {
 
-  name : 'Tools/base/l4/String/ToJson',
+  name : 'Tools.base.l4.String.ToJson',
   silencing : 1,
   // verbosity : 7,
 

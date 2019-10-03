@@ -9,7 +9,7 @@ if( typeof module !== 'undefined' )
 
   _.include( 'wTesting' );
 
-  if( Config.platform === 'nodejs' )
+  if( Config.interpreter === 'njs' )
   var File = require( 'fs' );
 
 }
@@ -2608,43 +2608,43 @@ function toStrThrow( test )
   if( Config.debug )
   {
     test.case = 'wrong type of argument';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStr( { a : 1 }, null );
     });
 
     test.case = '( o.precision ) is not between 1 and 21';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStr( { a : 1 }, { precision : 0 } );
     });
 
     test.case = '( o.fixed ) is not between 0 and 20';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStr( { a : 1 }, { fixed : 22 } );
     });
 
     test.case = 'if jsonLike : 1, multilinedString 1 " ';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStr( { a : 1 }, { jsonLike : 1, multilinedString : 1 } );
     });
 
     test.case = 'wrong arguments count';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStr( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
     });
 
     test.case = 'invalid json if multilinedString is true`';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStr( { a : 1, b : "text" }, { jsonLike : 1, multilinedString : 1 } );
     });
 
     test.case = 'onlyRoutines & noRoutine both true';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStr( { a : function f(){}, b : "text" }, { onlyRoutines : 1, noRoutine : 1 } );
     });
@@ -2805,19 +2805,19 @@ function toStrMethods( test )
   /**/
 
   test.case = 'invalid argument type';
-  test.shouldThrowError( function()
+  test.shouldThrowErrorOfAnyKind( function()
   {
     _.toStrMethods( 'one','two' );
   });
 
   test.case = 'wrong arguments count';
-  test.shouldThrowError( function()
+  test.shouldThrowErrorOfAnyKind( function()
   {
     _.toStrMethods( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
   });
 
   test.case = 'onlyRoutines & noRoutine both true';
-  test.shouldThrowError( function()
+  test.shouldThrowErrorOfAnyKind( function()
   {
     _.toStrMethods( function f () {},{ noRoutine : 1 } );
   });
@@ -2855,19 +2855,19 @@ function toStrFields( test )
   if( Config.debug )
   {
     test.case = 'invalid argument type';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStrFields( 'one','two' );
     });
 
     test.case = 'wrong arguments count';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStrFields( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
     });
 
     test.case = 'onlyRoutines & noRoutine both true';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStrFields( function f () {}, { onlyRoutines : 1 } );
     });
@@ -2910,19 +2910,19 @@ function toStrShort( test )
   {
 
     test.case = 'invalid second argument type';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStrShort( '1', 2 );
     });
 
     test.case = 'only one argument provided';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStrShort( '1' );
     });
 
     test.case = 'no arguments';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _.toStrShort( );
     });
@@ -2955,19 +2955,19 @@ function _toStrIsVisibleElement( test )
   {
 
     test.case = 'invalid arguments count';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrIsVisibleElement( '1' );
     });
 
     // test.case = 'second argument is not a object';
-    // test.shouldThrowError( function()
+    // test.shouldThrowErrorOfAnyKind( function()
     // {
     //   _._toStrIsVisibleElement( '1', 2 );
     // });
 
     test.case = 'no arguments';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrIsVisibleElement();
     });
@@ -3010,19 +3010,19 @@ function _toStrIsSimpleElement( test )
   {
 
     test.case = 'invalid arguments count';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrIsSimpleElement( '1' );
     });
 
     test.case = 'second argument is not a object';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrIsSimpleElement( '1', 2 );
     });
 
     test.case = 'no arguments';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrIsSimpleElement();
     });
@@ -3050,13 +3050,13 @@ function _toStrFromRoutine( test )
   {
 
     test.case = 'invalid argument type';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromRoutine( '1' );
     });
 
     test.case = 'no arguments';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromRoutine();
     });
@@ -3094,31 +3094,31 @@ function _toStrFromNumber( test )
   {
 
     test.case = 'invalid first argument type';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromNumber( '1',{} );
     });
 
     test.case = 'invalid second argument type';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromNumber( 1, 2 );
     });
 
     test.case = 'no arguments';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromNumber();
     });
 
     test.case = 'precision out of range';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromNumber( 1, { precision : 22 });
     });
 
     test.case = 'fixed out of range';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromNumber( 1, { precision : 22 });
     });
@@ -3173,25 +3173,25 @@ function _toStrFromNumber2( test )
   return;
 
   test.case = 'no arguments';
-  test.shouldThrowError( function( )
+  test.shouldThrowErrorOfAnyKind( function( )
   {
     _._toStrFromNumber( );
   } );
 
   test.case = 'first argument is wrong';
-  test.shouldThrowError( function( )
+  test.shouldThrowErrorOfAnyKind( function( )
   {
     _._toStrFromNumber( 'wrong argument', { fixed : 3 } );
   } );
 
   test.case = 'second argument is not provided';
-  test.shouldThrowError( function( )
+  test.shouldThrowErrorOfAnyKind( function( )
   {
     _._toStrFromNumber( 13.75 );
   } );
 
   test.case = 'second argument is wrong precision must be between 1 and 21';
-  test.shouldThrowError( function( )
+  test.shouldThrowErrorOfAnyKind( function( )
   {
     _._toStrFromNumber( 13.75, { precision : 0 } );
   } );
@@ -3289,19 +3289,19 @@ function _toStrFromStr( test )
   {
 
     test.case = 'invalid first argument type';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromStr( 2, {} );
     });
 
     test.case = 'invalid second argument type';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromStr( '1', 2 );
     });
 
     test.case = 'no arguments';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromStr();
     });
@@ -3347,19 +3347,19 @@ function _toStrFromArray( test )
   {
 
     test.case = 'invalid first argument type';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromArray( 2, {} );
     });
 
     test.case = 'invalid second argument type';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromArray( [], 2 );
     });
 
     test.case = 'no arguments';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromArray();
     });
@@ -3417,25 +3417,25 @@ function _toStrFromObject( test )
   {
 
     test.case = 'invalid first argument type';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromObject( 1, {} );
     });
 
     test.case = 'empty options';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromObject( { a : 1 }, {} );
     });
 
     test.case = 'invalid second argument type';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromObject( { a : 1 }, 2 );
     });
 
     test.case = 'no arguments';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromObject();
     });
@@ -3535,19 +3535,19 @@ function _toStrFromContainer( test )
   {
 
     test.case = 'invalid  argument type';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromContainer( 1 );
     });
 
     test.case = 'empty object';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromContainer( { } );
     });
 
     test.case = 'no arguments';
-    test.shouldThrowError( function()
+    test.shouldThrowErrorOfAnyKind( function()
     {
       _._toStrFromContainer();
     });
@@ -3561,7 +3561,7 @@ function _toStrFromContainer( test )
 var Self =
 {
 
-  name : 'Tools/base/l4/String/2',
+  name : 'Tools.base.l4.String.2',
   silencing : 1,
   enabled : 0, // !!! refactoring
 

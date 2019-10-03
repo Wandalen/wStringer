@@ -514,7 +514,7 @@ function toStr( test )
 var Self =
 {
 
-  name : 'Tools/base/l4/String/1',
+  name : 'Tools.base.l4.String.1',
   silencing : 1,
   enabled : 1, // !!! refactoring
 
