@@ -2,10 +2,13 @@ format: outwillfile-2.0
 root:
   - wStringer.out
 consistency:
-  ../.ex.will.yml: &ref_0
+  wStringer.out.will.yml: &ref_0
+    hash: c4046a7bef55dba8ce8c083b66f18b14
+    size: 38465
+  ../.ex.will.yml: &ref_1
     hash: 7709158480f466d5396cc8dba2b93ae6
     size: 1884
-  ../.im.will.yml: &ref_1
+  ../.im.will.yml: &ref_2
     hash: b86595936b6e5d02c9b64cedcc742ee3
     size: 4936
 module:
@@ -20,18 +23,18 @@ module:
         Refactoring required.
       enabled: 1
       version: 0.4.0
-      interpreters: &ref_2
+      interpreters:
         - njs >= 8.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
+      keywords:
         - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors: &ref_4
+      contributors:
         - Kostiantyn Wandalen <wanalen@willbe.so>
       npm.name: wstringer
-      npm.scripts: &ref_5
+      npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -698,6 +701,24 @@ module:
           content: prime
         inherit:
           - files.transpile
+      exported.proto.export:
+        opts:
+          reflector: 'reflector::exported.proto.export*'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
+      exported.files.proto.export:
+        opts:
+          reflector: 'reflector::exported.files.proto.export*'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
     build:
       proto.export:
         steps:
@@ -786,8 +807,9 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      wStringer.out.will.yml: *ref_0
+      ../.ex.will.yml: *ref_1
+      ../.im.will.yml: *ref_2
   ../:
     about:
       name: wStringer
@@ -799,13 +821,20 @@ module:
         Refactoring required.
       enabled: 1
       version: 0.4.0
-      interpreters: *ref_2
-      keywords: *ref_3
+      interpreters:
+        - njs >= 8.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords:
+        - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors: *ref_4
+      contributors:
+        - Kostiantyn Wandalen <wanalen@willbe.so>
       npm.name: wstringer
-      npm.scripts: *ref_5
+      npm.scripts:
+        test: wtest .run proto/**
+        docgen: wdocgen .build proto
     path:
       module.willfiles:
         criterion:
@@ -1477,3 +1506,6 @@ module:
       ../.im.will.yml:
         hash: b86595936b6e5d02c9b64cedcc742ee3
         size: 4936
+      wStringer.out.will.yml:
+        hash: c4046a7bef55dba8ce8c083b66f18b14
+        size: 38465
