@@ -1584,17 +1584,15 @@ function _toStrFromContainer( o )
 
   /* wrap */
 
+  if( values.length - l > 0 )
+  result += other( values.length );
+
   if( optionsContainer.wrap )
   {
     if( simple )
     {
       if( l )
-      {
-        if( values.length - l != 0 )
-        result += other( values.length );
-
-        result += ' ';
-      }
+      result += ' ';
     }
     else
     {
