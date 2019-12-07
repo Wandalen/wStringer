@@ -1481,7 +1481,7 @@ function _toStrFromContainer( o )
 
   var linePostfix = '';
   if( optionsContainer.comma )
-    linePostfix += optionsContainer.comma;
+  linePostfix += optionsContainer.comma;
 
   if( !simple )
   {
