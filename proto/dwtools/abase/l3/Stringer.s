@@ -1481,7 +1481,7 @@ function _toStrFromContainer( o )
 
   var linePostfix = '';
   if( optionsContainer.comma )
-  linePostfix += optionsContainer.comma;
+    linePostfix += optionsContainer.comma;
 
   if( !simple )
   {
@@ -1589,7 +1589,12 @@ function _toStrFromContainer( o )
     if( simple )
     {
       if( l )
-      result += ' ';
+      {
+        if( values.length - l != 0 )
+        result += other( values.length );
+
+        result += ' ';
+      }
     }
     else
     {
