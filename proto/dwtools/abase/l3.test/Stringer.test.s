@@ -3339,7 +3339,7 @@ function toStrFields( test )
 {
   test.case = 'Fields default options';
   var got = _.toStrFields( [ 1, 2, 'text', undefined ] );
-  var expected = "[ 1, 2, 'text', undefined ]";
+  var expected = '[ 1, 2, \'text\', undefined ]';
   test.identical( got, expected );
 
   test.case = 'Fields, levels : 0';
