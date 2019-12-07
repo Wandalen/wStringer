@@ -384,7 +384,7 @@ function toStrFine_functor()
     level : 0,
 
     wrap : 1,
-    stringWrapper : '\'',
+    stringWrapper : '"',
     keyWrapper : '',
     prependTab : 1,
     errorAsMap : 0,
