@@ -1,4 +1,4 @@
-( function _String_toStr2_test_s_( ) {
+( function _Stringer_test_s_( ) {
 
 'use strict';
 
@@ -9,15 +9,22 @@ if( typeof module !== 'undefined' )
 
   _.include( 'wTesting' );
 
-  if( Config.interpreter === 'njs' )
-  var File = require( 'fs' );
+  require( '../l3/Stringer.s' );
+
+  // if( Config.interpreter === 'njs' )
+  // var File = require( 'fs' );
 
 }
 
 var _global = _global_;
 var _ = _global_.wTools;
+let fileProvider = _testerGlobal_.wTools.fileProvider;
+let path = fileProvider.path;
 
-//
+// --
+// context
+// --
+
 /*
 
 \' 	single quote 	byte 0x27 in ASCII encoding
@@ -41,6 +48,7 @@ may result in several characters 	code point U+nnnnnnnn
 source : http://en.cppreference.com/w/cpp/language/escape
 
 */
+
 //
 
 function reportChars()
@@ -50,7 +58,7 @@ function reportChars()
   var r = '';
   for( var i = 0 ; i < 512 ; i++ )
   {
-    var d = _.strDup( '0',4-i.toString( 16 ).length ) + i.toString( 16 );
+    var d = _.strDup( '0', 4-i.toString( 16 ).length ) + i.toString( 16 );
     var u = eval( `"\\u${d}"` );
     r += `${d} : "${u}"\n`;
   }
@@ -66,11 +74,12 @@ function reportChars()
 
 function stringFromFile( name, encoding, begin, end )
 {
-  var str = File.readFileSync( __dirname + '/../../../file.test/' + name, encoding );
+  // var str = File.readFileSync( __dirname + '/../../../file.test/' + name, encoding ); /* xxx : use wFiles */
+  var str = fileProvider.fileRead({ filePath : __dirname + '/../../../file.test/' + name, encoding });
   str = str.slice( begin, end );
 
   //if( name === 'file1' )
-  //str = str.substring( 0,10 ) + str.substring( 14 );
+  //str = str.substring( 0, 10 ) + str.substring( 14 );
 
   return str;
 }
@@ -87,13 +96,13 @@ function testFunction( test, desc, src, options, expected )
   {
     test.case = desc ;
     var optionsTest = options[ k ] || options[ 0 ];
-    got = _.toStr( src[ k ],optionsTest );
+    got = _.toStr( src[ k ], optionsTest );
 
-    if( test.case.slice( 0,4 ) === 'json' && optionsTest.json )
+    if( test.case.slice( 0, 4 ) === 'json' && optionsTest.json )
     {
 
       // good
-      // if JSON.parse is OK,compare source vs parse result
+      // if JSON.parse is OK, compare source vs parse result
       // else throws error
       try
       {
@@ -110,7 +119,7 @@ function testFunction( test, desc, src, options, expected )
         logger.log( got );
         throw _.err( err );
         //test fail call when JSON.parse throws error
-        //test.identical( 0,1 );
+        //test.identical( 0, 1 );
       }
 
     }
@@ -130,7 +139,507 @@ function testFunction( test, desc, src, options, expected )
   debugger;
 }
 
-//
+// --
+// tests
+// --
+
+/* qqq : normalize test */
+
+function toStr( test )
+{
+  var self = this;
+
+  var samples =
+  [
+
+    {
+      options : {},
+      in : false,
+      out : 'false',
+      description : 'boolean',
+    },
+
+    {
+      options : {},
+      in : 13,
+      out : '13',
+      description : 'number',
+    },
+
+    {
+      options : { levels : 2 },
+      in : 0,
+      out : '0',
+    },
+
+    {
+      options : { levels : 2 },
+      in : new Date( Date.UTC( 2020, 0, 13 ) ),
+      out : '2020-01-13T00:00:00.000Z',
+    },
+
+    {
+      options : { levels : 2 },
+      in : 'text',
+      out : '\'text\'',
+    },
+
+    {
+      options : { levels : 2 },
+      in : [],
+      out : '[]',
+    },
+
+    {
+      options : { levels : 2 },
+      in : [ {}, {}, {} ],
+      out : '[ {}, {}, {} ]',
+    },
+
+    {
+      options : { levels : 2 },
+      in : {},
+      out : '{}',
+    },
+
+    {
+      options : { levels : 2 },
+      in : { a : {}, b : {} },
+      out : '{ a : {}, b : {} }',
+    },
+
+    {
+      options : { levels : 2 },
+      in : [ 1, 2, 3, 4 ],
+      out : '[ 1, 2, 3, 4 ]',
+    },
+
+    {
+      options : { levels : 2 },
+      in : { 1 : 'a', 2: 'b', 3: 'c' },
+      out : '{ 1 : \'a\', 2 : \'b\', 3 : \'c\' }',
+    },
+
+    {
+      options : { levels : 2 },
+      in :
+      {
+        1 : 'a',
+        2: [ 10, 20, 30 ],
+        3: { 21 : 'aa', 22 : 'bb' }
+      },
+      out :
+      [
+        '{',
+        '  1 : \'a\', ',
+        '  2 : [ 10, 20, 30 ], ',
+        '  3 : { 21 : \'aa\', 22 : \'bb\' }',
+        '}',
+      ].join( '\n' ),
+    },
+
+    {
+      options : { levels : 2 },
+      in :
+      {
+        1 : 'a',
+        2 : [ 10, 20, 30 ],
+        3 : { 21 : 'aa', 22 : 'bb' },
+        4 : [ 10, 20, 30 ],
+        5 : [ 10, 20, 30 ],
+      },
+      out :
+      [
+        '{',
+        '  1 : \'a\', ',
+        '  2 : [ 10, 20, 30 ], ',
+        '  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
+        '  4 : [ 10, 20, 30 ], ',
+        '  5 : [ 10, 20, 30 ]',
+        '}',
+      ].join( '\n' ),
+    },
+
+    {
+      options : { levels : 2 },
+      in :
+      [
+        'a',
+        [ 10, 20, 30 ],
+        { 21 : 'aa', 22 : 'bb' },
+        { 31 : '111', 32 : '222' },
+        [ 10, 20, 30 ],
+        [ 10, 20, 30 ],
+      ],
+      out :
+      [
+        '[',
+        '  \'a\', ',
+        '  [ 10, 20, 30 ], ',
+        '  { 21 : \'aa\', 22 : \'bb\' }, ',
+        '  { 31 : \'111\', 32 : \'222\' }, ',
+        '  [ 10, 20, 30 ], ',
+        '  [ 10, 20, 30 ]',
+        ']',
+      ].join( '\n' ),
+    },
+
+    // complex
+
+    {
+      options : { levels : 3 },
+      in :
+      [
+        'a',
+        [ 10, 20, 30 ],
+        {
+          21 : [ 1, 2, 3 ],
+          22 : [ 1, 2, 3, 4 ],
+        },
+        {
+          31 : { a : 'a', b : 'b' },
+          32 : { a : 'a', b : 'b', c : 'c' }
+        },
+        [
+          [ 1, 2, 3 ],
+          [ 1, 2, 3, 4 ]
+        ],
+        [
+          { a : 'a', b : 'b' },
+          { a : 'a', b : 'b', c : 'c' }
+        ],
+      ],
+      out :
+      [
+        '[',
+        '  \'a\', ',
+        '  [ 10, 20, 30 ], ',
+        '  {',
+        '    21 : [ 1, 2, 3 ], ',
+        '    22 : [ 1, 2, 3, 4 ]',
+        '  }, ',
+        '  {',
+        '    31 : { a : \'a\', b : \'b\' }, ',
+        '    32 : { a : \'a\', b : \'b\', c : \'c\' }',
+        '  }, ',
+        '  [',
+        '    [ 1, 2, 3 ], ',
+        '    [ 1, 2, 3, 4 ]',
+        '  ], ',
+        '  [',
+        '    { a : \'a\', b : \'b\' }, ',
+        '    { a : \'a\', b : \'b\', c : \'c\' }',
+        '  ]',
+        ']',
+      ].join( '\n' ),
+    },
+
+    {
+      options : { levels : 5 },
+      in :
+      [
+        'a',
+        [ 10, 20, 30 ],
+        {
+          21 : [ 1, 2, 3 ],
+          22 : [ 1, 2, 3, 4 ],
+        },
+        {
+          31 :
+          {
+            a : { a : 'a', b : 'b' },
+            b : { a : 'a', b : 'b' }
+          },
+          32 :
+          {
+            a : 'a',
+            b : 'b',
+            c : { a : 'a', b : 'b' },
+          }
+        },
+        [
+          [
+            [ 100, 200 ],
+            [ 100, 200 ]
+          ],
+          [ 1, 2, 3, 4 ]
+        ],
+        [
+          { a : 'a', b : 'b' },
+          {
+            a : 'a',
+            b : 'b',
+            c : { a : 'a', b : 'b' }
+          }
+        ],
+      ],
+      out :
+      [
+        '[',
+        '  \'a\', ',
+        '  [ 10, 20, 30 ], ',
+        '  {',
+        '    21 : [ 1, 2, 3 ], ',
+        '    22 : [ 1, 2, 3, 4 ]',
+        '  }, ',
+        '  {',
+        '    31 : ',
+        '    {',
+        '      a : { a : \'a\', b : \'b\' }, ',
+        '      b : { a : \'a\', b : \'b\' }',
+        '    }, ',
+        '    32 : ',
+        '    {',
+        '      a : \'a\', ',
+        '      b : \'b\', ',
+        '      c : { a : \'a\', b : \'b\' }',
+        '    }',
+        '  }, ',
+        '  [',
+        '    [',
+        '      [ 100, 200 ], ',
+        '      [ 100, 200 ]',
+        '    ], ',
+        '    [ 1, 2, 3, 4 ]',
+        '  ], ',
+        '  [',
+        '    { a : \'a\', b : \'b\' }, ',
+        '    {',
+        '      a : \'a\', ',
+        '      b : \'b\', ',
+        '      c : { a : \'a\', b : \'b\' }',
+        '    }',
+        '  ]',
+        ']',
+      ].join( '\n' ),
+    },
+
+    // levels
+
+    {
+      options : { levels : 1 },
+      in :
+      [
+        'a',
+        [ 10, 20, 30 ],
+        { 21 : 'aa', 22 : 'bb' },
+        { 31 : '111', 32 : '222' },
+        [ 10, 20, 30 ],
+        [ 10, 20, 30 ],
+      ],
+      out :
+      [
+        '[',
+        '  \'a\', ',
+        '  [ Array with 3 elements ], ',
+        '  [ Object with 2 elements ], ',
+        '  [ Object with 2 elements ], ',
+        '  [ Array with 3 elements ], ',
+        '  [ Array with 3 elements ]',
+        ']',
+      ].join( '\n' ),
+    },
+
+    {
+      options : { levels : 2 },
+      in :
+      [
+        'a',
+        [ 10, 20, 30 ],
+        {
+          21 : [ 1, 2, 3 ],
+          22 : [ 1, 2, 3, 4 ],
+        },
+        {
+          31 : { a : 'a', b : 'b' },
+          32 : { a : 'a', b : 'b', c : 'c' }
+        },
+        [
+          [ 1, 2, 3 ],
+          [ 1, 2, 3, 4 ]
+        ],
+        [
+          { a : 'a', b : 'b' },
+          { a : 'a', b : 'b', c : 'c' }
+        ],
+      ],
+      out :
+      [
+        '[',
+        '  \'a\', ',
+        '  [ 10, 20, 30 ], ',
+        '  {',
+        '    21 : [ Array with 3 elements ], ',
+        '    22 : [ Array with 4 elements ]',
+        '  }, ',
+        '  {',
+        '    31 : [ Object with 2 elements ], ',
+        '    32 : [ Object with 3 elements ]',
+        '  }, ',
+        '  [',
+        '    [ Array with 3 elements ], ',
+        '    [ Array with 4 elements ]',
+        '  ], ',
+        '  [',
+        '    [ Object with 2 elements ], ',
+        '    [ Object with 3 elements ]',
+        '  ]',
+        ']',
+      ].join( '\n' ),
+    },
+
+    // tab
+
+    {
+      options : { levels : 2, tab : '---', dtab : '+' },
+      in :
+      {
+        1 : 'a',
+        2 : [ 10, 20, 30 ],
+        3 : { 21 : 'aa', 22 : 'bb' },
+        4 : [ 10, 20, 30 ],
+        13 : [ 10, 20, 30 ],
+      },
+      out :
+      [
+        '---{',
+        '---+1 : \'a\', ',
+        '---+2 : [ 10, 20, 30 ], ',
+        '---+3 : { 21 : \'aa\', 22 : \'bb\' }, ',
+        '---+4 : [ 10, 20, 30 ], ',
+        '---+13 : [ 10, 20, 30 ]',
+        '---}',
+      ].join( '\n' ),
+    },
+
+    // prependTab
+
+    {
+      options : { levels : 2, wrap : 0, tab : '-', prependTab : 0 },
+      in :
+      {
+        1 : 'a',
+        2 : [ 10, 20, 30 ],
+        3 : { 21 : 'aa', 22 : 'bb' },
+        4 : [ 10, 20, 30 ],
+        13 : [ 10, 20, 30 ],
+      },
+      out :
+      [
+        '  1 : \'a\' ',
+        '-  2 :   10 20 30 ',
+        '-  3 : 21 : \'aa\' 22 : \'bb\' ',
+        '-  4 :   10 20 30 ',
+        '-  13 :   10 20 30',
+      ].join( '\n' ),
+    },
+
+    {
+      options : { levels : 2, wrap : 0, tab : '-', prependTab : 1 },
+      in :
+      {
+        1 : 'a',
+        2 : [ 10, 20, 30 ],
+        3 : { 21 : 'aa', 22 : 'bb' },
+        4 : [ 10, 20, 30 ],
+        13 : [ 10, 20, 30 ],
+      },
+      out :
+      [
+        '-  1 : \'a\' ',
+        '-  2 :   10 20 30 ',
+        '-  3 : 21 : \'aa\' 22 : \'bb\' ',
+        '-  4 :   10 20 30 ',
+        '-  13 :   10 20 30',
+      ].join( '\n' ),
+    },
+
+
+
+    {
+      options : { levels : 2, wrap : 1, tab : '-', prependTab : 0 },
+      in :
+      {
+        1 : 'a',
+        2 : [ 10, 20, 30 ],
+        3 : { 21 : 'aa', 22 : 'bb' },
+        4 : [ 10, 20, 30 ],
+        5 : [ 10, 20, 30 ],
+      },
+      out :
+      [
+        '{',
+        '-  1 : \'a\', ',
+        '-  2 : [ 10, 20, 30 ], ',
+        '-  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
+        '-  4 : [ 10, 20, 30 ], ',
+        '-  5 : [ 10, 20, 30 ]',
+        '-}',
+      ].join( '\n' ),
+    },
+
+    {
+      options : { levels : 2, wrap : 1, tab : '-', prependTab : 1 },
+      in :
+      {
+        1 : 'a',
+        2 : [ 10, 20, 30 ],
+        3 : { 21 : 'aa', 22 : 'bb' },
+        4 : [ 10, 20, 30 ],
+        5 : [ 10, 20, 30 ],
+      },
+      out :
+      [
+        '-{',
+        '-  1 : \'a\', ',
+        '-  2 : [ 10, 20, 30 ], ',
+        '-  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
+        '-  4 : [ 10, 20, 30 ], ',
+        '-  5 : [ 10, 20, 30 ]',
+        '-}',
+      ].join( '\n' ),
+    },
+
+    {
+      options : { levels : 2, noSubObject : 1, noArray : 1, dtab : '  ' },
+      in :
+      {
+        1 : [ 1, 2, 3 ],
+        2 : 'abc',
+        3 : 4,
+      },
+      out :
+      [
+        '{',
+        '  2 : \'abc\', ',
+        '  3 : 4',
+        '}',
+      ].join( '\n' ),
+    },
+
+  ];
+
+  /* */
+
+  debugger;
+  for( var s = 0 ; s < samples.length ; s++ )
+  {
+    var sample = samples[ s ];
+    debugger;
+    var got = _.toStr( sample.in, sample.options );
+    debugger;
+
+    test.case = sample.description || null;
+    test.identical( got, sample.out );
+
+  }
+  debugger;
+
+}
+
+// --
+// str unwrapped
+// --
 
 function toStrUnwrapped( test )
 {
@@ -194,10 +703,10 @@ function toStrUnwrapped( test )
     [ 'a', 7, { u : 1 }, 8, 'b' ],
 
     /*08*/
-    [ [ 5, 4 ],[ 2, 1, 0 ] ],
+    [ [ 5, 4 ], [ 2, 1, 0 ] ],
 
     /*09*/
-    [ [ 5, 4, [ 3 ] ],[ 2, 1, 0 ] ],
+    [ [ 5, 4, [ 3 ] ], [ 2, 1, 0 ] ],
 
     /*10*/
     ( function( )
@@ -352,7 +861,7 @@ function toStrUnwrapped( test )
 
   ];
 
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 
 }
 
@@ -377,14 +886,14 @@ function toStrError( test )
     /*10*/  ( function()
               {
                 var err = new Error( 'my message4' );
-                err.stack = err.stack.slice( 0,18 );
+                err.stack = err.stack.slice( 0, 18 );
                 return err;
               } )(),
 
     /*11*/  ( function()
               {
                 var err = new Error( 'my error' );
-                err.stack = err.stack.slice( 0,16 );
+                err.stack = err.stack.slice( 0, 16 );
                 return err;
               } )(),
   ],
@@ -447,7 +956,7 @@ function toStrError( test )
   ];
 
 
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 
 }
 
@@ -470,7 +979,7 @@ function toStrArray( test )
     /*08*/ [ 'e', 'e', 'e' ],
     /*09*/ [ '\n\nEscaping test' ],
     /*10*/ [ 0, 1, 2 ],
-    /*11*/ [ 'a','b','c', 1, 2, 3 ],
+    /*11*/ [ 'a', 'b', 'c', 1, 2, 3 ],
     /*12*/ [ { x : 1 }, { y : 2 } ],
     /*13*/ [ 1, [ 2, 3, 4 ], 5 ],
     /*14*/ [ 6, [ 7, 8, 9 ], 10 ],
@@ -484,10 +993,10 @@ function toStrArray( test )
     /*22*/ [ { c : 1 }, { d : 2 } ],
     /*23*/ [ new Date( Date.UTC( 1993, 12, 12 ) ), { d : 2 }, new Error( 'error' ) ],
     /*24*/ [ function ff( ){ }, { d : 3 }, 15 ],
-    /*25*/ [ [ 1, 2, 3 ],[ 4, 5, 6 ] ],
-    /*26*/ [ [ 1, 2, 3 ],[ '4, 5, 6' ], undefined, false ],
+    /*25*/ [ [ 1, 2, 3 ], [ 4, 5, 6 ] ],
+    /*26*/ [ [ 1, 2, 3 ], [ '4, 5, 6' ], undefined, false ],
     /*27*/ [ 'e', 'e', 'e' ],
-    /*28*/ [ 'a','b','c', 1, 2, 3 ],
+    /*28*/ [ 'a', 'b', 'c', 1, 2, 3 ],
     /*29*/ [ 15, 16, 17, 18 ],
     /*30*/ [ { a : 5, b : 6, c : 7 } ],
     /*31*/ [ 'a', 1, function() { }, false ],
@@ -498,7 +1007,7 @@ function toStrArray( test )
     /*36*/ [  7, { v : 0 }, 1, 'x' ],
     /*37*/ [ '\n\nEscaping & wrap test' ],
     /*38*/ [ 0, [ 1, 2, 3, 4 ], 5, { a : 6 } ],
-    /*39*/ [ ['a','b','c'],'d','e' ],
+    /*39*/ [ ['a', 'b', 'c'], 'd', 'e' ],
     /*40*/ [ { a : 0 }, { b : 1 }, [ 2, 3 ] ],
     /*41*/ [ { a : 'a', b : 'b', c : 'c' } ],
     /*42*/ [ 'a', 7, { u : 2 }, 8, 'b' ],
@@ -510,26 +1019,26 @@ function toStrArray( test )
     /*48*/ [ 1, { a : 2 }, '03' ],
     /*49*/ [ 0, [ 1, 2, 3, 4 ], 5, { a : 6 } ],
     /*50*/ [ { a : 'string' }, [ true ], 1 ],
-    /*51*/ [ [ 5, 4, [ 3 ] ],[ 2, 1, 0 ] ],
+    /*51*/ [ [ 5, 4, [ 3 ] ], [ 2, 1, 0 ] ],
     /*52*/ [ { a : 0 }, { b : 1 }, [ 2, 3 ] ],
-    /*53*/ [ [ 1.100,1.200 ], [ 2, 3 ] ],
-    /*54*/ [ 9000,[ 8000, 6000], 7000 ],
+    /*53*/ [ [ 1.100, 1.200 ], [ 2, 3 ] ],
+    /*54*/ [ 9000, [ 8000, 6000], 7000 ],
     /*55*/ [ { a : '\\test' }, { b : '\ntest' }, { c : 'test' } ],
     /*56*/ [ { a : function func ( ){ } }, 0, 1, 'a' ],
     /*57*/ [ { b : function f ( ){ } }, 1, 2 , 3 ],
-    /*58*/ [ new Error('msg'),new Date(1990, 0, 0),'test' ],
+    /*58*/ [ new Error('msg'), new Date(1990, 0, 0), 'test' ],
     /*59*/ [ 1, [ 2, 3, 4 ], 2 ],
-    /*60*/ [ 1, [ '2', null,undefined, '4' ], 2 ],
-    /*61*/ [ [ 1, 2 ],'string',{ a : true, b : null }, undefined ],
-    /*62*/ [ [ 0, 1 ],'test',{ a : Symbol() }, undefined ],
-    /*63*/ [ 0, 'str', { a : Symbol() },function test(){ }, null ],
-    /*64*/ [ 0, 'str', { a : Symbol() },function test( ){ }, true, new Date(1990, 0, 0) ],
-    /*65*/ [ [ 0, 1 ],'test', { a : 'a' } ],
-    /*66*/ [ [ 1, 2 ],'sample', { a : 'b' } ],
-    /*67*/ [ 11,22,function routine( ){ }, { a : 'string' } ],
-    /*68*/ [ ['a',100],['b',200] ],
-    /*69*/ [ ['aa',300],['bb',400] ],
-    /*70*/ [ [ 1.00, 2.00 ], [ 3.00, 4.00],'str sample' ],
+    /*60*/ [ 1, [ '2', null, undefined, '4' ], 2 ],
+    /*61*/ [ [ 1, 2 ], 'string', { a : true, b : null }, undefined ],
+    /*62*/ [ [ 0, 1 ], 'test', { a : Symbol() }, undefined ],
+    /*63*/ [ 0, 'str', { a : Symbol() }, function test(){ }, null ],
+    /*64*/ [ 0, 'str', { a : Symbol() }, function test( ){ }, true, new Date(1990, 0, 0) ],
+    /*65*/ [ [ 0, 1 ], 'test', { a : 'a' } ],
+    /*66*/ [ [ 1, 2 ], 'sample', { a : 'b' } ],
+    /*67*/ [ 11, 22, function routine( ){ }, { a : 'string' } ],
+    /*68*/ [ ['a', 100], ['b', 200] ],
+    /*69*/ [ ['aa', 300], ['bb', 400] ],
+    /*70*/ [ [ 1.00, 2.00 ], [ 3.00, 4.00], 'str sample' ],
     /*71*/ [ '1', [ 2, 3, 4 ], '2' ],
     /*72*/ [ '1', [ 2.00, 3.00, 4.00 ], '2' ],
     /*73*/ [ 'o', [ 90, 80, 70 ], 'o' ],
@@ -591,12 +1100,12 @@ function toStrArray( test )
     /*45*/  { levels : 2, wrap : 0, multiline : 1, comma : '| ' },
     /*46*/  { levels : 3, wrap : 0, escaping : 1, comma : '. ' },
     /*47*/  { levels : 4, wrap : 0, escaping : 1, comma : ', ' },
-    /*48*/  { levels : 3, wrap : 0, noAtomic : 1, comma : ' ,' },
+    /*48*/  { levels : 3, wrap : 0, noAtomic : 1, comma : ' , ' },
     /*49*/  { levels : 2, wrap : 0, noSubObject : 1, noArray : 1, comma : ' ..' },
     /*50*/  { levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '/ ' },
 
     /*51*/  { levels : 3, wrap : 0, comma : '||' },
-    /*52*/  { levels : 2, wrap : 0, comma : ',, ', tab :'  |', colon : '->' },
+    /*52*/  { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' },
     /*53*/  { levels : 2, prependTab : 0, fixed : 2 },
     /*54*/  { levels : 2, prependTab : 0, precision : 1 },
     /*55*/  { levels : 2, multiline : 1, escaping : 1 },
@@ -892,9 +1401,9 @@ function toStrArray( test )
 
     /*52*/
     [
-      '  |  a->0,, ',
-      '  |  b->1,, ',
-      '  |    2,, 3',
+      '  |  a->0, , ',
+      '  |  b->1, , ',
+      '  |    2, , 3',
     ].join( '\n' ),
 
     /*53*/
@@ -1117,7 +1626,7 @@ function toStrArray( test )
 
   ];
 
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 }
 // toStrArray.cover = [ _.toStr ];
 
@@ -1164,8 +1673,8 @@ function toStrObject( test )
     /*32*/  { a : '\na', b : { d : '\ntrue' }, c : '\n' },
     /*33*/  { a : 'a', b : { d : false }, c : 3 },
     /*34*/  { a : 'aa', b : { d : true }, c : 40 },
-    /*35*/  { a : [ 'a','b' ], b : { d : 'true' }, c : 1 },
-    /*36*/  { a : [ 'a','b' ], b : { d : 'true' }, c : 1 },
+    /*35*/  { a : [ 'a', 'b' ], b : { d : 'true' }, c : 1 },
+    /*36*/  { a : [ 'a', 'b' ], b : { d : 'true' }, c : 1 },
     /*37*/  { a : 1, b : { d : 2 }, c : 3 },
     /*38*/  { a : 3, b : { d : 2 }, c : 1 },
     /*39*/  { a : 'bb', b : { d : false }, c : 30 },
@@ -1250,19 +1759,19 @@ function toStrObject( test )
     /*28*/  { levels : 2, wrap : 0, prependTab : 0, comma : ', ' },
     /*29*/  { levels : 2, wrap : 0, fixed : 1, comma : '| ' },
     /*30*/  { levels : 2, wrap : 0, precision : 1, comma : '/ ' },
-    /*31*/  { levels : 2, wrap : 0, multiline : 1, comma : ',, ' },
+    /*31*/  { levels : 2, wrap : 0, multiline : 1, comma : ', , ' },
     /*32*/  { levels : 3, wrap : 0, escaping : 1, comma : '| ' },
     /*33*/  { levels : 2, wrap : 0, noAtomic : 1, comma : '< ' },
     /*34*/  { levels : 3, wrap : 0, noAtomic : 1, comma : ', ' },
     /*35*/  { levels : 2, wrap : 0, noSubObject : 1, noArray : 1, comma : '' },
     /*36*/  { levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '. ' },
     /*37*/  { levels : 2, wrap : 0, comma : '. '},
-    /*38*/  { levels : 2, wrap : 0, comma : ',, ', tab :'  |', colon : '->' },
+    /*38*/  { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' },
     /*39*/  { levels : 2, prependTab : 0, fixed : 5 },
     /*40*/  { levels : 2, prependTab : 0, precision : 5 },
     /*41*/  { levels : 2, multiline : 1, escaping : 1 },
     /*42*/  { levels : 2, noRoutine : 1 },
-    /*43*/  { levels : 3, noRoutine : 1,},
+    /*43*/  { levels : 3, noRoutine : 1, },
     /*44*/  { levels : 3, noError : 1, noDate : 1 },
     /*45*/  { escaping : 1 },
     /*46*/  { escaping : 0 },
@@ -1502,9 +2011,9 @@ function toStrObject( test )
 
     /*31*/
     [
-      '  a : "a",, ',
+      '  a : "a", , ',
       '  b : ',
-      '    d : false,, ',
+      '    d : false, , ',
       '  c : 3'
     ].join( '\n' ),
 
@@ -1539,8 +2048,8 @@ function toStrObject( test )
 
     /*38*/
     [
-      '  |  a->3,, ',
-      '  |  b->d->2,, ',
+      '  |  a->3, , ',
+      '  |  b->d->2, , ',
       '  |  c->1',
     ].join( '\n' ),
 
@@ -1786,7 +2295,7 @@ function toStrObject( test )
 
   ];
 
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 
 }
 
@@ -1806,8 +2315,8 @@ function toStrJson( test )
      /*03*/ [ { "a" : 100, "b" : "x", "c" : { "d" : true, "e" : null } } ],
      /*04*/ { a : '\n\nABC' },
 
-     ///*04*/ { a : "aa", b : [ 1,2,3 ], c : function r( ){ } },
-     ///*05*/ [ { a : 1, b : 2, c : { d : [ null,undefined ] } } ],
+     ///*04*/ { a : "aa", b : [ 1, 2, 3 ], c : function r( ){ } },
+     ///*05*/ [ { a : 1, b : 2, c : { d : [ null, undefined ] } } ],
      ///*06*/ { a : new Date( Date.UTC( 1993, 12, 12 ) ) },
      ///*07*/ { a : new Error( "r" ) },
      ///*08*/ { a : Symbol( 'sm' ) },
@@ -1992,7 +2501,7 @@ function toStrJson( test )
 
 //
 
-function _toStrJsonFromFile( test,encoding )
+function _toStrJsonFromFile( test, encoding )
 {
   var desc =  'json from file as utf8',
 
@@ -2034,7 +2543,7 @@ function _toStrJsonFromFile( test,encoding )
 function toStrJsonFromFileU( test )
 {
 
-  return _toStrJsonFromFile( test,'utf8' );
+  return _toStrJsonFromFile( test, 'utf8' );
 
 }
 
@@ -2045,7 +2554,7 @@ function toStrJsonFromFileU( test )
 function toStrJsonFromFileA( test )
 {
 
-  return _toStrJsonFromFile( test,'ascii' );
+  return _toStrJsonFromFile( test, 'ascii' );
 
 }
 
@@ -2058,9 +2567,9 @@ function toStrstringWrapper( test )
    var desc =  'stringWrapper test',
    src =
    [
-     /*01*/ { a : "string",b : 1, c : null , d : undefined },
-     /*02*/ { a : "sample",b : 0, c : false , d : [ "a" ] },
-     /*03*/ { a : [ "example" ],b : 1, c : null , d : [ "b" ] },
+     /*01*/ { a : "string", b : 1, c : null , d : undefined },
+     /*02*/ { a : "sample", b : 0, c : false , d : [ "a" ] },
+     /*03*/ { a : [ "example" ], b : 1, c : null , d : [ "b" ] },
      /*04*/ { a : "test", b : new Error( "err" ) },
      /*05*/ { a : "a", b : "b", c : { d : "d" } },
      /*06*/ { a : { h : "a" }, b : "b", c : { d : "d" } },
@@ -2166,7 +2675,7 @@ function toStrstringWrapper( test )
 
    ]
 
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 
 }
 // toStrstringWrapper.cover = [ _.toStr ];
@@ -2180,7 +2689,7 @@ function toStrLevel( test )
    [
      /*01*/ { a : "a", b : "b", c : { d : "d" } },
      /*02*/ { a : { h : "a" }, b : "b", c : { d : "d" } },
-     /*03*/ { a : [ "example" ],b : 1, c : null , d : [ "b" ] },
+     /*03*/ { a : [ "example" ], b : 1, c : null , d : [ "b" ] },
      /*04*/ { a : "a", b : "b", c : { d : "d" } },
    ],
    options =
@@ -2224,7 +2733,7 @@ function toStrLevel( test )
       ].join( '\n' ),
 
    ]
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 }
 // toStrLevel.cover = [ _.toStr ];
 
@@ -2315,9 +2824,9 @@ function toStrEnumerable( test )
    ],
    options =
    [
-     /*01*/ {  }, //own :1,onlyEnumerable:1
-     /*02*/ { own : 0 }, //own :0,onlyEnumerable:1
-     /*03*/ { onlyEnumerable : 0 }, //own :1,onlyEnumerable:0
+     /*01*/ {  }, //own :1, onlyEnumerable:1
+     /*02*/ { own : 0 }, //own :0, onlyEnumerable:1
+     /*03*/ { onlyEnumerable : 0 }, //own :1, onlyEnumerable:0
      /*04*/ { own : 0, onlyEnumerable : 0 },
    ],
    expected =
@@ -2358,7 +2867,7 @@ function toStrEnumerable( test )
         '}',
       ].join( '\n' ),
    ]
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 }
 // toStrEnumerable.cover = [ _.toStr ];
 //
@@ -2370,7 +2879,7 @@ function toStrEmptyArgs( test )
   options = [ {} ],
   expected =[ '{}', '""', '[]' ];
 
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 }
 // toStrEmptyArgs.cover = [ _.toStr ];
 //
@@ -2401,7 +2910,7 @@ function toStrSymbol( test )
     ''
   ]
 
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 }
 // toStrSymbol.cover = [ _.toStr ];
 //
@@ -2446,7 +2955,7 @@ function toStrNumber( test )
 
   ]
 
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 }
 // toStrNumber.cover = [ _.toStr ];
 //
@@ -2489,7 +2998,7 @@ function toStrString( test )
     '"\nsample7"'
   ]
 
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 }
 
 // toStrString.cover = [ _.toStr ];
@@ -2539,7 +3048,7 @@ function toStrAtomic( test )
     'undefined',
     ''
   ]
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 }
 // toStrAtomic.cover = [ _.toStr ];
 
@@ -2569,7 +3078,7 @@ function toStrDate( test )
     '2017-01-07T22:00:00.000Z',
     '',
   ]
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 }
 // toStrDate.cover = [ _.toStr ];
 
@@ -2597,7 +3106,7 @@ function toStrRoutine( test )
     '',
     '',
   ]
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 }
 // toStrRoutine.cover = [ _.toStr ];
 
@@ -2662,13 +3171,13 @@ function toStrLimitElements( test )
   src =
   [
   //Arrays
-  /*01*/[ 1, 2 ,3, 4, 5 ],
-  /*02*/[ 1, 2 ,'3', 4, 5 ],
-  /*03*/[ 1, 2 ,'3', 4, 5 ],
-  /*04*/[ 1, 2 ,'3', 4, 5 ],
-  /*05*/[ 1, 2 ,'3', 4, 5 ],
-  /*06*/[ 1, 2 ,'3', 4, { a : '1'  }, '5', '6' ],
-  /*07*/[ 1, 2 ,'3', 4, { a : '1'  }, '5', '6' ],
+  /*01*/[ 1, 2 , 3, 4, 5 ],
+  /*02*/[ 1, 2 , '3', 4, 5 ],
+  /*03*/[ 1, 2 , '3', 4, 5 ],
+  /*04*/[ 1, 2 , '3', 4, 5 ],
+  /*05*/[ 1, 2 , '3', 4, 5 ],
+  /*06*/[ 1, 2 , '3', 4, { a : '1'  }, '5', '6' ],
+  /*07*/[ 1, 2 , '3', 4, { a : '1'  }, '5', '6' ],
 
   //Objects
   /*08*/{ a : 1, b : 2, c : 3, d : 4 },
@@ -2777,7 +3286,7 @@ function toStrLimitElements( test )
   ].join( '\n' ),
 
   ]
-  testFunction( test,desc,src,options,expected );
+  testFunction( test, desc, src, options, expected );
 }
 
 // toStrRoutine.cover = [ _.toStr ];
@@ -2789,17 +3298,17 @@ function toStrMethods( test )
   test.case = 'converts routine to string default options';
   var got = _.toStrMethods( function route() {} );
   var expected = '[ routine route ]';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'converts routine to string, levels:0';
   var got = _.toStrMethods( function route() {}, { levels : 0 } );
   var expected = '[ routine route ]';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'different input data types';
   var got = _.toStrMethods( [ function route() {}, 0, '1', null ] );
   var expected = '';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
 
   /**/
@@ -2807,7 +3316,7 @@ function toStrMethods( test )
   test.case = 'invalid argument type';
   test.shouldThrowErrorOfAnyKind( function()
   {
-    _.toStrMethods( 'one','two' );
+    _.toStrMethods( 'one', 'two' );
   });
 
   test.case = 'wrong arguments count';
@@ -2819,7 +3328,7 @@ function toStrMethods( test )
   test.case = 'onlyRoutines & noRoutine both true';
   test.shouldThrowErrorOfAnyKind( function()
   {
-    _.toStrMethods( function f () {},{ noRoutine : 1 } );
+    _.toStrMethods( function f () {}, { noRoutine : 1 } );
   });
 
 }
@@ -2831,22 +3340,22 @@ function toStrFields( test )
   test.case = 'Fields default options';
   var got = _.toStrFields( [ 1, 2, 'text', undefined ] );
   var expected = '[ 1, 2, "text", undefined ]';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'Fields, levels : 0';
   var got = _.toStrFields( [ 1, 2, 'text', undefined ], { levels : 0 } );
   var expected = '[ Array with 4 elements ]';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'Ignore routine';
   var got = _.toStrFields( [ function f () {}, 1, 2, 3 ] );
   var expected = '[ 1, 2, 3 ]';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'no arguments';
   var got = _.toStrFields();
   var expected = 'undefined';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
 
 
@@ -2857,7 +3366,7 @@ function toStrFields( test )
     test.case = 'invalid argument type';
     test.shouldThrowErrorOfAnyKind( function()
     {
-      _.toStrFields( 'one','two' );
+      _.toStrFields( 'one', 'two' );
     });
 
     test.case = 'wrong arguments count';
@@ -2882,27 +3391,27 @@ function toStrShort( test )
   test.case = 'Array length test';
   var got = _.toStrShort( [ 1, 2, 'text', undefined ], { } );
   var expected = '[ Array with 4 elements ]';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'date to string';
   var got = _.toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), { }  );
   var expected = '1994-01-12T00:00:00.000Z';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'string length > 40';
   var got = _.toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
   var expected = '[ "toxtndmtmdbmmlzoirmf" ... "pyhnrrqfuvybuuvixyrx" ]';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'string with options';
   var got = _.toStrShort( '\toxtndmtmdb', { escaping : 1 } );
   var expected = '\\toxtndmtmdb';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'error to string ';
   var got = _.toStrShort( new Error( 'err' ), { } );
   var expected = '[object Error]';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   /**/
 
@@ -2937,17 +3446,17 @@ function _toStrIsVisibleElement( test )
   test.case = 'default options';
   var got = _._toStrIsVisibleElement( 123, {} );
   var expected = true;
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'noAtomic';
   var got = _._toStrIsVisibleElement( 'test', { noAtomic : 1 } );
   var expected = false;
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'noObject';
   var got = _._toStrIsVisibleElement( { a : 'test' }, { noObject : 1 } );
   var expected = false;
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   /**/
 
@@ -2982,27 +3491,27 @@ function _toStrIsSimpleElement( test )
   test.case = 'default options';
   var got = _._toStrIsSimpleElement( 123, {} );
   var expected = true;
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'string length > 40';
   var got = _._toStrIsSimpleElement( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', {} );
   var expected = false;
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'object test';
   var got = _._toStrIsSimpleElement( { a : 1 }, {} );
   var expected = false;
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'atomic test';
   var got = _._toStrIsSimpleElement( undefined, {} );
   var expected = true;
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'escaping test';
   var got = _._toStrIsSimpleElement( '\naaa', { escaping : 1 } );
   var expected = true;
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   /**/
 
@@ -3037,12 +3546,12 @@ function _toStrFromRoutine( test )
   test.case = 'routine test';
   var got = _._toStrFromRoutine( function a () {} );
   var expected = '[ routine a ]';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'routine without name';
   var got = _._toStrFromRoutine( function() {} );
   var expected = '[ routine without name ]';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   /**/
 
@@ -3071,22 +3580,22 @@ function _toStrFromNumber( test )
   test.case = 'default options';
   var got = _._toStrFromNumber( 123, {} );
   var expected = '123';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'number precision test';
   var got = _._toStrFromNumber( 123, { precision : 2 } );
   var expected = '1.2e+2';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'number fixed test';
   var got = _._toStrFromNumber( 123, { fixed : 2 } );
   var expected = '123.00';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'invalid option type';
   var got = _._toStrFromNumber( 123, { fixed : '2' } );
   var expected = '123';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   /**/
 
@@ -3096,7 +3605,7 @@ function _toStrFromNumber( test )
     test.case = 'invalid first argument type';
     test.shouldThrowErrorOfAnyKind( function()
     {
-      _._toStrFromNumber( '1',{} );
+      _._toStrFromNumber( '1', {} );
     });
 
     test.case = 'invalid second argument type';
@@ -3229,7 +3738,7 @@ function _toStrIsSimpleElement2( test )
   test.identical( got, expected );
 
   test.case = 'argument\'s length is greater than 40 symbols';
-  var got = _._toStrIsSimpleElement( 'test,test,test,test,test,test,test,test,test.' );
+  var got = _._toStrIsSimpleElement( 'test, test, test, test, test, test, test, test, test.' );
   var expected = false;
   test.identical( got, expected );
 
@@ -3265,22 +3774,22 @@ function _toStrFromStr( test )
   test.case = 'default options';
   var got = _._toStrFromStr( '123', {} );
   var expected = '123';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'escaping';
   var got = _._toStrFromStr( '\n123\u001b', { escaping : 1 } );
   var expected = '\\n123\\u001b';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'stringWrapper';
   var got = _._toStrFromStr( 'string', { stringWrapper : '"' } );
   var expected = '"string"';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'multilinedString';
   var got = _._toStrFromStr( 'string\nstring2', { stringWrapper : '`' } );
   var expected = "`string\nstring2`";
-  test.identical( got,expected );
+  test.identical( got, expected );
 
 
   /**/
@@ -3317,17 +3826,17 @@ function _toStrFromArray( test )
   test.case = 'default options';
   var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 1 } ).text;
   var expected = '[ 1, 2, 3 ]';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'wrap test';
   var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 0 } ).text;
   var expected = '   1, 2, 3';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'levels 0 test';
   var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 0, levels : 0, comma : ', ', wrap : 1 } ).text;
   var expected = '[ Array with 3 elements ]';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'dtab & multiline test';
   var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab: '-', level : 0, comma : ', ', wrap : 1, multiline : 1 } ).text;
@@ -3339,7 +3848,7 @@ function _toStrFromArray( test )
     ' -3',
     ' ]',
   ].join( '\n' );
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   /**/
 
@@ -3371,31 +3880,31 @@ function _toStrFromArray( test )
 
 function _toStrFromObject( test )
 {
-  var def = { tab : ' ', dtab : '   ',level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0};
+  var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0};
 
   test.case = 'default options';
   var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );
   var expected = '{ a : 1, b : 2, c : text }';
-  test.identical( got.text,expected );
+  test.identical( got.text, expected );
 
   test.case = 'levels 0 test';
   def.levels = 0;
   var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );
   var expected = '[ Object with 3 elements ]';
-  test.identical( got.text,expected );
+  test.identical( got.text, expected );
 
   test.case = 'wrap 0 test';
   def.levels = 1;
   def.wrap = 0;
   var got = _._toStrFromObject( { a : 1, b : 2, c : 'text' }, def );
   var expected = 'a : 1, b : 2, c : text';
-  test.identical( got.text,expected );
+  test.identical( got.text, expected );
 
   test.case = 'noObject test';
   def.noObject = 1;
   var got = _._toStrFromObject( { a : 1, b : 2, c : 'text' }, def );
   var expected = undefined;
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'dtab & prependTab & multiline test';
   def.noObject = 0;
@@ -3409,7 +3918,7 @@ function _toStrFromObject( test )
     ' *b : 2, ',
     ' *c : text',
   ].join( '\n' );
-  test.identical( got.text,expected );
+  test.identical( got.text, expected );
 
   /**/
 
@@ -3447,7 +3956,7 @@ function _toStrFromObject( test )
 
 function _toStrFromContainer( test )
 {
-  var o = { tab : ' ', dtab : '   ',level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0, noSubObject : 0, prependTab : 1, jsonLike : 0, stringWrapper : '"' };
+  var o = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0, noSubObject : 0, prependTab : 1, jsonLike : 0, stringWrapper : '"' };
   var src = { a : 1, b : 2, c : 'text' };
   var names = _.mapOwnKeys( src );
   var optionsItem = null;
@@ -3474,9 +3983,9 @@ function _toStrFromContainer( test )
     postfix : '}',
   });
   var expected = ' { a : 1, b : 2, c : "text" }';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
-  test.case = 'wrap 0,comma ,dtab, multiline test';
+  test.case = 'wrap 0, comma , dtab, multiline test';
 
   o.wrap = 0;
   o.comma = '_';
@@ -3502,7 +4011,7 @@ function _toStrFromContainer( test )
     ' *c | "text"',
   ].join( '\n' );
 
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'json test';
 
@@ -3527,7 +4036,7 @@ function _toStrFromContainer( test )
   });
   var expected = ' { "a" : 1, "b" : 2, "c" : "text" }';
 
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   /**/
 
@@ -3561,13 +4070,21 @@ function _toStrFromContainer( test )
 var Self =
 {
 
-  name : 'Tools.base.l4.String.2',
+  name : 'Tools.base.l3.Stringer',
   silencing : 1,
-  enabled : 0, // !!! refactoring
+  enabled : 1,
+
+  context :
+  {
+    reportChars,
+    stringFromFile,
+    testFunction,
+  },
 
   tests :
   {
 
+    toStr,
     toStrUnwrapped,
     toStrError,
     toStrArray,
