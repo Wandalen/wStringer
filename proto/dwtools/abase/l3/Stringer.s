@@ -1464,6 +1464,7 @@ function _toStrFromContainer( o )
   var optionsContainer = o.optionsContainer;
   var optionsItem = o.optionsItem;
 
+  var length = values.length || names.length;
   var simple = o.simple;
   var prefix = o.prefix;
   var postfix = o.postfix;
@@ -1584,8 +1585,8 @@ function _toStrFromContainer( o )
 
   /* wrap */
 
-  if( values.length - l > 0 )
-  result += other( values.length );
+  if( length - l > 0 )
+  result += other( length );
 
   if( optionsContainer.wrap )
   {
