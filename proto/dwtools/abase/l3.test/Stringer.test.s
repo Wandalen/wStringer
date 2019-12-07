@@ -3280,7 +3280,7 @@ function toStrLimitElements( test )
   [
     '  a : 1, ',
     '  b : 2, ',
-    '  c : [ Object with 2 elements ], ',
+    '  c : {- Object with 2 elements -}, ',
     '  d : 3',
 
   ].join( '\n' ),
