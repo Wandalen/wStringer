@@ -3632,7 +3632,7 @@ function _toStrFromNumber( test )
     test.case = 'fixed out of range';
     test.shouldThrowErrorOfAnyKind( function()
     {
-      _._toStrFromNumber( 1, { precision : 22 });
+      _._toStrFromNumber( 1, { fixed : 22 });
     });
 
   }
