@@ -2704,22 +2704,22 @@ function toStrLevel( test )
    [
     /*01*/
       [
-       '[ Object with 3 elements ]',
+       '{- Object with 3 elements -}',
       ].join( '\n' ),
 
     /*02*/
       [
        '{',
-       '  a : [ Object with 1 elements ], ',
+       '  a : {- Object with 1 elements -}, ',
        '  b : "b", ',
-       '  c : [ Object with 1 elements ]',
+       '  c : {- Object with 1 elements -}',
        '}'
 
       ].join( '\n' ),
 
     /*03*/
       [
-       '[ Object with 4 elements ]',
+       '{- Object with 4 elements -}',
       ].join( '\n' ),
 
     /*04*/
@@ -2727,7 +2727,7 @@ function toStrLevel( test )
        '{',
        '  a : "a", ',
        '  b : "b", ',
-       '  c : [ Object with 1 elements ]',
+       '  c : {- Object with 1 elements -}',
        '}',
 
       ].join( '\n' ),
