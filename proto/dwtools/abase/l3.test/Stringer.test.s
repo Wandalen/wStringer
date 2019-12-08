@@ -3074,8 +3074,8 @@ function toStrDate( test )
   expected =
   [
     '1994-01-12T00:00:00.000Z',
-    '1989-12-30T22:00:00.000Z',
-    '2017-01-07T22:00:00.000Z',
+    '1989-12-31T02:00:00.000Z',
+    '2017-01-08T03:00:00.000Z',
     '',
   ]
   testFunction( test, desc, src, options, expected );
