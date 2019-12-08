@@ -3890,7 +3890,7 @@ function _toStrFromObject( test )
   test.case = 'levels 0 test';
   def.levels = 0;
   var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );
-  var expected = '[ Object with 3 elements ]';
+  var expected = '{- Object with 3 elements -}';
   test.identical( got.text, expected );
 
   test.case = 'wrap 0 test';
