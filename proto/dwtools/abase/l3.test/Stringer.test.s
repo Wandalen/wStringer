@@ -3835,7 +3835,7 @@ function _toStrFromArray( test )
 
   test.case = 'levels 0 test';
   var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 0, levels : 0, comma : ', ', wrap : 1 } ).text;
-  var expected = '[ Array with 3 elements ]';
+  var expected = '{- Array with 3 elements -}';
   test.identical( got, expected );
 
   test.case = 'dtab & multiline test';
