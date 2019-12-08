@@ -1120,6 +1120,9 @@ function _toStrFromStr( src,o )
   //var q = o.multilinedString ? '`' : o.stringWrapper;
   var q = o.stringWrapper;
 
+  if( src.length === 1 )
+  q = '\'';
+
   if( o.limitStringLength )
   {
     result = _.strStrShort({ src, limit : o.limitStringLength, wrap : q, escaping : 1 });

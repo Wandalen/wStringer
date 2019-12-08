@@ -629,7 +629,7 @@ function toStr( test )
     var got = _.toStr( sample.in, sample.options );
     debugger;
 
-    test.case = sample.description || null;
+    test.case = sample.description || '';
     test.identical( got, sample.out );
 
   }
