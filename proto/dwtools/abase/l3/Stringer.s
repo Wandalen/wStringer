@@ -1565,7 +1565,7 @@ function _toStrFromContainer( o )
     {
       if( optionsContainer.keyWrapper )
       result += optionsContainer.keyWrapper + String( names[ n ] ) + optionsContainer.keyWrapper + optionsContainer.colon;
-      else
+      else if( String( names[ n ] ) !== r.text )
       result += String( names[ n ] ) + optionsContainer.colon;
 
       if( !r.simple )

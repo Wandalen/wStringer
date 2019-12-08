@@ -2629,7 +2629,10 @@ function toStrstringWrapper( test )
     /*04*/
       [
 
-       '{ a : "test", b : Error: err }',
+       '{',
+       '  a : "test", ',
+       '  b : Error: err',
+       '}'
 
      ].join( '\n' ),
 
@@ -2639,7 +2642,7 @@ function toStrstringWrapper( test )
        '{',
        '  a, ',
        '  b, ',
-       '  c : [ Object with 1 elements ]',
+       '  c : {- Object with 1 elements -}',
        '}'
 
      ].join( '\n' ),
