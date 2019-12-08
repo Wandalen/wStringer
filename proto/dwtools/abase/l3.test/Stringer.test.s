@@ -1799,14 +1799,14 @@ function toStrObject( test )
   expected =
   [
     /*01*/  '{ a : 1, b : 2, c : 3 }',
-    /*02*/  '[ Object with 3 elements ]',
+    /*02*/  '{- Object with 3 elements -}',
     /*03*/  '{ q : 6, w : 7, e : 8 }',
 
     /*04*/
     [
       '{',
       '  u : 12, ',
-      '  i : [ Object with 1 elements ], ',
+      '  i : {- Object with 1 elements -}, ',
       '  p : 14',
       '}'
     ].join( '\n' ),
