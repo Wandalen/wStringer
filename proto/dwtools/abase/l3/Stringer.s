@@ -1516,6 +1516,13 @@ function _toStrFromContainer( o )
     /*result += '\n' + optionsItem.tab;*/
   }
 
+  /* keyWrapper */
+
+  if( optionsContainer.json )
+  {
+    optionsContainer.keyWrapper = '"';
+  }
+
   /* exec */
 
   var r;
