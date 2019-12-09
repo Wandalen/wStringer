@@ -2714,7 +2714,7 @@ function toStrLevel( test )
       [
        '{',
        '  a : {- Object with 1 elements -}, ',
-       '  b : "b", ',
+       '  b : \'b\', ',
        '  c : {- Object with 1 elements -}',
        '}'
 
@@ -2728,8 +2728,8 @@ function toStrLevel( test )
     /*04*/
       [
        '{',
-       '  a : "a", ',
-       '  b : "b", ',
+       '  a : \'a\', ',
+       '  b : \'b\', ',
        '  c : {- Object with 1 elements -}',
        '}',
 
