@@ -2138,7 +2138,7 @@ function toStrObject( test )
     [
       '{',
       '  sequence : "<\\u001cb>text<\\u001cb>", ',
-      '  data : [ Object with 2 elements ], ',
+      '  data : {- Object with 2 elements -}, ',
       '  shift : false, ',
       '  code : "<b>text<b>"',
       '}'
@@ -2503,7 +2503,7 @@ function toStrJson( test )
 
 function _toStrJsonFromFile( test, encoding )
 {
-  var desc =  'json from file as utf8',
+  var desc =  'json from file as ' + encoding,
 
   src =
   [
