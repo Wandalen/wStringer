@@ -2344,7 +2344,7 @@ function toStrJson( test )
     [
       '{',
       '  "a" : 100, ',
-      '  "b" : "c", ',
+      '  "b" : \'c\', ',
       '  "c" : { "d" : true, "e" : null }',
       '}'
 
@@ -2353,7 +2353,7 @@ function toStrJson( test )
     /*02*/
     [
       '{',
-      '  "b" : "a", ',
+      '  "b" : \'a\', ',
       '  "c" : 50, ',
       '  "d" : { "a" : "undefined", "e" : null }',
       '}'
@@ -2365,7 +2365,7 @@ function toStrJson( test )
       '[',
       '  {',
       '    "a" : 100, ',
-      '    "b" : "x", ',
+      '    "b" : \'x\', ',
       '    "c" : { "d" : true, "e" : null }',
       '  }',
       ']'
