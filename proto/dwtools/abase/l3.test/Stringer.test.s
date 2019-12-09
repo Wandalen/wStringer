@@ -1141,8 +1141,8 @@ function toStrArray( test )
     /*02*/
     [
       '[',
-      '  [ Object with 1 elements ], ',
-      '  [ Object with 1 elements ]',
+      '  {- Object with 1 elements -}, ',
+      '  {- Object with 1 elements -}',
       ']'
     ].join( '\n' ),
 
@@ -1164,7 +1164,7 @@ function toStrArray( test )
     /*07*/
     [
       '[',
-      '  [ Object with 1 elements ]',
+      '  {- Object with 1 elements -}',
       ']'
     ].join( '\n' ),
 
@@ -1173,7 +1173,7 @@ function toStrArray( test )
 
     /*09*/ '[ "\\n\\nEscaping test" ]',
 
-    /*10*/ '[ Array with 3 elements ]',
+    /*10*/ '{- Array with 3 elements -}',
     /*11*/ '[ 1, 2, 3 ]',
     /*12*/
     [
@@ -1267,8 +1267,8 @@ function toStrArray( test )
 
     /*25*/
     [
-      '  [ Array with 3 elements ] | ',
-      '  [ Array with 3 elements ]',
+      '  {- Array with 3 elements -} | ',
+      '  {- Array with 3 elements -}',
     ].join( '\n' ),
 
     /*26*/
@@ -1284,7 +1284,7 @@ function toStrArray( test )
     /*29*/
     '| 15. 16. 17. 18',
     /*30*/
-    '  [ Object with 3 elements ]',
+    '  {- Object with 3 elements -}',
     /*31*/
     '  "a". 1. false',
     /*32*/
@@ -1299,7 +1299,7 @@ function toStrArray( test )
     /*36*/
     [
       '  7. ',
-      '  [ Object with 1 elements ]. ',
+      '  {- Object with 1 elements -}. ',
       '  1. ',
       '  "x"',
     ].join( '\n' ),
@@ -1395,7 +1395,6 @@ function toStrArray( test )
       '    5||',
       '    4||',
       '      3||',
-      '',
       '    2||1||0',
     ].join( '\n' ),
 
@@ -1602,7 +1601,7 @@ function toStrArray( test )
     [
       '[',
       '  [], ',
-      '  1989-12-30T22:00:00.000Z',
+      '  1989-12-31T02:00:00.000Z',
       ']'
     ].join( '\n' ),
 
@@ -1611,7 +1610,7 @@ function toStrArray( test )
     [
       '[',
       '|  [], ',
-      '|  1999-01-31T22:00:00.000Z',
+      '|  1999-02-01T02:00:00.000Z',
       '|]'
     ].join( '\n' ),
 

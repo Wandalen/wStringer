@@ -732,6 +732,10 @@ function _toStrShort( src, o )
     {
       result += _toStrFromRoutine( src,o );
     }
+    else if( _.numberIs( src ) )
+    {
+      result += _toStrFromNumber( src,o );
+    }
     else
     {
       result = _.strShort( src );
@@ -1487,12 +1491,12 @@ function _toStrFromContainer( o )
   var optionsContainer = o.optionsContainer;
   var optionsItem = o.optionsItem;
 
-  var length = values.length || names.length;
+  var length = ( names ? names.length : values.length );
   var simple = o.simple;
   var prefix = o.prefix;
   var postfix = o.postfix;
   var limit = optionsContainer.limitElementsNumber;
-  var l = ( names ? names.length : values.length );
+  var l = length;
 
   if( limit > 0 && limit < l )
   {
@@ -1565,7 +1569,7 @@ function _toStrFromContainer( o )
     if( names )
     r = _toStr( values[ names[ n ] ],optionsItem );
     else
-    r = _toStr( values[ n ],optionsItem );
+    r = _toStr( values[ n ],optionsItem );//aa
 
     _.assert( _.objectIs( r ) && _.strIs( r.text ) );
     _.assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
