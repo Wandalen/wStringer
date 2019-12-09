@@ -521,6 +521,12 @@ function toStrShort( src )
 
 function _toStr( src,o )
 {
+  if( o.precision < 1 || o.precision > 21 )
+  throw _.err( 'RangeError' );
+
+  if( o.fixed < 0 || o.fixed > 20 )
+  throw _.err( 'RangeError' );
+
   var result = '';
   var simple = 1;
   var type = _.strPrimitiveType( src );
@@ -1044,11 +1050,11 @@ function _toStrFromNumber( src,o )
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( _.numberIs( src ) && _.objectIs( o ) );
 
-  if( o.precision && ( o.precision < 1 || o.precision > 21 ) )
-  throw _.err( 'RangeError' )
+  if( o.precision < 1 || o.precision > 21 )
+  throw _.err( 'RangeError' );
 
-  if( o.fixed && ( o.fixed < 0 || o.fixed > 20 ) )
-  throw _.err( 'RangeError' )
+  if( o.fixed < 0 || o.fixed > 20 )
+  throw _.err( 'RangeError' );
 
   if( _.numberIs( o.precision ) )
   result += src.toPrecision( o.precision );
