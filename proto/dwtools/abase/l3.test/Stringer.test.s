@@ -2846,27 +2846,27 @@ function toStrEnumerable( test )
 
     /*03*/
       [
-       '{ getFoo : [ routine without name ], foo : 1 }'
+       '{ getFoo : [ routine value ], foo : 1 }'
       ].join( '\n' ),
 
     /*04*/
       [
         '{',
+        '  a : "string", ',
+        '  getFoo : [ routine value ], ',
+        '  foo : 1, ',
         '  constructor : [ routine Object ], ',
-        '  toString : [ routine toString ], ',
-        '  toLocaleString : [ routine toLocaleString ], ',
-        '  valueOf : [ routine valueOf ], ',
+        '  __defineGetter__ : [ routine __defineGetter__ ], ',
+        '  __defineSetter__ : [ routine __defineSetter__ ], ',
         '  hasOwnProperty : [ routine hasOwnProperty ], ',
+        '  __lookupGetter__ : [ routine __lookupGetter__ ], ',
+        '  __lookupSetter__ : [ routine __lookupSetter__ ], ',
         '  isPrototypeOf : [ routine isPrototypeOf ], ',
         '  propertyIsEnumerable : [ routine propertyIsEnumerable ], ',
-        '  __defineGetter__ : [ routine __defineGetter__ ], ',
-        '  __lookupGetter__ : [ routine __lookupGetter__ ], ',
-        '  __defineSetter__ : [ routine __defineSetter__ ], ',
-        '  __lookupSetter__ : [ routine __lookupSetter__ ], ',
-        '  __proto__ : [ Object with 1 elements ], ',
-        '  getFoo : [ routine without name ], ',
-        '  foo : 1, ',
-        '  a : "string"',
+        '  toString : [ routine toString ], ',
+        '  valueOf : [ routine valueOf ], ',
+        '  __proto__ : {- Object with 1 elements -}, ',
+        '  toLocaleString : [ routine toLocaleString ]',
         '}',
       ].join( '\n' ),
    ]
