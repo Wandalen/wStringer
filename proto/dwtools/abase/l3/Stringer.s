@@ -1569,7 +1569,7 @@ function _toStrFromContainer( o )
     if( names )
     r = _toStr( values[ names[ n ] ],optionsItem );
     else
-    r = _toStr( values[ n ],optionsItem );//aa
+    r = _toStr( values[ n ],optionsItem );
 
     _.assert( _.objectIs( r ) && _.strIs( r.text ) );
     _.assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
