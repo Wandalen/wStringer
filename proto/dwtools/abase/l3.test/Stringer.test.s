@@ -3392,12 +3392,12 @@ function toStrFields( test )
 function toStrShort( test )
 {
   test.case = 'Array length test';
-  var got = _._toStrShort( [ 1, 2, 'text', undefined ], { } );
+  var got = _._toStrShort( [ 1, 2, 'text', undefined ], {} );
   var expected = '{- Array with 4 elements -}';
   test.identical( got, expected );
 
   test.case = 'date to string';
-  var got = _._toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), { }  );
+  var got = _._toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), {}  );
   var expected = '1994-01-12T00:00:00.000Z';
   test.identical( got, expected );
 
@@ -3412,7 +3412,7 @@ function toStrShort( test )
   test.identical( got, expected );
 
   test.case = 'error to string ';
-  var got = _._toStrShort( new Error( 'err' ), { } );
+  var got = _._toStrShort( new Error( 'err' ), {} );
   var expected = 'Error: err';
   test.identical( got, expected );
 
@@ -3547,12 +3547,12 @@ function _toStrIsSimpleElement( test )
 function _toStrFromRoutine( test )
 {
   test.case = 'routine test';
-  var got = _._toStrFromRoutine( function a () {}, { } );
+  var got = _._toStrFromRoutine( function a () {}, {} );
   var expected = '[ routine a ]';
   test.identical( got, expected );
 
   test.case = 'routine without name';
-  var got = _._toStrFromRoutine( function() {}, { } );
+  var got = _._toStrFromRoutine( function() {}, {} );
   var expected = '[ routine without name ]';
   test.identical( got, expected );
 
@@ -3716,48 +3716,48 @@ function _toStrIsSimpleElement2( test )
 {
 
   test.case = 'argument\'s length is less than 40 symbols';
-  var got = _._toStrIsSimpleElement( 'test' );
+  var got = _._toStrIsSimpleElement( 'test', {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument is number';
-  var got = _._toStrIsSimpleElement( 13 );
+  var got = _._toStrIsSimpleElement( 13, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument is boolean';
-  var got = _._toStrIsSimpleElement( true );
+  var got = _._toStrIsSimpleElement( true, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument is null';
-  var got = _._toStrIsSimpleElement( null );
+  var got = _._toStrIsSimpleElement( null, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument is undefined';
-  var got = _._toStrIsSimpleElement( undefined );
+  var got = _._toStrIsSimpleElement( undefined, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument\'s length is greater than 40 symbols';
-  var got = _._toStrIsSimpleElement( 'test, test, test, test, test, test, test, test, test.' );
+  var got = _._toStrIsSimpleElement( 'test, test, test, test, test, test, test, test, test.', {} );
   var expected = false;
   test.identical( got, expected );
 
   test.case = 'argument is an object';
-  var got = _._toStrIsSimpleElement( { a: 33 } );
+  var got = _._toStrIsSimpleElement( { a: 33 }, {} );
   var expected = false;
   test.identical( got, expected );
 
   test.case = 'argument is an array';
-  var got = _._toStrIsSimpleElement( [ 1, 2, 3 ] );
+  var got = _._toStrIsSimpleElement( [ 1, 2, 3 ], {} );
   var expected = false;
   test.identical( got, expected );
 
   test.case = 'argument is an array-like';
   var arrLike = ( function( ) { return arguments; } )( 1, 2, 3 );
-  var got = _._toStrIsSimpleElement( arrLike );
+  var got = _._toStrIsSimpleElement( arrLike, {} );
   var expected = false;
   test.identical( got, expected );
 
@@ -3766,7 +3766,7 @@ function _toStrIsSimpleElement2( test )
   if( !Config.debug )
   return;
 
-  xxx
+  /**/
 
 };
 
