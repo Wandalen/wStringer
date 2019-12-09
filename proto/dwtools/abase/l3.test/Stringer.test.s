@@ -3413,7 +3413,6 @@ function toStrShort( test )
 
   test.case = 'error to string ';
   var got = _._toStrShort( new Error( 'err' ), {} );
-  console.log(got)
   var expected = '[object Error]';
   test.identical( got, expected );
 
