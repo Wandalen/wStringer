@@ -125,7 +125,7 @@ function testFunction( test, desc, src, options, expected )
     }
     else
     {
-      test.identical( got, expected[ k ] );
+      test.identical( got, expected[ k ] ); debugger;
     }
 
   }

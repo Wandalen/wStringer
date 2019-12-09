@@ -164,8 +164,7 @@ module:
           - ../proto/dwtools/abase/l3
           - ../proto/dwtools/abase/l3/Stringer.s
           - ../proto/dwtools/abase/l3.test
-          - ../proto/dwtools/abase/l3.test/String.toStr1.test.s
-          - ../proto/dwtools/abase/l3.test/String.toStr2.test.s
+          - ../proto/dwtools/abase/l3.test/Stringer.test.s
           - ../proto/dwtools/abase/l3.test/StrJson.test.s
           - ../proto/dwtools/amid
           - ../proto/dwtools/atop
