@@ -724,6 +724,10 @@ function _toStrShort( src, o )
       result = _toStrFromStr( src, o2 );
 
     }
+    else if( _.errIs( src ) )
+    {
+      result += _ObjectToString.call( src );
+    }
     else if( _.routineIs( src ) )
     {
       result += _toStrFromRoutine( src,o );
