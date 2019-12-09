@@ -1854,7 +1854,7 @@ function toStrObject( test )
     /*08*/
     [
       '{',
-      '  w : "c"',
+      '  w : \'c\'',
       '}'
     ].join( '\n' ),
 
@@ -1883,7 +1883,7 @@ function toStrObject( test )
     [
       '  a : null* ',
       '  b : 1* ',
-      '  c : "2"* ',
+      '  c : \'2\'* ',
       '  d : undefined* ',
       '  e : true* ',
       '  f : Symbol(symbol)'
@@ -2010,7 +2010,7 @@ function toStrObject( test )
 
     /*31*/
     [
-      '  a : "a", , ',
+      '  a : \'a\', , ',
       '  b : ',
       '    d : false, , ',
       '  c : 3'
@@ -2020,7 +2020,7 @@ function toStrObject( test )
     [
       '  a : "\\na"| ',
       '  b : d : "\\ntrue"| ',
-      '  c : "\\n"'
+      '  c : \'\\n\''
 
     ].join( '\n' ),
 
@@ -2275,7 +2275,7 @@ function toStrObject( test )
 
     /*64*/
     [
-      '{ c : "3" }',
+      '{ c : \'3\' }',
 
     ].join( '\n' ),
 
