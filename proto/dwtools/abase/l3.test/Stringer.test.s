@@ -3547,12 +3547,12 @@ function _toStrIsSimpleElement( test )
 function _toStrFromRoutine( test )
 {
   test.case = 'routine test';
-  var got = _._toStrFromRoutine( function a () {} );
+  var got = _._toStrFromRoutine( function a () {}, { } );
   var expected = '[ routine a ]';
   test.identical( got, expected );
 
   test.case = 'routine without name';
-  var got = _._toStrFromRoutine( function() {} );
+  var got = _._toStrFromRoutine( function() {}, { } );
   var expected = '[ routine without name ]';
   test.identical( got, expected );
 
