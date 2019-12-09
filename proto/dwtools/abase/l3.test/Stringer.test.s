@@ -799,21 +799,21 @@ function toStrUnwrapped( test )
     /*06*/
 
     [
-      '  "a" ',
+      '  \'a\' ',
       '  7 ',
       '    1 ',
       '  8 ',
-      '  "b"',
+      '  \'b\'',
     ].join( '\n' ),
 
     /*07*/
 
     [
-      '  "a" ',
+      '  \'a\' ',
       '  7 ',
       '  u : 1 ',
       '  8 ',
-      '  "b"',
+      '  \'b\'',
     ].join( '\n' ),
 
     /*08*/
@@ -827,7 +827,6 @@ function toStrUnwrapped( test )
       '    5 ',
       '    4 ',
       '      3 ',
-      '',
       '    2 1 0',
     ].join( '\n' ),
 
@@ -837,14 +836,13 @@ function toStrUnwrapped( test )
       '    description : "edf" ',
       '    rewardForVisitor : a : 1 ',
       '    stationary : 1 ',
-      '    f : "f" ',
+      '    f : \'f\' ',
       '    quantity : 1 ',
-      '',
       '    nameLong : "abc2" ',
-      '    description : "edf2',
+      '    description : "edf2" ',
       '    rewardForVisitor : a : 1 ',
       '    stationary : 1 ',
-      '    f : "f" ',
+      '    f : \'f\' ',
       '    quantity : 1',
 
     ].join( '\n' ),
@@ -852,11 +850,11 @@ function toStrUnwrapped( test )
     /*11*/
 
     [
-      '-  1 : "a" ',
-      '-  2 : 10 20 30 ',
-      '-  3 : 21 : "aa" 22 : "bb" ',
-      '-  4 : 10 20 30 ',
-      '-  13 : 10 20 30',
+      '  1 : \'a\' ',
+      '  2 :   10 20 30 ',
+      '  3 : 21 : "aa" 22 : "bb" ',
+      '  4 :   10 20 30 ',
+      '  13 :   10 20 30',
     ].join( '\n' ),
 
   ];
