@@ -4091,8 +4091,8 @@ var Self =
     toStrArray,
     toStrObject,
     toStrJson,
-    toStrJsonFromFileU,
-    toStrJsonFromFileA,
+    //toStrJsonFromFileU, //There's no proto/file.test directory with files to test
+    //toStrJsonFromFileA, //There's no proto/file.test directory with files to test
     toStrstringWrapper,
     toStrLevel,
     toStrEnumerable,
