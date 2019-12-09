@@ -3305,7 +3305,7 @@ function toStrMethods( test )
 
   test.case = 'converts routine to string, levels:0';
   var got = _.toStrMethods( function route() {}, { levels : 0 } );
-  var expected = 'function route() {}';
+  var expected = '[ routine route ]';
   test.identical( got, expected );
 
   test.case = 'different input data types';
