@@ -1706,7 +1706,7 @@ function _toStrFromObject( src,o )
   var result = '';
 
   _.assert( arguments.length === 2 );
-  _.assert( _.objectLike( src ) );
+  _.assert( _.objectLike( src ) || _.strPrimitiveType( src ) === 'Error' );
   _.assert( _.objectIs( o ) || o === undefined,'Expects map {-o-}' );
 
 
