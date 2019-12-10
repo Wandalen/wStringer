@@ -75,7 +75,7 @@ function reportChars()
 function stringFromFile( name, encoding, begin, end )
 {
   // var str = File.readFileSync( __dirname + '/../../../file.test/' + name, encoding ); /* xxx : use wFiles */
-  var str = fileProvider.fileRead({ filePath : __dirname + '/../../../file.test/' + name, encoding });
+  var str = fileProvider.fileRead({ filePath : __dirname + '/../../../../asset/test/' + name, encoding });
   str = str.slice( begin, end );
 
   //if( name === 'file1' )
@@ -98,7 +98,7 @@ function testFunction( test, desc, src, options, expected )
     var optionsTest = options[ k ] || options[ 0 ];
     got = _.toStr( src[ k ], optionsTest );
 
-    if( test.case.slice( 0, 4 ) === 'json' && optionsTest.json )
+    if( test.case.slice( 0, 4 ) === 'json' && optionsTest.jsonLike )
     {
 
       // good
@@ -2333,100 +2333,100 @@ function toStrJson( test )
 
      ///*04*/ { jsonLike : 1, noRoutine : 1 },
 
-   ],
+   ];
 
-   expected =
-   [
-   
-    /*01*/
-    [
-      '{',
-      '  "a" : 100, ',
-      '  "b" : "c", ',
-      '  "c" : { "d" : true, "e" : null }',
-      '}'
-
-    ].join( '\n' ),
-   
-    /*02*/
-    [
-      '{',
-      '  "b" : "a", ',
-      '  "c" : 50, ',
-      '  "d" : { "a" : "undefined", "e" : null }',
-      '}'
-   
-    ].join( '\n' ),
-   
-    /*03*/
-    [
-      '[',
-      '  {',
-      '    "a" : 100, ',
-      '    "b" : "x", ',
-      '    "c" : { "d" : true, "e" : null }',
-      '  }',
-      ']'
-   
-    ].join( '\n' ),
-   
-    /*04*/
-    [
-      '{',
-      '  "a" : "aa", ',
-      '  "b" : [ 1, 2, 3 ], ',
-      '  "c" : [ routine r ]',
-      '}',
-   
-    ].join( '\n' ),
-   
-    /*05*/
-    [
-  
-      '[',
-      '  {',
-      '    "a" : 1, ',
-      '    "b" : 2, ',
-      '    "c" : ',
-      '    {',
-      '      "d" : [ null, null ]',
-      '    }',
-      '  }',
-      ']',
-   
-    ].join( '\n' ),
-   
-    /*06*/
-    [
-  
-      '{',
-      '  "a" : "1994-01-12T00:00:00.000Z"',
-      '}',
-  
-    ].join( '\n' ),
-  
-    /*07*/
-    [
-  
-      '{',
-      '  "a" : Error: r',
-      '}',
-  
-    ].join( '\n' ),
-  
-    /*08*/
-    [
-  
-      '{ "a" : Symbol(sm) }'
-  
-    ].join( '\n' ),
-  
-    /*09*/
-    [
-  
-      '{ "a" : "\\n\\nABC" }'
-  
-    ].join( '\n' ),
+  // expected =
+  // [
+  // 
+  //  /*01*/
+  //  [
+  //    '{',
+  //    '  "a" : 100, ',
+  //    '  "b" : "c", ',
+  //    '  "c" : { "d" : true, "e" : null }',
+  //    '}'
+  //
+  //  ].join( '\n' ),
+  // 
+  //  /*02*/
+  //  [
+  //    '{',
+  //    '  "b" : "a", ',
+  //    '  "c" : 50, ',
+  //    '  "d" : { "a" : "undefined", "e" : null }',
+  //    '}'
+  // 
+  //  ].join( '\n' ),
+  // 
+  //  /*03*/
+  //  [
+  //    '[',
+  //    '  {',
+  //    '    "a" : 100, ',
+  //    '    "b" : "x", ',
+  //    '    "c" : { "d" : true, "e" : null }',
+  //    '  }',
+  //    ']'
+  // 
+  //  ].join( '\n' ),
+  // 
+  //  /*04*/
+  //  [
+  //    '{',
+  //    '  "a" : "aa", ',
+  //    '  "b" : [ 1, 2, 3 ], ',
+  //    '  "c" : [ routine r ]',
+  //    '}',
+  // 
+  //  ].join( '\n' ),
+  // 
+  //  /*05*/
+  //  [
+  //
+  //    '[',
+  //    '  {',
+  //    '    "a" : 1, ',
+  //    '    "b" : 2, ',
+  //    '    "c" : ',
+  //    '    {',
+  //    '      "d" : [ null, null ]',
+  //    '    }',
+  //    '  }',
+  //    ']',
+  // 
+  //  ].join( '\n' ),
+  // 
+  //  /*06*/
+  //  [
+  //
+  //    '{',
+  //    '  "a" : "1994-01-12T00:00:00.000Z"',
+  //    '}',
+  //
+  //  ].join( '\n' ),
+  //
+  //  /*07*/
+  //  [
+  //
+  //    '{',
+  //    '  "a" : Error: r',
+  //    '}',
+  //
+  //  ].join( '\n' ),
+  //
+  //  /*08*/
+  //  [
+  //
+  //    '{ "a" : Symbol(sm) }'
+  //
+  //  ].join( '\n' ),
+  //
+  //  /*09*/
+  //  [
+  //
+  //    '{ "a" : "\\n\\nABC" }'
+  //
+  //  ].join( '\n' ),
   //
   //     /*10*/
   //     [
@@ -2489,9 +2489,9 @@ function toStrJson( test )
   //     ''
   //   ].join( '\n' ),
    //
-   ];
+  // ];
 
-  testFunction( test, desc, src, options, expected );
+  testFunction( test, desc, src, options );
 
 }
 
@@ -2530,7 +2530,7 @@ function _toStrJsonFromFile( test, encoding )
   options =
   [
     { jsonLike : 1 },
-  ]
+  ];
 
   testFunction( test, desc, src, options );
 
@@ -4091,8 +4091,8 @@ var Self =
     toStrArray,
     toStrObject,
     toStrJson,
-    //toStrJsonFromFileU, //There's no proto/file.test directory with files to test
-    //toStrJsonFromFileA, //There's no proto/file.test directory with files to test
+    toStrJsonFromFileU,
+    toStrJsonFromFileA,
     toStrstringWrapper,
     toStrLevel,
     toStrEnumerable,
