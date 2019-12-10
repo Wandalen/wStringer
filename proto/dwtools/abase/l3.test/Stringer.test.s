@@ -3342,12 +3342,28 @@ function toStrEnumerable( test )
 
 function toStrEmptyArgs( test )
 {
-  var desc = 'empty arguments',
-  src = [ {}, '', [] ],
-  options = [ {} ],
-  expected =[ '{}', '\'\'', '[]' ];
+  //  var desc = 'empty arguments',
+  //  src = [ {}, '', [] ],
+  //  options = [ {} ],
+  //  expected =[ '{}', '\'\'', '[]' ];
+  //
+  //  testFunction( test, desc, src, options, expected );
 
-  testFunction( test, desc, src, options, expected );
+  test.case = 'empty arguments, object';
+  var got = _.toStr( { }, { } );
+  var expected = '{}';
+  test.identical( got, expected );
+
+  test.case = 'empty arguments, string';
+  var got = _.toStr( '', { } );
+  var expected = '\'\'';
+  test.identical( got, expected );
+
+  test.case = 'empty arguments, array';
+  var got = _.toStr( [], { } );
+  var expected = '[]';
+  test.identical( got, expected );
+
 }
 
 //
