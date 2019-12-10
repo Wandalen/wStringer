@@ -384,7 +384,7 @@ function toStrFine_functor()
     level : 0,
 
     wrap : 1,
-    stringWrapper : '"',
+    stringWrapper : '\'',
     keyWrapper : '',
     prependTab : 1,
     errorAsMap : 0,
@@ -1143,9 +1143,6 @@ function _toStrFromStr( src,o )
 
   //var q = o.multilinedString ? '`' : o.stringWrapper;
   var q = o.stringWrapper;
-
-  if( src.length === 1 )
-  q = '\'';
 
   if( o.limitStringLength )
   {

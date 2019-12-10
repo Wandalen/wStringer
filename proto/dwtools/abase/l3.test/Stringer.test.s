@@ -917,17 +917,17 @@ function toStrError( test )
     /*02*/  'Error: msg',
     /*03*/  '[object Error]',
     /*04*/  '',
-    /*05*/  '{ stack : [ "Error: message2\\n   " ... "al/timers.js:480:7)" ], message : "message2" }',
+    /*05*/  '{ stack : [ \'Error: message2\\n   \' ... \'al/timers.js:480:7)\' ], message : \'message2\' }',
     /*06*/  '{}',
     /*07*/  '{}',
-    /*08*/  '{ stack : [ "Error: my message2\\n" ... "al/timers.js:480:7)" ], message : "my message2" }',
+    /*08*/  '{ stack : [ \'Error: my message2\\n\' ... \'al/timers.js:480:7)\' ], message : \'my message2\' }',
     /*09*/
       [
         '{',
-        '  stack : [ "Error: my message3\\n" ... "al/timers.js:480:7)" ], ',
-        '  message : "my message3", ',
+        '  stack : [ \'Error: my message3\\n\' ... \'al/timers.js:480:7)\' ], ',
+        '  message : \'my message3\', ',
         '  constructor : [ routine Error ], ',
-        '  name : "Error", ',
+        '  name : \'Error\', ',
         '  toString : [ routine toString ], ',
         '  __defineGetter__ : [ routine __defineGetter__ ], ',
         '  __defineSetter__ : [ routine __defineSetter__ ], ',
@@ -1169,7 +1169,7 @@ function toStrArray( test )
     /*08*/ '',
 
 
-    /*09*/ '[ "\\n\\nEscaping test" ]',
+    /*09*/ '[ \'\\n\\nEscaping test\' ]',
 
     /*10*/ '{- Array with 3 elements -}',
     /*11*/ '[ 1, 2, 3 ]',
@@ -1303,7 +1303,7 @@ function toStrArray( test )
     ].join( '\n' ),
 
     /*37*/
-    '  "\\n\\nEscaping & wrap test"',
+    '  \'\\n\\nEscaping & wrap test\'',
 
     /*38*/
     [
@@ -1360,14 +1360,14 @@ function toStrArray( test )
 
     /*46*/
     [
-      '    a : "\\na". ',
-      '    b : d : "\\ntrue"',
+      '    a : \'\\na\'. ',
+      '    b : d : \'\\ntrue\'',
     ].join( '\n' ),
 
     /*47*/
     [
-      '    x : "\\na", ',
-      '    y : z : "\\ntrue"',
+      '    x : \'\\na\', ',
+      '    y : z : \'\\ntrue\'',
     ].join( '\n' ),
 
     /*48*/
@@ -1424,13 +1424,13 @@ function toStrArray( test )
     [
       '[',
       '  {',
-      '    a : "\\\\test"',
+      '    a : \'\\\\test\'',
       '  }, ',
       '  {',
-      '    b : "\\ntest"',
+      '    b : \'\\ntest\'',
       '  }, ',
       '  {',
-      '    c : "test"',
+      '    c : \'test\'',
       '  }',
       ']',
     ].join( '\n' ),
@@ -1457,7 +1457,7 @@ function toStrArray( test )
 
     /*58*/
     [
-      '[ "test" ]',
+      '[ \'test\' ]',
     ].join( '\n' ),
 
     /*59*/
@@ -1821,12 +1821,12 @@ function toStrObject( test )
     /*06*/
     [
       '{',
-      '  z : "01", ',
+      '  z : \'01\', ',
       '  x : ',
       '  {',
       '    c : { g : 4 }',
       '  }, ',
-      '  v : "03"',
+      '  v : \'03\'',
       '}'
     ].join( '\n' ),
 
@@ -1890,7 +1890,7 @@ function toStrObject( test )
 
     /*14*/
     [
-      '  a : "true"-> ',
+      '  a : \'true\'-> ',
       '  b : 2-> ',
       '  c : false-> ',
       '  d : undefined'
@@ -1949,7 +1949,7 @@ function toStrObject( test )
 
     /*23*/
 
-    'x : "\\n10"| z : "\\\\11"',
+    'x : \'\\n10\'| z : \'\\\\11\'',
 
     /*24*/
     [
@@ -2016,8 +2016,8 @@ function toStrObject( test )
 
     /*32*/
     [
-      '  a : "\\na"| ',
-      '  b : d : "\\ntrue"| ',
+      '  a : \'\\na\'| ',
+      '  b : d : \'\\ntrue\'| ',
       '  c : \'\\n\''
 
     ].join( '\n' ),
@@ -2053,7 +2053,7 @@ function toStrObject( test )
     /*39*/
     [
       '{',
-      '  a : "bb", ',
+      '  a : \'bb\', ',
       '  b : { d : false }, ',
       '  c : 30.00000',
       '}'
@@ -2073,10 +2073,10 @@ function toStrObject( test )
     /*41*/
     [
       '{',
-      '  a : "\\na", ',
+      '  a : \'\\na\', ',
       '  b : ',
       '  {',
-      '    d : "\\ntrue"',
+      '    d : \'\\ntrue\'',
       '  }',
       '}'
 
@@ -2085,7 +2085,7 @@ function toStrObject( test )
     /*42*/
     [
       '{',
-      '  a : "aa", ',
+      '  a : \'aa\', ',
       '  b : {}',
       '}'
 
@@ -2094,7 +2094,7 @@ function toStrObject( test )
     /*43*/
     [
       '{',
-      '  a : "bb", ',
+      '  a : \'bb\', ',
       '  b : {}',
       '}'
 
@@ -2113,10 +2113,10 @@ function toStrObject( test )
     [
 
       '{',
-      '  sequence : "\\u001b[A", ',
-      '  name : "undefined", ',
+      '  sequence : \'\\u001b[A\', ',
+      '  name : \'undefined\', ',
       '  shift : false, ',
-      '  code : "[A"',
+      '  code : \'[A\'',
       '}'
 
     ].join( '\n' ),
@@ -2124,10 +2124,10 @@ function toStrObject( test )
     /*46*/
     [
       '{',
-      '  sequence : "\\u007f[A", ',
-      '  name : "undefined", ',
+      '  sequence : \'\\u007f[A\', ',
+      '  name : \'undefined\', ',
       '  shift : false, ',
-      '  code : "[A"',
+      '  code : \'[A\'',
       '}'
 
     ].join( '\n' ),
@@ -2135,10 +2135,10 @@ function toStrObject( test )
     /*47*/
     [
       '{',
-      '  sequence : "<\\u001cb>text<\\u001cb>", ',
+      '  sequence : \'<\\u001cb>text<\\u001cb>\', ',
       '  data : {- Object with 2 elements -}, ',
       '  shift : false, ',
-      '  code : "<b>text<b>"',
+      '  code : \'<b>text<b>\'',
       '}'
 
     ].join( '\n' ),
@@ -2146,9 +2146,9 @@ function toStrObject( test )
     /*48*/
     [
       '{',
-      '  sequence : "heLLo", ',
+      '  sequence : \'heLLo\', ',
       '  shift : false, ',
-      '  code : "heLLo"',
+      '  code : \'heLLo\'',
       '}'
 
     ].join( '\n' ),
@@ -2156,9 +2156,9 @@ function toStrObject( test )
     /*49*/
     [
       '{',
-      '  sequence : "\\nabc", ',
+      '  sequence : \'\\nabc\', ',
       '  shift : false, ',
-      '  code : "abc"',
+      '  code : \'abc\'',
       '}'
 
     ].join( '\n' ),
@@ -2166,9 +2166,9 @@ function toStrObject( test )
     /*50*/
     [
       '{',
-      '  sequence : "\\t[cba]\\t", ',
+      '  sequence : \'\\t[cba]\\t\', ',
       '  data : 100, ',
-      '  code : "\\n[cba]\\n"',
+      '  code : \'\\n[cba]\\n\'',
       '}'
 
     ].join( '\n' ),
@@ -2176,9 +2176,9 @@ function toStrObject( test )
     /*51*/
     [
       '{',
-      '  sequence : "\\\\ABC\\\\", ',
+      '  sequence : \'\\\\ABC\\\\\', ',
       '  data : 100, ',
-      '  code : "\\\\ABC\\\\"',
+      '  code : \'\\\\ABC\\\\\'',
       '}'
 
     ].join( '\n' ),
@@ -2186,34 +2186,34 @@ function toStrObject( test )
     /*52*/
     [
       '{',
-      '  sequence : "\\nline\\n", ',
+      '  sequence : \'\\nline\\n\', ',
       '  data : null, ',
-      '  code : "\\nline\\n"',
+      '  code : \'\\nline\\n\'',
       '}'
 
     ].join( '\n' ),
 
     /*53*/
     [
-      '{ sequence : "\\rspace\\r" }'
+      '{ sequence : \'\\rspace\\r\' }'
 
     ].join( '\n' ),
 
     /*54*/
     [
-      '{ sequence : "\\btest" }'
+      '{ sequence : \'\\btest\' }'
 
     ].join( '\n' ),
 
     /*55*/
     [
-      '{ sequence : "\\u000bsample" }'
+      '{ sequence : \'\\u000bsample\' }'
 
     ].join( '\n' ),
 
     /*56*/
     [
-      '{ sequence : "\\ftest" }'
+      '{ sequence : \'\\ftest\' }'
 
     ].join( '\n' ),
 
@@ -2281,10 +2281,10 @@ function toStrObject( test )
     [
 
       '{',
-      '  sequence : "\\u001b[A", ',
-      '  name : "undefined", ',
+      '  sequence : \'\\u001b[A\', ',
+      '  name : \'undefined\', ',
       '  shift : false, ',
-      '  code : "[A"',
+      '  code : \'[A\'',
       '}'
 
     ].join( '\n' ),
@@ -2342,7 +2342,7 @@ function toStrJson( test )
     [
       '{',
       '  "a" : 100, ',
-      '  "b" : \'c\', ',
+      '  "b" : "c", ',
       '  "c" : { "d" : true, "e" : null }',
       '}'
 
@@ -2351,7 +2351,7 @@ function toStrJson( test )
     /*02*/
     [
       '{',
-      '  "b" : \'a\', ',
+      '  "b" : "a", ',
       '  "c" : 50, ',
       '  "d" : { "a" : "undefined", "e" : null }',
       '}'
@@ -2363,7 +2363,7 @@ function toStrJson( test )
       '[',
       '  {',
       '    "a" : 100, ',
-      '    "b" : \'x\', ',
+      '    "b" : "x", ',
       '    "c" : { "d" : true, "e" : null }',
       '  }',
       ']'
@@ -2628,7 +2628,7 @@ function toStrstringWrapper( test )
       [
 
        '{',
-       '  a : "test", ',
+       '  a : \'test\', ',
        '  b : Error: err',
        '}'
 
@@ -2834,12 +2834,12 @@ function toStrEnumerable( test )
    [
     /*01*/
       [
-       '{ a : "string" }'
+       '{ a : \'string\' }'
       ].join( '\n' ),
 
     /*02*/
       [
-       '{ a : "string", foo : 1 }'
+       '{ a : \'string\', foo : 1 }'
       ].join( '\n' ),
 
     /*03*/
@@ -2850,7 +2850,7 @@ function toStrEnumerable( test )
     /*04*/
       [
         '{',
-        '  a : "string", ',
+        '  a : \'string\', ',
         '  getFoo : [ routine value ], ',
         '  foo : 1, ',
         '  constructor : [ routine Object ], ',
@@ -2878,7 +2878,7 @@ function toStrEmptyArgs( test )
   var desc = 'empty arguments',
   src = [ {}, '', [] ],
   options = [ {} ],
-  expected =[ '{}', '""', '[]' ];
+  expected =[ '{}', '\'\'', '[]' ];
 
   testFunction( test, desc, src, options, expected );
 }
@@ -2989,14 +2989,14 @@ function toStrString( test )
   ],
   expected =
   [
-    '""',
-    '"sample"',
+    '\'\'',
+    '\'sample\'',
     '',
     '',
-    '"\\nsample4\\n"',
-    '"sample5"',
-    '"sample6"',
-    '"\nsample7"'
+    '\'\\nsample4\\n\'',
+    '\'sample5\'',
+    '\'sample6\'',
+    '\'\nsample7\''
   ]
 
   testFunction( test, desc, src, options, expected );
@@ -3340,7 +3340,7 @@ function toStrFields( test )
 {
   test.case = 'Fields default options';
   var got = _.toStrFields( [ 1, 2, 'text', undefined ] );
-  var expected = '[ 1, 2, "text", undefined ]';
+  var expected = '[ 1, 2, \'text\', undefined ]';
   test.identical( got, expected );
 
   test.case = 'Fields, levels : 0';
