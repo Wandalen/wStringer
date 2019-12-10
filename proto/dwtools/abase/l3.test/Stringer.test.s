@@ -1045,64 +1045,118 @@ function toStrUnwrapped( test )
 
 function toStrError( test )
 {
-  var desc = 'Error test',
-  src =
-  [
-    /*01*/  new Error( ),
-    /*02*/  new Error( 'msg' ),
-    /*03*/  new Error( 'msg2' ),
-    /*04*/  new Error( 'message' ),
-    /*06*/  new Error( 'err message' ),
-    /*07*/  new Error( 'my message' ),
-    /*10*/  ( function( )
-              {
-                var err = new Error( 'my message4' );
-                err.stack = err.stack.slice( 0, 18 );
-                return err;
-              } )( ),
+  //  var desc = 'Error test',
+  //  src =
+  //  [
+  //    /*01*/  new Error( ),
+  //    /*02*/  new Error( 'msg' ),
+  //    /*03*/  new Error( 'msg2' ),
+  //    /*04*/  new Error( 'message' ),
+  //    /*06*/  new Error( 'err message' ),
+  //    /*07*/  new Error( 'my message' ),
+  //    /*10*/  ( function( )
+  //              {
+  //                var err = new Error( 'my message4' );
+  //                err.stack = err.stack.slice( 0, 18 );
+  //                return err;
+  //              } )( ),
+  //
+  //    /*11*/  ( function( )
+  //              {
+  //                var err = new Error( 'my error' );
+  //                err.stack = err.stack.slice( 0, 16 );
+  //                return err;
+  //              } )( ),
+  //  ],
+  //  options =
+  //  [
+  //    /*01*/  { },
+  //    /*02*/  { },
+  //    /*03*/  { levels : 0 },
+  //    /*04*/  { noError : 1 },
+  //    /*06*/  { errorAsMap : 1, onlyEnumerable : 1 },
+  //    /*07*/  { errorAsMap : 1, onlyEnumerable : 1, own : 0 },
+  //    /*10*/  { errorAsMap : 1, levels : 2 },
+  //    /*11*/  { errorAsMap : 1, levels : 2, escaping : 1 },
+  //
+  //  ],
+  //  expected =
+  //  [
+  //
+  //    /*01*/  'Error',
+  //    /*02*/  'Error: msg',
+  //    /*03*/  '[object Error]',
+  //    /*04*/  '',
+  //    /*06*/  '{}',
+  //    /*07*/  '{}',
+  //
+  //    /*10*/
+  //      [
+  //        '{ stack : \'Error: my message4\', message : \'my message4\' }',
+  //      ].join( '\n' ),
+  //
+  //    /*11*/
+  //      [
+  //        '{ stack : \'Error: my error\\n\', message : \'my error\' }',
+  //      ].join( '\n' ),
+  //  ];
+  //
+  //
+  //  testFunction( test, desc, src, options, expected );
 
-    /*11*/  ( function( )
-              {
-                var err = new Error( 'my error' );
-                err.stack = err.stack.slice( 0, 16 );
-                return err;
-              } )( ),
-  ],
-  options =
-  [
-    /*01*/  { },
-    /*02*/  { },
-    /*03*/  { levels : 0 },
-    /*04*/  { noError : 1 },
-    /*06*/  { errorAsMap : 1, onlyEnumerable : 1 },
-    /*07*/  { errorAsMap : 1, onlyEnumerable : 1, own : 0 },
-    /*10*/  { errorAsMap : 1, levels : 2 },
-    /*11*/  { errorAsMap : 1, levels : 2, escaping : 1 },
+  test.case = 'error simple';
+  var got = _.toStr( new Error( ), { } );
+  var expected = 'Error';
+  test.identical( got, expected);
 
-  ],
-  expected =
-  [
+  test.case = 'error with message';
+  var got = _.toStr( new Error( 'msg' ), { } );
+  var expected = 'Error: msg';
+  test.identical( got, expected);
 
-    /*01*/  'Error',
-    /*02*/  'Error: msg',
-    /*03*/  '[object Error]',
-    /*04*/  '',
-    /*06*/  '{}',
-    /*07*/  '{}',
+  test.case = 'error with message, levels 0';
+  var got = _.toStr( new Error( 'msg2' ), { levels : 0 } );
+  var expected = '[object Error]';
+  test.identical( got, expected);
 
-    /*10*/
-      [
-        '{ stack : \'Error: my message4\', message : \'my message4\' }',
-      ].join( '\n' ),
+  test.case = 'error, noError';
+  var got = _.toStr( new Error( 'message' ), { noError : 1 } );
+  var expected = '';
+  test.identical( got, expected);
 
-    /*11*/
-      [
-        '{ stack : \'Error: my error\\n\', message : \'my error\' }',
-      ].join( '\n' ),
-  ];
+  test.case = 'map-error, onlyEnumerable';
+  var got = _.toStr( new Error( 'err message' ), { errorAsMap : 1, onlyEnumerable : 1 } );
+  var expected = '{}';
+  test.identical( got, expected);
 
+  test.case = 'map-error, onlyEnumerable own:0';
+  var got = _.toStr( new Error( 'my message' ), { errorAsMap : 1, onlyEnumerable : 1, own : 0 } );
+  var expected = '{}';
+  test.identical( got, expected);
 
-  testFunction( test, desc, src, options, expected );
+  test.case = 'map-error stack';
+  var src =
+      ( function( )
+      {
+        var err = new Error( 'my message4' );
+        err.stack = err.stack.slice( 0, 18 );
+        return err;
+      } )( );
+  var got = _.toStr( src, { errorAsMap : 1, levels : 2 } );
+  var expected = '{ stack : \'Error: my message4\', message : \'my message4\' }';
+  test.identical( got, expected);
+
+  test.case = 'map-error stack, escaping';
+  var src =
+      ( function( )
+      {
+        var err = new Error( 'my error' );
+        err.stack = err.stack.slice( 0, 16 );
+        return err;
+      } )( );
+  var got = _.toStr( src, { errorAsMap : 1, levels : 2, escaping : 1 } );
+  var expected = '{ stack : \'Error: my error\\n\', message : \'my error\' }';
+  test.identical( got, expected);
 
 }
 
