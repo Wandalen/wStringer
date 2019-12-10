@@ -65,11 +65,11 @@ var strType = _.strType;
  *
  */
 
-function toStrMethods( src,o )
+function toStrMethods( src, o )
 {
   var o = o || Object.create( null );
   o.onlyRoutines = 1;
-  var result = toStrFine( src,o );
+  var result = toStrFine( src, o );
   return result;
 }
 
@@ -99,11 +99,11 @@ function toStrMethods( src,o )
  *
  */
 
-function toStrFields( src,o )
+function toStrFields( src, o )
 {
   var o = o || Object.create( null );
   o.noRoutine = 1;
-  var result = toStrFine( src,o );
+  var result = toStrFine( src, o );
   return result;
 }
 
@@ -138,7 +138,7 @@ function toStrFields( src,o )
 * @property {boolean} [ o.onlyRoutines=false ] - Ignores all entities, but Routine.
 * @property {boolean} [ o.onlyEnumerable=true ] - Ignores all non-enumerable properties of object ( src ).
 * @property {boolean} [ o.noSubObject=false ] - Ignores all child entities of type Object.
-* @property {number} [ o.precision=null ] - An integer specifying the number of significant digits,example : [ '1500' ].
+* @property {number} [ o.precision=null ] - An integer specifying the number of significant digits, example : [ '1500' ].
 * Number must be between 1 and 21.
 * @property {number} [ o.fixed=null ] - The number of digits to appear after the decimal point, example : [ '58912.001' ].
 * Number must be between 0 and 20.
@@ -172,7 +172,7 @@ function toStrFields( src,o )
  * // --subf : {  x : 1  // level 3}
  * // -}
  * // }
- * _.toStr( { a : 1, b : 2, c : { subd : 'some test', sube : true, subf : { x : 1 } } },{ levels : 3, dtab : '-'} );
+ * _.toStr( { a : 1, b : 2, c : { subd : 'some test', sube : true, subf : { x : 1 } } }, { levels : 3, dtab : '-'} );
  *
  * @example
  * //returns " \n1500 "
@@ -210,11 +210,11 @@ function toStrFields( src,o )
  *
  * @example
  * //returns [Array with 3 elements]
- * _.toStr( [ 'a','b','c' ], { levels : 0 } );
+ * _.toStr( [ 'a', 'b', 'c' ], { levels : 0 } );
  *
  * @example
  * //returns [ 1, 2, 3 ]
- * _.toStr( _.toStr( [ 'a','b','c', 1, 2, 3 ], { levels : 2, noString : 1} ) );
+ * _.toStr( _.toStr( [ 'a', 'b', 'c', 1, 2, 3 ], { levels : 2, noString : 1} ) );
  *
  * @example
  * //returns
@@ -261,11 +261,11 @@ function toStrFields( src,o )
  * //  ],
  * //  4
  * // ]
- * _.toStr( [ 0, [ 1,2,3 ], 4 ], { levels : 2, multiline : 1 } );
+ * _.toStr( [ 0, [ 1, 2, 3 ], 4 ], { levels : 2, multiline : 1 } );
  *
  * @example
  * //returns [ 1, 2, [ other 3 element(s) ] ]
- * _.toStr( [ 1, 2 ,3, 4, 5 ], { limitElementsNumber : 2 } );
+ * _.toStr( [ 1, 2 , 3, 4, 5 ], { limitElementsNumber : 2 } );
  *
  * @example
  * //returns [ routine sample ]
@@ -423,7 +423,7 @@ function toStrFine_functor()
 
   var restricts =
   {
-    /*level : 0,*/
+    /*level : 0, */
   }
 
   Object.preventExtensions( primeFilter );
@@ -435,15 +435,15 @@ function toStrFine_functor()
 
   /* !!! : remove dependency of prototypeUnitedInterface */
   if( _.prototypeUnitedInterface )
-  def = _.prototypeUnitedInterface([ primeFilter,composes,optional ]);
+  def = _.prototypeUnitedInterface([ primeFilter, composes, optional ]);
   else
-  def = _.mapExtend( null,primeFilter,composes,optional );
+  def = _.mapExtend( null, primeFilter, composes, optional );
 
-  var routine = function toStrFine( src,o )
+  var routine = function toStrFine( src, o )
   {
 
     _.assert( arguments.length === 1 || arguments.length === 2 );
-    _.assert( _.objectIs( o ) || o === undefined,'Expects map {-o-}' );
+    _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
 
     var o = o || Object.create( null );
     var toStrDefaults = Object.create( null );
@@ -466,12 +466,12 @@ function toStrFine_functor()
     if( o.stringWrapper === undefined && o.multilinedString )
     o.stringWrapper = '`';
 
-    _.assertMapHasOnly( o,[ composes,primeFilter,optional ] );
-    o = _.mapSupplement( null,o,toStrDefaults,composes,primeFilter );
+    _.assertMapHasOnly( o, [ composes, primeFilter, optional ] );
+    o = _.mapSupplement( null, o, toStrDefaults, composes, primeFilter );
 
     if( o.onlyRoutines )
     {
-      _.assert( !o.noRoutine,'Expects {-o.noRoutine-} false if( o.onlyRoutines ) is true' );
+      _.assert( !o.noRoutine, 'Expects {-o.noRoutine-} false if( o.onlyRoutines ) is true' );
       for( var f in primeFilter )
       o[ f ] = 1;
       o.noRoutine = 0;
@@ -486,15 +486,15 @@ function toStrFine_functor()
     if( o.stringWrapper === '`' && o.multilinedString === undefined )
     o.multilinedString = 1;
 
-    _.assert( _.strIs( o.stringWrapper ),'Expects string {-o.stringWrapper-}' );
+    _.assert( _.strIs( o.stringWrapper ), 'Expects string {-o.stringWrapper-}' );
 
     if( o.jsonLike )
     {
-      _.assert( o.stringWrapper === '"','Expects double quote ( o.stringWrapper ) true if either ( o.jsonLike ) or ( o.jsLike ) is true' );
-      _.assert( !o.multilinedString,'Expects {-o.multilinedString-} false if either ( o.jsonLike ) or ( o.jsLike ) is true to make valid JSON' );
+      _.assert( o.stringWrapper === '"', 'Expects double quote ( o.stringWrapper ) true if either ( o.jsonLike ) or ( o.jsLike ) is true' );
+      _.assert( !o.multilinedString, 'Expects {-o.multilinedString-} false if either ( o.jsonLike ) or ( o.jsLike ) is true to make valid JSON' );
     }
 
-    var r = _toStr( src,o );
+    var r = _toStr( src, o );
 
     return r ? r.text : '';
   }
@@ -519,7 +519,7 @@ function toStrShort( src )
 
 //
 
-function _toStr( src,o )
+function _toStr( src, o )
 {
   if( o.precision < 1 || o.precision > 21 )
   throw _.err( 'RangeError' );
@@ -533,13 +533,13 @@ function _toStr( src,o )
 
   if( o.level >= o.levels )
   {
-    return { text : _toStrShort( src,o ), simple : 1 };
+    return { text : _toStrShort( src, o ), simple : 1 };
   }
 
-  if( !_toStrIsVisibleElement( src,o ) )
+  if( !_toStrIsVisibleElement( src, o ) )
   return;
 
-  var isAtomic = _.primitiveIs( src );
+  var isPrimitive = _.primitiveIs( src );
   var isLong = _.longIs( src );
   var isArray = _.arrayIs( src );
   var isObject = !isLong && _.objectIs( src );
@@ -552,7 +552,7 @@ function _toStr( src,o )
   // if( src && src.constructor && src.constructor.name === 'eGdcHeader' )
   // debugger;
 
-  if( !isAtomic && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod && !_ObjectHasOwnProperty.call( src,'constructor' ) )
+  if( !isPrimitive && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod && !_ObjectHasOwnProperty.call( src, 'constructor' ) )
   {
 
     var r = src.toStr( o );
@@ -572,7 +572,7 @@ function _toStr( src,o )
   }
   else if( _.vectorAdapterIs( src ) )
   {
-    result += _.vector.toStr( src,o );
+    result += _.vector.toStr( src, o );
   }
   else if( _.errIs( src ) )
   {
@@ -585,7 +585,7 @@ function _toStr( src,o )
     {
       if( o.onlyEnumerable === undefined )
       o.onlyEnumerable = 0;
-      var r = _toStrFromObject( src,o );
+      var r = _toStrFromObject( src, o );
       result += r.text;
       simple = r.simple;
     }
@@ -593,19 +593,19 @@ function _toStr( src,o )
   }
   else if( type === 'Function' )
   {
-    result += _toStrFromRoutine( src,o );
+    result += _toStrFromRoutine( src, o );
   }
   else if( type === 'Number' )
   {
-    result += _toStrFromNumber( src,o );
+    result += _toStrFromNumber( src, o );
   }
   else if( type === 'BigInt' )
   {
-    result += _toStrFromBigInt( src,o );
+    result += _toStrFromBigInt( src, o );
   }
   else if( type === 'String' )
   {
-    result += _toStrFromStr( src,o );
+    result += _toStrFromStr( src, o );
   }
   else if( type === 'Date' )
   {
@@ -616,49 +616,53 @@ function _toStr( src,o )
     else
     result += src.toISOString();
   }
+  else if( type === 'Symbol' )
+  {
+    result += _toStrFromSymbol( src, o );
+  }
   else if( _.bufferRawIs( src ) )
   {
-    var r = _toStrFromBufferRaw( src,o );
+    var r = _toStrFromBufferRaw( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( _.bufferTypedIs( src ) )
   {
-    var r = _toStrFromBufferTyped( src,o );
+    var r = _toStrFromBufferTyped( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( _.bufferNodeIs( src ) )
   {
-    var r = _toStrFromBufferNode( src,o );
+    var r = _toStrFromBufferNode( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( isLong )
   {
-    var r = _toStrFromArray( src,o );
+    var r = _toStrFromArray( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( isObject )
   {
-    var r = _toStrFromObject( src,o );
+    var r = _toStrFromObject( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( _.hashMapLike( src ) )
   {
-    var r = _toStrFromHashMap( src,o );
+    var r = _toStrFromHashMap( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( _.setLike( src ) )
   {
-    var r = _toStrFromSet( src,o );
+    var r = _toStrFromSet( src, o );
     result += r.text;
     simple = r.simple;
   }
-  else if( !isAtomic && _.routineIs( src.toString ) )
+  else if( !isPrimitive && _.routineIs( src.toString ) )
   {
     result += src.toString();
   }
@@ -686,7 +690,7 @@ function _toStr( src,o )
  * Converts object passed by argument( src ) to string representation using
  * options provided by argument( o ) for string and number types.
  * Returns string with object type for routines and errors, iso format for date, string representation for atomic.
- * For object,array and row returns count of elemets, example: '[ Row with 3 elements ]'.
+ * For object, array and row returns count of elemets, example: '[ Row with 3 elements ]'.
  *
  * @param {object} src - Source object.
  * @param {Object} o - Conversion options {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
@@ -730,11 +734,11 @@ function _toStrShort( src, o )
     }
     else if( _.routineIs( src ) )
     {
-      result += _toStrFromRoutine( src,o );
+      result += _toStrFromRoutine( src, o );
     }
     else if( _.numberIs( src ) )
     {
-      result += _toStrFromNumber( src,o );
+      result += _toStrFromNumber( src, o );
     }
     else
     {
@@ -751,11 +755,11 @@ function _toStrShort( src, o )
     // }
     // else if( _.routineIs( src ) )
     // {
-    //   result += _toStrFromRoutine( src,o );
+    //   result += _toStrFromRoutine( src, o );
     // }
     // else if( _.numberIs( src ) )
     // {
-    //   result += _toStrFromNumber( src,o );
+    //   result += _toStrFromNumber( src, o );
     // }
     // else if( _.strIs( src ) )
     // {
@@ -767,7 +771,7 @@ function _toStrShort( src, o )
     //     escaping : 1,
     //   }
     //
-    //   result = _toStrFromStr( src,optionsStr );
+    //   result = _toStrFromStr( src, optionsStr );
     //
     // }
     // else if( _.setLike( src ) || _.hashMapLike( src ) )
@@ -831,17 +835,17 @@ function _toStrShort( src, o )
  *
  */
 
-function _toStrIsVisibleElement( src,o )
+function _toStrIsVisibleElement( src, o )
 {
 
-  var isAtomic = _.primitiveIs( src );
+  var isPrimitive = _.primitiveIs( src );
   var isArray = _.longIs( src );
   var isObject = !isArray && _.objectLike( src );
   var type = _.strPrimitiveType( src );
 
   /* */
 
-  if( !isAtomic && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod )
+  if( !isPrimitive && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod )
   {
     if( isObject && o.noObject )
     return false;
@@ -893,7 +897,7 @@ function _toStrIsVisibleElement( src,o )
 
     if( !o.wrap )
     {
-      src = _toStrFromArrayFiltered( src,o );
+      src = _toStrFromArrayFiltered( src, o );
       if( !src.length )
       return false;
     }
@@ -907,14 +911,14 @@ function _toStrIsVisibleElement( src,o )
 
     if( !o.wrap )
     {
-      var keys = _toStrFromObjectKeysFiltered( src,o );
+      var keys = _toStrFromObjectKeysFiltered( src, o );
       if( !keys.length )
       return false;
     }
 
     return true;
   }
-  else if( !isAtomic && _.routineIs( src.toString ) )
+  else if( !isPrimitive && _.routineIs( src.toString ) )
   {
     if( isObject && o.noObject )
     return false;
@@ -959,10 +963,10 @@ function _toStrIsVisibleElement( src,o )
  *
  */
 
-function _toStrIsSimpleElement( element,o )
+function _toStrIsSimpleElement( element, o )
 {
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
-  _.assert( _.objectIs( o ) || o === undefined,'Expects map {-o-}' );
+  _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
 
   if( _.strIs( element ) )
   {
@@ -1000,13 +1004,13 @@ function _toStrIsSimpleElement( element,o )
  *
  */
 
-function _toStrFromRoutine( src,o )
+function _toStrFromRoutine( src, o )
 {
   var result = '';
 
   // debugger;
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
-  _.assert( _.routineIs( src ),'Expects routine {-src-}' );
+  _.assert( _.routineIs( src ), 'Expects routine {-src-}' );
 
   if( o.jsLike )
   {
@@ -1055,7 +1059,7 @@ function _toStrFromRoutine( src,o )
  *
 */
 
-function _toStrFromNumber( src,o )
+function _toStrFromNumber( src, o )
 {
   var result = '';
 
@@ -1083,7 +1087,7 @@ function _toStrFromNumber( src,o )
 
 //
 
-function _toStrFromBigInt( src,o )
+function _toStrFromBigInt( src, o )
 {
   let result = '';
 
@@ -1094,6 +1098,17 @@ function _toStrFromBigInt( src,o )
   else
   result += String( src );
 
+  return result;
+}
+
+//
+
+function _toStrFromSymbol( src, o )
+{
+  // let result = String( src );
+  let text = src.toString().slice( 7, -1 );
+  let result = `{- Symbol${text ? ' ' + text + ' ' : ' '}-}`;
+  debugger;
   return result;
 }
 
@@ -1133,13 +1148,13 @@ function _toStrFromBigInt( src,o )
  *
 */
 
-function _toStrFromStr( src,o )
+function _toStrFromStr( src, o )
 {
   var result = '';
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( _.strIs( src ), 'Expects string {-src-}'  );
-  _.assert( _.objectIs( o ) || o === undefined,'Expects map {-o-}' );
+  _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
 
   //var q = o.multilinedString ? '`' : o.stringWrapper;
   var q = o.stringWrapper;
@@ -1172,14 +1187,14 @@ function _toStrFromStr( src,o )
 
 //
 
-function _toStrFromHashMap( src,o )
+function _toStrFromHashMap( src, o )
 {
   var result = 'HashMap\n';
   var simple = 0;
 
   _.assert( src instanceof HashMap ); debugger;
 
-  src.forEach( function( e,k )
+  src.forEach( function( e, k )
   {
     result += '\n' + k + ' : ' + e;
   });
@@ -1188,7 +1203,7 @@ function _toStrFromHashMap( src,o )
 
   /* item options */
 
-  var optionsItem = _.mapExtend( null,o );
+  var optionsItem = _.mapExtend( null, o );
   optionsItem.noObject = o.noSubObject ? 1 : optionsItem.noObject;
   optionsItem.tab = o.tab + o.dtab;
   optionsItem.level = o.level + 1;
@@ -1196,7 +1211,7 @@ function _toStrFromHashMap( src,o )
 
   /* get names */
 
-  var keys = _toStrFromObjectKeysFiltered( src,o );
+  var keys = _toStrFromObjectKeysFiltered( src, o );
 
   /* empty case */
 
@@ -1216,7 +1231,7 @@ function _toStrFromHashMap( src,o )
   if( simple )
   for( var k in src )
   {
-    simple = _toStrIsSimpleElement( src[ k ],optionsItem );
+    simple = _toStrIsSimpleElement( src[ k ], optionsItem );
     if( !simple )
     break;
   }
@@ -1254,10 +1269,10 @@ function _toStrFromBufferTyped( src, o )
 
   _.assert( _.bufferTypedIs( src ) );
 
-  src.forEach( function( e,k )
+  src.forEach( function( e, k )
   {
     if( k !== 0 )
-    result += ',';
+    result += ', ';
     result += _toStrFromNumber( e, o );
   });
 
@@ -1274,10 +1289,10 @@ function _toStrFromBufferRaw( src, o )
 
   _.assert( _.bufferRawIs( src ) );
 
-  ( new U8x( src ) ).forEach( function( e,k )
+  ( new U8x( src ) ).forEach( function( e, k )
   {
     if( k !== 0 )
-    result += ',';
+    result += ', ';
     result += '0x' + e.toString( 16 );
   });
 
@@ -1298,7 +1313,7 @@ function _toStrFromBufferNode( src, o )
   for ( let value of src.values() )
   {
     if( k !== 0 )
-    result += ',';
+    result += ', ';
     result += value;
     ++k;
   }
@@ -1310,7 +1325,7 @@ function _toStrFromBufferNode( src, o )
 
 //
 
-function _toStrFromArrayFiltered( src,o )
+function _toStrFromArrayFiltered( src, o )
 {
   var result = '';
 
@@ -1318,7 +1333,7 @@ function _toStrFromArrayFiltered( src,o )
 
   /* item options */
 
-  var optionsItem = _.mapExtend( null,o );
+  var optionsItem = _.mapExtend( null, o );
   optionsItem.level = o.level + 1;
 
   /* filter */
@@ -1327,17 +1342,17 @@ function _toStrFromArrayFiltered( src,o )
   var length = src.length;
   for( var i = 0 ; i < length ; i++ )
   {
-    v += !!_toStrIsVisibleElement( src[ i ],optionsItem );
+    v += !!_toStrIsVisibleElement( src[ i ], optionsItem );
   }
 
   if( v !== length )
   {
     var i2 = 0;
     var i = 0;
-    var src2 = _.longMakeUndefined( src,v );
+    var src2 = _.longMakeUndefined( src, v );
     while( i < length )
     {
-      if( _toStrIsVisibleElement( src[ i ],optionsItem ) )
+      if( _toStrIsVisibleElement( src[ i ], optionsItem ) )
       {
         src2[ i2 ] = src[ i ];
         i2 += 1;
@@ -1389,23 +1404,23 @@ function _toStrFromArrayFiltered( src,o )
  *
  */
 
-function _toStrFromArray( src,o )
+function _toStrFromArray( src, o )
 {
   var result = '';
 
   _.assert( arguments.length === 2 );
   _.assert( src && _.numberIs( src.length ) );
-  _.assert( _.objectIs( o ) || o === undefined,'Expects map {-o-}' );
+  _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
 
 
   if( o.level >= o.levels )
   {
-    return { text : _toStrShort( src,o ), simple : 1 };
+    return { text : _toStrShort( src, o ), simple : 1 };
   }
 
   /* item options */
 
-  var optionsItem = _.mapExtend( null,o );
+  var optionsItem = _.mapExtend( null, o );
   optionsItem.tab = o.tab + o.dtab;
   optionsItem.level = o.level + 1;
   optionsItem.prependTab = 0;
@@ -1421,7 +1436,7 @@ function _toStrFromArray( src,o )
 
   /* filter */
 
-  src = _toStrFromArrayFiltered( src,o );
+  src = _toStrFromArrayFiltered( src, o );
 
   /* is simple */
 
@@ -1432,7 +1447,7 @@ function _toStrFromArray( src,o )
   if( simple )
   for( var i = 0 ; i < length ; i++ )
   {
-    simple = _toStrIsSimpleElement( src[ i ],optionsItem );;
+    simple = _toStrIsSimpleElement( src[ i ], optionsItem );;
     if( !simple )
     break;
   }
@@ -1480,7 +1495,7 @@ function _toStrFromContainer( o )
   var result = '';
 
   _.assert( arguments.length );
-  _.assert( _.objectIs( o ) || o === undefined,'Expects map {-o-}' );
+  _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
   _.assert( _.arrayIs( o.names ) || !o.names );
 
   var values = o.values;
@@ -1564,9 +1579,9 @@ function _toStrFromContainer( o )
     // console.log( _.process.memoryUsageInfo() );
 
     if( names )
-    r = _toStr( values[ names[ n ] ],optionsItem );
+    r = _toStr( values[ names[ n ] ], optionsItem );
     else
-    r = _toStr( values[ n ],optionsItem );
+    r = _toStr( values[ n ], optionsItem );
 
     _.assert( _.objectIs( r ) && _.strIs( r.text ) );
     _.assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
@@ -1638,7 +1653,7 @@ function _toStrFromContainer( o )
 
 //
 
-function _toStrFromObjectKeysFiltered( src,o )
+function _toStrFromObjectKeysFiltered( src, o )
 {
   var result = '';
 
@@ -1646,7 +1661,7 @@ function _toStrFromObjectKeysFiltered( src,o )
 
   /* item options */
 
-  var optionsItem = _.mapExtend( null,o );
+  var optionsItem = _.mapExtend( null, o );
   optionsItem.noObject = o.noSubObject ? 1 : optionsItem.noObject;
 
   /* get keys */
@@ -1662,9 +1677,9 @@ function _toStrFromObjectKeysFiltered( src,o )
 
   for( var n = 0 ; n < keys.length ; n++ )
   {
-    if( !_toStrIsVisibleElement( src[ keys[ n ] ],optionsItem ) )
+    if( !_toStrIsVisibleElement( src[ keys[ n ] ], optionsItem ) )
     {
-      keys.splice( n,1 );
+      keys.splice( n, 1 );
       n -= 1;
     }
   }
@@ -1702,18 +1717,18 @@ function _toStrFromObjectKeysFiltered( src,o )
  *
 */
 
-function _toStrFromObject( src,o )
+function _toStrFromObject( src, o )
 {
   var result = '';
 
   _.assert( arguments.length === 2 );
   _.assert( _.objectLike( src ) || _.strPrimitiveType( src ) === 'Error' );
-  _.assert( _.objectIs( o ) || o === undefined,'Expects map {-o-}' );
+  _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
 
 
   if( o.level >= o.levels )
   {
-    return { text : _toStrShort( src,o ), simple : 1 };
+    return { text : _toStrShort( src, o ), simple : 1 };
   }
 
   if( o.noObject )
@@ -1721,7 +1736,7 @@ function _toStrFromObject( src,o )
 
   /* item options */
 
-  var optionsItem = _.mapExtend( null,o );
+  var optionsItem = _.mapExtend( null, o );
   optionsItem.noObject = o.noSubObject ? 1 : optionsItem.noObject;
   optionsItem.tab = o.tab + o.dtab;
   optionsItem.level = o.level + 1;
@@ -1729,7 +1744,7 @@ function _toStrFromObject( src,o )
 
   /* get names */
 
-  var keys = _toStrFromObjectKeysFiltered( src,o );
+  var keys = _toStrFromObjectKeysFiltered( src, o );
 
   /* empty case */
 
@@ -1749,7 +1764,7 @@ function _toStrFromObject( src,o )
   if( simple )
   for( var k in src )
   {
-    simple = _toStrIsSimpleElement( src[ k ],optionsItem );
+    simple = _toStrIsSimpleElement( src[ k ], optionsItem );
     if( !simple )
     break;
   }
@@ -1772,7 +1787,7 @@ function _toStrFromObject( src,o )
 
 //
 
-function toJson( src,o )
+function toJson( src, o )
 {
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
@@ -1783,7 +1798,7 @@ function toJson( src,o )
 
   delete o.cloning;
 
-  var result = _.toStr( src,o );
+  var result = _.toStr( src, o );
 
   return result;
 }
@@ -1797,13 +1812,13 @@ toJson.defaults =
 
 //
 
-function toJs( src,o )
+function toJs( src, o )
 {
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
   o = _.routineOptions( toJs, o );
 
-  var result = _.toStr( src,o );
+  var result = _.toStr( src, o );
 
   return result;
 }
@@ -1864,6 +1879,7 @@ var Proto =
   _toStrFromRoutine,
   _toStrFromNumber,
   _toStrFromBigInt,
+  _toStrFromSymbol,
   _toStrFromStr,
 
   _toStrFromHashMap,

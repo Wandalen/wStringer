@@ -11,9 +11,6 @@ if( typeof module !== 'undefined' )
 
   require( '../l3/Stringer.s' );
 
-  // if( Config.interpreter === 'njs' )
-  // var File = require( 'fs' );
-
 }
 
 var _global = _global_;
@@ -39,10 +36,10 @@ let path = fileProvider.path;
 \nnn 	arbitrary octal value 	byte nnn
 \xnn 	arbitrary hexadecimal value 	byte nn
 \unnnn 	universal character name
-(arbitrary Unicode value);
+( arbitrary Unicode value );
 may result in several characters 	code point U+nnnn
 \Unnnnnnnn 	universal character name
-(arbitrary Unicode value);
+( arbitrary Unicode value );
 may result in several characters 	code point U+nnnnnnnn
 
 source : http://en.cppreference.com/w/cpp/language/escape
@@ -51,7 +48,7 @@ source : http://en.cppreference.com/w/cpp/language/escape
 
 //
 
-function reportChars()
+function reportChars( )
 {
 
   debugger;
@@ -68,30 +65,28 @@ function reportChars()
 
 }
 
-/*reportChars();*/
+/*reportChars( );*/
 
 //
 
 function stringFromFile( name, encoding, begin, end )
 {
-  // var str = File.readFileSync( __dirname + '/../../../file.test/' + name, encoding ); /* xxx : use wFiles */
-  var str = fileProvider.fileRead({ filePath : __dirname + '/../../../../asset/test/' + name, encoding });
+  var str = fileProvider.fileRead( { filePath : __dirname + '/../../../../asset/test/' + name, encoding } );
   str = str.slice( begin, end );
-
-  //if( name === 'file1' )
-  //str = str.substring( 0, 10 ) + str.substring( 14 );
-
   return str;
 }
 
 //
 
+/* qqq : eliminate that, please */
+
 function testFunction( test, desc, src, options, expected )
 {
-  debugger;
+
   var got = null;
   var result = null;
   var exp = null;
+
   for( var k = 0; k < src.length; ++k  )
   {
     test.case = desc ;
@@ -101,9 +96,6 @@ function testFunction( test, desc, src, options, expected )
     if( test.case.slice( 0, 4 ) === 'json' && optionsTest.jsonLike )
     {
 
-      // good
-      // if JSON.parse is OK, compare source vs parse result
-      // else throws error
       try
       {
         result = JSON.parse( got );
@@ -111,15 +103,9 @@ function testFunction( test, desc, src, options, expected )
       }
       catch( err )
       {
-        //  throw err;
-        logger.log( '1510 : ' + got.charCodeAt( 1510 ) );
-        logger.log( '1511 : ' + got.charCodeAt( 1511 ) );
-        logger.log( '1512 : ' + got.charCodeAt( 1512 ) );
         logger.log( 'JSON :' );
         logger.log( got );
         throw _.err( err );
-        //test fail call when JSON.parse throws error
-        //test.identical( 0, 1 );
       }
 
     }
@@ -129,12 +115,6 @@ function testFunction( test, desc, src, options, expected )
     }
 
   }
-
-  // test.onError = function()
-  // {
-  //   debugger;
-  //   console.log( 'onError' );
-  // }
 
   debugger;
 }
@@ -643,7 +623,7 @@ function toStr( test )
 
 function toStrUnwrapped( test )
 {
-  var desc =  'Error test',
+  var desc = 'Error test',
   src =
   [
 
@@ -863,37 +843,32 @@ function toStrUnwrapped( test )
 
 }
 
-// toStrUnwrapped.cover = [ _.toStr ];
-
 //
 
 function toStrError( test )
 {
-  var desc =  'Error test',
+  var desc = 'Error test',
   src =
   [
-    /*01*/  new Error(),
+    /*01*/  new Error( ),
     /*02*/  new Error( 'msg' ),
     /*03*/  new Error( 'msg2' ),
     /*04*/  new Error( 'message' ),
-    /*05*/  new Error( 'message2' ),
     /*06*/  new Error( 'err message' ),
     /*07*/  new Error( 'my message' ),
-    /*08*/  new Error( 'my message2' ),
-    /*09*/  new Error( 'my message3' ),
-    /*10*/  ( function()
+    /*10*/  ( function( )
               {
                 var err = new Error( 'my message4' );
                 err.stack = err.stack.slice( 0, 18 );
                 return err;
-              } )(),
+              } )( ),
 
-    /*11*/  ( function()
+    /*11*/  ( function( )
               {
                 var err = new Error( 'my error' );
                 err.stack = err.stack.slice( 0, 16 );
                 return err;
-              } )(),
+              } )( ),
   ],
   options =
   [
@@ -901,11 +876,8 @@ function toStrError( test )
     /*02*/  { },
     /*03*/  { levels : 0 },
     /*04*/  { noError : 1 },
-    /*05*/  { errorAsMap : 1 },
     /*06*/  { errorAsMap : 1, onlyEnumerable : 1 },
     /*07*/  { errorAsMap : 1, onlyEnumerable : 1, own : 0 },
-    /*08*/  { errorAsMap : 1, onlyEnumerable : 0 },
-    /*09*/  { errorAsMap : 1, onlyEnumerable : 0, own : 0 },
     /*10*/  { errorAsMap : 1, levels : 2 },
     /*11*/  { errorAsMap : 1, levels : 2, escaping : 1 },
 
@@ -917,30 +889,8 @@ function toStrError( test )
     /*02*/  'Error: msg',
     /*03*/  '[object Error]',
     /*04*/  '',
-    /*05*/  '{ stack : [ \'Error: message2\\n   \' ... \'al/timers.js:480:7)\' ], message : \'message2\' }',
     /*06*/  '{}',
     /*07*/  '{}',
-    /*08*/  '{ stack : [ \'Error: my message2\\n\' ... \'al/timers.js:480:7)\' ], message : \'my message2\' }',
-    /*09*/
-      [
-        '{',
-        '  stack : [ \'Error: my message3\\n\' ... \'al/timers.js:480:7)\' ], ',
-        '  message : \'my message3\', ',
-        '  constructor : [ routine Error ], ',
-        '  name : \'Error\', ',
-        '  toString : [ routine toString ], ',
-        '  __defineGetter__ : [ routine __defineGetter__ ], ',
-        '  __defineSetter__ : [ routine __defineSetter__ ], ',
-        '  hasOwnProperty : [ routine hasOwnProperty ], ',
-        '  __lookupGetter__ : [ routine __lookupGetter__ ], ',
-        '  __lookupSetter__ : [ routine __lookupSetter__ ], ',
-        '  isPrototypeOf : [ routine isPrototypeOf ], ',
-        '  propertyIsEnumerable : [ routine propertyIsEnumerable ], ',
-        '  valueOf : [ routine valueOf ], ',
-        '  __proto__ : {- Error with 0 elements -}, ',
-        '  toLocaleString : [ routine toLocaleString ]',
-        '}',
-      ].join( '\n' ),
 
     /*10*/
       [
@@ -957,8 +907,6 @@ function toStrError( test )
   testFunction( test, desc, src, options, expected );
 
 }
-
-// toStrError.cover = [ _.toStr ];
 
 //
 
@@ -997,9 +945,9 @@ function toStrArray( test )
     /*28*/ [ 'a', 'b', 'c', 1, 2, 3 ],
     /*29*/ [ 15, 16, 17, 18 ],
     /*30*/ [ { a : 5, b : 6, c : 7 } ],
-    /*31*/ [ 'a', 1, function() { }, false ],
-    /*32*/ [ 'b', 2, function() { }, true ],
-    /*33*/ [ function() { } ],
+    /*31*/ [ 'a', 1, function( ) { }, false ],
+    /*32*/ [ 'b', 2, function( ) { }, true ],
+    /*33*/ [ function( ) { } ],
     /*34*/ [ 'a', 1000, 2000, 3000 ],
     /*35*/ [ 1.1111, 2.2222, 3.3333 ],
     /*36*/ [  7, { v : 0 }, 1, 'x' ],
@@ -1024,13 +972,13 @@ function toStrArray( test )
     /*55*/ [ { a : '\\test' }, { b : '\ntest' }, { c : 'test' } ],
     /*56*/ [ { a : function func ( ){ } }, 0, 1, 'a' ],
     /*57*/ [ { b : function f ( ){ } }, 1, 2 , 3 ],
-    /*58*/ [ new Error('msg'), new Date(1990, 0, 0), 'test' ],
+    /*58*/ [ new Error( 'msg' ), new Date( 1990, 0, 0 ), 'test' ],
     /*59*/ [ 1, [ 2, 3, 4 ], 2 ],
     /*60*/ [ 1, [ '2', null, undefined, '4' ], 2 ],
     /*61*/ [ [ 1, 2 ], 'string', { a : true, b : null }, undefined ],
-    /*62*/ [ [ 0, 1 ], 'test', { a : Symbol() }, undefined ],
-    /*63*/ [ 0, 'str', { a : Symbol() }, function test(){ }, null ],
-    /*64*/ [ 0, 'str', { a : Symbol() }, function test( ){ }, true, new Date(1990, 0, 0) ],
+    /*62*/ [ [ 0, 1 ], 'test', { a : Symbol( ) }, undefined ],
+    /*63*/ [ 0, 'str', { a : Symbol( ) }, function test( ){ }, null ],
+    /*64*/ [ 0, 'str', { a : Symbol( ) }, function test( ){ }, true, new Date( 1990, 0, 0 ) ],
     /*65*/ [ [ 0, 1 ], 'test', { a : 'a' } ],
     /*66*/ [ [ 1, 2 ], 'sample', { a : 'b' } ],
     /*67*/ [ 11, 22, function routine( ){ }, { a : 'string' } ],
@@ -1042,8 +990,8 @@ function toStrArray( test )
     /*73*/ [ 'o', [ 90, 80, 70 ], 'o' ],
     /*74*/ [ 'o', 1, { a : true, b : undefined, c : null } ],
     /*75*/ [ 'a', 2, { a : '\\true', b : true, c : null } ],
-    /*76*/ [ [ 'a', 1 ], new Error( 'err msg' ), new Date(1990, 0, 0) ],
-    /*77*/ [ [ 'a', 1 ], new Date(1999, 1, 1) ],
+    /*76*/ [ [ 'a', 1 ], new Error( 'err msg' ), new Date( 1990, 0, 0 ) ],
+    /*77*/ [ [ 'a', 1 ], new Date( 1999, 1, 1 ) ],
     /*78*/ [ [ 1, 2, 3 ], 'a' ],
 
   ],
@@ -1625,13 +1573,12 @@ function toStrArray( test )
 
   testFunction( test, desc, src, options, expected );
 }
-// toStrArray.cover = [ _.toStr ];
 
 //
 
 function toStrObject( test )
 {
-  var desc =  'Object test',
+  var desc = 'Object test',
   src =
   [
     /*01*/  { a : 1, b : 2, c : 3 },
@@ -1650,7 +1597,7 @@ function toStrObject( test )
     /*12*/  { a : true, b : '2', c : 3, d : undefined },
     /*13*/  { a : null, b : 1, c : '2', d : undefined, e : true, f : Symbol( 'symbol' ) },
     /*14*/  { a : 'true', b : 2, c : false, d : undefined },
-    /*15*/  { e : new Error('msg') },
+    /*15*/  { e : new Error( 'msg' ) },
     /*16*/  { f : 1, g : function f(  ) { } },
     /*17*/  { x : function y(  ) { } },
     /*18*/  { a : null, b : 1, c : '2', d : undefined },
@@ -1677,8 +1624,8 @@ function toStrObject( test )
     /*39*/  { a : 'bb', b : { d : false }, c : 30 },
     /*40*/  { a : 100, b : { d : 110 }, c : 120 },
     /*41*/  { a : '\na', b : { d : '\ntrue' } },
-    /*42*/  { a : 'aa', b : { d : function(){ } } },
-    /*43*/  { a : 'bb', b : { d : function(){ } } },
+    /*42*/  { a : 'aa', b : { d : function( ){ } } },
+    /*43*/  { a : 'bb', b : { d : function( ){ } } },
     /*44*/  { a : new Date( Date.UTC( 1993, 12, 12 ) ), b : { d : new Error( 'msg' ) }, c : 1 },
     /*45*/  { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  },
     /*46*/  { "sequence" : "\x7f[A", "name" : "undefined", "shift" : false, "code" : "[A"  },
@@ -1693,7 +1640,7 @@ function toStrObject( test )
     /*55*/  { "sequence" : "\vsample",  },
     /*56*/  { "sequence" : "\ftest",  },
     /*57*/  { a : 1, b : { d : 'string' }, c : true },
-    /*58*/  { a : 1, b : { d : 'string' }, c : new Date() },
+    /*58*/  { a : 1, b : { d : 'string' }, c : new Date( ) },
     /*59*/  { a : 1000, b : { d : 'string' }, c : 1.500 },
     /*60*/  { a : 1000, b : 'text', c : 1.500 },
     /*61*/  { a : 1000, b : 'text', c : false, d : undefined, e : null},
@@ -1884,7 +1831,7 @@ function toStrObject( test )
       '  c : \'2\'* ',
       '  d : undefined* ',
       '  e : true* ',
-      '  f : Symbol(symbol)'
+      '  f : Symbol( symbol )'
 
     ].join( '\n' ),
 
@@ -2296,13 +2243,12 @@ function toStrObject( test )
 
 }
 
-// toStrObject.cover = [ _.toStr ];
 
 //
 
 function toStrJson( test )
 {
-   var desc =  'json test',
+   var desc = 'json test',
 
    src =
    [
@@ -2314,17 +2260,17 @@ function toStrJson( test )
 
 
     /*
-       - Only way that i know to store a function inside a valid json is by setting it as 
-       a string. Same must apply for the Error. The same may even apply for the Symbol 
+       - Only way that i know to store a function inside a valid json is by setting it as
+       a string. Same must apply for the Error. The same may even apply for the Symbol
        and Date, but i don't know.
        - The *05* isn't working because there's no undefined in a JSON structure.
     */
      ///*04*/ { a : "aa", b : [ 1, 2, 3 ], c : function r( ){ } },
-     ///*05*/ [ { a : 1, b : 2, c : { d : [ null, undefined ] } } ], 
+     ///*05*/ [ { a : 1, b : 2, c : { d : [ null, undefined ] } } ],
      ///*06*/ { a : new Date( Date.UTC( 1993, 12, 12 ) ) },
      ///*07*/ { a : new Error( "r" ) },
      ///*08*/ { a : Symbol( 'sm' ) },
-     
+
    ],
 
    options =
@@ -2346,7 +2292,7 @@ function toStrJson( test )
 
   // expected =
   // [
-  // 
+  //
   //  /*01*/
   //  [
   //    '{',
@@ -2356,7 +2302,7 @@ function toStrJson( test )
   //    '}'
   //
   //  ].join( '\n' ),
-  // 
+  //
   //  /*02*/
   //  [
   //    '{',
@@ -2364,9 +2310,9 @@ function toStrJson( test )
   //    '  "c" : 50, ',
   //    '  "d" : { "a" : "undefined", "e" : null }',
   //    '}'
-  // 
+  //
   //  ].join( '\n' ),
-  // 
+  //
   //  /*03*/
   //  [
   //    '[',
@@ -2376,9 +2322,9 @@ function toStrJson( test )
   //    '    "c" : { "d" : true, "e" : null }',
   //    '  }',
   //    ']'
-  // 
+  //
   //  ].join( '\n' ),
-  // 
+  //
   //  /*04*/
   //  [
   //    '{',
@@ -2386,9 +2332,9 @@ function toStrJson( test )
   //    '  "b" : [ 1, 2, 3 ], ',
   //    '  "c" : [ routine r ]',
   //    '}',
-  // 
+  //
   //  ].join( '\n' ),
-  // 
+  //
   //  /*05*/
   //  [
   //
@@ -2402,9 +2348,9 @@ function toStrJson( test )
   //    '    }',
   //    '  }',
   //    ']',
-  // 
+  //
   //  ].join( '\n' ),
-  // 
+  //
   //  /*06*/
   //  [
   //
@@ -2426,7 +2372,7 @@ function toStrJson( test )
   //  /*08*/
   //  [
   //
-  //    '{ "a" : Symbol(sm) }'
+  //    '{ "a" : Symbol( sm ) }'
   //
   //  ].join( '\n' ),
   //
@@ -2504,13 +2450,11 @@ function toStrJson( test )
 
 }
 
-// toStrJson.cover = [ _.toStr ];
-
 //
 
 function _toStrJsonFromFile( test, encoding )
 {
-  var desc =  'json from file as ' + encoding,
+  var desc = 'json from file as ' + encoding,
 
   src =
   [
@@ -2554,8 +2498,6 @@ function toStrJsonFromFileU( test )
 
 }
 
-// toStrJsonFromFileU.cover = [ _.toStr ];
-
 //
 
 function toStrJsonFromFileA( test )
@@ -2565,13 +2507,11 @@ function toStrJsonFromFileA( test )
 
 }
 
-// toStrJsonFromFileA.cover = [ _.toStr ];
-
 //
 
-function toStrstringWrapper( test )
+function toStrStringWrapper( test )
 {
-   var desc =  'stringWrapper test',
+   var desc = 'stringWrapper test',
    src =
    [
      /*01*/ { a : "string", b : 1, c : null , d : undefined },
@@ -2688,13 +2628,12 @@ function toStrstringWrapper( test )
   testFunction( test, desc, src, options, expected );
 
 }
-// toStrstringWrapper.cover = [ _.toStr ];
 
 //
 
 function toStrLevel( test )
 {
-   var desc =  'level test',
+   var desc = 'level test',
    src =
    [
      /*01*/ { a : "a", b : "b", c : { d : "d" } },
@@ -2745,25 +2684,24 @@ function toStrLevel( test )
    ]
   testFunction( test, desc, src, options, expected );
 }
-// toStrLevel.cover = [ _.toStr ];
 
 //
 
 function toStrEnumerable( test )
 {
-   var desc =  'onlyEnumerable test',
+   var desc = 'onlyEnumerable test',
    src =
    [
-     /*01*/ ( function()
+     /*01*/ ( function( )
             {
-             var x = Object.create({},
+             var x = Object.create( {},
               {
                 getFoo:
                 {
-                  value: function() { return this.foo; },
+                  value: function( ) { return this.foo; },
                   enumerable: false
                 }
-              });
+              } );
 
              x.foo = 1;
 
@@ -2772,18 +2710,18 @@ function toStrEnumerable( test )
 
              return y;
 
-            } )(),
+            } )( ),
 
-     /*02*/ ( function()
+     /*02*/ ( function( )
             {
-             var x = Object.create({},
+             var x = Object.create( {},
               {
                 getFoo:
                 {
-                  value: function() { return this.foo; },
+                  value: function( ) { return this.foo; },
                   enumerable: false
                 }
-              });
+              } );
 
              x.foo = 1;
 
@@ -2792,35 +2730,35 @@ function toStrEnumerable( test )
 
              return y;
 
-            } )(),
+            } )( ),
 
-     /*03*/ ( function()
+     /*03*/ ( function( )
             {
-             var x = Object.create({},
+             var x = Object.create( {},
               {
                 getFoo:
                 {
-                  value: function() { return this.foo; },
+                  value: function( ) { return this.foo; },
                   enumerable: false
                 }
-              });
+              } );
 
              x.foo = 1;
 
              return x;
 
-            } )(),
+            } )( ),
 
-      /*04*/ ( function()
+      /*04*/ ( function( )
       {
-        var x = Object.create({},
+        var x = Object.create( {},
           {
             getFoo:
             {
-              value: function() { return this.foo; },
+              value: function( ) { return this.foo; },
               enumerable: false
             }
-          });
+          } );
 
           x.foo = 1;
 
@@ -2829,7 +2767,7 @@ function toStrEnumerable( test )
 
           return y;
 
-        } )(),
+        } )( ),
 
    ],
    options =
@@ -2879,8 +2817,8 @@ function toStrEnumerable( test )
    ]
   testFunction( test, desc, src, options, expected );
 }
-// toStrEnumerable.cover = [ _.toStr ];
-//
+
+// xxx
 
 function toStrEmptyArgs( test )
 {
@@ -2891,18 +2829,18 @@ function toStrEmptyArgs( test )
 
   testFunction( test, desc, src, options, expected );
 }
-// toStrEmptyArgs.cover = [ _.toStr ];
+
 //
 
 function toStrSymbol( test )
 {
-  var desc =  'Symbol test',
+  var desc = 'Symbol test',
   src =
   [
-    Symbol(),
-    Symbol('sm'),
-    Symbol('sx'),
-    Symbol('sy')
+    Symbol( ),
+    Symbol( 'sm' ),
+    Symbol( 'sx' ),
+    Symbol( 'sy' )
   ],
   options =
   [
@@ -2914,15 +2852,15 @@ function toStrSymbol( test )
   ],
   expected =
   [
-    'Symbol()',
-    'Symbol(sm)',
-    'Symbol(sx)',
+    '{- Symbol -}',
+    '{- Symbol sm -}',
+    '{- Symbol sx -}',
     ''
   ]
 
   testFunction( test, desc, src, options, expected );
 }
-// toStrSymbol.cover = [ _.toStr ];
+
 //
 
 function toStrNumber( test )
@@ -2930,7 +2868,7 @@ function toStrNumber( test )
   var desc = 'Number test',
   src =
   [
-    Number(),
+    Number( ),
     5,
     15000,
     1222.222,
@@ -2938,8 +2876,6 @@ function toStrNumber( test )
     15,
     99,
     22
-
-
   ],
   options =
   [
@@ -2962,20 +2898,19 @@ function toStrNumber( test )
     '',
     '99',
     '22'
-
   ]
 
   testFunction( test, desc, src, options, expected );
 }
-// toStrNumber.cover = [ _.toStr ];
+
 //
 
 function toStrString( test )
 {
-  var desc =  'String test',
+  var desc = 'String test',
   src =
   [
-    String(),
+    String( ),
     'sample',
     'sample2',
     'sample3',
@@ -3011,8 +2946,6 @@ function toStrString( test )
   testFunction( test, desc, src, options, expected );
 }
 
-// toStrString.cover = [ _.toStr ];
-
 //
 
 function toStrAtomic( test )
@@ -3020,7 +2953,7 @@ function toStrAtomic( test )
   var desc = 'boolean, null, undefined test',
   src =
   [
-    Boolean(),
+    Boolean( ),
     true,
     false,
     1!=2,
@@ -3060,13 +2993,12 @@ function toStrAtomic( test )
   ]
   testFunction( test, desc, src, options, expected );
 }
-// toStrAtomic.cover = [ _.toStr ];
 
 //
 
 function toStrDate( test )
 {
-  var desc =  'Date test',
+  var desc = 'Date test',
   src =
   [
     new Date( Date.UTC( 1993, 12, 12 ) ),
@@ -3090,13 +3022,12 @@ function toStrDate( test )
   ]
   testFunction( test, desc, src, options, expected );
 }
-// toStrDate.cover = [ _.toStr ];
 
 //
 
 function toStrRoutine( test )
 {
-  var desc =  'Routine test',
+  var desc = 'Routine test',
   src =
   [
     function rr( ){ },
@@ -3118,7 +3049,6 @@ function toStrRoutine( test )
   ]
   testFunction( test, desc, src, options, expected );
 }
-// toStrRoutine.cover = [ _.toStr ];
 
 //
 
@@ -3127,57 +3057,56 @@ function toStrThrow( test )
   if( Config.debug )
   {
     test.case = 'wrong type of argument';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _.toStr( { a : 1 }, null );
-    });
+    } );
 
     test.case = '( o.precision ) is not between 1 and 21';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _.toStr( { a : 1 }, { precision : 0 } );
-    });
+    } );
 
     test.case = '( o.fixed ) is not between 0 and 20';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _.toStr( { a : 1 }, { fixed : 22 } );
-    });
+    } );
 
     test.case = 'if jsonLike : 1, multilinedString 1 " ';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _.toStr( { a : 1 }, { jsonLike : 1, multilinedString : 1 } );
-    });
+    } );
 
     test.case = 'wrong arguments count';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _.toStr( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
-    });
+    } );
 
     test.case = 'invalid json if multilinedString is true`';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _.toStr( { a : 1, b : "text" }, { jsonLike : 1, multilinedString : 1 } );
-    });
+    } );
 
     test.case = 'onlyRoutines & noRoutine both true';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.toStr( { a : function f(){}, b : "text" }, { onlyRoutines : 1, noRoutine : 1 } );
-    });
+      _.toStr( { a : function f( ){}, b : "text" }, { onlyRoutines : 1, noRoutine : 1 } );
+    } );
 
 
   }
 }
-// toStrThrow.cover = [ _.toStr ];
 
 //
 
 function toStrLimitElements( test )
 {
-  var desc =  'limitElementsNumber options test',
+  var desc = 'limitElementsNumber options test',
   src =
   [
   //Arrays
@@ -3191,7 +3120,7 @@ function toStrLimitElements( test )
 
   //Objects
   /*08*/{ a : 1, b : 2, c : 3, d : 4 },
-  /*09*/{ a : 1, b : function n(){ }, c : { a : '1' }, d : 4 },
+  /*09*/{ a : 1, b : function n( ){ }, c : { a : '1' }, d : 4 },
   /*10*/{ a : 1, b : undefined, c : { a : '1' }, d : 4 },
   /*11*/{ a : 1, b : 2, c : { a : 1, b : '2' }, d : 3 },
 
@@ -3299,47 +3228,45 @@ function toStrLimitElements( test )
   testFunction( test, desc, src, options, expected );
 }
 
-// toStrRoutine.cover = [ _.toStr ];
-
 //
 
 function toStrMethods( test )
 {
+
   test.case = 'converts routine to string default options';
-  var got = _.toStrMethods( function route() {} );
+  var got = _.toStrMethods( function route( ) {} );
   var expected = '[ routine route ]';
   test.identical( got, expected );
 
   test.case = 'converts routine to string, levels:0';
-  var got = _.toStrMethods( function route() {}, { levels : 0 } );
+  var got = _.toStrMethods( function route( ) {}, { levels : 0 } );
   var expected = '[ routine route ]';
   test.identical( got, expected );
 
   test.case = 'different input data types';
-  var got = _.toStrMethods( [ function route() {}, 0, '1', null ] );
+  var got = _.toStrMethods( [ function route( ) {}, 0, '1', null ] );
   var expected = '';
   test.identical( got, expected );
-
 
   /**/
 
   test.case = 'invalid argument type';
-  test.shouldThrowErrorOfAnyKind( function()
+  test.shouldThrowErrorOfAnyKind( function( )
   {
     _.toStrMethods( 'one', 'two' );
-  });
+  } );
 
   test.case = 'wrong arguments count';
-  test.shouldThrowErrorOfAnyKind( function()
+  test.shouldThrowErrorOfAnyKind( function( )
   {
     _.toStrMethods( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
-  });
+  } );
 
   test.case = 'onlyRoutines & noRoutine both true';
-  test.shouldThrowErrorOfAnyKind( function()
+  test.shouldThrowErrorOfAnyKind( function( )
   {
-    _.toStrMethods( function f () {}, { noRoutine : 1 } );
-  });
+    _.toStrMethods( function f ( ) {}, { noRoutine : 1 } );
+  } );
 
 }
 
@@ -3358,12 +3285,12 @@ function toStrFields( test )
   test.identical( got, expected );
 
   test.case = 'Ignore routine';
-  var got = _.toStrFields( [ function f () {}, 1, 2, 3 ] );
+  var got = _.toStrFields( [ function f ( ) {}, 1, 2, 3 ] );
   var expected = '[ 1, 2, 3 ]';
   test.identical( got, expected );
 
   test.case = 'no arguments';
-  var got = _.toStrFields();
+  var got = _.toStrFields( );
   var expected = 'undefined';
   test.identical( got, expected );
 
@@ -3374,22 +3301,22 @@ function toStrFields( test )
   if( Config.debug )
   {
     test.case = 'invalid argument type';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _.toStrFields( 'one', 'two' );
-    });
+    } );
 
     test.case = 'wrong arguments count';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _.toStrFields( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
-    });
+    } );
 
     test.case = 'onlyRoutines & noRoutine both true';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.toStrFields( function f () {}, { onlyRoutines : 1 } );
-    });
+      _.toStrFields( function f ( ) {}, { onlyRoutines : 1 } );
+    } );
 
   }
 }
@@ -3429,22 +3356,22 @@ function toStrShort( test )
   {
 
     test.case = 'invalid second argument type';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrShort( '1', 2 );
-    });
+    } );
 
     test.case = 'only one argument provided';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrShort( '1' );
-    });
+    } );
 
     test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrShort( );
-    });
+    } );
 
   }
 }
@@ -3474,22 +3401,22 @@ function _toStrIsVisibleElement( test )
   {
 
     test.case = 'invalid arguments count';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrIsVisibleElement( '1' );
-    });
+    } );
 
     // test.case = 'second argument is not a object';
-    // test.shouldThrowErrorOfAnyKind( function()
+    // test.shouldThrowErrorOfAnyKind( function( )
     // {
     //   _._toStrIsVisibleElement( '1', 2 );
-    // });
+    // } );
 
     test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrIsVisibleElement();
-    });
+      _._toStrIsVisibleElement( );
+    } );
 
   }
 }
@@ -3529,22 +3456,22 @@ function _toStrIsSimpleElement( test )
   {
 
     test.case = 'invalid arguments count';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrIsSimpleElement( '1' );
-    });
+    } );
 
     test.case = 'second argument is not a object';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrIsSimpleElement( '1', 2 );
-    });
+    } );
 
     test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrIsSimpleElement();
-    });
+      _._toStrIsSimpleElement( );
+    } );
 
   }
 }
@@ -3554,12 +3481,12 @@ function _toStrIsSimpleElement( test )
 function _toStrFromRoutine( test )
 {
   test.case = 'routine test';
-  var got = _._toStrFromRoutine( function a () {}, {} );
+  var got = _._toStrFromRoutine( function a ( ) {}, {} );
   var expected = '[ routine a ]';
   test.identical( got, expected );
 
   test.case = 'routine without name';
-  var got = _._toStrFromRoutine( function() {}, {} );
+  var got = _._toStrFromRoutine( function( ) {}, {} );
   var expected = '[ routine without name ]';
   test.identical( got, expected );
 
@@ -3569,16 +3496,16 @@ function _toStrFromRoutine( test )
   {
 
     test.case = 'invalid argument type';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrFromRoutine( '1' );
-    });
+    } );
 
     test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromRoutine();
-    });
+      _._toStrFromRoutine( );
+    } );
 
   }
 }
@@ -3613,34 +3540,34 @@ function _toStrFromNumber( test )
   {
 
     test.case = 'invalid first argument type';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrFromNumber( '1', {} );
-    });
+    } );
 
     test.case = 'invalid second argument type';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrFromNumber( 1, 2 );
-    });
+    } );
 
     test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromNumber();
-    });
+      _._toStrFromNumber( );
+    } );
 
     test.case = 'precision out of range';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromNumber( 1, { precision : 22 });
-    });
+      _._toStrFromNumber( 1, { precision : 22 } );
+    } );
 
     test.case = 'fixed out of range';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromNumber( 1, { fixed : 22 });
-    });
+      _._toStrFromNumber( 1, { fixed : 22 } );
+    } );
 
   }
 }
@@ -3808,22 +3735,22 @@ function _toStrFromStr( test )
   {
 
     test.case = 'invalid first argument type';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrFromStr( 2, {} );
-    });
+    } );
 
     test.case = 'invalid second argument type';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrFromStr( '1', 2 );
-    });
+    } );
 
     test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromStr();
-    });
+      _._toStrFromStr( );
+    } );
 
   }
 }
@@ -3866,22 +3793,22 @@ function _toStrFromArray( test )
   {
 
     test.case = 'invalid first argument type';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrFromArray( 2, {} );
-    });
+    } );
 
     test.case = 'invalid second argument type';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrFromArray( [], 2 );
-    });
+    } );
 
     test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromArray();
-    });
+      _._toStrFromArray( );
+    } );
 
   }
 }
@@ -3936,28 +3863,28 @@ function _toStrFromObject( test )
   {
 
     test.case = 'invalid first argument type';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrFromObject( 1, {} );
-    });
+    } );
 
     test.case = 'empty options';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrFromObject( { a : 1 }, {} );
-    });
+    } );
 
     test.case = 'invalid second argument type';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrFromObject( { a : 1 }, 2 );
-    });
+    } );
 
     test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromObject();
-    });
+      _._toStrFromObject( );
+    } );
 
   }
 }
@@ -3971,9 +3898,9 @@ function _toStrFromContainer( test )
   var names = _.mapOwnKeys( src );
   var optionsItem = null;
 
-  function item_options()
+  function item_options( )
   {
-  optionsItem = _.mapExtend( {}, o);
+  optionsItem = _.mapExtend( {}, o );
   optionsItem.noObject = o.noSubObject ? 1 : 0;
   optionsItem.tab = o.tab + o.dtab;
   optionsItem.level = o.level + 1;
@@ -3981,9 +3908,9 @@ function _toStrFromContainer( test )
   };
 
   test.case = 'default options';
-  item_options();
+  item_options( );
   var got = _._toStrFromContainer
-  ({
+  ( {
     values : src,
     names,
     optionsContainer : o,
@@ -3991,7 +3918,7 @@ function _toStrFromContainer( test )
     simple : !o.multiline,
     prefix : '{',
     postfix : '}',
-  });
+  } );
   var expected = ' { a : 1, b : 2, c : "text" }';
   test.identical( got, expected );
 
@@ -4002,10 +3929,10 @@ function _toStrFromContainer( test )
   o.dtab = '*';
   o.colon = ' | ';
   o.multiline = 1;
-  item_options();
+  item_options( );
 
   var got = _._toStrFromContainer
-  ({
+  ( {
     values : src,
     names,
     optionsContainer : o,
@@ -4013,7 +3940,7 @@ function _toStrFromContainer( test )
     simple : !o.multiline,
     prefix : '{',
     postfix : '}',
-  });
+  } );
   var expected =
   [
     ' *a | 1_',
@@ -4032,10 +3959,10 @@ function _toStrFromContainer( test )
   o.colon = ' : ';
   o.json = 1;
   o.levels = 256;
-  item_options();
+  item_options( );
 
   var got = _._toStrFromContainer
-  ({
+  ( {
     values : src,
     names,
     optionsContainer : o,
@@ -4043,7 +3970,7 @@ function _toStrFromContainer( test )
     simple : !o.multiline,
     prefix : '{',
     postfix : '}',
-  });
+  } );
   var expected = ' { "a" : 1, "b" : 2, "c" : "text" }';
 
   test.identical( got, expected );
@@ -4054,28 +3981,30 @@ function _toStrFromContainer( test )
   {
 
     test.case = 'invalid  argument type';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrFromContainer( 1 );
-    });
+    } );
 
     test.case = 'empty object';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
       _._toStrFromContainer( { } );
-    });
+    } );
 
     test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function()
+    test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromContainer();
-    });
+      _._toStrFromContainer( );
+    } );
 
   }
 
 }
 
-//
+// --
+// declare test suite
+// --
 
 var Self =
 {
@@ -4089,6 +4018,7 @@ var Self =
     reportChars,
     stringFromFile,
     testFunction,
+    _toStrJsonFromFile,
   },
 
   tests :
@@ -4102,7 +4032,7 @@ var Self =
     toStrJson,
     toStrJsonFromFileU,
     toStrJsonFromFileA,
-    toStrstringWrapper,
+    toStrStringWrapper,
     toStrLevel,
     toStrEnumerable,
     toStrEmptyArgs,
