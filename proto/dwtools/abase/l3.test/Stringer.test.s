@@ -3370,31 +3370,52 @@ function toStrEmptyArgs( test )
 
 function toStrSymbol( test )
 {
-  var desc = 'Symbol test',
-  src =
-  [
-    Symbol( ),
-    Symbol( 'sm' ),
-    Symbol( 'sx' ),
-    Symbol( 'sy' )
-  ],
-  options =
-  [
-    {},
-    {},
-    { levels : 0 },
-    { noAtomic : 1 },
+  //  var desc = 'Symbol test',
+  //  src =
+  //  [
+  //    Symbol( ),
+  //    Symbol( 'sm' ),
+  //    Symbol( 'sx' ),
+  //    Symbol( 'sy' )
+  //  ],
+  //  options =
+  //  [
+  //    {},
+  //    {},
+  //    { levels : 0 },
+  //    { noAtomic : 1 },
+  //
+  //  ],
+  //  expected =
+  //  [
+  //    '{- Symbol -}',
+  //    '{- Symbol sm -}',
+  //    '{- Symbol sx -}',
+  //    ''
+  //  ]
+  //
+  //  testFunction( test, desc, src, options, expected );
 
-  ],
-  expected =
-  [
-    '{- Symbol -}',
-    '{- Symbol sm -}',
-    '{- Symbol sx -}',
-    ''
-  ]
+  test.case = 'symbol';
+  var got = _.toStr( Symbol( ), { } );
+  var expected = '{- Symbol -}';
+  test.identical( got, expected );
 
-  testFunction( test, desc, src, options, expected );
+  test.case = 'symbol sm';
+  var got = _.toStr( Symbol( 'sm' ), { } );
+  var expected = '{- Symbol sm -}';
+  test.identical( got, expected );
+
+  test.case = 'symbol sx, level 0';
+  var got = _.toStr( Symbol( 'sx' ), { levels : 0 } );
+  var expected = '{- Symbol sx -}';
+  test.identical( got, expected );
+
+  test.case = 'symbol sy, noAtomic';
+  var got = _.toStr( Symbol( 'sy' ), { noAtomic : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
 }
 
 //
