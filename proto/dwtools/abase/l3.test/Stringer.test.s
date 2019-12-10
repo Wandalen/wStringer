@@ -2248,48 +2248,48 @@ function toStrObject( test )
 
 function toStrJson( test )
 {
-   var desc = 'json test',
-
-   src =
-   [
-
-     /*01*/ { "a" : 100, "b" : "c", "c" : { "d" : true, "e" : null } },
-     /*02*/ { "b" : "a", "c" : 50, "d" : { "a" : "undefined", "e" : null } },
-     /*03*/ [ { "a" : 100, "b" : "x", "c" : { "d" : true, "e" : null } } ],
-     /*09*/ { a : '\n\nABC' },
-
-
-    /*
-       - Only way that i know to store a function inside a valid json is by setting it as
-       a string. Same must apply for the Error. The same may even apply for the Symbol
-       and Date, but i don't know.
-       - The *05* isn't working because there's no undefined in a JSON structure.
-    */
-     ///*04*/ { a : "aa", b : [ 1, 2, 3 ], c : function r( ){ } },
-     ///*05*/ [ { a : 1, b : 2, c : { d : [ null, undefined ] } } ],
-     ///*06*/ { a : new Date( Date.UTC( 1993, 12, 12 ) ) },
-     ///*07*/ { a : new Error( "r" ) },
-     ///*08*/ { a : Symbol( 'sm' ) },
-
-   ],
-
-   options =
-   [
-     /*01*/ { jsonLike : 1 },
-     /*02*/ { jsonLike : 1 },
-     /*03*/ { jsonLike : 1 },
-     /*04*/ { jsonLike : 1 },
-     /*05*/ { jsonLike : 1 },
-     /*06*/ { jsonLike : 1 },
-     /*07*/ { jsonLike : 1 },
-     /*08*/ { jsonLike : 1 },
-     /*09*/ { jsonLike : 1 },
-
-
-     ///*04*/ { jsonLike : 1, noRoutine : 1 },
-
-   ];
-
+  // var desc = 'json test',
+  //
+  // src =
+  // [
+  //
+  //   /*01*/ { "a" : 100, "b" : "c", "c" : { "d" : true, "e" : null } },
+  //   /*02*/ { "b" : "a", "c" : 50, "d" : { "a" : "undefined", "e" : null } },
+  //   /*03*/ [ { "a" : 100, "b" : "x", "c" : { "d" : true, "e" : null } } ],
+  //   /*09*/ { a : '\n\nABC' },
+  //
+  //
+  //  /*
+  //     - Only way that i know to store a function inside a valid json is by setting it as
+  //     a string. Same must apply for the Error. The same may even apply for the Symbol
+  //     and Date, but i don't know.
+  //     - The *05* isn't working because there's no undefined in a JSON structure.
+  //  */
+  //   ///*04*/ { a : "aa", b : [ 1, 2, 3 ], c : function r( ){ } },
+  //   ///*05*/ [ { a : 1, b : 2, c : { d : [ null, undefined ] } } ],
+  //   ///*06*/ { a : new Date( Date.UTC( 1993, 12, 12 ) ) },
+  //   ///*07*/ { a : new Error( "r" ) },
+  //   ///*08*/ { a : Symbol( 'sm' ) },
+  //
+  // ],
+  //
+  // options =
+  // [
+  //   /*01*/ { jsonLike : 1 },
+  //   /*02*/ { jsonLike : 1 },
+  //   /*03*/ { jsonLike : 1 },
+  //   /*04*/ { jsonLike : 1 },
+  //   /*05*/ { jsonLike : 1 },
+  //   /*06*/ { jsonLike : 1 },
+  //   /*07*/ { jsonLike : 1 },
+  //   /*08*/ { jsonLike : 1 },
+  //   /*09*/ { jsonLike : 1 },
+  //
+  //
+  //   ///*04*/ { jsonLike : 1, noRoutine : 1 },
+  //
+  // ];
+  //
   // expected =
   // [
   //
@@ -2446,8 +2446,32 @@ function toStrJson( test )
    //
   // ];
 
-  testFunction( test, desc, src, options );
+  // Should the tests be just like that?
 
+  // If the it converted to string and can be parsed back to JSON without loss, it's good
+
+  test.case = 'json with valid json as property'
+  var src = { "a" : 100, "b" : "c", "c" : { "d" : true, "e" : null } };
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+  var src = { "b" : "a", "c" : 50, "d" : { "a" : "undefined", "e" : null } };
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = 'array as a json'
+  var src = [ { "a" : 100, "b" : "x", "c" : { "d" : true, "e" : null } } ];
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = 'trivial json'
+  var src = { a : '\n\nABC' };
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+  
 }
 
 //
