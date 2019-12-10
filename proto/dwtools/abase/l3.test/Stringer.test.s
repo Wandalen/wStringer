@@ -972,13 +972,13 @@ function toStrArray( test )
     /*55*/ [ { a : '\\test' }, { b : '\ntest' }, { c : 'test' } ],
     /*56*/ [ { a : function func ( ){ } }, 0, 1, 'a' ],
     /*57*/ [ { b : function f ( ){ } }, 1, 2 , 3 ],
-    /*58*/ [ new Error( 'msg' ), new Date( 1990, 0, 0 ), 'test' ],
+    /*58*/ [ new Error( 'msg' ), new Date( Date.UTC( 1990, 0, 0 ) ), 'test' ],
     /*59*/ [ 1, [ 2, 3, 4 ], 2 ],
     /*60*/ [ 1, [ '2', null, undefined, '4' ], 2 ],
     /*61*/ [ [ 1, 2 ], 'string', { a : true, b : null }, undefined ],
     /*62*/ [ [ 0, 1 ], 'test', { a : Symbol( ) }, undefined ],
     /*63*/ [ 0, 'str', { a : Symbol( ) }, function test( ){ }, null ],
-    /*64*/ [ 0, 'str', { a : Symbol( ) }, function test( ){ }, true, new Date( 1990, 0, 0 ) ],
+    /*64*/ [ 0, 'str', { a : Symbol( ) }, function test( ){ }, true, new Date( Date.UTC( 1990, 0, 0 ) ) ],
     /*65*/ [ [ 0, 1 ], 'test', { a : 'a' } ],
     /*66*/ [ [ 1, 2 ], 'sample', { a : 'b' } ],
     /*67*/ [ 11, 22, function routine( ){ }, { a : 'string' } ],
@@ -990,8 +990,8 @@ function toStrArray( test )
     /*73*/ [ 'o', [ 90, 80, 70 ], 'o' ],
     /*74*/ [ 'o', 1, { a : true, b : undefined, c : null } ],
     /*75*/ [ 'a', 2, { a : '\\true', b : true, c : null } ],
-    /*76*/ [ [ 'a', 1 ], new Error( 'err msg' ), new Date( 1990, 0, 0 ) ],
-    /*77*/ [ [ 'a', 1 ], new Date( 1999, 1, 1 ) ],
+    /*76*/ [ [ 'a', 1 ], new Error( 'err msg' ), new Date( Date.UTC( 1990, 0, 0 ) ) ],
+    /*77*/ [ [ 'a', 1 ], new Date( Date.UTC( 1999, 1, 1 ) ) ],
     /*78*/ [ [ 1, 2, 3 ], 'a' ],
 
   ],
@@ -1547,7 +1547,7 @@ function toStrArray( test )
     [
       '[',
       '  [], ',
-      '  1989-12-31T02:00:00.000Z',
+      '  1989-12-31T00:00:00.000Z',
       ']'
     ].join( '\n' ),
 
@@ -1556,7 +1556,7 @@ function toStrArray( test )
     [
       '[',
       '|  [], ',
-      '|  1999-02-01T02:00:00.000Z',
+      '|  1999-02-01T00:00:00.000Z',
       '|]'
     ].join( '\n' ),
 
@@ -1640,7 +1640,7 @@ function toStrObject( test )
     /*55*/  { "sequence" : "\vsample",  },
     /*56*/  { "sequence" : "\ftest",  },
     /*57*/  { a : 1, b : { d : 'string' }, c : true },
-    /*58*/  { a : 1, b : { d : 'string' }, c : new Date( ) },
+    /*58*/  { a : 1, b : { d : 'string' }, c : new Date(Date.UTC( ) ) },
     /*59*/  { a : 1000, b : { d : 'string' }, c : 1.500 },
     /*60*/  { a : 1000, b : 'text', c : 1.500 },
     /*61*/  { a : 1000, b : 'text', c : false, d : undefined, e : null},
@@ -1831,7 +1831,7 @@ function toStrObject( test )
       '  c : \'2\'* ',
       '  d : undefined* ',
       '  e : true* ',
-      '  f : Symbol( symbol )'
+      '  f : {- Symbol symbol -}'
 
     ].join( '\n' ),
 
@@ -3002,9 +3002,9 @@ function toStrDate( test )
   src =
   [
     new Date( Date.UTC( 1993, 12, 12 ) ),
-    new Date( 1990, 0, 0 ),
-    new Date( 2016, 12, 8 ),
-    new Date( 2016, 1, 2 ),
+    new Date( Date.UTC( 1990, 0, 0 ) ),
+    new Date( Date.UTC( 2016, 12, 8 ) ),
+    new Date( Date.UTC( 2016, 1, 2 ) ),
   ],
   options =
   [
@@ -3016,8 +3016,8 @@ function toStrDate( test )
   expected =
   [
     '1994-01-12T00:00:00.000Z',
-    '1989-12-31T02:00:00.000Z',
-    '2017-01-08T03:00:00.000Z',
+    '1989-12-31T00:00:00.000Z',
+    '2017-01-08T00:00:00.000Z',
     '',
   ]
   testFunction( test, desc, src, options, expected );
