@@ -2787,121 +2787,212 @@ function toStrJsonFromFileA( test )
 
 function toStrStringWrapper( test )
 {
-   var desc = 'stringWrapper test',
-   src =
-   [
-     /*01*/ { a : "string", b : 1, c : null , d : undefined },
-     /*02*/ { a : "sample", b : 0, c : false , d : [ "a" ] },
-     /*03*/ { a : [ "example" ], b : 1, c : null , d : [ "b" ] },
-     /*04*/ { a : "test", b : new Error( "err" ) },
-     /*05*/ { a : "a", b : "b", c : { d : "d" } },
-     /*06*/ { a : { h : "a" }, b : "b", c : { d : "d" } },
-     /*07*/ { a : "line1\nline2\nline3" },
-     /*08*/ { a : "line1" },
-   ],
-   options =
-   [
-     /*01*/ { stringWrapper : '' },
-     /*02*/ { levels : 2, stringWrapper : '' },
-     /*03*/ { levels : 3, stringWrapper : '' },
-     /*04*/ { levels : 2 },
-     /*05*/ { stringWrapper: '', levels : 1 },
-     /*06*/ { stringWrapper: '', levels : 2 },
-     /*07*/ { levels : 2, multilinedString : 1 },
-     /*08*/ { levels : 2, multilinedString : 1 },
-   ],
+  //   var desc = 'stringWrapper test',
+  //   src =
+  //   [
+  //     /*01*/ { a : "string", b : 1, c : null , d : undefined },
+  //     /*02*/ { a : "sample", b : 0, c : false , d : [ "a" ] },
+  //     /*03*/ { a : [ "example" ], b : 1, c : null , d : [ "b" ] },
+  //     /*04*/ { a : "test", b : new Error( "err" ) },
+  //     /*05*/ { a : "a", b : "b", c : { d : "d" } },
+  //     /*06*/ { a : { h : "a" }, b : "b", c : { d : "d" } },
+  //     /*07*/ { a : "line1\nline2\nline3" },
+  //     /*08*/ { a : "line1" },
+  //   ],
+  //   options =
+  //   [
+  //     /*01*/ { stringWrapper : '' },
+  //     /*02*/ { levels : 2, stringWrapper : '' },
+  //     /*03*/ { levels : 3, stringWrapper : '' },
+  //     /*04*/ { levels : 2 },
+  //     /*05*/ { stringWrapper: '', levels : 1 },
+  //     /*06*/ { stringWrapper: '', levels : 2 },
+  //     /*07*/ { levels : 2, multilinedString : 1 },
+  //     /*08*/ { levels : 2, multilinedString : 1 },
+  //   ],
+  //
+  //   expected =
+  //   [
+  //    /*01*/
+  //      [
+  //
+  //       '{',
+  //       '  a : string, ',
+  //       '  b : 1, ',
+  //       '  c : null, ',
+  //       '  d : undefined',
+  //       '}'
+  //
+  //     ].join( '\n' ),
+  //
+  //    /*02*/
+  //      [
+  //
+  //       '{',
+  //       '  a : sample, ',
+  //       '  b : 0, ',
+  //       '  c : false, ',
+  //       '  d : [ a ]',
+  //       '}'
+  //
+  //     ].join( '\n' ),
+  //
+  //    /*03*/
+  //      [
+  //
+  //       '{',
+  //       '  a : [ example ], ',
+  //       '  b : 1, ',
+  //       '  c : null, ',
+  //       '  d : [ b ]',
+  //       '}'
+  //
+  //     ].join( '\n' ),
+  //
+  //    /*04*/
+  //      [
+  //
+  //       '{',
+  //       '  a : \'test\', ',
+  //       '  b : Error: err',
+  //       '}'
+  //
+  //     ].join( '\n' ),
+  //
+  //    /*05*/
+  //      [
+  //
+  //       '{',
+  //       '  a, ',
+  //       '  b, ',
+  //       '  c : {- Object with 1 elements -}',
+  //       '}'
+  //
+  //     ].join( '\n' ),
+  //
+  //    /*06*/
+  //    [
+  //
+  //       '{',
+  //       '  a : { h : a }, ',
+  //       '  b, ',
+  //       '  c : { d }',
+  //       '}'
+  //
+  //     ].join( '\n' ),
+  //
+  //    /*07*/
+  //    [
+  //
+  //       '{',
+  //       '  a : `line1',
+  //       'line2',
+  //       'line3`',
+  //       '}'
+  //
+  //     ].join( '\n' ),
+  //
+  //    /*08*/
+  //    [
+  //
+  //       '{ a : `line1` }',
+  //
+  //      ].join( '\n' ),
+  //
+  //   ]
+  //
+  //testFunction( test, desc, src, options, expected );
 
-   expected =
-   [
-    /*01*/
-      [
-
-       '{',
+  test.case = 'stringWrapper no quotes';
+  var got = _.toStr( { a : "string", b : 1, c : null , d : undefined } , { stringWrapper : '' } );
+  var expected =
+      ['{',
        '  a : string, ',
        '  b : 1, ',
        '  c : null, ',
        '  d : undefined',
        '}'
+      ].join( '\n' );
+  test.identical( got, expected );
 
-     ].join( '\n' ),
-
-    /*02*/
-      [
-
-       '{',
+  test.case = 'stringWrapper no quotes, levels 2';
+  var src = { a : "sample", b : 0, c : false , d : [ "a" ] };
+  var got = _.toStr( src, { levels : 2, stringWrapper : '' } );
+  var expected =
+      ['{',
        '  a : sample, ',
        '  b : 0, ',
        '  c : false, ',
        '  d : [ a ]',
        '}'
+      ].join( '\n' );
+  test.identical( got, expected );
 
-     ].join( '\n' ),
-
-    /*03*/
-      [
-
-       '{',
+  test.case = 'stringWrapper no quotes, levels 3';
+  var src = { a : [ "example" ], b : 1, c : null , d : [ "b" ] };
+  var got = _.toStr( src, { levels : 3, stringWrapper : '' } );
+  var expected =
+      ['{',
        '  a : [ example ], ',
        '  b : 1, ',
        '  c : null, ',
        '  d : [ b ]',
        '}'
+      ].join( '\n' );
+  test.identical( got, expected );
 
-     ].join( '\n' ),
-
-    /*04*/
-      [
-
-       '{',
+  test.case = 'stringWrapper with error';
+  var src = { a : "test", b : new Error( "err" ) };
+  var got = _.toStr( src, { levels : 2 } );
+  var expected =
+      ['{',
        '  a : \'test\', ',
        '  b : Error: err',
        '}'
+      ].join( '\n' );
+  test.identical( got, expected );
 
-     ].join( '\n' ),
-
-    /*05*/
-      [
-
-       '{',
+  test.case = 'stringWrapper with object, levels 1';
+  var src = { a : "a", b : "b", c : { d : "d" } };
+  var got = _.toStr( src, { stringWrapper: '', levels : 1 } );
+  var expected =
+      ['{',
        '  a, ',
        '  b, ',
        '  c : {- Object with 1 elements -}',
        '}'
+      ].join( '\n' );
+  test.identical( got, expected );
 
-     ].join( '\n' ),
-
-    /*06*/
-    [
-
-       '{',
+  test.case = 'stringWrapper with objects, levels 2';
+  var src = { a : { h : "a" }, b : "b", c : { d : "d" } };
+  var got = _.toStr( src, { stringWrapper: '', levels : 2 } );
+  var expected =
+      ['{',
        '  a : { h : a }, ',
        '  b, ',
        '  c : { d }',
        '}'
+      ].join( '\n' );
+  test.identical( got, expected );
 
-     ].join( '\n' ),
-
-    /*07*/
-    [
-
-       '{',
+  test.case = 'stringWrapper multiline \\n, levels 2';
+  var src = { a : "line1\nline2\nline3" };
+  var got = _.toStr( src, { levels : 2, multilinedString : 1 } );
+  var expected =
+      ['{',
        '  a : `line1',
        'line2',
        'line3`',
        '}'
+      ].join( '\n' );
+  test.identical( got, expected );
 
-     ].join( '\n' ),
-
-    /*08*/
-    [
-
-       '{ a : `line1` }',
-
-      ].join( '\n' ),
-
-   ]
-
-  testFunction( test, desc, src, options, expected );
+  test.case = 'stringWrapper multiline, levels 2';
+  var src = { a : "line1" };
+  var got = _.toStr( src, { levels : 2, multilinedString : 1 } );
+  var expected = '{ a : `line1` }';
+  test.identical( got, expected );
 
 }
 
