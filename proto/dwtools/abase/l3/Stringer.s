@@ -521,6 +521,12 @@ function toStrShort( src )
 
 function _toStr( src,o )
 {
+  if( o.precision < 1 || o.precision > 21 )
+  throw _.err( 'RangeError' );
+
+  if( o.fixed < 0 || o.fixed > 20 )
+  throw _.err( 'RangeError' );
+
   var result = '';
   var simple = 1;
   var type = _.strPrimitiveType( src );
@@ -717,6 +723,18 @@ function _toStrShort( src, o )
 
       result = _toStrFromStr( src, o2 );
 
+    }
+    else if( _.errIs( src ) )
+    {
+      result += _ObjectToString.call( src );
+    }
+    else if( _.routineIs( src ) )
+    {
+      result += _toStrFromRoutine( src,o );
+    }
+    else if( _.numberIs( src ) )
+    {
+      result += _toStrFromNumber( src,o );
     }
     else
     {
@@ -1043,6 +1061,12 @@ function _toStrFromNumber( src,o )
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( _.numberIs( src ) && _.objectIs( o ) );
+
+  if( o.precision < 1 || o.precision > 21 )
+  throw _.err( 'RangeError' );
+
+  if( o.fixed < 0 || o.fixed > 20 )
+  throw _.err( 'RangeError' );
 
   if( _.numberIs( o.precision ) )
   result += src.toPrecision( o.precision );
@@ -1464,11 +1488,12 @@ function _toStrFromContainer( o )
   var optionsContainer = o.optionsContainer;
   var optionsItem = o.optionsItem;
 
+  var length = ( names ? names.length : values.length );
   var simple = o.simple;
   var prefix = o.prefix;
   var postfix = o.postfix;
   var limit = optionsContainer.limitElementsNumber;
-  var l = ( names ? names.length : values.length );
+  var l = length;
 
   if( limit > 0 && limit < l )
   {
@@ -1515,6 +1540,13 @@ function _toStrFromContainer( o )
     /*result += '\n' + optionsItem.tab;*/
   }
 
+  /* keyWrapper */
+
+  if( optionsContainer.json )
+  {
+    optionsContainer.keyWrapper = '"';
+  }
+
   /* exec */
 
   var r;
@@ -1554,7 +1586,7 @@ function _toStrFromContainer( o )
     {
       if( optionsContainer.keyWrapper )
       result += optionsContainer.keyWrapper + String( names[ n ] ) + optionsContainer.keyWrapper + optionsContainer.colon;
-      else
+      else if( String( names[ n ] ) !== r.text )
       result += String( names[ n ] ) + optionsContainer.colon;
 
       if( !r.simple )
@@ -1583,6 +1615,9 @@ function _toStrFromContainer( o )
   // result += other( names.length );
 
   /* wrap */
+
+  if( length - l > 0 )
+  result += other( length );
 
   if( optionsContainer.wrap )
   {
@@ -1672,7 +1707,7 @@ function _toStrFromObject( src,o )
   var result = '';
 
   _.assert( arguments.length === 2 );
-  _.assert( _.objectLike( src ) );
+  _.assert( _.objectLike( src ) || _.strPrimitiveType( src ) === 'Error' );
   _.assert( _.objectIs( o ) || o === undefined,'Expects map {-o-}' );
 
 

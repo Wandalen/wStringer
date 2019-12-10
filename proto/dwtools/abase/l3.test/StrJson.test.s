@@ -2106,7 +2106,7 @@ function toJson( test )
 
   test.case = 'trivial'; /* */
 
-  var expected = '[ ' + _.arrayFromRange([ 1,100 ]).join( ', ' ) + ' ]';
+  var expected = '[\n  ' + _.arrayFromRange([ 1,100 ]).join( ', \n  ' ) + '\n]';
   var src = _.arrayFromRange([ 1,100 ]);
   var json = _.toJson( src );
   test.identical( json , expected );

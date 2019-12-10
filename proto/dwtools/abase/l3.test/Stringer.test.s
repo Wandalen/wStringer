@@ -75,7 +75,7 @@ function reportChars()
 function stringFromFile( name, encoding, begin, end )
 {
   // var str = File.readFileSync( __dirname + '/../../../file.test/' + name, encoding ); /* xxx : use wFiles */
-  var str = fileProvider.fileRead({ filePath : __dirname + '/../../../file.test/' + name, encoding });
+  var str = fileProvider.fileRead({ filePath : __dirname + '/../../../../asset/test/' + name, encoding });
   str = str.slice( begin, end );
 
   //if( name === 'file1' )
@@ -98,7 +98,7 @@ function testFunction( test, desc, src, options, expected )
     var optionsTest = options[ k ] || options[ 0 ];
     got = _.toStr( src[ k ], optionsTest );
 
-    if( test.case.slice( 0, 4 ) === 'json' && optionsTest.json )
+    if( test.case.slice( 0, 4 ) === 'json' && optionsTest.jsonLike )
     {
 
       // good
@@ -431,11 +431,11 @@ function toStr( test )
       [
         '[',
         '  \'a\', ',
-        '  [ Array with 3 elements ], ',
-        '  [ Object with 2 elements ], ',
-        '  [ Object with 2 elements ], ',
-        '  [ Array with 3 elements ], ',
-        '  [ Array with 3 elements ]',
+        '  {- Array with 3 elements -}, ',
+        '  {- Object with 2 elements -}, ',
+        '  {- Object with 2 elements -}, ',
+        '  {- Array with 3 elements -}, ',
+        '  {- Array with 3 elements -}',
         ']',
       ].join( '\n' ),
     },
@@ -469,20 +469,20 @@ function toStr( test )
         '  \'a\', ',
         '  [ 10, 20, 30 ], ',
         '  {',
-        '    21 : [ Array with 3 elements ], ',
-        '    22 : [ Array with 4 elements ]',
+        '    21 : {- Array with 3 elements -}, ',
+        '    22 : {- Array with 4 elements -}',
         '  }, ',
         '  {',
-        '    31 : [ Object with 2 elements ], ',
-        '    32 : [ Object with 3 elements ]',
+        '    31 : {- Object with 2 elements -}, ',
+        '    32 : {- Object with 3 elements -}',
         '  }, ',
         '  [',
-        '    [ Array with 3 elements ], ',
-        '    [ Array with 4 elements ]',
+        '    {- Array with 3 elements -}, ',
+        '    {- Array with 4 elements -}',
         '  ], ',
         '  [',
-        '    [ Object with 2 elements ], ',
-        '    [ Object with 3 elements ]',
+        '    {- Object with 2 elements -}, ',
+        '    {- Object with 3 elements -}',
         '  ]',
         ']',
       ].join( '\n' ),
@@ -629,7 +629,7 @@ function toStr( test )
     var got = _.toStr( sample.in, sample.options );
     debugger;
 
-    test.case = sample.description || null;
+    test.case = sample.description || '';
     test.identical( got, sample.out );
 
   }
@@ -755,16 +755,16 @@ function toStrUnwrapped( test )
     /*01*/
 
     [
-      '    "abc" ',
-      '    "edf" ',
+      '    \'abc\' ',
+      '    \'edf\' ',
       '    a : 1',
     ].join( '\n' ),
 
     /*02*/
 
     [
-      '    nameLong : "abc" ',
-      '    description : "edf" ',
+      '    nameLong : \'abc\' ',
+      '    description : \'edf\' ',
       '    rewardForVisitor : a : 1',
     ].join( '\n' ),
 
@@ -772,8 +772,8 @@ function toStrUnwrapped( test )
 
     [
       '  a : ',
-      '    nameLong : "abc" ',
-      '    description : "edf" ',
+      '    nameLong : \'abc\' ',
+      '    description : \'edf\' ',
       '    rewardForVisitor : a : 1',
     ].join( '\n' ),
 
@@ -781,16 +781,16 @@ function toStrUnwrapped( test )
 
     [
       '  a : ',
-      '    "abc" ',
-      '    "edf" ',
+      '    \'abc\' ',
+      '    \'edf\' ',
       '    a : 1',
     ].join( '\n' ),
 
     /*05*/
 
     [
-      '    "abc" ',
-      '    "edf" ',
+      '    \'abc\' ',
+      '    \'edf\' ',
       '    a : 1 ',
       '  1 ',
       '  2',
@@ -799,21 +799,21 @@ function toStrUnwrapped( test )
     /*06*/
 
     [
-      '  "a" ',
+      '  \'a\' ',
       '  7 ',
       '    1 ',
       '  8 ',
-      '  "b"',
+      '  \'b\'',
     ].join( '\n' ),
 
     /*07*/
 
     [
-      '  "a" ',
+      '  \'a\' ',
       '  7 ',
       '  u : 1 ',
       '  8 ',
-      '  "b"',
+      '  \'b\'',
     ].join( '\n' ),
 
     /*08*/
@@ -827,24 +827,22 @@ function toStrUnwrapped( test )
       '    5 ',
       '    4 ',
       '      3 ',
-      '',
       '    2 1 0',
     ].join( '\n' ),
 
     /*10*/
     [
-      '    nameLong : "abc" ',
-      '    description : "edf" ',
+      '    nameLong : \'abc\' ',
+      '    description : \'edf\' ',
       '    rewardForVisitor : a : 1 ',
       '    stationary : 1 ',
-      '    f : "f" ',
+      '    f : \'f\' ',
       '    quantity : 1 ',
-      '',
-      '    nameLong : "abc2" ',
-      '    description : "edf2',
+      '    nameLong : \'abc2\' ',
+      '    description : \'edf2\' ',
       '    rewardForVisitor : a : 1 ',
       '    stationary : 1 ',
-      '    f : "f" ',
+      '    f : \'f\' ',
       '    quantity : 1',
 
     ].join( '\n' ),
@@ -852,11 +850,11 @@ function toStrUnwrapped( test )
     /*11*/
 
     [
-      '-  1 : "a" ',
-      '-  2 : 10 20 30 ',
-      '-  3 : 21 : "aa" 22 : "bb" ',
-      '-  4 : 10 20 30 ',
-      '-  13 : 10 20 30',
+      '  1 : \'a\' ',
+      '  2 :   10 20 30 ',
+      '  3 : 21 : \'aa\' 22 : \'bb\' ',
+      '  4 :   10 20 30 ',
+      '  13 :   10 20 30',
     ].join( '\n' ),
 
   ];
@@ -919,39 +917,39 @@ function toStrError( test )
     /*02*/  'Error: msg',
     /*03*/  '[object Error]',
     /*04*/  '',
-    /*05*/  '{ stack : [ "Error: message2\\n   " ... "ut (timers.js:198:5)" ], message : "message2" }',
+    /*05*/  '{ stack : [ \'Error: message2\\n   \' ... \'al/timers.js:480:7)\' ], message : \'message2\' }',
     /*06*/  '{}',
     /*07*/  '{}',
-    /*08*/  '{ stack : [ "Error: my message2\\n" ... "ut (timers.js:198:5)" ], message : "my message2" }',
+    /*08*/  '{ stack : [ \'Error: my message2\\n\' ... \'al/timers.js:480:7)\' ], message : \'my message2\' }',
     /*09*/
       [
         '{',
-        '  toLocaleString : [ routine toLocaleString ], ',
-        '  valueOf : [ routine valueOf ], ',
+        '  stack : [ \'Error: my message3\\n\' ... \'al/timers.js:480:7)\' ], ',
+        '  message : \'my message3\', ',
+        '  constructor : [ routine Error ], ',
+        '  name : \'Error\', ',
+        '  toString : [ routine toString ], ',
+        '  __defineGetter__ : [ routine __defineGetter__ ], ',
+        '  __defineSetter__ : [ routine __defineSetter__ ], ',
         '  hasOwnProperty : [ routine hasOwnProperty ], ',
+        '  __lookupGetter__ : [ routine __lookupGetter__ ], ',
+        '  __lookupSetter__ : [ routine __lookupSetter__ ], ',
         '  isPrototypeOf : [ routine isPrototypeOf ], ',
         '  propertyIsEnumerable : [ routine propertyIsEnumerable ], ',
-        '  __defineGetter__ : [ routine __defineGetter__ ], ',
-        '  __lookupGetter__ : [ routine __lookupGetter__ ], ',
-        '  __defineSetter__ : [ routine __defineSetter__ ], ',
-        '  __lookupSetter__ : [ routine __lookupSetter__ ], ',
-        '  __proto__ : [ Error with 0 elements ], ',
-        '  name : "Error", ',
-        '  constructor : [ routine Error ], ',
-        '  toString : [ routine toString ], ',
-        '  stack : [ "Error: my message3\\n" ... "ut (timers.js:198:5)" ], ',
-        '  message : "my message3"',
+        '  valueOf : [ routine valueOf ], ',
+        '  __proto__ : {- Error with 0 elements -}, ',
+        '  toLocaleString : [ routine toLocaleString ]',
         '}',
       ].join( '\n' ),
 
     /*10*/
       [
-        '{ stack : "Error: my message4", message : "my message4" }',
+        '{ stack : \'Error: my message4\', message : \'my message4\' }',
       ].join( '\n' ),
 
     /*11*/
       [
-        '{ stack : "Error: my error\\n", message : "my error" }',
+        '{ stack : \'Error: my error\\n\', message : \'my error\' }',
       ].join( '\n' ),
   ];
 
@@ -1141,8 +1139,8 @@ function toStrArray( test )
     /*02*/
     [
       '[',
-      '  [ Object with 1 elements ], ',
-      '  [ Object with 1 elements ]',
+      '  {- Object with 1 elements -}, ',
+      '  {- Object with 1 elements -}',
       ']'
     ].join( '\n' ),
 
@@ -1164,16 +1162,16 @@ function toStrArray( test )
     /*07*/
     [
       '[',
-      '  [ Object with 1 elements ]',
+      '  {- Object with 1 elements -}',
       ']'
     ].join( '\n' ),
 
     /*08*/ '',
 
 
-    /*09*/ '[ "\\n\\nEscaping test" ]',
+    /*09*/ '[ \'\\n\\nEscaping test\' ]',
 
-    /*10*/ '[ Array with 3 elements ]',
+    /*10*/ '{- Array with 3 elements -}',
     /*11*/ '[ 1, 2, 3 ]',
     /*12*/
     [
@@ -1267,8 +1265,8 @@ function toStrArray( test )
 
     /*25*/
     [
-      '  [ Array with 3 elements ] | ',
-      '  [ Array with 3 elements ]',
+      '  {- Array with 3 elements -} | ',
+      '  {- Array with 3 elements -}',
     ].join( '\n' ),
 
     /*26*/
@@ -1277,35 +1275,35 @@ function toStrArray( test )
     ].join( '\n' ),
 
     /*27*/
-    '  "e" "e" "e"',
+    '  \'e\' \'e\' \'e\'',
 
     /*28*/
-    '  "a", "b", "c", 1, 2, 3',
+    '  \'a\', \'b\', \'c\', 1, 2, 3',
     /*29*/
     '| 15. 16. 17. 18',
     /*30*/
-    '  [ Object with 3 elements ]',
+    '  {- Object with 3 elements -}',
     /*31*/
-    '  "a". 1. false',
+    '  \'a\'. 1. false',
     /*32*/
     '  [ routine without name ]',
     /*33*/
     '',
     /*34*/
-    '  "a"* 1.00e+3* 2.00e+3* 3.00e+3',
+    '  \'a\'* 1.00e+3* 2.00e+3* 3.00e+3',
 
     /*35*/
     '  1.111, 2.222, 3.333',
     /*36*/
     [
       '  7. ',
-      '  [ Object with 1 elements ]. ',
+      '  {- Object with 1 elements -}. ',
       '  1. ',
-      '  "x"',
+      '  \'x\'',
     ].join( '\n' ),
 
     /*37*/
-    '  "\\n\\nEscaping & wrap test"',
+    '  \'\\n\\nEscaping & wrap test\'',
 
     /*38*/
     [
@@ -1317,9 +1315,9 @@ function toStrArray( test )
 
     /*39*/
     [
-      '    "a". "b". "c". ',
-      '  "d". ',
-      '  "e"'
+      '    \'a\'. \'b\'. \'c\'. ',
+      '  \'d\'. ',
+      '  \'e\''
     ].join( '\n' ),
 
     /*40*/
@@ -1331,16 +1329,16 @@ function toStrArray( test )
 
     /*41*/
     [
-      '  a - "a"| b - "b"| c - "c"'
+      '  a - \'a\'| b - \'b\'| c - \'c\''
     ].join( '\n' ),
 
     /*42*/
     [
-      '  "a", ',
+      '  \'a\', ',
       '  7, ',
       '  u : 2, ',
       '  8, ',
-      '  "b"',
+      '  \'b\'',
     ].join( '\n' ),
 
     /*43*/
@@ -1350,7 +1348,7 @@ function toStrArray( test )
 
     /*44*/
     [
-      '  "x", 2e+3, 3e+3, 4e+3',
+      '  \'x\', 2e+3, 3e+3, 4e+3',
     ].join( '\n' ),
 
     /*45*/
@@ -1362,14 +1360,14 @@ function toStrArray( test )
 
     /*46*/
     [
-      '    a : "\\na". ',
-      '    b : d : "\\ntrue"',
+      '    a : \'\\na\'. ',
+      '    b : d : \'\\ntrue\'',
     ].join( '\n' ),
 
     /*47*/
     [
-      '    x : "\\na", ',
-      '    y : z : "\\ntrue"',
+      '    x : \'\\na\', ',
+      '    y : z : \'\\ntrue\'',
     ].join( '\n' ),
 
     /*48*/
@@ -1395,7 +1393,6 @@ function toStrArray( test )
       '    5||',
       '    4||',
       '      3||',
-      '',
       '    2||1||0',
     ].join( '\n' ),
 
@@ -1427,13 +1424,13 @@ function toStrArray( test )
     [
       '[',
       '  {',
-      '    a : "\\\\test"',
+      '    a : \'\\\\test\'',
       '  }, ',
       '  {',
-      '    b : "\\ntest"',
+      '    b : \'\\ntest\'',
       '  }, ',
       '  {',
-      '    c : "test"',
+      '    c : \'test\'',
       '  }',
       ']',
     ].join( '\n' ),
@@ -1444,7 +1441,7 @@ function toStrArray( test )
       '  {}, ',
       '  0, ',
       '  1, ',
-      '  "a"',
+      '  \'a\'',
       ']',
     ].join( '\n' ),
 
@@ -1460,7 +1457,7 @@ function toStrArray( test )
 
     /*58*/
     [
-      '[ "test" ]',
+      '[ \'test\' ]',
     ].join( '\n' ),
 
     /*59*/
@@ -1602,7 +1599,7 @@ function toStrArray( test )
     [
       '[',
       '  [], ',
-      '  1989-12-30T22:00:00.000Z',
+      '  1989-12-31T02:00:00.000Z',
       ']'
     ].join( '\n' ),
 
@@ -1611,7 +1608,7 @@ function toStrArray( test )
     [
       '[',
       '|  [], ',
-      '|  1999-01-31T22:00:00.000Z',
+      '|  1999-02-01T02:00:00.000Z',
       '|]'
     ].join( '\n' ),
 
@@ -1799,14 +1796,14 @@ function toStrObject( test )
   expected =
   [
     /*01*/  '{ a : 1, b : 2, c : 3 }',
-    /*02*/  '[ Object with 3 elements ]',
+    /*02*/  '{- Object with 3 elements -}',
     /*03*/  '{ q : 6, w : 7, e : 8 }',
 
     /*04*/
     [
       '{',
       '  u : 12, ',
-      '  i : [ Object with 1 elements ], ',
+      '  i : {- Object with 1 elements -}, ',
       '  p : 14',
       '}'
     ].join( '\n' ),
@@ -1824,12 +1821,12 @@ function toStrObject( test )
     /*06*/
     [
       '{',
-      '  z : "01", ',
+      '  z : \'01\', ',
       '  x : ',
       '  {',
       '    c : { g : 4 }',
       '  }, ',
-      '  v : "03"',
+      '  v : \'03\'',
       '}'
     ].join( '\n' ),
 
@@ -1855,7 +1852,7 @@ function toStrObject( test )
     /*08*/
     [
       '{',
-      '  w : "c"',
+      '  w : \'c\'',
       '}'
     ].join( '\n' ),
 
@@ -1884,7 +1881,7 @@ function toStrObject( test )
     [
       '  a : null* ',
       '  b : 1* ',
-      '  c : "2"* ',
+      '  c : \'2\'* ',
       '  d : undefined* ',
       '  e : true* ',
       '  f : Symbol(symbol)'
@@ -1893,7 +1890,7 @@ function toStrObject( test )
 
     /*14*/
     [
-      '  a : "true"-> ',
+      '  a : \'true\'-> ',
       '  b : 2-> ',
       '  c : false-> ',
       '  d : undefined'
@@ -1952,7 +1949,7 @@ function toStrObject( test )
 
     /*23*/
 
-    'x : "\\n10"| z : "\\\\11"',
+    'x : \'\\n10\'| z : \'\\\\11\'',
 
     /*24*/
     [
@@ -2011,7 +2008,7 @@ function toStrObject( test )
 
     /*31*/
     [
-      '  a : "a", , ',
+      '  a : \'a\', , ',
       '  b : ',
       '    d : false, , ',
       '  c : 3'
@@ -2019,9 +2016,9 @@ function toStrObject( test )
 
     /*32*/
     [
-      '  a : "\\na"| ',
-      '  b : d : "\\ntrue"| ',
-      '  c : "\\n"'
+      '  a : \'\\na\'| ',
+      '  b : d : \'\\ntrue\'| ',
+      '  c : \'\\n\''
 
     ].join( '\n' ),
 
@@ -2056,7 +2053,7 @@ function toStrObject( test )
     /*39*/
     [
       '{',
-      '  a : "bb", ',
+      '  a : \'bb\', ',
       '  b : { d : false }, ',
       '  c : 30.00000',
       '}'
@@ -2076,10 +2073,10 @@ function toStrObject( test )
     /*41*/
     [
       '{',
-      '  a : "\\na", ',
+      '  a : \'\\na\', ',
       '  b : ',
       '  {',
-      '    d : "\\ntrue"',
+      '    d : \'\\ntrue\'',
       '  }',
       '}'
 
@@ -2088,7 +2085,7 @@ function toStrObject( test )
     /*42*/
     [
       '{',
-      '  a : "aa", ',
+      '  a : \'aa\', ',
       '  b : {}',
       '}'
 
@@ -2097,7 +2094,7 @@ function toStrObject( test )
     /*43*/
     [
       '{',
-      '  a : "bb", ',
+      '  a : \'bb\', ',
       '  b : {}',
       '}'
 
@@ -2116,10 +2113,10 @@ function toStrObject( test )
     [
 
       '{',
-      '  sequence : "\\u001b[A", ',
-      '  name : "undefined", ',
+      '  sequence : \'\\u001b[A\', ',
+      '  name : \'undefined\', ',
       '  shift : false, ',
-      '  code : "[A"',
+      '  code : \'[A\'',
       '}'
 
     ].join( '\n' ),
@@ -2127,10 +2124,10 @@ function toStrObject( test )
     /*46*/
     [
       '{',
-      '  sequence : "\\u007f[A", ',
-      '  name : "undefined", ',
+      '  sequence : \'\\u007f[A\', ',
+      '  name : \'undefined\', ',
       '  shift : false, ',
-      '  code : "[A"',
+      '  code : \'[A\'',
       '}'
 
     ].join( '\n' ),
@@ -2138,10 +2135,10 @@ function toStrObject( test )
     /*47*/
     [
       '{',
-      '  sequence : "<\\u001cb>text<\\u001cb>", ',
-      '  data : [ Object with 2 elements ], ',
+      '  sequence : \'<\\u001cb>text<\\u001cb>\', ',
+      '  data : {- Object with 2 elements -}, ',
       '  shift : false, ',
-      '  code : "<b>text<b>"',
+      '  code : \'<b>text<b>\'',
       '}'
 
     ].join( '\n' ),
@@ -2149,9 +2146,9 @@ function toStrObject( test )
     /*48*/
     [
       '{',
-      '  sequence : "heLLo", ',
+      '  sequence : \'heLLo\', ',
       '  shift : false, ',
-      '  code : "heLLo"',
+      '  code : \'heLLo\'',
       '}'
 
     ].join( '\n' ),
@@ -2159,9 +2156,9 @@ function toStrObject( test )
     /*49*/
     [
       '{',
-      '  sequence : "\\nabc", ',
+      '  sequence : \'\\nabc\', ',
       '  shift : false, ',
-      '  code : "abc"',
+      '  code : \'abc\'',
       '}'
 
     ].join( '\n' ),
@@ -2169,9 +2166,9 @@ function toStrObject( test )
     /*50*/
     [
       '{',
-      '  sequence : "\\t[cba]\\t", ',
+      '  sequence : \'\\t[cba]\\t\', ',
       '  data : 100, ',
-      '  code : "\\n[cba]\\n"',
+      '  code : \'\\n[cba]\\n\'',
       '}'
 
     ].join( '\n' ),
@@ -2179,9 +2176,9 @@ function toStrObject( test )
     /*51*/
     [
       '{',
-      '  sequence : "\\\\ABC\\\\", ',
+      '  sequence : \'\\\\ABC\\\\\', ',
       '  data : 100, ',
-      '  code : "\\\\ABC\\\\"',
+      '  code : \'\\\\ABC\\\\\'',
       '}'
 
     ].join( '\n' ),
@@ -2189,34 +2186,34 @@ function toStrObject( test )
     /*52*/
     [
       '{',
-      '  sequence : "\\nline\\n", ',
+      '  sequence : \'\\nline\\n\', ',
       '  data : null, ',
-      '  code : "\\nline\\n"',
+      '  code : \'\\nline\\n\'',
       '}'
 
     ].join( '\n' ),
 
     /*53*/
     [
-      '{ sequence : "\\rspace\\r" }'
+      '{ sequence : \'\\rspace\\r\' }'
 
     ].join( '\n' ),
 
     /*54*/
     [
-      '{ sequence : "\\btest" }'
+      '{ sequence : \'\\btest\' }'
 
     ].join( '\n' ),
 
     /*55*/
     [
-      '{ sequence : "\\u000bsample" }'
+      '{ sequence : \'\\u000bsample\' }'
 
     ].join( '\n' ),
 
     /*56*/
     [
-      '{ sequence : "\\ftest" }'
+      '{ sequence : \'\\ftest\' }'
 
     ].join( '\n' ),
 
@@ -2276,7 +2273,7 @@ function toStrObject( test )
 
     /*64*/
     [
-      '{ c : "3" }',
+      '{ c : \'3\' }',
 
     ].join( '\n' ),
 
@@ -2284,10 +2281,10 @@ function toStrObject( test )
     [
 
       '{',
-      '  sequence : "\\u001b[A", ',
-      '  name : "undefined", ',
+      '  sequence : \'\\u001b[A\', ',
+      '  name : \'undefined\', ',
       '  shift : false, ',
-      '  code : "[A"',
+      '  code : \'[A\'',
       '}'
 
     ].join( '\n' ),
@@ -2313,14 +2310,21 @@ function toStrJson( test )
      /*01*/ { "a" : 100, "b" : "c", "c" : { "d" : true, "e" : null } },
      /*02*/ { "b" : "a", "c" : 50, "d" : { "a" : "undefined", "e" : null } },
      /*03*/ [ { "a" : 100, "b" : "x", "c" : { "d" : true, "e" : null } } ],
-     /*04*/ { a : '\n\nABC' },
+     /*09*/ { a : '\n\nABC' },
 
+
+    /*
+       - Only way that i know to store a function inside a valid json is by setting it as 
+       a string. Same must apply for the Error. The same may even apply for the Symbol 
+       and Date, but i don't know.
+       - The *05* isn't working because there's no undefined in a JSON structure.
+    */
      ///*04*/ { a : "aa", b : [ 1, 2, 3 ], c : function r( ){ } },
-     ///*05*/ [ { a : 1, b : 2, c : { d : [ null, undefined ] } } ],
+     ///*05*/ [ { a : 1, b : 2, c : { d : [ null, undefined ] } } ], 
      ///*06*/ { a : new Date( Date.UTC( 1993, 12, 12 ) ) },
      ///*07*/ { a : new Error( "r" ) },
      ///*08*/ { a : Symbol( 'sm' ) },
-
+     
    ],
 
    options =
@@ -2329,106 +2333,109 @@ function toStrJson( test )
      /*02*/ { jsonLike : 1 },
      /*03*/ { jsonLike : 1 },
      /*04*/ { jsonLike : 1 },
+     /*05*/ { jsonLike : 1 },
+     /*06*/ { jsonLike : 1 },
+     /*07*/ { jsonLike : 1 },
+     /*08*/ { jsonLike : 1 },
+     /*09*/ { jsonLike : 1 },
+
 
      ///*04*/ { jsonLike : 1, noRoutine : 1 },
-     ///*05*/ { jsonLike : 1 },
-     ///*06*/ { jsonLike : 1 },
-     ///*07*/ { jsonLike : 1 },
-     ///*08*/ { jsonLike : 1 },
 
-   ]
+   ];
 
-  //  expected =
+  // expected =
+  // [
+  // 
+  //  /*01*/
   //  [
-   //
-  //   /*01*/
-  //   [
-  //     '{',
-  //     '  "a" : 100, ',
-  //     '  "b" : "c", ',
-  //     '  "c" : { "d" : true, "e" : null }',
-  //     '}'
-  //   ].join( '\n' ),
-   //
-  //   /*02*/
-  //   [
-  //     '{',
-  //     '  "b" : "a", ',
-  //     '  "c" : 50, ',
-  //     '  "d" : { "a" : "undefined", "e" : null }',
-  //     '}'
-   //
-  //   ].join( '\n' ),
-   //
-  //   /*03*/
-  //   [
-  //     '[',
-  //     '  {',
-  //     '    "a" : 100, ',
-  //     '    "b" : "x", ',
-  //     '    "c" : { "d" : true, "e" : null }',
-  //     '  }',
-  //     ']'
-   //
-  //   ].join( '\n' ),
-   //
-  //   /*04*/
-  //   [
-  //     '{',
-  //     '  "a" : "aa", ',
-  //     '  "b" : [ 1, 2, 3 ], ',
-  //     '  "c" : [ routine r ]',
-  //     '}',
-   //
-  //   ].join( '\n' ),
-   //
-  //   /*05*/
-  //   [
-   //
-  //     '[',
-  //     '  {',
-  //     '    "a" : 1, ',
-  //     '    "b" : 2, ',
-  //     '    "c" : ',
-  //     '    {',
-  //     '      "d" : [ null, null ]',
-  //     '    }',
-  //     '  }',
-  //     ']',
-   //
-  //   ].join( '\n' ),
-   //
-  //   /*06*/
-  //   [
-   //
-  //     '{',
-  //     '  "a" : 1994-01-12T00:00:00.000Z',
-  //     '}',
-   //
-  //   ].join( '\n' ),
-   //
-  //   /*07*/
-  //   [
-   //
-  //     '{ "a" : "Error: r" }',
-   //
-  //   ].join( '\n' ),
-   //
-  //   /*08*/
-  //   [
-   //
-  //     '{ "a" : Symbol(sm) }'
-   //
-   //
-  //   ].join( '\n' ),
-   //
-  //   /*09*/
-  //   [
-   //
-  //     '{ "a" : "\\n\\nABC" }'
-   //
-   //
-  //   ].join( '\n' ),
+  //    '{',
+  //    '  "a" : 100, ',
+  //    '  "b" : "c", ',
+  //    '  "c" : { "d" : true, "e" : null }',
+  //    '}'
+  //
+  //  ].join( '\n' ),
+  // 
+  //  /*02*/
+  //  [
+  //    '{',
+  //    '  "b" : "a", ',
+  //    '  "c" : 50, ',
+  //    '  "d" : { "a" : "undefined", "e" : null }',
+  //    '}'
+  // 
+  //  ].join( '\n' ),
+  // 
+  //  /*03*/
+  //  [
+  //    '[',
+  //    '  {',
+  //    '    "a" : 100, ',
+  //    '    "b" : "x", ',
+  //    '    "c" : { "d" : true, "e" : null }',
+  //    '  }',
+  //    ']'
+  // 
+  //  ].join( '\n' ),
+  // 
+  //  /*04*/
+  //  [
+  //    '{',
+  //    '  "a" : "aa", ',
+  //    '  "b" : [ 1, 2, 3 ], ',
+  //    '  "c" : [ routine r ]',
+  //    '}',
+  // 
+  //  ].join( '\n' ),
+  // 
+  //  /*05*/
+  //  [
+  //
+  //    '[',
+  //    '  {',
+  //    '    "a" : 1, ',
+  //    '    "b" : 2, ',
+  //    '    "c" : ',
+  //    '    {',
+  //    '      "d" : [ null, null ]',
+  //    '    }',
+  //    '  }',
+  //    ']',
+  // 
+  //  ].join( '\n' ),
+  // 
+  //  /*06*/
+  //  [
+  //
+  //    '{',
+  //    '  "a" : "1994-01-12T00:00:00.000Z"',
+  //    '}',
+  //
+  //  ].join( '\n' ),
+  //
+  //  /*07*/
+  //  [
+  //
+  //    '{',
+  //    '  "a" : Error: r',
+  //    '}',
+  //
+  //  ].join( '\n' ),
+  //
+  //  /*08*/
+  //  [
+  //
+  //    '{ "a" : Symbol(sm) }'
+  //
+  //  ].join( '\n' ),
+  //
+  //  /*09*/
+  //  [
+  //
+  //    '{ "a" : "\\n\\nABC" }'
+  //
+  //  ].join( '\n' ),
   //
   //     /*10*/
   //     [
@@ -2491,7 +2498,7 @@ function toStrJson( test )
   //     ''
   //   ].join( '\n' ),
    //
-  //  ]
+  // ];
 
   testFunction( test, desc, src, options );
 
@@ -2503,7 +2510,7 @@ function toStrJson( test )
 
 function _toStrJsonFromFile( test, encoding )
 {
-  var desc =  'json from file as utf8',
+  var desc =  'json from file as ' + encoding,
 
   src =
   [
@@ -2532,7 +2539,7 @@ function _toStrJsonFromFile( test, encoding )
   options =
   [
     { jsonLike : 1 },
-  ]
+  ];
 
   testFunction( test, desc, src, options );
 
@@ -2629,7 +2636,10 @@ function toStrstringWrapper( test )
     /*04*/
       [
 
-       '{ a : "test", b : Error: err }',
+       '{',
+       '  a : \'test\', ',
+       '  b : Error: err',
+       '}'
 
      ].join( '\n' ),
 
@@ -2639,7 +2649,7 @@ function toStrstringWrapper( test )
        '{',
        '  a, ',
        '  b, ',
-       '  c : [ Object with 1 elements ]',
+       '  c : {- Object with 1 elements -}',
        '}'
 
      ].join( '\n' ),
@@ -2704,30 +2714,30 @@ function toStrLevel( test )
    [
     /*01*/
       [
-       '[ Object with 3 elements ]',
+       '{- Object with 3 elements -}',
       ].join( '\n' ),
 
     /*02*/
       [
        '{',
-       '  a : [ Object with 1 elements ], ',
-       '  b : "b", ',
-       '  c : [ Object with 1 elements ]',
+       '  a : {- Object with 1 elements -}, ',
+       '  b : \'b\', ',
+       '  c : {- Object with 1 elements -}',
        '}'
 
       ].join( '\n' ),
 
     /*03*/
       [
-       '[ Object with 4 elements ]',
+       '{- Object with 4 elements -}',
       ].join( '\n' ),
 
     /*04*/
       [
        '{',
-       '  a : "a", ',
-       '  b : "b", ',
-       '  c : [ Object with 1 elements ]',
+       '  a : \'a\', ',
+       '  b : \'b\', ',
+       '  c : {- Object with 1 elements -}',
        '}',
 
       ].join( '\n' ),
@@ -2833,37 +2843,37 @@ function toStrEnumerable( test )
    [
     /*01*/
       [
-       '{ a : "string" }'
+       '{ a : \'string\' }'
       ].join( '\n' ),
 
     /*02*/
       [
-       '{ a : "string", foo : 1 }'
+       '{ a : \'string\', foo : 1 }'
       ].join( '\n' ),
 
     /*03*/
       [
-       '{ getFoo : [ routine without name ], foo : 1 }'
+       '{ getFoo : [ routine value ], foo : 1 }'
       ].join( '\n' ),
 
     /*04*/
       [
         '{',
+        '  a : \'string\', ',
+        '  getFoo : [ routine value ], ',
+        '  foo : 1, ',
         '  constructor : [ routine Object ], ',
-        '  toString : [ routine toString ], ',
-        '  toLocaleString : [ routine toLocaleString ], ',
-        '  valueOf : [ routine valueOf ], ',
+        '  __defineGetter__ : [ routine __defineGetter__ ], ',
+        '  __defineSetter__ : [ routine __defineSetter__ ], ',
         '  hasOwnProperty : [ routine hasOwnProperty ], ',
+        '  __lookupGetter__ : [ routine __lookupGetter__ ], ',
+        '  __lookupSetter__ : [ routine __lookupSetter__ ], ',
         '  isPrototypeOf : [ routine isPrototypeOf ], ',
         '  propertyIsEnumerable : [ routine propertyIsEnumerable ], ',
-        '  __defineGetter__ : [ routine __defineGetter__ ], ',
-        '  __lookupGetter__ : [ routine __lookupGetter__ ], ',
-        '  __defineSetter__ : [ routine __defineSetter__ ], ',
-        '  __lookupSetter__ : [ routine __lookupSetter__ ], ',
-        '  __proto__ : [ Object with 1 elements ], ',
-        '  getFoo : [ routine without name ], ',
-        '  foo : 1, ',
-        '  a : "string"',
+        '  toString : [ routine toString ], ',
+        '  valueOf : [ routine valueOf ], ',
+        '  __proto__ : {- Object with 1 elements -}, ',
+        '  toLocaleString : [ routine toLocaleString ]',
         '}',
       ].join( '\n' ),
    ]
@@ -2877,7 +2887,7 @@ function toStrEmptyArgs( test )
   var desc = 'empty arguments',
   src = [ {}, '', [] ],
   options = [ {} ],
-  expected =[ '{}', '""', '[]' ];
+  expected =[ '{}', '\'\'', '[]' ];
 
   testFunction( test, desc, src, options, expected );
 }
@@ -2988,14 +2998,14 @@ function toStrString( test )
   ],
   expected =
   [
-    '""',
-    '"sample"',
+    '\'\'',
+    '\'sample\'',
     '',
     '',
-    '"\\nsample4\\n"',
-    '"sample5"',
-    '"sample6"',
-    '"\nsample7"'
+    '\'\\nsample4\\n\'',
+    '\'sample5\'',
+    '\'sample6\'',
+    '\'\nsample7\''
   ]
 
   testFunction( test, desc, src, options, expected );
@@ -3074,8 +3084,8 @@ function toStrDate( test )
   expected =
   [
     '1994-01-12T00:00:00.000Z',
-    '1989-12-30T22:00:00.000Z',
-    '2017-01-07T22:00:00.000Z',
+    '1989-12-31T02:00:00.000Z',
+    '2017-01-08T03:00:00.000Z',
     '',
   ]
   testFunction( test, desc, src, options, expected );
@@ -3213,7 +3223,7 @@ function toStrLimitElements( test )
   //Arrays
   /*01*/'[ 1, 2, [ ... other 3 element(s) ] ]',
   /*02*/'[ 1, 2, 4, [ ... other 1 element(s) ] ]',
-  /*03*/'[ "3" ]',
+  /*03*/'[ \'3\' ]',
   /*04*/'',
   /*05*/
   [
@@ -3227,20 +3237,20 @@ function toStrLimitElements( test )
   /*06*/
   [
     '[',
-    '  "3", ',
+    '  \'3\', ',
     '  {',
-    '    a : "1"',
+    '    a : \'1\'',
     '  }, ',
-    '  "5", ',
+    '  \'5\', ',
     '  [ ... other 1 element(s) ]',
     ']',
   ].join( '\n' ),
 
   /*07*/
   [
-    '  "3", ',
-    '    a : "1", ',
-    '  "5", ',
+    '  \'3\', ',
+    '    a : \'1\', ',
+    '  \'5\', ',
     '  [ ... other 1 element(s) ]',
 
   ].join( '\n' ),
@@ -3280,7 +3290,7 @@ function toStrLimitElements( test )
   [
     '  a : 1, ',
     '  b : 2, ',
-    '  c : [ Object with 2 elements ], ',
+    '  c : {- Object with 2 elements -}, ',
     '  d : 3',
 
   ].join( '\n' ),
@@ -3389,27 +3399,27 @@ function toStrFields( test )
 function toStrShort( test )
 {
   test.case = 'Array length test';
-  var got = _.toStrShort( [ 1, 2, 'text', undefined ], { } );
-  var expected = '[ Array with 4 elements ]';
+  var got = _._toStrShort( [ 1, 2, 'text', undefined ], {} );
+  var expected = '{- Array with 4 elements -}';
   test.identical( got, expected );
 
   test.case = 'date to string';
-  var got = _.toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), { }  );
+  var got = _._toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), {}  );
   var expected = '1994-01-12T00:00:00.000Z';
   test.identical( got, expected );
 
   test.case = 'string length > 40';
-  var got = _.toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
+  var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
   var expected = '[ "toxtndmtmdbmmlzoirmf" ... "pyhnrrqfuvybuuvixyrx" ]';
   test.identical( got, expected );
 
   test.case = 'string with options';
-  var got = _.toStrShort( '\toxtndmtmdb', { escaping : 1 } );
+  var got = _._toStrShort( '\toxtndmtmdb', { escaping : 1 } );
   var expected = '\\toxtndmtmdb';
   test.identical( got, expected );
 
   test.case = 'error to string ';
-  var got = _.toStrShort( new Error( 'err' ), { } );
+  var got = _._toStrShort( new Error( 'err' ), {} );
   var expected = '[object Error]';
   test.identical( got, expected );
 
@@ -3421,19 +3431,19 @@ function toStrShort( test )
     test.case = 'invalid second argument type';
     test.shouldThrowErrorOfAnyKind( function()
     {
-      _.toStrShort( '1', 2 );
+      _._toStrShort( '1', 2 );
     });
 
     test.case = 'only one argument provided';
     test.shouldThrowErrorOfAnyKind( function()
     {
-      _.toStrShort( '1' );
+      _._toStrShort( '1' );
     });
 
     test.case = 'no arguments';
     test.shouldThrowErrorOfAnyKind( function()
     {
-      _.toStrShort( );
+      _._toStrShort( );
     });
 
   }
@@ -3544,12 +3554,12 @@ function _toStrIsSimpleElement( test )
 function _toStrFromRoutine( test )
 {
   test.case = 'routine test';
-  var got = _._toStrFromRoutine( function a () {} );
+  var got = _._toStrFromRoutine( function a () {}, {} );
   var expected = '[ routine a ]';
   test.identical( got, expected );
 
   test.case = 'routine without name';
-  var got = _._toStrFromRoutine( function() {} );
+  var got = _._toStrFromRoutine( function() {}, {} );
   var expected = '[ routine without name ]';
   test.identical( got, expected );
 
@@ -3629,7 +3639,7 @@ function _toStrFromNumber( test )
     test.case = 'fixed out of range';
     test.shouldThrowErrorOfAnyKind( function()
     {
-      _._toStrFromNumber( 1, { precision : 22 });
+      _._toStrFromNumber( 1, { fixed : 22 });
     });
 
   }
@@ -3713,48 +3723,48 @@ function _toStrIsSimpleElement2( test )
 {
 
   test.case = 'argument\'s length is less than 40 symbols';
-  var got = _._toStrIsSimpleElement( 'test' );
+  var got = _._toStrIsSimpleElement( 'test', {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument is number';
-  var got = _._toStrIsSimpleElement( 13 );
+  var got = _._toStrIsSimpleElement( 13, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument is boolean';
-  var got = _._toStrIsSimpleElement( true );
+  var got = _._toStrIsSimpleElement( true, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument is null';
-  var got = _._toStrIsSimpleElement( null );
+  var got = _._toStrIsSimpleElement( null, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument is undefined';
-  var got = _._toStrIsSimpleElement( undefined );
+  var got = _._toStrIsSimpleElement( undefined, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument\'s length is greater than 40 symbols';
-  var got = _._toStrIsSimpleElement( 'test, test, test, test, test, test, test, test, test.' );
+  var got = _._toStrIsSimpleElement( 'test, test, test, test, test, test, test, test, test.', {} );
   var expected = false;
   test.identical( got, expected );
 
   test.case = 'argument is an object';
-  var got = _._toStrIsSimpleElement( { a: 33 } );
+  var got = _._toStrIsSimpleElement( { a: 33 }, {} );
   var expected = false;
   test.identical( got, expected );
 
   test.case = 'argument is an array';
-  var got = _._toStrIsSimpleElement( [ 1, 2, 3 ] );
+  var got = _._toStrIsSimpleElement( [ 1, 2, 3 ], {} );
   var expected = false;
   test.identical( got, expected );
 
   test.case = 'argument is an array-like';
   var arrLike = ( function( ) { return arguments; } )( 1, 2, 3 );
-  var got = _._toStrIsSimpleElement( arrLike );
+  var got = _._toStrIsSimpleElement( arrLike, {} );
   var expected = false;
   test.identical( got, expected );
 
@@ -3763,7 +3773,7 @@ function _toStrIsSimpleElement2( test )
   if( !Config.debug )
   return;
 
-  xxx
+  /**/
 
 };
 
@@ -3835,7 +3845,7 @@ function _toStrFromArray( test )
 
   test.case = 'levels 0 test';
   var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 0, levels : 0, comma : ', ', wrap : 1 } ).text;
-  var expected = '[ Array with 3 elements ]';
+  var expected = '{- Array with 3 elements -}';
   test.identical( got, expected );
 
   test.case = 'dtab & multiline test';
@@ -3890,7 +3900,7 @@ function _toStrFromObject( test )
   test.case = 'levels 0 test';
   def.levels = 0;
   var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );
-  var expected = '[ Object with 3 elements ]';
+  var expected = '{- Object with 3 elements -}';
   test.identical( got.text, expected );
 
   test.case = 'wrap 0 test';
