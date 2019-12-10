@@ -181,7 +181,7 @@ function toStr( test )
     {
       options : { levels : 2 },
       in : 'text',
-      out : '"text"',
+      out : '\'text\'',
     },
 
     {
@@ -233,7 +233,7 @@ function toStr( test )
         '{',
         '  1 : \'a\', ',
         '  2 : [ 10, 20, 30 ], ',
-        '  3 : { 21 : "aa", 22 : "bb" }',
+        '  3 : { 21 : \'aa\', 22 : \'bb\' }',
         '}',
       ].join( '\n' ),
     },
@@ -253,7 +253,7 @@ function toStr( test )
         '{',
         '  1 : \'a\', ',
         '  2 : [ 10, 20, 30 ], ',
-        '  3 : { 21 : "aa", 22 : "bb" }, ',
+        '  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
         '  4 : [ 10, 20, 30 ], ',
         '  5 : [ 10, 20, 30 ]',
         '}',
@@ -276,8 +276,8 @@ function toStr( test )
         '[',
         '  \'a\', ',
         '  [ 10, 20, 30 ], ',
-        '  { 21 : "aa", 22 : "bb" }, ',
-        '  { 31 : "111", 32 : "222" }, ',
+        '  { 21 : \'aa\', 22 : \'bb\' }, ',
+        '  { 31 : \'111\', 32 : \'222\' }, ',
         '  [ 10, 20, 30 ], ',
         '  [ 10, 20, 30 ]',
         ']',
@@ -505,7 +505,7 @@ function toStr( test )
         '---{',
         '---+1 : \'a\', ',
         '---+2 : [ 10, 20, 30 ], ',
-        '---+3 : { 21 : "aa", 22 : "bb" }, ',
+        '---+3 : { 21 : \'aa\', 22 : \'bb\' }, ',
         '---+4 : [ 10, 20, 30 ], ',
         '---+13 : [ 10, 20, 30 ]',
         '---}',
@@ -528,7 +528,7 @@ function toStr( test )
       [
         '  1 : \'a\' ',
         '-  2 :   10 20 30 ',
-        '-  3 : 21 : "aa" 22 : "bb" ',
+        '-  3 : 21 : \'aa\' 22 : \'bb\' ',
         '-  4 :   10 20 30 ',
         '-  13 :   10 20 30',
       ].join( '\n' ),
@@ -548,7 +548,7 @@ function toStr( test )
       [
         '-  1 : \'a\' ',
         '-  2 :   10 20 30 ',
-        '-  3 : 21 : "aa" 22 : "bb" ',
+        '-  3 : 21 : \'aa\' 22 : \'bb\' ',
         '-  4 :   10 20 30 ',
         '-  13 :   10 20 30',
       ].join( '\n' ),
@@ -571,7 +571,7 @@ function toStr( test )
         '{',
         '-  1 : \'a\', ',
         '-  2 : [ 10, 20, 30 ], ',
-        '-  3 : { 21 : "aa", 22 : "bb" }, ',
+        '-  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
         '-  4 : [ 10, 20, 30 ], ',
         '-  5 : [ 10, 20, 30 ]',
         '-}',
@@ -593,7 +593,7 @@ function toStr( test )
         '-{',
         '-  1 : \'a\', ',
         '-  2 : [ 10, 20, 30 ], ',
-        '-  3 : { 21 : "aa", 22 : "bb" }, ',
+        '-  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
         '-  4 : [ 10, 20, 30 ], ',
         '-  5 : [ 10, 20, 30 ]',
         '-}',
@@ -611,7 +611,7 @@ function toStr( test )
       out :
       [
         '{',
-        '  2 : "abc", ',
+        '  2 : \'abc\', ',
         '  3 : 4',
         '}',
       ].join( '\n' ),
@@ -755,16 +755,16 @@ function toStrUnwrapped( test )
     /*01*/
 
     [
-      '    "abc" ',
-      '    "edf" ',
+      '    \'abc\' ',
+      '    \'edf\' ',
       '    a : 1',
     ].join( '\n' ),
 
     /*02*/
 
     [
-      '    nameLong : "abc" ',
-      '    description : "edf" ',
+      '    nameLong : \'abc\' ',
+      '    description : \'edf\' ',
       '    rewardForVisitor : a : 1',
     ].join( '\n' ),
 
@@ -772,8 +772,8 @@ function toStrUnwrapped( test )
 
     [
       '  a : ',
-      '    nameLong : "abc" ',
-      '    description : "edf" ',
+      '    nameLong : \'abc\' ',
+      '    description : \'edf\' ',
       '    rewardForVisitor : a : 1',
     ].join( '\n' ),
 
@@ -781,16 +781,16 @@ function toStrUnwrapped( test )
 
     [
       '  a : ',
-      '    "abc" ',
-      '    "edf" ',
+      '    \'abc\' ',
+      '    \'edf\' ',
       '    a : 1',
     ].join( '\n' ),
 
     /*05*/
 
     [
-      '    "abc" ',
-      '    "edf" ',
+      '    \'abc\' ',
+      '    \'edf\' ',
       '    a : 1 ',
       '  1 ',
       '  2',
@@ -832,14 +832,14 @@ function toStrUnwrapped( test )
 
     /*10*/
     [
-      '    nameLong : "abc" ',
-      '    description : "edf" ',
+      '    nameLong : \'abc\' ',
+      '    description : \'edf\' ',
       '    rewardForVisitor : a : 1 ',
       '    stationary : 1 ',
       '    f : \'f\' ',
       '    quantity : 1 ',
-      '    nameLong : "abc2" ',
-      '    description : "edf2" ',
+      '    nameLong : \'abc2\' ',
+      '    description : \'edf2\' ',
       '    rewardForVisitor : a : 1 ',
       '    stationary : 1 ',
       '    f : \'f\' ',
@@ -852,7 +852,7 @@ function toStrUnwrapped( test )
     [
       '  1 : \'a\' ',
       '  2 :   10 20 30 ',
-      '  3 : 21 : "aa" 22 : "bb" ',
+      '  3 : 21 : \'aa\' 22 : \'bb\' ',
       '  4 :   10 20 30 ',
       '  13 :   10 20 30',
     ].join( '\n' ),
@@ -944,12 +944,12 @@ function toStrError( test )
 
     /*10*/
       [
-        '{ stack : "Error: my message4", message : "my message4" }',
+        '{ stack : \'Error: my message4\', message : \'my message4\' }',
       ].join( '\n' ),
 
     /*11*/
       [
-        '{ stack : "Error: my error\\n", message : "my error" }',
+        '{ stack : \'Error: my error\\n\', message : \'my error\' }',
       ].join( '\n' ),
   ];
 
