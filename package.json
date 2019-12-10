@@ -1,33 +1,22 @@
 {
-  "name": "wstringer",
-  "version": "0.3.116",
-  "description": "Stringer nicely stringifies structures does not matter how complex or cycled them are. Convenient tool for fast diagnostic and inspection of data during development and in production. Use it to see more, faster. Refactoring required.",
-  "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
-  "license": "MIT",
-  "main": "proto/dwtools/abase/l3/Stringer.s",
-  "files": [
-    "proto/dwtools/abase/l3",
-    "proto/dwtools/Tools.s",
-    "out"
-  ],
-  "scripts": {
-    "test": "wtest .run proto/**",
-    "docgen": "wdocgen proto"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Wandalen/wStringer.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Wandalen/wStringer/issues"
-  },
-  "dependencies": {
-    "wTools": "alpha"
-  },
-  "devDependencies": {
-    "wTesting": "alpha"
-  },
-  "keywords": [
-    "wTools"
-  ]
+  "name" : "wstringer", 
+  "version" : "0.3.116", 
+  "description" : "Stringer nicely stringifies structures does not matter how complex or cycled them are. Convenient tool for fast diagnostic and inspection of data during development and in production. Use it to see more, faster. Refactoring required.", 
+  "author" : "Kostiantyn Wandalen <wanalen@willbe.so>", 
+  "license" : "MIT", 
+  "main" : "proto/dwtools/abase/l3/Stringer.s", 
+  "files" : [ "proto/dwtools/abase/l3", "proto/dwtools/Tools.s", "out" ], 
+  "scripts" : { "test" : "wtest .run proto/**", "docgen" : "wdocgen proto" }, 
+  "repository" : 
+  {
+    "type" : "git", 
+    "url" : "https://github.com/Wandalen/wStringer.git"
+  }, 
+  "bugs" : 
+  {
+    "url" : "https://github.com/Wandalen/wStringer/issues"
+  }, 
+  "dependencies" : { "wTools" : "alpha" }, 
+  "devDependencies" : { "wTesting" : "alpha" }, 
+  "keywords" : [ "wTools" ]
 }
