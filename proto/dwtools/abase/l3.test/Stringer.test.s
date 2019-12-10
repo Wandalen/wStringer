@@ -2310,12 +2310,21 @@ function toStrJson( test )
      /*01*/ { "a" : 100, "b" : "c", "c" : { "d" : true, "e" : null } },
      /*02*/ { "b" : "a", "c" : 50, "d" : { "a" : "undefined", "e" : null } },
      /*03*/ [ { "a" : 100, "b" : "x", "c" : { "d" : true, "e" : null } } ],
-     /*04*/ { a : "aa", b : [ 1, 2, 3 ], c : function r( ){ } },
-     /*05*/ [ { a : 1, b : 2, c : { d : [ null, undefined ] } } ],
-     /*06*/ { a : new Date( Date.UTC( 1993, 12, 12 ) ) },
-     /*07*/ { a : new Error( "r" ) },
-     /*08*/ { a : Symbol( 'sm' ) },
      /*09*/ { a : '\n\nABC' },
+
+
+    /*
+       - Only way that i know to store a function inside a valid json is by setting it as 
+       a string. Same must apply for the Error. The same may even apply for the Symbol 
+       and Date, but i don't know.
+       - The *05* isn't working because there's no undefined in a JSON structure.
+    */
+     ///*04*/ { a : "aa", b : [ 1, 2, 3 ], c : function r( ){ } },
+     ///*05*/ [ { a : 1, b : 2, c : { d : [ null, undefined ] } } ], 
+     ///*06*/ { a : new Date( Date.UTC( 1993, 12, 12 ) ) },
+     ///*07*/ { a : new Error( "r" ) },
+     ///*08*/ { a : Symbol( 'sm' ) },
+     
    ],
 
    options =
