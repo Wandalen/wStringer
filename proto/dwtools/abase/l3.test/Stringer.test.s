@@ -3093,133 +3093,249 @@ function toStrLevel( test )
 
 function toStrEnumerable( test )
 {
-   var desc = 'onlyEnumerable test',
-   src =
-   [
-     /*01*/ ( function( )
-            {
-             var x = Object.create( {},
-              {
-                getFoo:
-                {
-                  value: function( ) { return this.foo; },
-                  enumerable: false
-                }
-              } );
+  //   var desc = 'onlyEnumerable test',
+  //   src =
+  //   [
+  //     /*01*/ ( function( )
+  //            {
+  //             var x = Object.create( {},
+  //              {
+  //                getFoo:
+  //                {
+  //                  value: function( ) { return this.foo; },
+  //                  enumerable: false
+  //                }
+  //              } );
+  //
+  //             x.foo = 1;
+  //
+  //             var y = Object.create( x );
+  //             y.a = "string";
+  //
+  //             return y;
+  //
+  //            } )( ),
+  //
+  //     /*02*/ ( function( )
+  //            {
+  //             var x = Object.create( {},
+  //              {
+  //                getFoo:
+  //                {
+  //                  value: function( ) { return this.foo; },
+  //                  enumerable: false
+  //                }
+  //              } );
+  //
+  //             x.foo = 1;
+  //
+  //             var y = Object.create( x );
+  //             y.a = "string";
+  //
+  //             return y;
+  //
+  //            } )( ),
+  //
+  //     /*03*/ ( function( )
+  //            {
+  //             var x = Object.create( {},
+  //              {
+  //                getFoo:
+  //                {
+  //                  value: function( ) { return this.foo; },
+  //                  enumerable: false
+  //                }
+  //              } );
+  //
+  //             x.foo = 1;
+  //
+  //             return x;
+  //
+  //            } )( ),
+  //
+  //      /*04*/ ( function( )
+  //      {
+  //        var x = Object.create( {},
+  //          {
+  //            getFoo:
+  //            {
+  //              value: function( ) { return this.foo; },
+  //              enumerable: false
+  //            }
+  //          } );
+  //
+  //          x.foo = 1;
+  //
+  //          var y = Object.create( x );
+  //          y.a = "string";
+  //
+  //          return y;
+  //
+  //        } )( ),
+  //
+  //   ],
+  //   options =
+  //   [
+  //     /*01*/ {  }, //own :1, onlyEnumerable:1
+  //     /*02*/ { own : 0 }, //own :0, onlyEnumerable:1
+  //     /*03*/ { onlyEnumerable : 0 }, //own :1, onlyEnumerable:0
+  //     /*04*/ { own : 0, onlyEnumerable : 0 },
+  //   ],
+  //   expected =
+  //   [
+  //    /*01*/
+  //      [
+  //       '{ a : \'string\' }'
+  //      ].join( '\n' ),
+  //
+  //    /*02*/
+  //      [
+  //       '{ a : \'string\', foo : 1 }'
+  //      ].join( '\n' ),
+  //
+  //    /*03*/
+  //      [
+  //       '{ getFoo : [ routine value ], foo : 1 }'
+  //      ].join( '\n' ),
+  //
+  //    /*04*/
+  //      [
+  //        '{',
+  //        '  a : \'string\', ',
+  //        '  getFoo : [ routine value ], ',
+  //        '  foo : 1, ',
+  //        '  constructor : [ routine Object ], ',
+  //        '  __defineGetter__ : [ routine __defineGetter__ ], ',
+  //        '  __defineSetter__ : [ routine __defineSetter__ ], ',
+  //        '  hasOwnProperty : [ routine hasOwnProperty ], ',
+  //        '  __lookupGetter__ : [ routine __lookupGetter__ ], ',
+  //        '  __lookupSetter__ : [ routine __lookupSetter__ ], ',
+  //        '  isPrototypeOf : [ routine isPrototypeOf ], ',
+  //        '  propertyIsEnumerable : [ routine propertyIsEnumerable ], ',
+  //        '  toString : [ routine toString ], ',
+  //        '  valueOf : [ routine valueOf ], ',
+  //        '  __proto__ : {- Object with 1 elements -}, ',
+  //        '  toLocaleString : [ routine toLocaleString ]',
+  //        '}',
+  //      ].join( '\n' ),
+  //   ]
+  //  testFunction( test, desc, src, options, expected );
 
-             x.foo = 1;
-
-             var y = Object.create( x );
-             y.a = "string";
-
-             return y;
-
-            } )( ),
-
-     /*02*/ ( function( )
-            {
-             var x = Object.create( {},
-              {
-                getFoo:
-                {
-                  value: function( ) { return this.foo; },
-                  enumerable: false
-                }
-              } );
-
-             x.foo = 1;
-
-             var y = Object.create( x );
-             y.a = "string";
-
-             return y;
-
-            } )( ),
-
-     /*03*/ ( function( )
-            {
-             var x = Object.create( {},
-              {
-                getFoo:
-                {
-                  value: function( ) { return this.foo; },
-                  enumerable: false
-                }
-              } );
-
-             x.foo = 1;
-
-             return x;
-
-            } )( ),
-
-      /*04*/ ( function( )
+  test.case = 'enumerable';
+  var src =
+      ( function( )
       {
         var x = Object.create( {},
+        {
+          getFoo:
           {
-            getFoo:
-            {
-              value: function( ) { return this.foo; },
-              enumerable: false
-            }
-          } );
+            value: function( ) { return this.foo; },
+            enumerable: false
+          }
+        } );
 
-          x.foo = 1;
+        x.foo = 1;
 
-          var y = Object.create( x );
-          y.a = "string";
+        var y = Object.create( x );
+        y.a = "string";
 
-          return y;
+        return y;
 
-        } )( ),
+      } )( );
+  var got = _.toStr( src, { } );
+  var expected = '{ a : \'string\' }';
+  test.identical( got, expected );
+  
+  test.case = 'enumerable, own 0';
+  var src =
+      ( function( )
+      {
+        var x = Object.create( {},
+        {
+          getFoo:
+          {
+            value: function( ) { return this.foo; },
+            enumerable: false
+          }
+        } );
 
-   ],
-   options =
-   [
-     /*01*/ {  }, //own :1, onlyEnumerable:1
-     /*02*/ { own : 0 }, //own :0, onlyEnumerable:1
-     /*03*/ { onlyEnumerable : 0 }, //own :1, onlyEnumerable:0
-     /*04*/ { own : 0, onlyEnumerable : 0 },
-   ],
-   expected =
-   [
-    /*01*/
-      [
-       '{ a : \'string\' }'
-      ].join( '\n' ),
+        x.foo = 1;
 
-    /*02*/
-      [
-       '{ a : \'string\', foo : 1 }'
-      ].join( '\n' ),
+        var y = Object.create( x );
+        y.a = "string";
 
-    /*03*/
-      [
-       '{ getFoo : [ routine value ], foo : 1 }'
-      ].join( '\n' ),
+        return y;
 
-    /*04*/
-      [
-        '{',
-        '  a : \'string\', ',
-        '  getFoo : [ routine value ], ',
-        '  foo : 1, ',
-        '  constructor : [ routine Object ], ',
-        '  __defineGetter__ : [ routine __defineGetter__ ], ',
-        '  __defineSetter__ : [ routine __defineSetter__ ], ',
-        '  hasOwnProperty : [ routine hasOwnProperty ], ',
-        '  __lookupGetter__ : [ routine __lookupGetter__ ], ',
-        '  __lookupSetter__ : [ routine __lookupSetter__ ], ',
-        '  isPrototypeOf : [ routine isPrototypeOf ], ',
-        '  propertyIsEnumerable : [ routine propertyIsEnumerable ], ',
-        '  toString : [ routine toString ], ',
-        '  valueOf : [ routine valueOf ], ',
-        '  __proto__ : {- Object with 1 elements -}, ',
-        '  toLocaleString : [ routine toLocaleString ]',
-        '}',
-      ].join( '\n' ),
-   ]
-  testFunction( test, desc, src, options, expected );
+      } )( );
+  var got = _.toStr( src, { own : 0 } );
+  var expected = '{ a : \'string\', foo : 1 }';
+  test.identical( got, expected );
+  
+  test.case = 'enumerable, no enum';
+  var src =
+      ( function( )
+      {
+        var x = Object.create( {},
+        {
+          getFoo:
+          {
+            value: function( ) { return this.foo; },
+            enumerable: false
+          }
+        } );
+
+        x.foo = 1;
+
+        return x;
+
+      } )( );
+  var got = _.toStr( src, { onlyEnumerable : 0 } );
+  var expected = '{ getFoo : [ routine value ], foo : 1 }';
+  test.identical( got, expected );
+  
+  test.case = 'enumerable, no enum own 0';
+  var src =
+      ( function( )
+      {
+        var x = Object.create( {},
+        {
+          getFoo:
+          {
+            value: function( ) { return this.foo; },
+            enumerable: false
+          }
+        } );
+
+        x.foo = 1;
+
+        var y = Object.create( x );
+        y.a = "string";
+
+        return y;
+
+      } )( );
+  var got = _.toStr( src, { own : 0, onlyEnumerable : 0 } );
+  var expected =
+      ['{',
+       '  a : \'string\', ',
+       '  getFoo : [ routine value ], ',
+       '  foo : 1, ',
+       '  constructor : [ routine Object ], ',
+       '  __defineGetter__ : [ routine __defineGetter__ ], ',
+       '  __defineSetter__ : [ routine __defineSetter__ ], ',
+       '  hasOwnProperty : [ routine hasOwnProperty ], ',
+       '  __lookupGetter__ : [ routine __lookupGetter__ ], ',
+       '  __lookupSetter__ : [ routine __lookupSetter__ ], ',
+       '  isPrototypeOf : [ routine isPrototypeOf ], ',
+       '  propertyIsEnumerable : [ routine propertyIsEnumerable ], ',
+       '  toString : [ routine toString ], ',
+       '  valueOf : [ routine valueOf ], ',
+       '  __proto__ : {- Object with 1 elements -}, ',
+       '  toLocaleString : [ routine toLocaleString ]',
+       '}',
+      ].join( '\n' );
+  test.identical( got, expected );
+
 }
 
 // xxx
