@@ -3422,42 +3422,83 @@ function toStrSymbol( test )
 
 function toStrNumber( test )
 {
-  var desc = 'Number test',
-  src =
-  [
-    Number( ),
-    5,
-    15000,
-    1222.222,
-    1234.4321,
-    15,
-    99,
-    22
-  ],
-  options =
-  [
-    {},
-    {},
-    { precision : 3 },
-    { fixed : 1 },
-    { noNumber : 1 },
-    { noAtomic : 1 },
-    { levels : 0 },
-    { noRoutine : 1 }
-  ],
-  expected =
-  [
-    '0',
-    '5',
-    '1.50e+4',
-    '1222.2',
-    '',
-    '',
-    '99',
-    '22'
-  ]
+  //  var desc = 'Number test',
+  //  src =
+  //  [
+  //    Number( ),
+  //    5,
+  //    15000,
+  //    1222.222,
+  //    1234.4321,
+  //    15,
+  //    99,
+  //    22
+  //  ],
+  //  options =
+  //  [
+  //    {},
+  //    {},
+  //    { precision : 3 },
+  //    { fixed : 1 },
+  //    { noNumber : 1 },
+  //    { noAtomic : 1 },
+  //    { levels : 0 },
+  //    { noRoutine : 1 }
+  //  ],
+  //  expected =
+  //  [
+  //    '0',
+  //    '5',
+  //    '1.50e+4',
+  //    '1222.2',
+  //    '',
+  //    '',
+  //    '99',
+  //    '22'
+  //  ]
+  //
+  //  testFunction( test, desc, src, options, expected );
 
-  testFunction( test, desc, src, options, expected );
+  test.case = 'number';
+  var got = _.toStr( Number( ), { } );
+  var expected = '0';
+  test.identical( got, expected );
+
+  test.case = 'integer';
+  var got = _.toStr( 5, { } );
+  var expected = '5';
+  test.identical( got, expected );
+
+  test.case = 'number, precision 3';
+  var got = _.toStr( 15000, { precision : 3 } );
+  var expected = '1.50e+4';
+  test.identical( got, expected );
+
+  test.case = 'float number, fixed 1';
+  var got = _.toStr( 1222.222, { fixed : 1 } );
+  var expected = '1222.2';
+  test.identical( got, expected );
+
+  test.case = 'float number, noNumber';
+  var got = _.toStr( 1234.4321, { noNumber : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'integer, noAtomic';
+  var got = _.toStr( 15, { noAtomic : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'integer, levels 0';
+  var got = _.toStr( 99, { levels : 0 } );
+  var expected = '99';
+  test.identical( got, expected );
+
+  test.case = 'integer, noRoutine';
+  var got = _.toStr( 22, { noRoutine : 1 } );
+  var expected = '22';
+  test.identical( got, expected );
+
 }
 
 //
