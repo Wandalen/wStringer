@@ -3000,56 +3000,93 @@ function toStrStringWrapper( test )
 
 function toStrLevel( test )
 {
-   var desc = 'level test',
-   src =
-   [
-     /*01*/ { a : "a", b : "b", c : { d : "d" } },
-     /*02*/ { a : { h : "a" }, b : "b", c : { d : "d" } },
-     /*03*/ { a : [ "example" ], b : 1, c : null , d : [ "b" ] },
-     /*04*/ { a : "a", b : "b", c : { d : "d" } },
-   ],
-   options =
-   [
-     /*01*/ { level: 0, levels : 0 },
-     /*02*/ { level: 1, levels : 2 },
-     /*03*/ { level: 1, levels : 0 },
-     /*04*/ { },
-   ],
+  //   var desc = 'level test',
+  //   src =
+  //   [
+  //     /*01*/ { a : "a", b : "b", c : { d : "d" } },
+  //     /*02*/ { a : { h : "a" }, b : "b", c : { d : "d" } },
+  //     /*03*/ { a : [ "example" ], b : 1, c : null , d : [ "b" ] },
+  //     /*04*/ { a : "a", b : "b", c : { d : "d" } },
+  //   ],
+  //   options =
+  //   [
+  //     /*01*/ { level: 0, levels : 0 },
+  //     /*02*/ { level: 1, levels : 2 },
+  //     /*03*/ { level: 1, levels : 0 },
+  //     /*04*/ { },
+  //   ],
+  //
+  //   expected =
+  //   [
+  //    /*01*/
+  //      [
+  //       '{- Object with 3 elements -}',
+  //      ].join( '\n' ),
+  //
+  //    /*02*/
+  //      [
+  //       '{',
+  //       '  a : {- Object with 1 elements -}, ',
+  //       '  b : \'b\', ',
+  //       '  c : {- Object with 1 elements -}',
+  //       '}'
+  //
+  //      ].join( '\n' ),
+  //
+  //    /*03*/
+  //      [
+  //       '{- Object with 4 elements -}',
+  //      ].join( '\n' ),
+  //
+  //    /*04*/
+  //      [
+  //       '{',
+  //       '  a : \'a\', ',
+  //       '  b : \'b\', ',
+  //       '  c : {- Object with 1 elements -}',
+  //       '}',
+  //
+  //      ].join( '\n' ),
+  //
+  //   ]
+  //  testFunction( test, desc, src, options, expected );
 
-   expected =
-   [
-    /*01*/
-      [
-       '{- Object with 3 elements -}',
-      ].join( '\n' ),
+  test.case = 'nested objects, level 0 and levels 0';
+  var src = { a : "a", b : "b", c : { d : "d" } };
+  var got = _.toStr( src, { level: 0, levels : 0 } );
+  var expected = '{- Object with 3 elements -}';
+  test.identical( got, expected );
 
-    /*02*/
-      [
-       '{',
+  test.case = 'nested objects, level 1 levels 2';
+  var src = { a : { h : "a" }, b : "b", c : { d : "d" } };
+  var got = _.toStr( src, { level: 1, levels : 2 } );
+  var expected =
+      ['{',
        '  a : {- Object with 1 elements -}, ',
        '  b : \'b\', ',
        '  c : {- Object with 1 elements -}',
        '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+  
+  test.case = 'nested objects, level 1 levels 0';
+  var src = { a : [ "example" ], b : 1, c : null , d : [ "b" ] };
+  var got = _.toStr( src, { level: 1, levels : 0 } );
+  var expected = '{- Object with 4 elements -}';
+  test.identical( got, expected );
 
-      ].join( '\n' ),
-
-    /*03*/
-      [
-       '{- Object with 4 elements -}',
-      ].join( '\n' ),
-
-    /*04*/
-      [
-       '{',
+  test.case = 'nested objects';
+  var src = { a : "a", b : "b", c : { d : "d" } };
+  var got = _.toStr( src, { } );
+  var expected =
+      ['{',
        '  a : \'a\', ',
        '  b : \'b\', ',
        '  c : {- Object with 1 elements -}',
        '}',
+      ].join( '\n' );
+  test.identical( got, expected );
 
-      ].join( '\n' ),
-
-   ]
-  testFunction( test, desc, src, options, expected );
 }
 
 //
