@@ -843,200 +843,200 @@ function toStrUnwrapped( test )
 
   test.case = 'unwrapped array inside an array';
   var src = 
-        [
-          [
-            "abc",
-            "edf",
-            { a : 1 },
-          ],
-        ];
+  [
+    [
+      "abc",
+      "edf",
+      { a : 1 },
+    ],
+  ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected = 
-        ['    \'abc\' ',
-        '    \'edf\' ',
-        '    a : 1',
-        ].join( '\n' );
+  ['    \'abc\' ',
+  '    \'edf\' ',
+  '    a : 1',
+  ].join( '\n' );
   test.identical( got, expected);
 
   test.case = 'unwrapped object inside an array';
   var src = 
-        [
-        {
-          nameLong : "abc",
-          description : "edf",
-          rewardForVisitor : { a : 1 },
-        },
-        ];
+  [
+    {
+      nameLong : "abc",
+      description : "edf",
+      rewardForVisitor : { a : 1 },
+    },
+  ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected = 
-        ['    nameLong : \'abc\' ',
-         '    description : \'edf\' ',
-         '    rewardForVisitor : a : 1',
-        ].join( '\n' );
+  ['    nameLong : \'abc\' ',
+  '    description : \'edf\' ',
+  '    rewardForVisitor : a : 1',
+  ].join( '\n' );
   test.identical( got, expected);
 
   test.case = 'unwrapped object inside an array';
   var src =
-        {
-          a :
-          {
-            nameLong : "abc",
-            description : "edf",
-            rewardForVisitor : { a : 1 },
-          },
-        };
+  {
+    a :
+    {
+      nameLong : "abc",
+      description : "edf",
+      rewardForVisitor : { a : 1 },
+    },
+  };
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-        ['  a : ',
-        '    nameLong : \'abc\' ',
-        '    description : \'edf\' ',
-        '    rewardForVisitor : a : 1',
-        ].join( '\n' );
+  ['  a : ',
+  '    nameLong : \'abc\' ',
+  '    description : \'edf\' ',
+  '    rewardForVisitor : a : 1',
+  ].join( '\n' );
   test.identical( got, expected);
 
   test.case = 'unwrapped array inside an object';
   var src = 
-        {
-          a :
-          [
-            "abc",
-            "edf",
-            { a : 1 },
-          ],
-        };
+  {
+    a :
+    [
+      "abc",
+      "edf",
+      { a : 1 },
+    ],
+  };
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-        ['  a : ',
-         '    \'abc\' ',
-         '    \'edf\' ',
-         '    a : 1',
-        ].join( '\n' );
+  ['  a : ',
+  '    \'abc\' ',
+  '    \'edf\' ',
+  '    a : 1',
+  ].join( '\n' );
   test.identical( got, expected);
 
   test.case = 'unwrapped array inside an array, with other items';
   var src =
-        [
-          [
-            "abc",
-            "edf",
-            { a : 1 },
-          ],
-          1,
-          2,
-        ];
+  [
+    [
+      "abc",
+      "edf",
+      { a : 1 },
+    ],
+    1,
+    2,
+  ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected = 
-        ['    \'abc\' ',
-         '    \'edf\' ',
-         '    a : 1 ',
-         '  1 ',
-         '  2',
-        ].join( '\n' );
+  ['    \'abc\' ',
+  '    \'edf\' ',
+  '    a : 1 ',
+  '  1 ',
+  '  2',
+  ].join( '\n' );
   test.identical( got, expected);
 
   test.case = 'unwrapped array with single item array';
   var src = [ 'a', 7, [ 1 ], 8, 'b' ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-        ['  \'a\' ',
-         '  7 ',
-         '    1 ',
-         '  8 ',
-         '  \'b\'',
-        ].join( '\n' );
+  ['  \'a\' ',
+  '  7 ',
+  '    1 ',
+  '  8 ',
+  '  \'b\'',
+  ].join( '\n' );
   test.identical( got, expected);
 
   test.case = 'unwrapped array with single item object';
   var src = [ 'a', 7, { u : 1 }, 8, 'b' ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-        ['  \'a\' ',
-         '  7 ',
-         '  u : 1 ',
-         '  8 ',
-         '  \'b\'',
-        ].join( '\n' );
+  ['  \'a\' ',
+  '  7 ',
+  '  u : 1 ',
+  '  8 ',
+  '  \'b\'',
+  ].join( '\n' );
   test.identical( got, expected);
 
   test.case = 'unwrapped array of arrays';
   var src = [ [ 5, 4 ], [ 2, 1, 0 ] ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-        ['    5 4 ',
-         '    2 1 0',
-        ].join( '\n' );
+  ['    5 4 ',
+  '    2 1 0',
+  ].join( '\n' );
   test.identical( got, expected);
 
   test.case = 'unwrapped array of arrays, level 2';
   var src = [ [ 5, 4, [ 3 ] ], [ 2, 1, 0 ] ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-        ['    5 ',
-        '    4 ',
-        '      3 ',
-        '    2 1 0',
-        ].join( '\n' );
+  ['    5 ',
+  '    4 ',
+  '      3 ',
+  '    2 1 0',
+  ].join( '\n' );
   test.identical( got, expected);
 
   test.case = 'unwrapped function structure';
   var src =
-        ( function( )
-        {
-          var structure =
-          [
-            {
-              nameLong : "abc",
-              description : "edf",
-              rewardForVisitor : { a : 1 },
-              stationary : 1,
-              f : "f",
-              quantity : 1
-            },
-            {
-              nameLong : "abc2",
-              description : "edf2",
-              rewardForVisitor : { a : 1 },
-              stationary : 1,
-              f : "f",
-              quantity : 1
-            },
-          ];
-          return structure;
-        } )( );
+  ( function( )
+  {
+    var structure =
+    [
+      {
+        nameLong : "abc",
+        description : "edf",
+        rewardForVisitor : { a : 1 },
+        stationary : 1,
+        f : "f",
+        quantity : 1
+      },
+      {
+        nameLong : "abc2",
+        description : "edf2",
+        rewardForVisitor : { a : 1 },
+        stationary : 1,
+        f : "f",
+        quantity : 1
+      },
+    ];
+    return structure;
+  } )( );
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-        ['    nameLong : \'abc\' ',
-        '    description : \'edf\' ',
-        '    rewardForVisitor : a : 1 ',
-        '    stationary : 1 ',
-        '    f : \'f\' ',
-        '    quantity : 1 ',
-        '    nameLong : \'abc2\' ',
-        '    description : \'edf2\' ',
-        '    rewardForVisitor : a : 1 ',
-        '    stationary : 1 ',
-        '    f : \'f\' ',
-        '    quantity : 1',
-        ].join( '\n' );
+  ['    nameLong : \'abc\' ',
+  '    description : \'edf\' ',
+  '    rewardForVisitor : a : 1 ',
+  '    stationary : 1 ',
+  '    f : \'f\' ',
+  '    quantity : 1 ',
+  '    nameLong : \'abc2\' ',
+  '    description : \'edf2\' ',
+  '    rewardForVisitor : a : 1 ',
+  '    stationary : 1 ',
+  '    f : \'f\' ',
+  '    quantity : 1',
+  ].join( '\n' );
   test.identical( got, expected);
 
   test.case = 'unwrapped object with arrays as properties';
   var src =
-        {
-          1 : 'a',
-          2 : [ 10, 20, 30 ],
-          3 : { 21 : 'aa', 22 : 'bb' },
-          4 : [ 10, 20, 30 ],
-          13 : [ 10, 20, 30 ],
-        };
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    13 : [ 10, 20, 30 ],
+  };
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-        ['  1 : \'a\' ',
-        '  2 :   10 20 30 ',
-        '  3 : 21 : \'aa\' 22 : \'bb\' ',
-        '  4 :   10 20 30 ',
-        '  13 :   10 20 30',
-        ].join( '\n' );
+  ['  1 : \'a\' ',
+  '  2 :   10 20 30 ',
+  '  3 : 21 : \'aa\' 22 : \'bb\' ',
+  '  4 :   10 20 30 ',
+  '  13 :   10 20 30',
+  ].join( '\n' );
   test.identical( got, expected);
 
 }
