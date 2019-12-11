@@ -2730,38 +2730,134 @@ function toStrJson( test )
 
 function _toStrJsonFromFile( test, encoding )
 {
-  var desc = 'json from file as ' + encoding,
+  //  var desc = 'json from file as ' + encoding,
+  //
+  //  src =
+  //  [
+  //
+  //    stringFromFile( 'file1', encoding ),
+  //    stringFromFile( 'file4.pdf', encoding ),
+  //    stringFromFile( 'test.exe', encoding ),
+  //    stringFromFile( 'small', encoding ),
+  //    stringFromFile( 'small2', encoding ),
+  //    stringFromFile( 'small3', encoding ),
+  //    stringFromFile( 'small4', encoding ),
+  //    stringFromFile( 'small5', encoding ),
+  //    stringFromFile( 'small6', encoding ),
+  //    stringFromFile( 'small7', encoding ),
+  //    stringFromFile( 'small5', encoding ),
+  //
+  //    { a : stringFromFile( 'file1', encoding ), b : stringFromFile( 'file2', encoding ), c : 1 },
+  //    { a : stringFromFile( 'file3', encoding ), b : stringFromFile( 'file4.pdf', encoding ), c : 1 },
+  //    { a : [ stringFromFile( 'test.exe', encoding ) ], b : stringFromFile( 'small', encoding ) },
+  //    { a : stringFromFile( 'small2', encoding ), b : stringFromFile( 'small3', encoding ) },
+  //    { a : stringFromFile( 'small4', encoding ), b : stringFromFile( 'small5', encoding ) },
+  //    { a : stringFromFile( 'small6', encoding ), b : stringFromFile( 'small7', encoding ) },
+  //
+  //  ],
+  //
+  //  options =
+  //  [
+  //    { jsonLike : 1 },
+  //  ];
+  //
+  //  testFunction( test, desc, src, options );
 
-  src =
-  [
+  test.case = encoding + ' file1';
+  var src = stringFromFile( 'file1', encoding );
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
 
-    stringFromFile( 'file1', encoding ),
-    stringFromFile( 'file4.pdf', encoding ),
-    stringFromFile( 'test.exe', encoding ),
-    stringFromFile( 'small', encoding ),
-    stringFromFile( 'small2', encoding ),
-    stringFromFile( 'small3', encoding ),
-    stringFromFile( 'small4', encoding ),
-    stringFromFile( 'small5', encoding ),
-    stringFromFile( 'small6', encoding ),
-    stringFromFile( 'small7', encoding ),
-    stringFromFile( 'small5', encoding ),
+  test.case = encoding + ' file4.pdf';
+  var src = stringFromFile( 'file4.pdf', encoding );
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
 
-    { a : stringFromFile( 'file1', encoding ), b : stringFromFile( 'file2', encoding ), c : 1 },
-    { a : stringFromFile( 'file3', encoding ), b : stringFromFile( 'file4.pdf', encoding ), c : 1 },
-    { a : [ stringFromFile( 'test.exe', encoding ) ], b : stringFromFile( 'small', encoding ) },
-    { a : stringFromFile( 'small2', encoding ), b : stringFromFile( 'small3', encoding ) },
-    { a : stringFromFile( 'small4', encoding ), b : stringFromFile( 'small5', encoding ) },
-    { a : stringFromFile( 'small6', encoding ), b : stringFromFile( 'small7', encoding ) },
+  test.case = encoding + ' test.exe';
+  var src = stringFromFile( 'test.exe', encoding );
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
 
-  ],
+  test.case = encoding + ' small';
+  var src = stringFromFile( 'small', encoding );
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
 
-  options =
-  [
-    { jsonLike : 1 },
-  ];
+  test.case = encoding + ' small2';
+  var src = stringFromFile( 'small2', encoding );
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
 
-  testFunction( test, desc, src, options );
+  test.case = encoding + ' small3';
+  var src = stringFromFile( 'small3', encoding );
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+  
+  test.case = encoding + ' small4';
+  var src = stringFromFile( 'small4', encoding );
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = encoding + ' small5';
+  var src = stringFromFile( 'small5', encoding );
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = encoding + ' small6';
+  var src = stringFromFile( 'small6', encoding );
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = encoding + ' small7';
+  var src = stringFromFile( 'small7', encoding );
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = encoding + ' file as json property value';
+  var src = { a : stringFromFile( 'file1', encoding ), b : stringFromFile( 'file2', encoding ), c : 1 };
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = encoding + ' file as json property value';;
+  var src = { a : stringFromFile( 'file3', encoding ), b : stringFromFile( 'file4.pdf', encoding ), c : 1 };
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = encoding + ' file as json property value';;
+  var src = { a : [ stringFromFile( 'test.exe', encoding ) ], b : stringFromFile( 'small', encoding ) };
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+  
+  test.case = encoding + ' file as json property value';;
+  var src = { a : stringFromFile( 'small2', encoding ), b : stringFromFile( 'small3', encoding ) };
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = encoding + ' file as json property value';;
+  var src = { a : stringFromFile( 'small4', encoding ), b : stringFromFile( 'small5', encoding ) };
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = encoding + ' file as json property value';;
+  var src = { a : stringFromFile( 'small6', encoding ), b : stringFromFile( 'small7', encoding ) };
+  var got = _.toStr( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
 
 }
 
