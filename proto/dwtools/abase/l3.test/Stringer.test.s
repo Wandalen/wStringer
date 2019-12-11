@@ -1164,666 +1164,1365 @@ function toStrError( test )
 
 function toStrArray( test )
 {
-  var  desc = 'Array test',
-  src =
-  [
-    /*01*/ [ 1, 2, 3 ],
-    /*02*/ [ { a : 1 }, { b : 2 } ],
-    /*03*/ [ function( ){ }, function add( ){ } ],
-    /*04*/ [ 1000, 2000, 3000 ],
-    /*05*/ [ 1.1111, 2.2222, 3.3333 ],
-    /*06*/ [ 0, 1, 2 ],
-    /*07*/ [  7, { v : 0 }, 1, 'x' ],
-    /*08*/ [ 'e', 'e', 'e' ],
-    /*09*/ [ '\n\nEscaping test' ],
-    /*10*/ [ 0, 1, 2 ],
-    /*11*/ [ 'a', 'b', 'c', 1, 2, 3 ],
-    /*12*/ [ { x : 1 }, { y : 2 } ],
-    /*13*/ [ 1, [ 2, 3, 4 ], 5 ],
-    /*14*/ [ 6, [ 7, 8, 9 ], 10 ],
-    /*15*/ [ { k : 3 }, { l : 4 } ],
-    /*16*/ [ 1, { a : 2 }, 5 ],
-    /*17*/ [ 0, { b : 1 }, 3 ],
-    /*18*/ [ 'a', 7, { u : 2 }, 8, 'b' ],
-    /*19*/ [ function f1( ){ }, function( ){ } ],
-    /*20*/ [ function f2( ){ }, function f3( ){ } ],
-    /*21*/ [ { a : { a : '1' } } ],
-    /*22*/ [ { c : 1 }, { d : 2 } ],
-    /*23*/ [ new Date( Date.UTC( 1993, 12, 12 ) ), { d : 2 }, new Error( 'error' ) ],
-    /*24*/ [ function ff( ){ }, { d : 3 }, 15 ],
-    /*25*/ [ [ 1, 2, 3 ], [ 4, 5, 6 ] ],
-    /*26*/ [ [ 1, 2, 3 ], [ '4, 5, 6' ], undefined, false ],
-    /*27*/ [ 'e', 'e', 'e' ],
-    /*28*/ [ 'a', 'b', 'c', 1, 2, 3 ],
-    /*29*/ [ 15, 16, 17, 18 ],
-    /*30*/ [ { a : 5, b : 6, c : 7 } ],
-    /*31*/ [ 'a', 1, function( ) { }, false ],
-    /*32*/ [ 'b', 2, function( ) { }, true ],
-    /*33*/ [ function( ) { } ],
-    /*34*/ [ 'a', 1000, 2000, 3000 ],
-    /*35*/ [ 1.1111, 2.2222, 3.3333 ],
-    /*36*/ [  7, { v : 0 }, 1, 'x' ],
-    /*37*/ [ '\n\nEscaping & wrap test' ],
-    /*38*/ [ 0, [ 1, 2, 3, 4 ], 5, { a : 6 } ],
-    /*39*/ [ ['a', 'b', 'c'], 'd', 'e' ],
-    /*40*/ [ { a : 0 }, { b : 1 }, [ 2, 3 ] ],
-    /*41*/ [ { a : 'a', b : 'b', c : 'c' } ],
-    /*42*/ [ 'a', 7, { u : 2 }, 8, 'b' ],
-    /*43*/ [ 0.1111, 0.2222, 0.3333 ],
-    /*44*/ [ 'x', 2000, 3000, 4000 ],
-    /*45*/ [ 0, { b : 1 }, 3 ],
-    /*46*/ [ { a : '\na', b : { d : '\ntrue' } } ],
-    /*47*/ [ { x : '\na', y : { z : '\ntrue' } } ],
-    /*48*/ [ 1, { a : 2 }, '03' ],
-    /*49*/ [ 0, [ 1, 2, 3, 4 ], 5, { a : 6 } ],
-    /*50*/ [ { a : 'string' }, [ true ], 1 ],
-    /*51*/ [ [ 5, 4, [ 3 ] ], [ 2, 1, 0 ] ],
-    /*52*/ [ { a : 0 }, { b : 1 }, [ 2, 3 ] ],
-    /*53*/ [ [ 1.100, 1.200 ], [ 2, 3 ] ],
-    /*54*/ [ 9000, [ 8000, 6000], 7000 ],
-    /*55*/ [ { a : '\\test' }, { b : '\ntest' }, { c : 'test' } ],
-    /*56*/ [ { a : function func ( ){ } }, 0, 1, 'a' ],
-    /*57*/ [ { b : function f ( ){ } }, 1, 2 , 3 ],
-    /*58*/ [ new Error( 'msg' ), new Date( Date.UTC( 1990, 0, 0 ) ), 'test' ],
-    /*59*/ [ 1, [ 2, 3, 4 ], 2 ],
-    /*60*/ [ 1, [ '2', null, undefined, '4' ], 2 ],
-    /*61*/ [ [ 1, 2 ], 'string', { a : true, b : null }, undefined ],
-    /*62*/ [ [ 0, 1 ], 'test', { a : Symbol( ) }, undefined ],
-    /*63*/ [ 0, 'str', { a : Symbol( ) }, function test( ){ }, null ],
-    /*64*/ [ 0, 'str', { a : Symbol( ) }, function test( ){ }, true, new Date( Date.UTC( 1990, 0, 0 ) ) ],
-    /*65*/ [ [ 0, 1 ], 'test', { a : 'a' } ],
-    /*66*/ [ [ 1, 2 ], 'sample', { a : 'b' } ],
-    /*67*/ [ 11, 22, function routine( ){ }, { a : 'string' } ],
-    /*68*/ [ ['a', 100], ['b', 200] ],
-    /*69*/ [ ['aa', 300], ['bb', 400] ],
-    /*70*/ [ [ 1.00, 2.00 ], [ 3.00, 4.00], 'str sample' ],
-    /*71*/ [ '1', [ 2, 3, 4 ], '2' ],
-    /*72*/ [ '1', [ 2.00, 3.00, 4.00 ], '2' ],
-    /*73*/ [ 'o', [ 90, 80, 70 ], 'o' ],
-    /*74*/ [ 'o', 1, { a : true, b : undefined, c : null } ],
-    /*75*/ [ 'a', 2, { a : '\\true', b : true, c : null } ],
-    /*76*/ [ [ 'a', 1 ], new Error( 'err msg' ), new Date( Date.UTC( 1990, 0, 0 ) ) ],
-    /*77*/ [ [ 'a', 1 ], new Date( Date.UTC( 1999, 1, 1 ) ) ],
-    /*78*/ [ [ 1, 2, 3 ], 'a' ],
-
-  ],
-  options =
-  [
-    /*01*/ { },
-    /*02*/ { },
-    /*03*/ { },
-    /*04*/ { precision : 2, multiline : 1 },
-    /*05*/ { fixed : 2 },
-    /*06*/ { noArray : 1 },
-    /*07*/ { noAtomic : 1 },
-    /*08*/ { noArray : 1 },
-    /*09*/ { escaping : 1, levels : 2 },
-    /*10*/ { levels : 0 },
-    /*11*/ { levels : 2, noString : 1 },
-    /*12*/ { levels : 2, dtab : '-' },
-    /*13*/ { levels : 2, multiline : 1 },
-    /*14*/ { levels : 2, noNumber : 1 },
-    /*15*/ { levels : 2, colon : '->' },
-    /*16*/ { levels : 2, noObject : 1 },
-    /*17*/ { levels : 2, noNumber : 1 },
-    /*18*/ { levels : 2, noAtomic : 1 },
-    /*19*/ { levels : 2 },
-    /*20*/ { levels : 2, noRoutine : 1 },
-    /*21*/ { levels : 3, noSubObject : 1 },
-    /*22*/ { levels : 2, tab : '|', prependTab : 0 },
-    /*23*/ { levels : 2, noError : 1, noDate : 1 },
-    /*24*/ { levels : 2, noRoutine : 1, noSubObject : 1 },
-
-    /*25*/  { wrap : 0, comma : ' | ' },
-    /*26*/  { wrap : 0, noString : 1, noNumber: 1, comma : ', ' },
-    /*27*/  { wrap : 0, comma : ' ' },
-    /*28*/  { wrap : 0, prependTab : 0, comma : ', ' },
-    /*29*/  { wrap : 0, tab : '| ', dtab : '', comma : '. ' },
-    /*30*/  { wrap : 0, colon : '->', comma : '.' },
-    /*31*/  { wrap : 0, noRoutine : 1, comma : '. ' },
-    /*32*/  { wrap : 0, noAtomic : 1, comma : '. ' },
-    /*33*/  { wrap : 0, onlyRoutines : 1, comma : '| ' },
-    /*34*/  { wrap : 0, precision : 3, comma : '* ' },
-    /*35*/  { wrap : 0, fixed : 3, comma : ', ' },
-    /*36*/  { wrap : 0, multiline : 1, comma : '. ' },
-    /*37*/  { wrap : 0, escaping : 1, comma : '. ' },
-
-    /*38*/  { levels : 2, wrap : 0, comma : '- ' },
-    /*39*/  { levels : 2, wrap : 0, comma : '. '},
-    /*40*/  { levels : 2, wrap : 0, tab : '| ', dtab : '', comma : ', ' },
-    /*41*/  { levels : 2, wrap : 0, colon : ' - ', comma : '| ' },
-    /*42*/  { levels : 2, wrap : 0, prependTab : 0, comma : ', ' },
-    /*43*/  { levels : 2, wrap : 0, fixed : 1, comma : '* ' },
-    /*44*/  { levels : 2, wrap : 0, precision : 1, comma : ', ' },
-    /*45*/  { levels : 2, wrap : 0, multiline : 1, comma : '| ' },
-    /*46*/  { levels : 3, wrap : 0, escaping : 1, comma : '. ' },
-    /*47*/  { levels : 4, wrap : 0, escaping : 1, comma : ', ' },
-    /*48*/  { levels : 3, wrap : 0, noAtomic : 1, comma : ' , ' },
-    /*49*/  { levels : 2, wrap : 0, noSubObject : 1, noArray : 1, comma : ' ..' },
-    /*50*/  { levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '/ ' },
-
-    /*51*/  { levels : 3, wrap : 0, comma : '||' },
-    /*52*/  { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' },
-    /*53*/  { levels : 2, prependTab : 0, fixed : 2 },
-    /*54*/  { levels : 2, prependTab : 0, precision : 1 },
-    /*55*/  { levels : 2, multiline : 1, escaping : 1 },
-    /*56*/  { levels : 2, noRoutine : 1 },
-    /*57*/  { levels : 3, noRoutine : 1 },
-    /*58*/  { levels : 3, noError : 1, noDate : 1 },
-    /*59*/  { levels : 2, noArray : 1 },
-    /*60*/  { levels : 2, noNumber : 1, noString : 1 },
-    /*61*/  { levels : 2, noNumber : 1, noString : 1, noObject : 1 },
-    /*62*/  { levels : 3, noNumber : 1, noString : 1, noObject : 1 },
-    /*63*/  { levels : 2, noNumber : 1, noString : 1, noObject : 1, noRoutine : 1 },
-    /*64*/  { levels : 2, noNumber : 1, noString : 1, noObject : 1, noRoutine : 1, noDate : 1 },
-    /*65*/  { levels : 2, noNumber : 1, noString : 1, noSubObject : 1 },
-    /*66*/  { levels : 3, noNumber : 1, noString : 1, noSubObject : 1 },
-    /*67*/  { levels : 2, noNumber : 1, noString : 1, onlyRoutines : 1 },
-    /*68*/  { levels : 2, noString : 1, precision : 2 },
-    /*69*/  { levels : 3, noString : 1, precision : 3 },
-    /*70*/  { levels : 2, noString : 1, fixed : 3 },
-    /*71*/  { levels : 2, noString : 1, noNumber : 1, precision : 1 },
-    /*72*/  { levels : 2, noString : 1, noNumber : 1, fixed : 1 },
-    /*73*/  { levels : 3, noString : 1, noNumber : 1, precision : 1 },
-    /*74*/  { levels : 2, noString : 1, noNumber : 1, multiline : 1 },
-    /*75*/  { levels : 2, noString : 1, noNumber : 1, multiline : 1, escaping : 1 },
-    /*76*/  { levels : 2, noString : 1, noNumber : 1, noError : 1 },
-    /*77*/  { levels : 2, noString : 1, noNumber : 1, tab : '|', prependTab : 0 },
-    /*78*/  { levels : 3, noAtomic : 1, noNumber : 0 },
-
-
-  ],
-  expected =
-  [
-    /*01*/ '[ 1, 2, 3 ]',
-    /*02*/
-    [
-      '[',
-      '  {- Object with 1 elements -}, ',
-      '  {- Object with 1 elements -}',
-      ']'
-    ].join( '\n' ),
-
-    /*03*/ '[ [ routine without name ], [ routine add ] ]',
-    /*04*/
-    [
-      '[',
-      '  1.0e+3, ',
-      '  2.0e+3, ',
-      '  3.0e+3',
-      ']',
-    ].join( '\n' ),
-
-    /*05*/ '[ 1.11, 2.22, 3.33 ]',
-
-    /*06*/ '',
-
-
-    /*07*/
-    [
-      '[',
-      '  {- Object with 1 elements -}',
-      ']'
-    ].join( '\n' ),
-
-    /*08*/ '',
-
-
-    /*09*/ '[ \'\\n\\nEscaping test\' ]',
-
-    /*10*/ '{- Array with 3 elements -}',
-    /*11*/ '[ 1, 2, 3 ]',
-    /*12*/
-    [
-      '[',
-      '-{ x : 1 }, ',
-      '-{ y : 2 }',
-      ']'
-    ].join( '\n' ),
-
-    /*13*/
-    [
-      '[',
-      '  1, ',
-      '  [',
-      '    2, ',
-      '    3, ',
-      '    4',
-      '  ], ',
-      '  5',
-      ']',
-
-    ].join( '\n' ),
-
-    /*14*/
-    [
-      '[',
-      '  []',
-      ']'
-    ].join( '\n' ),
-
-    /*15*/
-    [
-      '[',
-      '  { k->3 }, ',
-      '  { l->4 }',
-      ']'
-    ].join( '\n' ),
-
-    /*16*/
-    [
-
-      '[ 1, 5 ]'
-
-    ].join( '\n' ),
-
-    /*17*/
-    [
-      '[',
-      '  {}',
-      ']'
-    ].join( '\n' ),
-
-    /*18*/
-    [
-      '[',
-      '  {}',
-      ']'
-    ].join( '\n' ),
-
-    /*19*/ '[ [ routine f1 ], [ routine without name ] ]',
-    /*20*/ '[]',
-    /*21*/
-    [
-      '[',
-      '  {}',
-      ']'
-    ].join( '\n' ),
-
-    /*22*/
-    [
-      '[',
-      '|  { c : 1 }, ',
-      '|  { d : 2 }',
-      '|]',
-    ].join( '\n' ),
-
-    /*23*/
-    [
-      '[',
-      '  { d : 2 }',
-      ']',
-    ].join( '\n' ),
-
-    /*24*/
-    [
-      '[',
-      '  { d : 3 }, ',
-      '  15',
-      ']',
-    ].join( '\n' ),
-
-    /*25*/
-    [
-      '  {- Array with 3 elements -} | ',
-      '  {- Array with 3 elements -}',
-    ].join( '\n' ),
-
-    /*26*/
-    [
-      '  undefined, false',
-    ].join( '\n' ),
-
-    /*27*/
-    '  \'e\' \'e\' \'e\'',
-
-    /*28*/
-    '  \'a\', \'b\', \'c\', 1, 2, 3',
-    /*29*/
-    '| 15. 16. 17. 18',
-    /*30*/
-    '  {- Object with 3 elements -}',
-    /*31*/
-    '  \'a\'. 1. false',
-    /*32*/
-    '  [ routine without name ]',
-    /*33*/
-    '',
-    /*34*/
-    '  \'a\'* 1.00e+3* 2.00e+3* 3.00e+3',
-
-    /*35*/
-    '  1.111, 2.222, 3.333',
-    /*36*/
-    [
-      '  7. ',
-      '  {- Object with 1 elements -}. ',
-      '  1. ',
-      '  \'x\'',
-    ].join( '\n' ),
-
-    /*37*/
-    '  \'\\n\\nEscaping & wrap test\'',
-
-    /*38*/
-    [
-      '  0- ',
-      '    1- 2- 3- 4- ',
-      '  5- ',
-      '  a : 6',
-    ].join( '\n' ),
-
-    /*39*/
-    [
-      '    \'a\'. \'b\'. \'c\'. ',
-      '  \'d\'. ',
-      '  \'e\''
-    ].join( '\n' ),
-
-    /*40*/
-    [
-      '| a : 0, ',
-      '| b : 1, ',
-      '| 2, 3'
-    ].join( '\n' ),
-
-    /*41*/
-    [
-      '  a - \'a\'| b - \'b\'| c - \'c\''
-    ].join( '\n' ),
-
-    /*42*/
-    [
-      '  \'a\', ',
-      '  7, ',
-      '  u : 2, ',
-      '  8, ',
-      '  \'b\'',
-    ].join( '\n' ),
-
-    /*43*/
-    [
-      '  0.1* 0.2* 0.3',
-    ].join( '\n' ),
-
-    /*44*/
-    [
-      '  \'x\', 2e+3, 3e+3, 4e+3',
-    ].join( '\n' ),
-
-    /*45*/
-    [
-      '  0| ',
-      '    b : 1| ',
-      '  3',
-    ].join( '\n' ),
-
-    /*46*/
-    [
-      '    a : \'\\na\'. ',
-      '    b : d : \'\\ntrue\'',
-    ].join( '\n' ),
-
-    /*47*/
-    [
-      '    x : \'\\na\', ',
-      '    y : z : \'\\ntrue\'',
-    ].join( '\n' ),
-
-    /*48*/
-    [
-      '',
-    ].join( '\n' ),
-
-    /*49*/
-    [
-      '',
-    ].join( '\n' ),
-
-    /*50*/
-    [
-      '    true'
-    ].join( '\n' ),
-
-//[ { a : 'string' }, [ true ], 1 ],
-//{ levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '/ ' },
-
-    /*51*/ // !!! please move to toStrUnwrapped
-    [
-      '    5||',
-      '    4||',
-      '      3||',
-      '    2||1||0',
-    ].join( '\n' ),
-
-    /*52*/
-    [
-      '  |  a->0, , ',
-      '  |  b->1, , ',
-      '  |    2, , 3',
-    ].join( '\n' ),
-
-    /*53*/
-    [
-      '[',
-      '  [ 1.10, 1.20 ], ',
-      '  [ 2.00, 3.00 ]',
-      ']',
-    ].join( '\n' ),
-
-    /*54*/
-    [
-      '[',
-      '  9e+3, ',
-      '  [ 8e+3, 6e+3 ], ',
-      '  7e+3',
-      ']',
-    ].join( '\n' ),
-
-    /*55*/
-    [
-      '[',
-      '  {',
-      '    a : \'\\\\test\'',
-      '  }, ',
-      '  {',
-      '    b : \'\\ntest\'',
-      '  }, ',
-      '  {',
-      '    c : \'test\'',
-      '  }',
-      ']',
-    ].join( '\n' ),
-
-    /*56*/
-    [
-      '[',
-      '  {}, ',
-      '  0, ',
-      '  1, ',
-      '  \'a\'',
-      ']',
-    ].join( '\n' ),
-
-    /*57*/
-    [
-      '[',
-      '  {}, ',
-      '  1, ',
-      '  2, ',
-      '  3',
-      ']',
-    ].join( '\n' ),
-
-    /*58*/
-    [
-      '[ \'test\' ]',
-    ].join( '\n' ),
-
-    /*59*/
-     '',
-
-    /*60*/
-
-    [ '[',
-      '  [ null, undefined ]',
-      ']',
-    ].join( '\n' ),
-
-    /*61*/
-
-    [ '[',
-      '  [], ',
-      '  undefined',
-      ']',
-    ].join( '\n' ),
-
-    /*62*/
-
-    [ '[',
-      '  [], ',
-      '  undefined',
-      ']',
-    ].join( '\n' ),
-
-    /*63*/
-
-    [
-      '[ null ]',
-    ].join( '\n' ),
-
-    /*64*/
-
-    [
-      '[ true ]',
-    ].join( '\n' ),
-
-    /*65*/
-
-    [ '[',
-      '  [], ',
-      '  {}',
-      ']',
-    ].join( '\n' ),
-
-    /*66*/
-
-    [ '[',
-      '  [], ',
-      '  {}',
-      ']',
-    ].join( '\n' ),
-
-    /*67*/
-
-    [
-      ''
-    ].join( '\n' ),
-
-    /*68*/
-
-    [
-      '[',
-      '  [ 1.0e+2 ], ',
-      '  [ 2.0e+2 ]',
-      ']'
-    ].join( '\n' ),
-
-    /*69*/
-
-    [
-      '[',
-      '  [ 300 ], ',
-      '  [ 400 ]',
-      ']'
-    ].join( '\n' ),
-
-    /*70*/
-
-    [
-      '[',
-      '  [ 1.000, 2.000 ], ',
-      '  [ 3.000, 4.000 ]',
-      ']'
-    ].join( '\n' ),
-
-    /*71*/
-
-    [
-      '[',
-      '  []',
-      ']'
-    ].join( '\n' ),
-
-    /*72*/
-
-    [
-      '[',
-      '  []',
-      ']'
-    ].join( '\n' ),
-
-    /*73*/
-
-    [
-      '[',
-      '  []',
-      ']'
-    ].join( '\n' ),
-
-    /*74*/
-
-    [
-      '[',
-      '  {',
-      '    a : true, ',
-      '    b : undefined, ',
-      '    c : null',
-      '  }',
-      ']'
-    ].join( '\n' ),
-
-    /*75*/
-
-    [
-      '[',
-      '  {',
-      '    b : true, ',
-      '    c : null',
-      '  }',
-      ']'
-    ].join( '\n' ),
-
-    /*76*/
-
-    [
-      '[',
-      '  [], ',
-      '  1989-12-31T00:00:00.000Z',
-      ']'
-    ].join( '\n' ),
-
-    /*77*/
-
-    [
-      '[',
-      '|  [], ',
-      '|  1999-02-01T00:00:00.000Z',
-      '|]'
-    ].join( '\n' ),
-
-    /*78*/
-
-    [
-      '[',
-      '  []',
-      ']'
-    ].join( '\n' ),
-
-
-  ];
-
-  testFunction( test, desc, src, options, expected );
+  //  var  desc = 'Array test',
+  //  src =
+  //  [
+  //    /*01*/ [ 1, 2, 3 ],
+  //    /*02*/ [ { a : 1 }, { b : 2 } ],
+  //    /*03*/ [ function( ){ }, function add( ){ } ],
+  //    /*04*/ [ 1000, 2000, 3000 ],
+  //    /*05*/ [ 1.1111, 2.2222, 3.3333 ],
+  //    /*06*/ [ 0, 1, 2 ],
+  //    /*07*/ [  7, { v : 0 }, 1, 'x' ],
+  //    /*08*/ [ 'e', 'e', 'e' ],
+  //    /*09*/ [ '\n\nEscaping test' ],
+  //    /*10*/ [ 0, 1, 2 ],
+  //    /*11*/ [ 'a', 'b', 'c', 1, 2, 3 ],
+  //    /*12*/ [ { x : 1 }, { y : 2 } ],
+  //    /*13*/ [ 1, [ 2, 3, 4 ], 5 ],
+  //    /*14*/ [ 6, [ 7, 8, 9 ], 10 ],
+  //    /*15*/ [ { k : 3 }, { l : 4 } ],
+  //    /*16*/ [ 1, { a : 2 }, 5 ],
+  //    /*17*/ [ 0, { b : 1 }, 3 ],
+  //    /*18*/ [ 'a', 7, { u : 2 }, 8, 'b' ],
+  //    /*19*/ [ function f1( ){ }, function( ){ } ],
+  //    /*20*/ [ function f2( ){ }, function f3( ){ } ],
+  //    /*21*/ [ { a : { a : '1' } } ],
+  //    /*22*/ [ { c : 1 }, { d : 2 } ],
+  //    /*23*/ [ new Date( Date.UTC( 1993, 12, 12 ) ), { d : 2 }, new Error( 'error' ) ],
+  //    /*24*/ [ function ff( ){ }, { d : 3 }, 15 ],
+  //    /*25*/ [ [ 1, 2, 3 ], [ 4, 5, 6 ] ],
+  //    /*26*/ [ [ 1, 2, 3 ], [ '4, 5, 6' ], undefined, false ],
+  //    /*27*/ [ 'e', 'e', 'e' ],
+  //    /*28*/ [ 'a', 'b', 'c', 1, 2, 3 ],
+  //    /*29*/ [ 15, 16, 17, 18 ],
+  //    /*30*/ [ { a : 5, b : 6, c : 7 } ],
+  //    /*31*/ [ 'a', 1, function( ) { }, false ],
+  //    /*32*/ [ 'b', 2, function( ) { }, true ],
+  //    /*33*/ [ function( ) { } ],
+  //    /*34*/ [ 'a', 1000, 2000, 3000 ],
+  //    /*35*/ [ 1.1111, 2.2222, 3.3333 ],
+  //    /*36*/ [  7, { v : 0 }, 1, 'x' ],
+  //    /*37*/ [ '\n\nEscaping & wrap test' ],
+  //    /*38*/ [ 0, [ 1, 2, 3, 4 ], 5, { a : 6 } ],
+  //    /*39*/ [ ['a', 'b', 'c'], 'd', 'e' ],
+  //    /*40*/ [ { a : 0 }, { b : 1 }, [ 2, 3 ] ],
+  //    /*41*/ [ { a : 'a', b : 'b', c : 'c' } ],
+  //    /*42*/ [ 'a', 7, { u : 2 }, 8, 'b' ],
+  //    /*43*/ [ 0.1111, 0.2222, 0.3333 ],
+  //    /*44*/ [ 'x', 2000, 3000, 4000 ],
+  //    /*45*/ [ 0, { b : 1 }, 3 ],
+  //    /*46*/ [ { a : '\na', b : { d : '\ntrue' } } ],
+  //    /*47*/ [ { x : '\na', y : { z : '\ntrue' } } ],
+  //    /*48*/ [ 1, { a : 2 }, '03' ],
+  //    /*49*/ [ 0, [ 1, 2, 3, 4 ], 5, { a : 6 } ],
+  //    /*50*/ [ { a : 'string' }, [ true ], 1 ],
+  //    /*51*/ [ [ 5, 4, [ 3 ] ], [ 2, 1, 0 ] ],
+  //    /*52*/ [ { a : 0 }, { b : 1 }, [ 2, 3 ] ],
+  //    /*53*/ [ [ 1.100, 1.200 ], [ 2, 3 ] ],
+  //    /*54*/ [ 9000, [ 8000, 6000], 7000 ],
+  //    /*55*/ [ { a : '\\test' }, { b : '\ntest' }, { c : 'test' } ],
+  //    /*56*/ [ { a : function func ( ){ } }, 0, 1, 'a' ],
+  //    /*57*/ [ { b : function f ( ){ } }, 1, 2 , 3 ],
+  //    /*58*/ [ new Error( 'msg' ), new Date( Date.UTC( 1990, 0, 0 ) ), 'test' ],
+  //    /*59*/ [ 1, [ 2, 3, 4 ], 2 ],
+  //    /*60*/ [ 1, [ '2', null, undefined, '4' ], 2 ],
+  //    /*61*/ [ [ 1, 2 ], 'string', { a : true, b : null }, undefined ],
+  //    /*62*/ [ [ 0, 1 ], 'test', { a : Symbol( ) }, undefined ],
+  //    /*63*/ [ 0, 'str', { a : Symbol( ) }, function test( ){ }, null ],
+  //    /*64*/ [ 0, 'str', { a : Symbol( ) }, function test( ){ }, true, new Date( Date.UTC( 1990, 0, 0 ) ) ],
+  //    /*65*/ [ [ 0, 1 ], 'test', { a : 'a' } ],
+  //    /*66*/ [ [ 1, 2 ], 'sample', { a : 'b' } ],
+  //    /*67*/ [ 11, 22, function routine( ){ }, { a : 'string' } ],
+  //    /*68*/ [ ['a', 100], ['b', 200] ],
+  //    /*69*/ [ ['aa', 300], ['bb', 400] ],
+  //    /*70*/ [ [ 1.00, 2.00 ], [ 3.00, 4.00], 'str sample' ],
+  //    /*71*/ [ '1', [ 2, 3, 4 ], '2' ],
+  //    /*72*/ [ '1', [ 2.00, 3.00, 4.00 ], '2' ],
+  //    /*73*/ [ 'o', [ 90, 80, 70 ], 'o' ],
+  //    /*74*/ [ 'o', 1, { a : true, b : undefined, c : null } ],
+  //    /*75*/ [ 'a', 2, { a : '\\true', b : true, c : null } ],
+  //    /*76*/ [ [ 'a', 1 ], new Error( 'err msg' ), new Date( Date.UTC( 1990, 0, 0 ) ) ],
+  //    /*77*/ [ [ 'a', 1 ], new Date( Date.UTC( 1999, 1, 1 ) ) ],
+  //    /*78*/ [ [ 1, 2, 3 ], 'a' ],
+  //
+  //  ],
+  //  options =
+  //  [
+  //    /*01*/ { },
+  //    /*02*/ { },
+  //    /*03*/ { },
+  //    /*04*/ { precision : 2, multiline : 1 },
+  //    /*05*/ { fixed : 2 },
+  //    /*06*/ { noArray : 1 },
+  //    /*07*/ { noAtomic : 1 },
+  //    /*08*/ { noArray : 1 },
+  //    /*09*/ { escaping : 1, levels : 2 },
+  //    /*10*/ { levels : 0 },
+  //    /*11*/ { levels : 2, noString : 1 },
+  //    /*12*/ { levels : 2, dtab : '-' },
+  //    /*13*/ { levels : 2, multiline : 1 },
+  //    /*14*/ { levels : 2, noNumber : 1 },
+  //    /*15*/ { levels : 2, colon : '->' },
+  //    /*16*/ { levels : 2, noObject : 1 },
+  //    /*17*/ { levels : 2, noNumber : 1 },
+  //    /*18*/ { levels : 2, noAtomic : 1 },
+  //    /*19*/ { levels : 2 },
+  //    /*20*/ { levels : 2, noRoutine : 1 },
+  //    /*21*/ { levels : 3, noSubObject : 1 },
+  //    /*22*/ { levels : 2, tab : '|', prependTab : 0 },
+  //    /*23*/ { levels : 2, noError : 1, noDate : 1 },
+  //    /*24*/ { levels : 2, noRoutine : 1, noSubObject : 1 },
+  //
+  //    /*25*/  { wrap : 0, comma : ' | ' },
+  //    /*26*/  { wrap : 0, noString : 1, noNumber: 1, comma : ', ' },
+  //    /*27*/  { wrap : 0, comma : ' ' },
+  //    /*28*/  { wrap : 0, prependTab : 0, comma : ', ' },
+  //    /*29*/  { wrap : 0, tab : '| ', dtab : '', comma : '. ' },
+  //    /*30*/  { wrap : 0, colon : '->', comma : '.' },
+  //    /*31*/  { wrap : 0, noRoutine : 1, comma : '. ' },
+  //    /*32*/  { wrap : 0, noAtomic : 1, comma : '. ' },
+  //    /*33*/  { wrap : 0, onlyRoutines : 1, comma : '| ' },
+  //    /*34*/  { wrap : 0, precision : 3, comma : '* ' },
+  //    /*35*/  { wrap : 0, fixed : 3, comma : ', ' },
+  //    /*36*/  { wrap : 0, multiline : 1, comma : '. ' },
+  //    /*37*/  { wrap : 0, escaping : 1, comma : '. ' },
+  //
+  //    /*38*/  { levels : 2, wrap : 0, comma : '- ' },
+  //    /*39*/  { levels : 2, wrap : 0, comma : '. '},
+  //    /*40*/  { levels : 2, wrap : 0, tab : '| ', dtab : '', comma : ', ' },
+  //    /*41*/  { levels : 2, wrap : 0, colon : ' - ', comma : '| ' },
+  //    /*42*/  { levels : 2, wrap : 0, prependTab : 0, comma : ', ' },
+  //    /*43*/  { levels : 2, wrap : 0, fixed : 1, comma : '* ' },
+  //    /*44*/  { levels : 2, wrap : 0, precision : 1, comma : ', ' },
+  //    /*45*/  { levels : 2, wrap : 0, multiline : 1, comma : '| ' },
+  //    /*46*/  { levels : 3, wrap : 0, escaping : 1, comma : '. ' },
+  //    /*47*/  { levels : 4, wrap : 0, escaping : 1, comma : ', ' },
+  //    /*48*/  { levels : 3, wrap : 0, noAtomic : 1, comma : ' , ' },
+  //    /*49*/  { levels : 2, wrap : 0, noSubObject : 1, noArray : 1, comma : ' ..' },
+  //    /*50*/  { levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '/ ' },
+  //
+  //    /*51*/  { levels : 3, wrap : 0, comma : '||' },
+  //    /*52*/  { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' },
+  //    /*53*/  { levels : 2, prependTab : 0, fixed : 2 },
+  //    /*54*/  { levels : 2, prependTab : 0, precision : 1 },
+  //    /*55*/  { levels : 2, multiline : 1, escaping : 1 },
+  //    /*56*/  { levels : 2, noRoutine : 1 },
+  //    /*57*/  { levels : 3, noRoutine : 1 },
+  //    /*58*/  { levels : 3, noError : 1, noDate : 1 },
+  //    /*59*/  { levels : 2, noArray : 1 },
+  //    /*60*/  { levels : 2, noNumber : 1, noString : 1 },
+  //    /*61*/  { levels : 2, noNumber : 1, noString : 1, noObject : 1 },
+  //    /*62*/  { levels : 3, noNumber : 1, noString : 1, noObject : 1 },
+  //    /*63*/  { levels : 2, noNumber : 1, noString : 1, noObject : 1, noRoutine : 1 },
+  //    /*64*/  { levels : 2, noNumber : 1, noString : 1, noObject : 1, noRoutine : 1, noDate : 1 },
+  //    /*65*/  { levels : 2, noNumber : 1, noString : 1, noSubObject : 1 },
+  //    /*66*/  { levels : 3, noNumber : 1, noString : 1, noSubObject : 1 },
+  //    /*67*/  { levels : 2, noNumber : 1, noString : 1, onlyRoutines : 1 },
+  //    /*68*/  { levels : 2, noString : 1, precision : 2 },
+  //    /*69*/  { levels : 3, noString : 1, precision : 3 },
+  //    /*70*/  { levels : 2, noString : 1, fixed : 3 },
+  //    /*71*/  { levels : 2, noString : 1, noNumber : 1, precision : 1 },
+  //    /*72*/  { levels : 2, noString : 1, noNumber : 1, fixed : 1 },
+  //    /*73*/  { levels : 3, noString : 1, noNumber : 1, precision : 1 },
+  //    /*74*/  { levels : 2, noString : 1, noNumber : 1, multiline : 1 },
+  //    /*75*/  { levels : 2, noString : 1, noNumber : 1, multiline : 1, escaping : 1 },
+  //    /*76*/  { levels : 2, noString : 1, noNumber : 1, noError : 1 },
+  //    /*77*/  { levels : 2, noString : 1, noNumber : 1, tab : '|', prependTab : 0 },
+  //    /*78*/  { levels : 3, noAtomic : 1, noNumber : 0 },
+  //
+  //
+  //  ],
+  //  expected =
+  //  [
+  //    /*01*/ '[ 1, 2, 3 ]',
+  //    /*02*/
+  //    [
+  //      '[',
+  //      '  {- Object with 1 elements -}, ',
+  //      '  {- Object with 1 elements -}',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*03*/ '[ [ routine without name ], [ routine add ] ]',
+  //    /*04*/
+  //    [
+  //      '[',
+  //      '  1.0e+3, ',
+  //      '  2.0e+3, ',
+  //      '  3.0e+3',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*05*/ '[ 1.11, 2.22, 3.33 ]',
+  //
+  //    /*06*/ '',
+  //
+  //
+  //    /*07*/
+  //    [
+  //      '[',
+  //      '  {- Object with 1 elements -}',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*08*/ '',
+  //
+  //
+  //    /*09*/ '[ \'\\n\\nEscaping test\' ]',
+  //
+  //    /*10*/ '{- Array with 3 elements -}',
+  //    /*11*/ '[ 1, 2, 3 ]',
+  //    /*12*/
+  //    [
+  //      '[',
+  //      '-{ x : 1 }, ',
+  //      '-{ y : 2 }',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*13*/
+  //    [
+  //      '[',
+  //      '  1, ',
+  //      '  [',
+  //      '    2, ',
+  //      '    3, ',
+  //      '    4',
+  //      '  ], ',
+  //      '  5',
+  //      ']',
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*14*/
+  //    [
+  //      '[',
+  //      '  []',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*15*/
+  //    [
+  //      '[',
+  //      '  { k->3 }, ',
+  //      '  { l->4 }',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*16*/
+  //    [
+  //
+  //      '[ 1, 5 ]'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*17*/
+  //    [
+  //      '[',
+  //      '  {}',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*18*/
+  //    [
+  //      '[',
+  //      '  {}',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*19*/ '[ [ routine f1 ], [ routine without name ] ]',
+  //    /*20*/ '[]',
+  //    /*21*/
+  //    [
+  //      '[',
+  //      '  {}',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*22*/
+  //    [
+  //      '[',
+  //      '|  { c : 1 }, ',
+  //      '|  { d : 2 }',
+  //      '|]',
+  //    ].join( '\n' ),
+  //
+  //    /*23*/
+  //    [
+  //      '[',
+  //      '  { d : 2 }',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*24*/
+  //    [
+  //      '[',
+  //      '  { d : 3 }, ',
+  //      '  15',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*25*/
+  //    [
+  //      '  {- Array with 3 elements -} | ',
+  //      '  {- Array with 3 elements -}',
+  //    ].join( '\n' ),
+  //
+  //    /*26*/
+  //    [
+  //      '  undefined, false',
+  //    ].join( '\n' ),
+  //
+  //    /*27*/
+  //    '  \'e\' \'e\' \'e\'',
+  //
+  //    /*28*/
+  //    '  \'a\', \'b\', \'c\', 1, 2, 3',
+  //    /*29*/
+  //    '| 15. 16. 17. 18',
+  //    /*30*/
+  //    '  {- Object with 3 elements -}',
+  //    /*31*/
+  //    '  \'a\'. 1. false',
+  //    /*32*/
+  //    '  [ routine without name ]',
+  //    /*33*/
+  //    '',
+  //    /*34*/
+  //    '  \'a\'* 1.00e+3* 2.00e+3* 3.00e+3',
+  //
+  //    /*35*/
+  //    '  1.111, 2.222, 3.333',
+  //    /*36*/
+  //    [
+  //      '  7. ',
+  //      '  {- Object with 1 elements -}. ',
+  //      '  1. ',
+  //      '  \'x\'',
+  //    ].join( '\n' ),
+  //
+  //    /*37*/
+  //    '  \'\\n\\nEscaping & wrap test\'',
+  //
+  //    /*38*/
+  //    [
+  //      '  0- ',
+  //      '    1- 2- 3- 4- ',
+  //      '  5- ',
+  //      '  a : 6',
+  //    ].join( '\n' ),
+  //
+  //    /*39*/
+  //    [
+  //      '    \'a\'. \'b\'. \'c\'. ',
+  //      '  \'d\'. ',
+  //      '  \'e\''
+  //    ].join( '\n' ),
+  //
+  //    /*40*/
+  //    [
+  //      '| a : 0, ',
+  //      '| b : 1, ',
+  //      '| 2, 3'
+  //    ].join( '\n' ),
+  //
+  //    /*41*/
+  //    [
+  //      '  a - \'a\'| b - \'b\'| c - \'c\''
+  //    ].join( '\n' ),
+  //
+  //    /*42*/
+  //    [
+  //      '  \'a\', ',
+  //      '  7, ',
+  //      '  u : 2, ',
+  //      '  8, ',
+  //      '  \'b\'',
+  //    ].join( '\n' ),
+  //
+  //    /*43*/
+  //    [
+  //      '  0.1* 0.2* 0.3',
+  //    ].join( '\n' ),
+  //
+  //    /*44*/
+  //    [
+  //      '  \'x\', 2e+3, 3e+3, 4e+3',
+  //    ].join( '\n' ),
+  //
+  //    /*45*/
+  //    [
+  //      '  0| ',
+  //      '    b : 1| ',
+  //      '  3',
+  //    ].join( '\n' ),
+  //
+  //    /*46*/
+  //    [
+  //      '    a : \'\\na\'. ',
+  //      '    b : d : \'\\ntrue\'',
+  //    ].join( '\n' ),
+  //
+  //    /*47*/
+  //    [
+  //      '    x : \'\\na\', ',
+  //      '    y : z : \'\\ntrue\'',
+  //    ].join( '\n' ),
+  //
+  //    /*48*/
+  //    [
+  //      '',
+  //    ].join( '\n' ),
+  //
+  //    /*49*/
+  //    [
+  //      '',
+  //    ].join( '\n' ),
+  //
+  //    /*50*/
+  //    [
+  //      '    true'
+  //    ].join( '\n' ),
+  //
+  ////[ { a : 'string' }, [ true ], 1 ],
+  ////{ levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '/ ' },
+  //
+  //    /*51*/ // !!! please move to toStrUnwrapped
+  //    [
+  //      '    5||',
+  //      '    4||',
+  //      '      3||',
+  //      '    2||1||0',
+  //    ].join( '\n' ),
+  //
+  //    /*52*/
+  //    [
+  //      '  |  a->0, , ',
+  //      '  |  b->1, , ',
+  //      '  |    2, , 3',
+  //    ].join( '\n' ),
+  //
+  //    /*53*/
+  //    [
+  //      '[',
+  //      '  [ 1.10, 1.20 ], ',
+  //      '  [ 2.00, 3.00 ]',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*54*/
+  //    [
+  //      '[',
+  //      '  9e+3, ',
+  //      '  [ 8e+3, 6e+3 ], ',
+  //      '  7e+3',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*55*/
+  //    [
+  //      '[',
+  //      '  {',
+  //      '    a : \'\\\\test\'',
+  //      '  }, ',
+  //      '  {',
+  //      '    b : \'\\ntest\'',
+  //      '  }, ',
+  //      '  {',
+  //      '    c : \'test\'',
+  //      '  }',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*56*/
+  //    [
+  //      '[',
+  //      '  {}, ',
+  //      '  0, ',
+  //      '  1, ',
+  //      '  \'a\'',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*57*/
+  //    [
+  //      '[',
+  //      '  {}, ',
+  //      '  1, ',
+  //      '  2, ',
+  //      '  3',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*58*/
+  //    [
+  //      '[ \'test\' ]',
+  //    ].join( '\n' ),
+  //
+  //    /*59*/
+  //     '',
+  //
+  //    /*60*/
+  //
+  //    [ '[',
+  //      '  [ null, undefined ]',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*61*/
+  //
+  //    [ '[',
+  //      '  [], ',
+  //      '  undefined',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*62*/
+  //
+  //    [ '[',
+  //      '  [], ',
+  //      '  undefined',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*63*/
+  //
+  //    [
+  //      '[ null ]',
+  //    ].join( '\n' ),
+  //
+  //    /*64*/
+  //
+  //    [
+  //      '[ true ]',
+  //    ].join( '\n' ),
+  //
+  //    /*65*/
+  //
+  //    [ '[',
+  //      '  [], ',
+  //      '  {}',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*66*/
+  //
+  //    [ '[',
+  //      '  [], ',
+  //      '  {}',
+  //      ']',
+  //    ].join( '\n' ),
+  //
+  //    /*67*/
+  //
+  //    [
+  //      ''
+  //    ].join( '\n' ),
+  //
+  //    /*68*/
+  //
+  //    [
+  //      '[',
+  //      '  [ 1.0e+2 ], ',
+  //      '  [ 2.0e+2 ]',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*69*/
+  //
+  //    [
+  //      '[',
+  //      '  [ 300 ], ',
+  //      '  [ 400 ]',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*70*/
+  //
+  //    [
+  //      '[',
+  //      '  [ 1.000, 2.000 ], ',
+  //      '  [ 3.000, 4.000 ]',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*71*/
+  //
+  //    [
+  //      '[',
+  //      '  []',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*72*/
+  //
+  //    [
+  //      '[',
+  //      '  []',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*73*/
+  //
+  //    [
+  //      '[',
+  //      '  []',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*74*/
+  //
+  //    [
+  //      '[',
+  //      '  {',
+  //      '    a : true, ',
+  //      '    b : undefined, ',
+  //      '    c : null',
+  //      '  }',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*75*/
+  //
+  //    [
+  //      '[',
+  //      '  {',
+  //      '    b : true, ',
+  //      '    c : null',
+  //      '  }',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*76*/
+  //
+  //    [
+  //      '[',
+  //      '  [], ',
+  //      '  1989-12-31T00:00:00.000Z',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //    /*77*/
+  //
+  //    [
+  //      '[',
+  //      '|  [], ',
+  //      '|  1999-02-01T00:00:00.000Z',
+  //      '|]'
+  //    ].join( '\n' ),
+  //
+  //    /*78*/
+  //
+  //    [
+  //      '[',
+  //      '  []',
+  //      ']'
+  //    ].join( '\n' ),
+  //
+  //
+  //  ];
+  //
+  //  testFunction( test, desc, src, options, expected );
+
+  test.case = 'trivial array';
+  var src = [ 1, 2, 3 ];
+  var got = _.toStr( src, { } );
+  var expected = '[ 1, 2, 3 ]';
+  test.identical( got, expected );
+
+  test.case = 'array of objects';
+  var src = [ { a : 1 }, { b : 2 } ];
+  var got = _.toStr( src, { } );
+  var expected =
+      ['[',
+       '  {- Object with 1 elements -}, ',
+       '  {- Object with 1 elements -}',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array of functions';
+  var src = [ function( ){ }, function add( ){ } ];
+  var got = _.toStr( src, { } );
+  var expected = '[ [ routine without name ], [ routine add ] ]';
+  test.identical( got, expected );
+
+  test.case = 'array of integers, precision 2 multiline';
+  var src = [ 1000, 2000, 3000 ];
+  var got = _.toStr( src, { precision : 2, multiline : 1 } );
+  var expected =
+      ['[',
+       '  1.0e+3, ',
+       '  2.0e+3, ',
+       '  3.0e+3',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array of floats, fixed 2';
+  var src = [ 1.1111, 2.2222, 3.3333 ];
+  var got = _.toStr( src, { fixed : 2 } );
+  var expected = '[ 1.11, 2.22, 3.33 ]';
+  test.identical( got, expected );
+
+  test.case = 'array, noArray';
+  var src = [ 0, 1, 2 ];
+  var got = _.toStr( src, { noArray : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'array with object, noAtomic';
+  var src = [  7, { v : 0 }, 1, 'x' ];
+  var got = _.toStr( src, { noAtomic : 1 } );
+  var expected =
+      ['[',
+       '  {- Object with 1 elements -}',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array, noArray';
+  var src = [ 'e', 'e', 'e' ];
+  var got = _.toStr( src, { noArray : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'array, escaping';
+  var src = [ '\n\nEscaping test' ];
+  var got = _.toStr( src, { escaping : 1, levels : 2 } );
+  var expected = '[ \'\\n\\nEscaping test\' ]';
+  test.identical( got, expected );
+
+  test.case = 'default array, levels 0';
+  var src = [ 0, 1, 2 ];
+  var got = _.toStr( src, { levels : 0 } );
+  var expected = '{- Array with 3 elements -}';
+  test.identical( got, expected );
+
+  test.case = 'default array, noSring levels 2';
+  var src = [ 'a', 'b', 'c', 1, 2, 3 ];
+  var got = _.toStr( src, { levels : 2, noString : 1 } );
+  var expected = '[ 1, 2, 3 ]';
+  test.identical( got, expected );
+
+  test.case = 'array with objects, levels 2';
+  var src = [ { x : 1 }, { y : 2 } ];
+  var got = _.toStr( src, { levels : 2, dtab : '-' } );
+  var expected =
+      ['[',
+       '-{ x : 1 }, ',
+       '-{ y : 2 }',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested array';
+  var src = [ 1, [ 2, 3, 4 ], 5 ];
+  var got = _.toStr( src, { levels : 2, multiline : 1 } );
+  var expected =
+      ['[',
+       '  1, ',
+       '  [',
+       '    2, ',
+       '    3, ',
+       '    4',
+       '  ], ',
+       '  5',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested array, noNumber';
+  var src = [ 6, [ 7, 8, 9 ], 10 ];
+  var got = _.toStr( src, { levels : 2, noNumber : 1 } );
+  var expected =
+      ['[',
+       '  []',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array of object, modified colon levels 2';
+  var src = [ { k : 3 }, { l : 4 } ];
+  var got = _.toStr( src, { levels : 2, colon : '->' } );
+  var expected =
+      ['[',
+       '  { k->3 }, ',
+       '  { l->4 }',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array with object, noObject';
+  var src = [ 1, { a : 2 }, 5 ];
+  var got = _.toStr( src, { levels : 2, noObject : 1 } );
+  var expected = '[ 1, 5 ]';
+  test.identical( got, expected );
+
+  test.case = 'array with object, noNumber';
+  var src = [ 0, { b : 1 }, 3 ];
+  var got = _.toStr( src, { levels : 2, noNumber : 1 } );
+  var expected =
+      [
+       '[',
+       '  {}',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array with object, noAtomic';
+  var src = [ 'a', 7, { u : 2 }, 8, 'b' ];
+  var got = _.toStr( src, { levels : 2, noAtomic : 1 } );
+  var expected =
+      [
+       '[',
+       '  {}',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array of functions, levels 2';
+  var src = [ function f1( ){ }, function( ){ } ];
+  var got = _.toStr( src, { levels : 2 } );
+  var expected = '[ [ routine f1 ], [ routine without name ] ]';
+  test.identical( got, expected );
+
+  test.case = 'array of functions, noRoutine';
+  var src = [ function f2( ){ }, function f3( ){ } ];
+  var got = _.toStr( src, { levels : 2, noRoutine : 1 } );
+  var expected = '[]';
+  test.identical( got, expected );
+
+  test.case = 'array of nested object, noSubObject';
+  var src = [ { a : { a : '1' } } ];
+  var got = _.toStr( src, { levels : 3, noSubObject : 1 } );
+  var expected =
+      ['[',
+       '  {}',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array of objects, prependTab 0';
+  var src = [ { c : 1 }, { d : 2 } ];
+  var got = _.toStr( src, { levels : 2, tab : '|', prependTab : 0 } );
+  var expected =
+      ['[',
+       '|  { c : 1 }, ',
+       '|  { d : 2 }',
+       '|]',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array of date, object and error. noError noDate';
+  var src = [ new Date( Date.UTC( 1993, 12, 12 ) ), { d : 2 }, new Error( 'error' ) ];
+  var got = _.toStr( src, { levels : 2, noError : 1, noDate : 1 } );
+  var expected =
+      ['[',
+       '  { d : 2 }',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array with routine and object, noRoutine noSubObject';
+  var src = [ function ff( ){ }, { d : 3 }, 15 ];
+  var got = _.toStr( src, { levels : 2, noRoutine : 1, noSubObject : 1 } );
+  var expected =
+      ['[',
+       '  { d : 3 }, ',
+       '  15',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested arrays, wrap 0';
+  var src = [ [ 1, 2, 3 ], [ 4, 5, 6 ] ];
+  var got = _.toStr( src, { wrap : 0, comma : ' | ' } );
+  var expected =
+      ['  {- Array with 3 elements -} | ',
+       '  {- Array with 3 elements -}',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested arrays, noString noNumber wrap 0';
+  var src = [ [ 1, 2, 3 ], [ '4, 5, 6' ], undefined, false ];
+  var got = _.toStr( src, { wrap : 0, noString : 1, noNumber: 1, comma : ', ' } );
+  var expected = '  undefined, false';
+  test.identical( got, expected );
+
+  test.case = 'array, wrap 0';
+  var src = [ 'e', 'e', 'e' ];
+  var got = _.toStr( src, { wrap : 0, comma : ' ' } );
+  var expected = '  \'e\' \'e\' \'e\'';
+  test.identical( got, expected );
+
+  test.case = 'array, wrap 0 prependTab 0';
+  var src = [ 'a', 'b', 'c', 1, 2, 3 ];
+  var got = _.toStr( src, { wrap : 0, prependTab : 0, comma : ', ' } );
+  var expected = '  \'a\', \'b\', \'c\', 1, 2, 3';
+  test.identical( got, expected );
+
+  test.case = 'array, wrap 0 modified tab';
+  var src = [ 15, 16, 17, 18 ];
+  var got = _.toStr( src, { wrap : 0, tab : '| ', dtab : '', comma : '. ' } );
+  var expected = '| 15. 16. 17. 18';
+  test.identical( got, expected );
+
+  test.case = 'array of an object, wrap 0';
+  var src = [ { a : 5, b : 6, c : 7 } ];
+  var got = _.toStr( src, { wrap : 0, colon : '->', comma : '.' } );
+  var expected = '  {- Object with 3 elements -}';
+  test.identical( got, expected );
+
+  test.case = 'array with a function, noRoutine';
+  var src = [ 'a', 1, function( ) { }, false ];
+  var got = _.toStr( src, { wrap : 0, noRoutine : 1, comma : '. ' } );
+  var expected = '  \'a\'. 1. false';
+  test.identical( got, expected );
+
+  test.case = 'array with function, noAtomic';
+  var src = [ 'b', 2, function( ) { }, true ];
+  var got = _.toStr( src, { wrap : 0, noAtomic : 1, comma : '. ' } );
+  var expected = '  [ routine without name ]';
+  test.identical( got, expected );
+
+  test.case = 'array with a function, onlyRoutines';
+  var src = [ function( ) { } ];
+  var got = _.toStr( src, { wrap : 0, onlyRoutines : 1, comma : '| ' } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'array, precision 3';
+  var src = [ 'a', 1000, 2000, 3000 ];
+  var got = _.toStr( src, { wrap : 0, precision : 3, comma : '* ' } );
+  var expected = '  \'a\'* 1.00e+3* 2.00e+3* 3.00e+3';
+  test.identical( got, expected );
+
+  test.case = 'array, fixed 3';
+  var src = [ 1.1111, 2.2222, 3.3333 ];
+  var got = _.toStr( src, { wrap : 0, fixed : 3, comma : ', ' } );
+  var expected = '  1.111, 2.222, 3.333';
+  test.identical( got, expected );
+
+  test.case = 'array, multiline';
+  var src = [  7, { v : 0 }, 1, 'x' ];
+  var got = _.toStr( src, { wrap : 0, multiline : 1, comma : '. ' } );
+  var expected =
+      ['  7. ',
+       '  {- Object with 1 elements -}. ',
+       '  1. ',
+       '  \'x\'',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array, escaping wrap 0';
+  var src = [ '\n\nEscaping & wrap test' ];
+  var got = _.toStr( src, { wrap : 0, escaping : 1, comma : '. ' } );
+  var expected = '  \'\\n\\nEscaping & wrap test\'';
+  test.identical( got, expected );
+
+  test.case = 'nested array, levels 2 wrap 0';
+  var src = [ 0, [ 1, 2, 3, 4 ], 5, { a : 6 } ];
+  var got = _.toStr( src, { levels : 2, wrap : 0, comma : '- ' } );
+  var expected =
+      ['  0- ',
+       '    1- 2- 3- 4- ',
+       '  5- ',
+       '  a : 6',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested array, levels 2 wrap 0';
+  var src = [ ['a', 'b', 'c'], 'd', 'e' ];
+  var got = _.toStr( src, { levels : 2, wrap : 0, comma : '. '} );
+  var expected =
+      ['    \'a\'. \'b\'. \'c\'. ',
+       '  \'d\'. ',
+       '  \'e\''
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array of objects, wrap 0 modified tab';
+  var src = [ { a : 0 }, { b : 1 }, [ 2, 3 ] ];
+  var got = _.toStr( src, { levels : 2, wrap : 0, tab : '| ', dtab : '', comma : ', ' } );
+  var expected =
+      ['| a : 0, ',
+       '| b : 1, ',
+       '| 2, 3'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array of an object';
+  var src = [ { a : 'a', b : 'b', c : 'c' } ];
+  var got = _.toStr( src, { levels : 2, wrap : 0, colon : ' - ', comma : '| ' } );
+  var expected = '  a - \'a\'| b - \'b\'| c - \'c\'';
+  test.identical( got, expected );
+
+  test.case = 'array, levels 2';
+  var src = [ 'a', 7, { u : 2 }, 8, 'b' ];
+  var got = _.toStr( src, { levels : 2, wrap : 0, prependTab : 0, comma : ', ' } );
+  var expected =
+      ['  \'a\', ',
+       '  7, ',
+       '  u : 2, ',
+       '  8, ',
+       '  \'b\'',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array, fixed 1';
+  var src = [ 0.1111, 0.2222, 0.3333 ];
+  var got = _.toStr( src, { levels : 2, wrap : 0, fixed : 1, comma : '* ' } );
+  var expected = '  0.1* 0.2* 0.3';
+  test.identical( got, expected );
+
+  test.case = 'array, precision 1 levels 2';
+  var src = [ 'x', 2000, 3000, 4000 ];
+  var got = _.toStr( src, { levels : 2, wrap : 0, precision : 1, comma : ', ' } );
+  var expected = '  \'x\', 2e+3, 3e+3, 4e+3';
+  test.identical( got, expected );
+
+  test.case = 'array, multiline';
+  var src = [ 0, { b : 1 }, 3 ];
+  var got = _.toStr( src, { levels : 2, wrap : 0, multiline : 1, comma : '| ' } );
+  var expected =
+      ['  0| ',
+       '    b : 1| ',
+       '  3',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array of nested objects, escaping';
+  var src = [ { a : '\na', b : { d : '\ntrue' } } ];
+  var got = _.toStr( src, { levels : 3, wrap : 0, escaping : 1, comma : '. ' } );
+  var expected =
+      ['    a : \'\\na\'. ',
+       '    b : d : \'\\ntrue\'',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array of nested objects, escaping';
+  var src = [ { x : '\na', y : { z : '\ntrue' } } ];
+  var got = _.toStr( src, { levels : 4, wrap : 0, escaping : 1, comma : ', ' } );
+  var expected =
+      ['    x : \'\\na\', ',
+       '    y : z : \'\\ntrue\'',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array, noAtomic wrap 0';
+  var src = [ 1, { a : 2 }, '03' ];
+  var got = _.toStr( src, { levels : 3, wrap : 0, noAtomic : 1, comma : ' , ' } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'array, noArray wrap 0';
+  var src = [ 0, [ 1, 2, 3, 4 ], 5, { a : 6 } ];
+  var got = _.toStr( src, { levels : 2, wrap : 0, noSubObject : 1, noArray : 1, comma : ' ..' } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'array, wrap 0 noSring noNumber';
+  var src = [ { a : 'string' }, [ true ], 1 ];
+  var got = _.toStr( src, { levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '/ ' } );
+  var expected = '    true';
+  test.identical( got, expected );
+
+  test.case = 'nested arrays, wrap 0 modified comma';
+  var src = [ [ 5, 4, [ 3 ] ], [ 2, 1, 0 ] ];
+  var got = _.toStr( src, { levels : 3, wrap : 0, comma : '||' } );
+  var expected =
+      ['    5||',
+       '    4||',
+       '      3||',
+       '    2||1||0',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array of objects';
+  var src = [ { a : 0 }, { b : 1 }, [ 2, 3 ] ];
+  var got = _.toStr( src, { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' } );
+  var expected =
+      ['  |  a->0, , ',
+       '  |  b->1, , ',
+       '  |    2, , 3',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested arrays, prependTab 0 fixed 2';
+  var src = [ [ 1.100, 1.200 ], [ 2, 3 ] ];
+  var got = _.toStr( src, { levels : 2, prependTab : 0, fixed : 2 } );
+  var expected =
+      ['[',
+       '  [ 1.10, 1.20 ], ',
+       '  [ 2.00, 3.00 ]',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array, precision 1';
+  var src = [ 9000, [ 8000, 6000], 7000 ];
+  var got = _.toStr( src, { levels : 2, prependTab : 0, precision : 1 } );
+  var expected =
+      ['[',
+       '  9e+3, ',
+       '  [ 8e+3, 6e+3 ], ',
+       '  7e+3',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array of objects, multiline escaping';
+  var src = [ { a : '\\test' }, { b : '\ntest' }, { c : 'test' } ];
+  var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
+  var expected =
+      ['[',
+       '  {',
+       '    a : \'\\\\test\'',
+       '  }, ',
+       '  {',
+       '    b : \'\\ntest\'',
+       '  }, ',
+       '  {',
+       '    c : \'test\'',
+       '  }',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array with a func inside an object, noRoutine';
+  var src = [ { a : function func ( ){ } }, 0, 1, 'a' ];
+  var got = _.toStr( src, { levels : 2, noRoutine : 1 } );
+  var expected =
+      ['[',
+       '  {}, ',
+       '  0, ',
+       '  1, ',
+       '  \'a\'',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array with a func inside an object, noRoutine';
+  var src = [ { b : function f ( ){ } }, 1, 2 , 3 ];
+  var got = _.toStr( src, { levels : 3, noRoutine : 1 } );
+  var expected =
+      ['[',
+       '  {}, ',
+       '  1, ',
+       '  2, ',
+       '  3',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array with error and date, noError noDate';
+  var src = [ new Error( 'msg' ), new Date( Date.UTC( 1990, 0, 0 ) ), 'test' ];
+  var got = _.toStr( src, { levels : 3, noError : 1, noDate : 1 } );
+  var expected = '[ \'test\' ]';
+  test.identical( got, expected );
+
+  test.case = 'nested arrays, noArray';
+  var src = [ 1, [ 2, 3, 4 ], 2 ];
+  var got = _.toStr( src, { levels : 2, noArray : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'nested array, noNumber';
+  var src = [ 1, [ '2', null, undefined, '4' ], 2 ];
+  var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1 } );
+  var expected =
+      [ '[',
+       '  [ null, undefined ]',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array, noObject noNumber noString';
+  var src = [ [ 1, 2 ], 'string', { a : true, b : null }, undefined ];
+  var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, noObject : 1 } );
+  var expected =
+      [ '[',
+       '  [], ',
+       '  undefined',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array, noObject noNumber noString';
+  var src = [ [ 0, 1 ], 'test', { a : Symbol( ) }, undefined ];
+  var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1, noObject : 1 } );
+  var expected =
+      [ '[',
+       '  [], ',
+       '  undefined',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array, noObject noNumber noString noRoutine';
+  var src = [ 0, 'str', { a : Symbol( ) }, function test( ){ }, null ];
+  var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, noObject : 1, noRoutine : 1 } );
+  var expected = '[ null ]';
+  test.identical( got, expected );
+
+  test.case = 'array, noObject noNumber noString noRoutine noDate';
+  var src = [ 0, 'str', { a : Symbol( ) }, function test( ){ }, true, new Date( Date.UTC( 1990, 0, 0 ) ) ];
+  var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, noObject : 1, noRoutine : 1, noDate : 1 } );
+  var expected = '[ true ]';
+  test.identical( got, expected );
+
+  test.case = 'array with object, noSubObject noNumber noSring';
+  var src = [ [ 0, 1 ], 'test', { a : 'a' } ];
+  var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, noSubObject : 1 } );
+  var expected =
+      [ '[',
+       '  [], ',
+       '  {}',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array with object, noSubObject noNumber noSring';
+  var src = [ [ 1, 2 ], 'sample', { a : 'b' } ];
+  var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1, noSubObject : 1 } );
+  var expected =
+      [ '[',
+       '  [], ',
+       '  {}',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array with function, onlyRoutines';
+  var src = [ 11, 22, function routine( ){ }, { a : 'string' } ];
+  var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, onlyRoutines : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'nested arrays, noSring precision 2';
+  var src = [ ['a', 100], ['b', 200] ];
+  var got = _.toStr( src, { levels : 2, noString : 1, precision : 2 } );
+  var expected =
+      ['[',
+       '  [ 1.0e+2 ], ',
+       '  [ 2.0e+2 ]',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested arrays, noSring precision 3';
+  var src = [ ['aa', 300], ['bb', 400] ];
+  var got = _.toStr( src, { levels : 3, noString : 1, precision : 3 } );
+  var expected =
+      ['[',
+       '  [ 300 ], ',
+       '  [ 400 ]',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested arrays, noSring fixed 3';
+  var src = [ [ 1.00, 2.00 ], [ 3.00, 4.00], 'str sample' ];
+  var got = _.toStr( src, { levels : 2, noString : 1, fixed : 3 } );
+  var expected =
+      ['[',
+       '  [ 1.000, 2.000 ], ',
+       '  [ 3.000, 4.000 ]',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested array, noString noNumber precision';
+  var src = [ '1', [ 2, 3, 4 ], '2' ];
+  var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, precision : 1 } );
+  var expected =
+      ['[',
+       '  []',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested arrays, noNumber noString fixed 1';
+  var src = [ '1', [ 2.00, 3.00, 4.00 ], '2' ];
+  var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, fixed : 1 } );
+  var expected =
+      ['[',
+       '  []',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested arrays, noNumber noString precision 1';
+  var src = [ 'o', [ 90, 80, 70 ], 'o' ];
+  var got = _.toStr( src, { levels : 3, noString : 1, noNumber : 1, precision : 1 } );
+  var expected =
+      ['[',
+       '  []',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array with an object,noSring noNumber multiline';
+  var src = [ 'o', 1, { a : true, b : undefined, c : null } ];
+  var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, multiline : 1 } );
+  var expected =
+      ['[',
+       '  {',
+       '    a : true, ',
+       '    b : undefined, ',
+       '    c : null',
+       '  }',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array with object, escaping';
+  var src = [ 'a', 2, { a : '\\true', b : true, c : null } ];
+  var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, multiline : 1, escaping : 1 } );
+  var expected =
+      ['[',
+       '  {',
+       '    b : true, ',
+       '    c : null',
+       '  }',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array, noError';
+  var src = [ [ 'a', 1 ], new Error( 'err msg' ), new Date( Date.UTC( 1990, 0, 0 ) ) ];
+  var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, noError : 1 } );
+  var expected =
+      ['[',
+       '  [], ',
+       '  1989-12-31T00:00:00.000Z',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'array with a date, modified tab';
+  var src = [ [ 'a', 1 ], new Date( Date.UTC( 1999, 1, 1 ) ) ];
+  var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, tab : '|', prependTab : 0 } );
+  var expected =
+      ['[',
+       '|  [], ',
+       '|  1999-02-01T00:00:00.000Z',
+       '|]'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested array';
+  var src = [ [ 1, 2, 3 ], 'a' ];
+  var got = _.toStr( src, { levels : 3, noAtomic : 1, noNumber : 0 } );
+  var expected =
+      ['[',
+       '  []',
+       ']'
+      ].join( '\n' );
+  test.identical( got, expected );
+
 }
 
 //
