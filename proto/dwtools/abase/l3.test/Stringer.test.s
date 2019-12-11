@@ -3823,126 +3823,236 @@ function toStrThrow( test )
 
 function toStrLimitElements( test )
 {
-  var desc = 'limitElementsNumber options test',
-  src =
-  [
-  //Arrays
-  /*01*/[ 1, 2 , 3, 4, 5 ],
-  /*02*/[ 1, 2 , '3', 4, 5 ],
-  /*03*/[ 1, 2 , '3', 4, 5 ],
-  /*04*/[ 1, 2 , '3', 4, 5 ],
-  /*05*/[ 1, 2 , '3', 4, 5 ],
-  /*06*/[ 1, 2 , '3', 4, { a : '1'  }, '5', '6' ],
-  /*07*/[ 1, 2 , '3', 4, { a : '1'  }, '5', '6' ],
+  //  var desc = 'limitElementsNumber options test',
+  //  src =
+  //  [
+  //  //Arrays
+  //  /*01*/[ 1, 2 , 3, 4, 5 ],
+  //  /*02*/[ 1, 2 , '3', 4, 5 ],
+  //  /*03*/[ 1, 2 , '3', 4, 5 ],
+  //  /*04*/[ 1, 2 , '3', 4, 5 ],
+  //  /*05*/[ 1, 2 , '3', 4, 5 ],
+  //  /*06*/[ 1, 2 , '3', 4, { a : '1'  }, '5', '6' ],
+  //  /*07*/[ 1, 2 , '3', 4, { a : '1'  }, '5', '6' ],
+  //
+  //  //Objects
+  //  /*08*/{ a : 1, b : 2, c : 3, d : 4 },
+  //  /*09*/{ a : 1, b : function n( ){ }, c : { a : '1' }, d : 4 },
+  //  /*10*/{ a : 1, b : undefined, c : { a : '1' }, d : 4 },
+  //  /*11*/{ a : 1, b : 2, c : { a : 1, b : '2' }, d : 3 },
+  //
+  //
+  //  ],
+  //  options =
+  //  [
+  //  //Arrays
+  //  /*01*/{ limitElementsNumber : 2 },
+  //  /*02*/{ limitElementsNumber : 3, noString : 1 },
+  //  /*03*/{ limitElementsNumber : 2, noNumber : 1 },
+  //  /*04*/{ limitElementsNumber : 5, noArray : 1 },
+  //  /*05*/{ limitElementsNumber : 2, multiline : 1 },
+  //  /*06*/{ levels : 2, limitElementsNumber : 3, noNumber : 1, multiline : 1 },
+  //  /*07*/{ levels : 2, limitElementsNumber : 3, noNumber : 1, multiline : 1, wrap : 0, comma : ', '  },
+  //
+  //  //Objects
+  //  /*08*/{ limitElementsNumber : 2 },
+  //  /*09*/{ limitElementsNumber : 2, levels : 2,  noRoutine : 1, noString : 1 },
+  //  /*10*/{ limitElementsNumber : 2, multiline : 1, noString : 1 },
+  //  /*11*/{ limitElementsNumber : 4, wrap : 0, comma : ', ' },
+  //
+  //
+  //
+  //
+  //  ],
+  //  expected =
+  //  [
+  //  //Arrays
+  //  /*01*/'[ 1, 2, [ ... other 3 element(s) ] ]',
+  //  /*02*/'[ 1, 2, 4, [ ... other 1 element(s) ] ]',
+  //  /*03*/'[ \'3\' ]',
+  //  /*04*/'',
+  //  /*05*/
+  //  [
+  //    '[',
+  //    '  1, ',
+  //    '  2, ',
+  //    '  [ ... other 3 element(s) ]',
+  //    ']',
+  //  ].join( '\n' ),
+  //
+  //  /*06*/
+  //  [
+  //    '[',
+  //    '  \'3\', ',
+  //    '  {',
+  //    '    a : \'1\'',
+  //    '  }, ',
+  //    '  \'5\', ',
+  //    '  [ ... other 1 element(s) ]',
+  //    ']',
+  //  ].join( '\n' ),
+  //
+  //  /*07*/
+  //  [
+  //    '  \'3\', ',
+  //    '    a : \'1\', ',
+  //    '  \'5\', ',
+  //    '  [ ... other 1 element(s) ]',
+  //
+  //  ].join( '\n' ),
+  //
+  //  //Objects
+  //  /*08*/
+  //  [
+  //    '{',
+  //    '  a : 1, ',
+  //    '  b : 2, ',
+  //    '  [ ... other 2 element(s) ]',
+  //    '}',
+  //
+  //  ].join( '\n' ),
+  //
+  //  /*09*/
+  //  [
+  //    '{',
+  //    '  a : 1, ',
+  //    '  c : {}, ',
+  //    '  [ ... other 1 element(s) ]',
+  //    '}',
+  //
+  //  ].join( '\n' ),
+  //
+  //  /*10*/
+  //  [
+  //    '{',
+  //    '  a : 1, ',
+  //    '  b : undefined, ',
+  //    '  [ ... other 2 element(s) ]',
+  //    '}',
+  //
+  //  ].join( '\n' ),
+  //
+  //  /*11*/
+  //  [
+  //    '  a : 1, ',
+  //    '  b : 2, ',
+  //    '  c : {- Object with 2 elements -}, ',
+  //    '  d : 3',
+  //
+  //  ].join( '\n' ),
+  //
+  //  ]
+  //  testFunction( test, desc, src, options, expected );
 
-  //Objects
-  /*08*/{ a : 1, b : 2, c : 3, d : 4 },
-  /*09*/{ a : 1, b : function n( ){ }, c : { a : '1' }, d : 4 },
-  /*10*/{ a : 1, b : undefined, c : { a : '1' }, d : 4 },
-  /*11*/{ a : 1, b : 2, c : { a : 1, b : '2' }, d : 3 },
+  test.case = 'array, limit elements 2';
+  var src = [ 1, 2 , 3, 4, 5 ];
+  var got = _.toStr( src, { limitElementsNumber : 2 } );
+  var expected = '[ 1, 2, [ ... other 3 element(s) ] ]';
+  test.identical( got, expected );
 
+  test.case = 'array, noString limit elements 3';
+  var src = [ 1, 2 , '3', 4, 5 ];
+  var got = _.toStr( src, { limitElementsNumber : 3, noString : 1 } );
+  var expected = '[ 1, 2, 4, [ ... other 1 element(s) ] ]';
+  test.identical( got, expected );
 
-  ],
-  options =
-  [
-  //Arrays
-  /*01*/{ limitElementsNumber : 2 },
-  /*02*/{ limitElementsNumber : 3, noString : 1 },
-  /*03*/{ limitElementsNumber : 2, noNumber : 1 },
-  /*04*/{ limitElementsNumber : 5, noArray : 1 },
-  /*05*/{ limitElementsNumber : 2, multiline : 1 },
-  /*06*/{ levels : 2, limitElementsNumber : 3, noNumber : 1, multiline : 1 },
-  /*07*/{ levels : 2, limitElementsNumber : 3, noNumber : 1, multiline : 1, wrap : 0, comma : ', '  },
+  test.case = 'array, noNumber limit elements 2';
+  var src = [ 1, 2 , '3', 4, 5 ];
+  var got = _.toStr( src, { limitElementsNumber : 2, noNumber : 1 } );
+  var expected = '[ \'3\' ]';
+  test.identical( got, expected );
 
-  //Objects
-  /*08*/{ limitElementsNumber : 2 },
-  /*09*/{ limitElementsNumber : 2, levels : 2,  noRoutine : 1, noString : 1 },
-  /*10*/{ limitElementsNumber : 2, multiline : 1, noString : 1 },
-  /*11*/{ limitElementsNumber : 4, wrap : 0, comma : ', ' },
+  test.case = 'array, noArray limit elements 5';
+  var src = [ 1, 2 , '3', 4, 5 ];
+  var got = _.toStr( src, { limitElementsNumber : 5, noArray : 1 } );
+  var expected = '';
+  test.identical( got, expected );
 
+  test.case = 'array, multiline limit elements';
+  var src = [ 1, 2 , '3', 4, 5 ];
+  var got = _.toStr( src, { limitElementsNumber : 2, multiline : 1 } );
+  var expected =
+      ['[',
+       '  1, ',
+       '  2, ',
+       '  [ ... other 3 element(s) ]',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
 
+  test.case = 'array, levels 2 noNumber multiline';
+  var src = [ 1, 2 , '3', 4, { a : '1'  }, '5', '6' ];
+  var got = _.toStr( src, { levels : 2, limitElementsNumber : 3, noNumber : 1, multiline : 1 } );
+  var expected =
+      ['[',
+       '  \'3\', ',
+       '  {',
+       '    a : \'1\'',
+       '  }, ',
+       '  \'5\', ',
+       '  [ ... other 1 element(s) ]',
+       ']',
+      ].join( '\n' );
+  test.identical( got, expected );
 
+  test.case = 'array, noNumber multiline wrap 0 levels 2';
+  var src = [ 1, 2 , '3', 4, { a : '1'  }, '5', '6' ];
+  var got = _.toStr( src, { levels : 2, limitElementsNumber : 3, noNumber : 1, multiline : 1, wrap : 0, comma : ', '  } );
+  var expected =
+      ['  \'3\', ',
+       '    a : \'1\', ',
+       '  \'5\', ',
+       '  [ ... other 1 element(s) ]',
+      ].join( '\n' );
+  test.identical( got, expected );
 
-  ],
-  expected =
-  [
-  //Arrays
-  /*01*/'[ 1, 2, [ ... other 3 element(s) ] ]',
-  /*02*/'[ 1, 2, 4, [ ... other 1 element(s) ] ]',
-  /*03*/'[ \'3\' ]',
-  /*04*/'',
-  /*05*/
-  [
-    '[',
-    '  1, ',
-    '  2, ',
-    '  [ ... other 3 element(s) ]',
-    ']',
-  ].join( '\n' ),
+  test.case = 'object, limit elements 2';
+  var src = { a : 1, b : 2, c : 3, d : 4 };
+  var got = _.toStr( src, { limitElementsNumber : 2 } );
+  var expected =
+      ['{',
+       '  a : 1, ',
+       '  b : 2, ',
+       '  [ ... other 2 element(s) ]',
+       '}',
+      ].join( '\n' );
+  test.identical( got, expected );
 
-  /*06*/
-  [
-    '[',
-    '  \'3\', ',
-    '  {',
-    '    a : \'1\'',
-    '  }, ',
-    '  \'5\', ',
-    '  [ ... other 1 element(s) ]',
-    ']',
-  ].join( '\n' ),
+  test.case = 'object, noRoutine noString levels 2';
+  var src = { a : 1, b : function n( ){ }, c : { a : '1' }, d : 4 };
+  var got = _.toStr( src, { limitElementsNumber : 2, levels : 2,  noRoutine : 1, noString : 1 } );
+  var expected =
+      ['{',
+       '  a : 1, ',
+       '  c : {}, ',
+       '  [ ... other 1 element(s) ]',
+       '}',
+      ].join( '\n' );
+  test.identical( got, expected );
 
-  /*07*/
-  [
-    '  \'3\', ',
-    '    a : \'1\', ',
-    '  \'5\', ',
-    '  [ ... other 1 element(s) ]',
+  test.case = 'object, noString multiline';
+  var src = { a : 1, b : undefined, c : { a : '1' }, d : 4 };
+  var got = _.toStr( src, { limitElementsNumber : 2, multiline : 1, noString : 1 } );
+  var expected =
+      ['{',
+       '  a : 1, ',
+       '  b : undefined, ',
+       '  [ ... other 2 element(s) ]',
+       '}',
+      ].join( '\n' );
+  test.identical( got, expected );
 
-  ].join( '\n' ),
+  test.case = 'object, wrap 0 ';
+  var src = { a : 1, b : 2, c : { a : 1, b : '2' }, d : 3 };
+  var got = _.toStr( src, { limitElementsNumber : 4, wrap : 0, comma : ', ' } );
+  var expected =
+      ['  a : 1, ',
+       '  b : 2, ',
+       '  c : {- Object with 2 elements -}, ',
+       '  d : 3',
+      ].join( '\n' );
+  test.identical( got, expected );
 
-  //Objects
-  /*08*/
-  [
-    '{',
-    '  a : 1, ',
-    '  b : 2, ',
-    '  [ ... other 2 element(s) ]',
-    '}',
-
-  ].join( '\n' ),
-
-  /*09*/
-  [
-    '{',
-    '  a : 1, ',
-    '  c : {}, ',
-    '  [ ... other 1 element(s) ]',
-    '}',
-
-  ].join( '\n' ),
-
-  /*10*/
-  [
-    '{',
-    '  a : 1, ',
-    '  b : undefined, ',
-    '  [ ... other 2 element(s) ]',
-    '}',
-
-  ].join( '\n' ),
-
-  /*11*/
-  [
-    '  a : 1, ',
-    '  b : 2, ',
-    '  c : {- Object with 2 elements -}, ',
-    '  d : 3',
-
-  ].join( '\n' ),
-
-  ]
-  testFunction( test, desc, src, options, expected );
 }
 
 //
