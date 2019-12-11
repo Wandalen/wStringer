@@ -3678,29 +3678,50 @@ function toStrAtomic( test )
 
 function toStrDate( test )
 {
-  var desc = 'Date test',
-  src =
-  [
-    new Date( Date.UTC( 1993, 12, 12 ) ),
-    new Date( Date.UTC( 1990, 0, 0 ) ),
-    new Date( Date.UTC( 2016, 12, 8 ) ),
-    new Date( Date.UTC( 2016, 1, 2 ) ),
-  ],
-  options =
-  [
-    { },
-    { },
-    { levels : 0 },
-    { noDate : 1 }
-  ],
-  expected =
-  [
-    '1994-01-12T00:00:00.000Z',
-    '1989-12-31T00:00:00.000Z',
-    '2017-01-08T00:00:00.000Z',
-    '',
-  ]
-  testFunction( test, desc, src, options, expected );
+  //  var desc = 'Date test',
+  //  src =
+  //  [
+  //    new Date( Date.UTC( 1993, 12, 12 ) ),
+  //    new Date( Date.UTC( 1990, 0, 0 ) ),
+  //    new Date( Date.UTC( 2016, 12, 8 ) ),
+  //    new Date( Date.UTC( 2016, 1, 2 ) ),
+  //  ],
+  //  options =
+  //  [
+  //    { },
+  //    { },
+  //    { levels : 0 },
+  //    { noDate : 1 }
+  //  ],
+  //  expected =
+  //  [
+  //    '1994-01-12T00:00:00.000Z',
+  //    '1989-12-31T00:00:00.000Z',
+  //    '2017-01-08T00:00:00.000Z',
+  //    '',
+  //  ]
+  //  testFunction( test, desc, src, options, expected );
+
+  test.case = 'date';
+  var got = _.toStr( new Date( Date.UTC( 1993, 12, 12 ) ), { } );
+  var expected = '1994-01-12T00:00:00.000Z';
+  test.identical( got, expected );
+
+  test.case = 'date';
+  var got = _.toStr( new Date( Date.UTC( 1990, 0, 0 ) ), { } );
+  var expected = '1989-12-31T00:00:00.000Z';
+  test.identical( got, expected );
+
+  test.case = 'date, levels 0';
+  var got = _.toStr( new Date( Date.UTC( 2016, 12, 8 ) ), { levels : 0 } );
+  var expected = '2017-01-08T00:00:00.000Z';
+  test.identical( got, expected );
+
+  test.case = 'date, noDate';
+  var got = _.toStr( new Date( Date.UTC( 2016, 1, 2 ) ), { noDate : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
 }
 
 //
