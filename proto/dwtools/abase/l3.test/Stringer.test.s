@@ -1830,668 +1830,1297 @@ function toStrArray( test )
 
 function toStrObject( test )
 {
-  var desc = 'Object test',
-  src =
-  [
-    /*01*/  { a : 1, b : 2, c : 3 },
-    /*02*/  { x : 3, y : 5, z : 5 },
-    /*03*/  { q : 6, w : 7, e : 8 },
-    /*04*/  { u : 12, i : { o : 13 }, p : 14 },
-    /*05*/  { r : 9, t : { a : 10 }, y : 11 },
-      /* redundant */
-    /*06*/  { z : '01', x : { c : { g : 4 } }, v : '03' },
-    /*07*/  { u : 12, i : { o : { x : { y : [ 1, 2, 3 ] } } }, p : 14 },
-      /* redundant */
-    /*08*/  { q : { a : 1 }, w : 'c', e : [1] },
-    /*09*/  { z : '02', x : { c : { g : 6 } }, v : '01' },
-    /*10*/  { h : { d : 1 }, g : 'c', c : [2] },
-    /*11*/  { a : 6, b : 7, c : 1 },
-    /*12*/  { a : true, b : '2', c : 3, d : undefined },
-    /*13*/  { a : null, b : 1, c : '2', d : undefined, e : true, f : Symbol( 'symbol' ) },
-    /*14*/  { a : 'true', b : 2, c : false, d : undefined },
-    /*15*/  { e : new Error( 'msg' ) },
-    /*16*/  { f : 1, g : function f(  ) { } },
-    /*17*/  { x : function y(  ) { } },
-    /*18*/  { a : null, b : 1, c : '2', d : undefined },
-    /*19*/  { e : function r( ) { }, f : 1, g : '2', h : [ 1 ] },
-    /*20*/  { i : 0, k : 1, g : 2, l : 3 },
-    /*21*/  { o : 4, p : 5, r : 6, s : 7 },
-    /*22*/  { m : 8, n : 9 },
-    /*23*/  { x : '\n10', z : '\\11' },
-    /*24*/  { a : 1, b : { d : 2 }, c : 3 },
-    /*25*/  { a : 3, b : { d : 2 }, c : 1 },
-    /*26*/  { a : 4, b : { d : 5 }, c : 6 },
-    /*27*/  { a : 7, b : { d : 8 }, c : 9 },
-    /*28*/  { a : 9, b : { d : 8 }, c : 7 },
-    /*29*/  { a : 10, b : { d : 20 }, c : 30 },
-    /*30*/  { a : 10.00, b : { d : 20.00 }, c : 30.00 },
-    /*31*/  { a : 'a', b : { d : false }, c : 3 },
-    /*32*/  { a : '\na', b : { d : '\ntrue' }, c : '\n' },
-    /*33*/  { a : 'a', b : { d : false }, c : 3 },
-    /*34*/  { a : 'aa', b : { d : true }, c : 40 },
-    /*35*/  { a : [ 'a', 'b' ], b : { d : 'true' }, c : 1 },
-    /*36*/  { a : [ 'a', 'b' ], b : { d : 'true' }, c : 1 },
-    /*37*/  { a : 1, b : { d : 2 }, c : 3 },
-    /*38*/  { a : 3, b : { d : 2 }, c : 1 },
-    /*39*/  { a : 'bb', b : { d : false }, c : 30 },
-    /*40*/  { a : 100, b : { d : 110 }, c : 120 },
-    /*41*/  { a : '\na', b : { d : '\ntrue' } },
-    /*42*/  { a : 'aa', b : { d : function( ){ } } },
-    /*43*/  { a : 'bb', b : { d : function( ){ } } },
-    /*44*/  { a : new Date( Date.UTC( 1993, 12, 12 ) ), b : { d : new Error( 'msg' ) }, c : 1 },
-    /*45*/  { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  },
-    /*46*/  { "sequence" : "\x7f[A", "name" : "undefined", "shift" : false, "code" : "[A"  },
-    /*47*/  { "sequence" : "<\u001cb>text<\u001cb>", "data" : { "name" : "myname", "age" : 1 }, "shift" : false, "code" : "<b>text<b>"  },
-    /*48*/  { "sequence" : "\u0068\u0065\u004C\u004C\u006F", "shift" : false, "code" : "heLLo"  },
-    /*49*/  { "sequence" : "\n\u0061\u0062\u0063", "shift" : false, "code" : "abc"  },
-    /*50*/  { "sequence" : "\t\u005b\u0063\u0062\u0061\u005d\t", "data" : 100, "code" : "\n[cba]\n"  },
-    /*51*/  { "sequence" : "\u005CABC\u005C", "data" : 100, "code" : "\\ABC\\"  },
-    /*52*/  { "sequence" : "\u000Aline\u000A", "data" : null, "code" : "\nline\n"  },
-    /*53*/  { "sequence" : "\rspace\r",  },
-    /*54*/  { "sequence" : "\btest",  },
-    /*55*/  { "sequence" : "\vsample",  },
-    /*56*/  { "sequence" : "\ftest",  },
-    /*57*/  { a : 1, b : { d : 'string' }, c : true },
-    /*58*/  { a : 1, b : { d : 'string' }, c : new Date(Date.UTC( ) ) },
-    /*59*/  { a : 1000, b : { d : 'string' }, c : 1.500 },
-    /*60*/  { a : 1000, b : 'text', c : 1.500 },
-    /*61*/  { a : 1000, b : 'text', c : false, d : undefined, e : null},
-    /*62*/  { a : 1001, b : 'text', c : false, d : undefined, e : null},
-    /*63*/  ( function( ) //own:0 option test
-            {
-              var x = { a : 1, b : 2 },
-              y = Object.create( x );
-              y.c = 3;
-              return y;
-            } )( ),
-
-    /*64*/  ( function( ) //own:1 option test
-            {
-              var x = { a : '0', b : '1' },
-              y = Object.create( x );
-              y.c = '3';
-              return y;
-            } )( ),
-
-    /*65*/  { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  },
-
-  ],
-  options =
-  [
-    /*01*/  { },
-    /*02*/  { levels : 0 },
-    /*03*/  { levels : 1 },
-    /*04*/  { levels : 1 },
-    /*05*/  { levels : 2 },
-
-      /* redundant */
-    /*06*/  { levels : 3 },
-    /*07*/  { levels : 5 },
-      /* redundant */
-
-    /*08*/  { levels : 2, noSubObject : 1, noArray : 1 },
-    /*09*/  { levels : 3, noAtomic : 1 },
-    /*10*/  { levels : 2, noObject : 1 },
-
-
-    /*11*/  { wrap : 0, comma : ' | ' },
-    /*12*/  { wrap : 0, noString : 1, noNumber: 1, comma : ', ' },
-    /*13*/  { wrap : 0, comma : '* ' },
-    /*14*/  { wrap : 0, prependTab : 0, comma : '-> ' },
-    /*15*/  { wrap : 0, tab : '| ', dtab : '', comma : '> ' },
-    /*16*/  { wrap : 0, colon : '', comma : ' ' },
-    /*17*/  { wrap : 0, noRoutine : 1, comma : '.. ' },
-    /*18*/  { wrap : 0, noAtomic : 1, comma : ', ' },
-    /*19*/  { wrap : 0, onlyRoutines : 1, comma : '<< ' },
-    /*20*/  { wrap : 0, precision : 3, comma : '| ' },
-    /*21*/  { wrap : 0,  fixed : 3, comma : '^ ' },
-    /*22*/  { wrap : 0,  multiline : 1, comma : ', ' },
-    /*23*/  { wrap : 0,  escaping : 1, comma : '| ' },
-
-    /*24*/  { levels : 2, wrap : 0, comma : '. ' },
-    /*25*/  { levels : 2, wrap : 0, comma : '. '},
-    /*26*/  { levels : 2, wrap : 0, tab : '| ', dtab : '', comma : '@ ' },
-    /*27*/  { levels : 2, wrap : 0, colon : ' - ', comma : '-? ' },
-    /*28*/  { levels : 2, wrap : 0, prependTab : 0, comma : ', ' },
-    /*29*/  { levels : 2, wrap : 0, fixed : 1, comma : '| ' },
-    /*30*/  { levels : 2, wrap : 0, precision : 1, comma : '/ ' },
-    /*31*/  { levels : 2, wrap : 0, multiline : 1, comma : ', , ' },
-    /*32*/  { levels : 3, wrap : 0, escaping : 1, comma : '| ' },
-    /*33*/  { levels : 2, wrap : 0, noAtomic : 1, comma : '< ' },
-    /*34*/  { levels : 3, wrap : 0, noAtomic : 1, comma : ', ' },
-    /*35*/  { levels : 2, wrap : 0, noSubObject : 1, noArray : 1, comma : '' },
-    /*36*/  { levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '. ' },
-    /*37*/  { levels : 2, wrap : 0, comma : '. '},
-    /*38*/  { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' },
-    /*39*/  { levels : 2, prependTab : 0, fixed : 5 },
-    /*40*/  { levels : 2, prependTab : 0, precision : 5 },
-    /*41*/  { levels : 2, multiline : 1, escaping : 1 },
-    /*42*/  { levels : 2, noRoutine : 1 },
-    /*43*/  { levels : 3, noRoutine : 1, },
-    /*44*/  { levels : 3, noError : 1, noDate : 1 },
-    /*45*/  { escaping : 1 },
-    /*46*/  { escaping : 0 },
-    /*47*/  { escaping : 0 },
-    /*48*/  { multiline : 1 },
-    /*49*/  { levels : 2, multiline : 1, escaping : 1 },
-    /*50*/  { levels : 2, multiline : 1, escaping : 1 },
-    /*51*/  { levels : 2, multiline : 1, escaping : 1 },
-    /*52*/  { levels : 2, multiline : 1, escaping : 1 },
-    /*53*/  { levels : 2, escaping : 1 },
-    /*54*/  { levels : 2, escaping : 1 },
-    /*55*/  { levels : 2, escaping : 1 },
-    /*56*/  { levels : 2, escaping : 1 },
-    /*57*/  { levels : 3, noNumber : 1, noString : 1},
-    /*58*/  { levels : 3, noNumber : 1, noString : 1, noDate : 1},
-    /*59*/  { levels : 2, noString : 1, fixed : 1},
-    /*60*/  { levels : 2, noString : 1, precision : 1},
-    /*61*/  { levels : 2, noString : 1, noNumber :1, tab : '-', prependTab : 0 },
-    /*62*/  { levels : 2, noAtomic : 1, noNumber : 0 },
-    /*63*/  { own : 0},
-    /*64*/  {  },
-    /*65*/  {  },
-
-  ],
-  expected =
-  [
-    /*01*/  '{ a : 1, b : 2, c : 3 }',
-    /*02*/  '{- Object with 3 elements -}',
-    /*03*/  '{ q : 6, w : 7, e : 8 }',
-
-    /*04*/
-    [
-      '{',
-      '  u : 12, ',
-      '  i : {- Object with 1 elements -}, ',
-      '  p : 14',
-      '}'
-    ].join( '\n' ),
-
-    /*05*/
-    [
-      '{',
-      '  r : 9, ',
-      '  t : { a : 10 }, ',
-      '  y : 11',
-      '}'
-    ].join( '\n' ),
-
-      /* redundant */
-    /*06*/
-    [
-      '{',
-      '  z : \'01\', ',
-      '  x : ',
-      '  {',
-      '    c : { g : 4 }',
-      '  }, ',
-      '  v : \'03\'',
-      '}'
-    ].join( '\n' ),
-
-    /*07*/
-    [
-      '{',
-      '  u : 12, ',
-      '  i : ',
-      '  {',
-      '    o : ',
-      '    {',
-      '      x : ',
-      '      {',
-      '        y : [ 1, 2, 3 ]',
-      '      }',
-      '    }',
-      '  }, ',
-      '  p : 14',
-      '}'
-    ].join( '\n' ),
-    /* redundant */
-
-    /*08*/
-    [
-      '{',
-      '  w : \'c\'',
-      '}'
-    ].join( '\n' ),
-
-    /*09*/
-    [
-      '{',
-      '  x : ',
-      '  {',
-      '    c : {}',
-      '  }',
-      '}'
-    ].join( '\n' ),
-
-    /*10*/  '',
-
-
-    /*11*/  'a : 6 | b : 7 | c : 1',
-
-    /*12*/
-    [
-      'a : true, d : undefined'
-
-    ].join( '\n' ),
-
-    /*13*/
-    [
-      '  a : null* ',
-      '  b : 1* ',
-      '  c : \'2\'* ',
-      '  d : undefined* ',
-      '  e : true* ',
-      '  f : {- Symbol symbol -}'
-
-    ].join( '\n' ),
-
-    /*14*/
-    [
-      '  a : \'true\'-> ',
-      '  b : 2-> ',
-      '  c : false-> ',
-      '  d : undefined'
-
-    ].join( '\n' ),
-
-    /*15*/
-
-      '| e : [object Error]',
-
-    /*16*/
-
-      'f1 g[ routine f ]',
-
-    /*17*/
-
-      '',
-
-    /*18*/
-    [
-      ''
-
-    ].join( '\n' ),
-
-    /*19*/
-
-    '',
-
-    /*20*/
-
-    [
-      '  i : 0.00| ',
-      '  k : 1.00| ',
-      '  g : 2.00| ',
-      '  l : 3.00'
-
-    ].join( '\n' ),
-
-    /*21*/
-
-    [
-      '  o : 4.000^ ',
-      '  p : 5.000^ ',
-      '  r : 6.000^ ',
-      '  s : 7.000'
-
-    ].join( '\n' ),
-
-    /*22*/
-
-    [
-      '  m : 8, ',
-      '  n : 9'
-
-    ].join( '\n' ),
-
-    /*23*/
-
-    'x : \'\\n10\'| z : \'\\\\11\'',
-
-    /*24*/
-    [
-      '  a : 1. ',
-      '  b : d : 2. ',
-      '  c : 3'
-
-    ].join( '\n' ),
-
-    /*25*/
-    [
-      '  a : 3. ',
-      '  b : d : 2. ',
-      '  c : 1'
-
-    ].join( '\n' ),
-
-    /*26*/
-    [
-      '| a : 4@ ',
-      '| b : d : 5@ ',
-      '| c : 6'
-
-    ].join( '\n' ),
-
-    /*27*/
-    [
-      '  a - 7-? ',
-      '  b - d - 8-? ',
-      '  c - 9'
-
-    ].join( '\n' ),
-
-    /*28*/
-    [
-      '  a : 9, ',
-      '  b : d : 8, ',
-      '  c : 7'
-
-    ].join( '\n' ),
-
-    /*29*/
-    [
-      '  a : 10.0| ',
-      '  b : d : 20.0| ',
-      '  c : 30.0'
-
-    ].join( '\n' ),
-
-    /*30*/
-    [
-      '  a : 1e+1/ ',
-      '  b : d : 2e+1/ ',
-      '  c : 3e+1'
-    ].join( '\n' ),
-
-    /*31*/
-    [
-      '  a : \'a\', , ',
-      '  b : ',
-      '    d : false, , ',
-      '  c : 3'
-    ].join( '\n' ),
-
-    /*32*/
-    [
-      '  a : \'\\na\'| ',
-      '  b : d : \'\\ntrue\'| ',
-      '  c : \'\\n\''
-
-    ].join( '\n' ),
-
-    /*33*/
-    '',
-
-    /*34*/
-    '',
-
-    /*35*/
-    '  c : 1',
-
-    /*36*/
-    [
-      '',
-    ].join( '\n' ),
-
-    /*37*/
-    [
-      '  a : 1. ',
-      '  b : d : 2. ',
-      '  c : 3',
-    ].join( '\n' ),
-
-    /*38*/
-    [
-      '  |  a->3, , ',
-      '  |  b->d->2, , ',
-      '  |  c->1',
-    ].join( '\n' ),
-
-    /*39*/
-    [
-      '{',
-      '  a : \'bb\', ',
-      '  b : { d : false }, ',
-      '  c : 30.00000',
-      '}'
-
-    ].join( '\n' ),
-
-    /*40*/
-    [
-      '{',
-      '  a : 100.00, ',
-      '  b : { d : 110.00 }, ',
-      '  c : 120.00',
-      '}'
-
-    ].join( '\n' ),
-
-    /*41*/
-    [
-      '{',
-      '  a : \'\\na\', ',
-      '  b : ',
-      '  {',
-      '    d : \'\\ntrue\'',
-      '  }',
-      '}'
-
-    ].join( '\n' ),
-
-    /*42*/
-    [
-      '{',
-      '  a : \'aa\', ',
-      '  b : {}',
-      '}'
-
-    ].join( '\n' ),
-
-    /*43*/
-    [
-      '{',
-      '  a : \'bb\', ',
-      '  b : {}',
-      '}'
-
-    ].join( '\n' ),
-
-    /*44*/
-    [
-      '{',
-      '  b : {}, ',
-      '  c : 1',
-      '}'
-
-    ].join( '\n' ),
-
-    /*45*/
-    [
-
-      '{',
-      '  sequence : \'\\u001b[A\', ',
-      '  name : \'undefined\', ',
-      '  shift : false, ',
-      '  code : \'[A\'',
-      '}'
-
-    ].join( '\n' ),
-
-    /*46*/
-    [
-      '{',
-      '  sequence : \'\\u007f[A\', ',
-      '  name : \'undefined\', ',
-      '  shift : false, ',
-      '  code : \'[A\'',
-      '}'
-
-    ].join( '\n' ),
-
-    /*47*/
-    [
-      '{',
-      '  sequence : \'<\\u001cb>text<\\u001cb>\', ',
-      '  data : {- Object with 2 elements -}, ',
-      '  shift : false, ',
-      '  code : \'<b>text<b>\'',
-      '}'
-
-    ].join( '\n' ),
-
-    /*48*/
-    [
-      '{',
-      '  sequence : \'heLLo\', ',
-      '  shift : false, ',
-      '  code : \'heLLo\'',
-      '}'
-
-    ].join( '\n' ),
-
-    /*49*/
-    [
-      '{',
-      '  sequence : \'\\nabc\', ',
-      '  shift : false, ',
-      '  code : \'abc\'',
-      '}'
-
-    ].join( '\n' ),
-
-    /*50*/
-    [
-      '{',
-      '  sequence : \'\\t[cba]\\t\', ',
-      '  data : 100, ',
-      '  code : \'\\n[cba]\\n\'',
-      '}'
-
-    ].join( '\n' ),
-
-    /*51*/
-    [
-      '{',
-      '  sequence : \'\\\\ABC\\\\\', ',
-      '  data : 100, ',
-      '  code : \'\\\\ABC\\\\\'',
-      '}'
-
-    ].join( '\n' ),
-
-    /*52*/
-    [
-      '{',
-      '  sequence : \'\\nline\\n\', ',
-      '  data : null, ',
-      '  code : \'\\nline\\n\'',
-      '}'
-
-    ].join( '\n' ),
-
-    /*53*/
-    [
-      '{ sequence : \'\\rspace\\r\' }'
-
-    ].join( '\n' ),
-
-    /*54*/
-    [
-      '{ sequence : \'\\btest\' }'
-
-    ].join( '\n' ),
-
-    /*55*/
-    [
-      '{ sequence : \'\\u000bsample\' }'
-
-    ].join( '\n' ),
-
-    /*56*/
-    [
-      '{ sequence : \'\\ftest\' }'
-
-    ].join( '\n' ),
-
-    /*57*/
-    [
-      '{',
-      '  b : {}, ',
-      '  c : true',
-      '}'
-
-
-    ].join( '\n' ),
-
-    /*58*/
-    [
-      '{',
-      '  b : {}',
-      '}'
-
-
-    ].join( '\n' ),
-
-    /*59*/
-    [
-      '{',
-      '  a : 1000.0, ',
-      '  b : {}, ',
-      '  c : 1.5',
-      '}'
-
-
-    ].join( '\n' ),
-
-    /*60*/
-    [
-      '{ a : 1e+3, c : 2 }',
-
-    ].join( '\n' ),
-
-    /*61*/
-    [
-      '{ c : false, d : undefined, e : null }'
-
-    ].join( '\n' ),
-
-    /*62*/
-    [
-      '{}',
-
-    ].join( '\n' ),
-
-    /*63*/
-    [
-      '{ c : 3, a : 1, b : 2 }',
-
-    ].join( '\n' ),
-
-    /*64*/
-    [
-      '{ c : \'3\' }',
-
-    ].join( '\n' ),
-
-    /*65*/
-    [
-
-      '{',
-      '  sequence : \'\\u001b[A\', ',
-      '  name : \'undefined\', ',
-      '  shift : false, ',
-      '  code : \'[A\'',
-      '}'
-
-    ].join( '\n' ),
-
-
-  ];
-
-  testFunction( test, desc, src, options, expected );
+  //  var desc = 'Object test',
+  //  src =
+  //  [
+  //    /*01*/  { a : 1, b : 2, c : 3 },
+  //    /*02*/  { x : 3, y : 5, z : 5 },
+  //    /*03*/  { q : 6, w : 7, e : 8 },
+  //    /*04*/  { u : 12, i : { o : 13 }, p : 14 },
+  //    /*05*/  { r : 9, t : { a : 10 }, y : 11 },
+  //      /* redundant */
+  //    /*06*/  { z : '01', x : { c : { g : 4 } }, v : '03' },
+  //    /*07*/  { u : 12, i : { o : { x : { y : [ 1, 2, 3 ] } } }, p : 14 },
+  //      /* redundant */
+  //    /*08*/  { q : { a : 1 }, w : 'c', e : [1] },
+  //    /*09*/  { z : '02', x : { c : { g : 6 } }, v : '01' },
+  //    /*10*/  { h : { d : 1 }, g : 'c', c : [2] },
+  //    /*11*/  { a : 6, b : 7, c : 1 },
+  //    /*12*/  { a : true, b : '2', c : 3, d : undefined },
+  //    /*13*/  { a : null, b : 1, c : '2', d : undefined, e : true, f : Symbol( 'symbol' ) },
+  //    /*14*/  { a : 'true', b : 2, c : false, d : undefined },
+  //    /*15*/  { e : new Error( 'msg' ) },
+  //    /*16*/  { f : 1, g : function f(  ) { } },
+  //    /*17*/  { x : function y(  ) { } },
+  //    /*18*/  { a : null, b : 1, c : '2', d : undefined },
+  //    /*19*/  { e : function r( ) { }, f : 1, g : '2', h : [ 1 ] },
+  //    /*20*/  { i : 0, k : 1, g : 2, l : 3 },
+  //    /*21*/  { o : 4, p : 5, r : 6, s : 7 },
+  //    /*22*/  { m : 8, n : 9 },
+  //    /*23*/  { x : '\n10', z : '\\11' },
+  //    /*24*/  { a : 1, b : { d : 2 }, c : 3 },
+  //    /*25*/  { a : 3, b : { d : 2 }, c : 1 },
+  //    /*26*/  { a : 4, b : { d : 5 }, c : 6 },
+  //    /*27*/  { a : 7, b : { d : 8 }, c : 9 },
+  //    /*28*/  { a : 9, b : { d : 8 }, c : 7 },
+  //    /*29*/  { a : 10, b : { d : 20 }, c : 30 },
+  //    /*30*/  { a : 10.00, b : { d : 20.00 }, c : 30.00 },
+  //    /*31*/  { a : 'a', b : { d : false }, c : 3 },
+  //    /*32*/  { a : '\na', b : { d : '\ntrue' }, c : '\n' },
+  //    /*33*/  { a : 'a', b : { d : false }, c : 3 },
+  //    /*34*/  { a : 'aa', b : { d : true }, c : 40 },
+  //    /*35*/  { a : [ 'a', 'b' ], b : { d : 'true' }, c : 1 },
+  //    /*36*/  { a : [ 'a', 'b' ], b : { d : 'true' }, c : 1 },
+  //    /*37*/  { a : 1, b : { d : 2 }, c : 3 },
+  //    /*38*/  { a : 3, b : { d : 2 }, c : 1 },
+  //    /*39*/  { a : 'bb', b : { d : false }, c : 30 },
+  //    /*40*/  { a : 100, b : { d : 110 }, c : 120 },
+  //    /*41*/  { a : '\na', b : { d : '\ntrue' } },
+  //    /*42*/  { a : 'aa', b : { d : function( ){ } } },
+  //    /*43*/  { a : 'bb', b : { d : function( ){ } } },
+  //    /*44*/  { a : new Date( Date.UTC( 1993, 12, 12 ) ), b : { d : new Error( 'msg' ) }, c : 1 },
+  //    /*45*/  { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  },
+  //    /*46*/  { "sequence" : "\x7f[A", "name" : "undefined", "shift" : false, "code" : "[A"  },
+  //    /*47*/  { "sequence" : "<\u001cb>text<\u001cb>", "data" : { "name" : "myname", "age" : 1 }, "shift" : false, "code" : "<b>text<b>"  },
+  //    /*48*/  { "sequence" : "\u0068\u0065\u004C\u004C\u006F", "shift" : false, "code" : "heLLo"  },
+  //    /*49*/  { "sequence" : "\n\u0061\u0062\u0063", "shift" : false, "code" : "abc"  },
+  //    /*50*/  { "sequence" : "\t\u005b\u0063\u0062\u0061\u005d\t", "data" : 100, "code" : "\n[cba]\n"  },
+  //    /*51*/  { "sequence" : "\u005CABC\u005C", "data" : 100, "code" : "\\ABC\\"  },
+  //    /*52*/  { "sequence" : "\u000Aline\u000A", "data" : null, "code" : "\nline\n"  },
+  //    /*53*/  { "sequence" : "\rspace\r",  },
+  //    /*54*/  { "sequence" : "\btest",  },
+  //    /*55*/  { "sequence" : "\vsample",  },
+  //    /*56*/  { "sequence" : "\ftest",  },
+  //    /*57*/  { a : 1, b : { d : 'string' }, c : true },
+  //    /*58*/  { a : 1, b : { d : 'string' }, c : new Date(Date.UTC( ) ) },
+  //    /*59*/  { a : 1000, b : { d : 'string' }, c : 1.500 },
+  //    /*60*/  { a : 1000, b : 'text', c : 1.500 },
+  //    /*61*/  { a : 1000, b : 'text', c : false, d : undefined, e : null},
+  //    /*62*/  { a : 1001, b : 'text', c : false, d : undefined, e : null},
+  //    /*63*/  ( function( ) //own:0 option test
+  //            {
+  //              var x = { a : 1, b : 2 },
+  //              y = Object.create( x );
+  //              y.c = 3;
+  //              return y;
+  //            } )( ),
+  //
+  //    /*64*/  ( function( ) //own:1 option test
+  //            {
+  //              var x = { a : '0', b : '1' },
+  //              y = Object.create( x );
+  //              y.c = '3';
+  //              return y;
+  //            } )( ),
+  //
+  //    /*65*/  { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  },
+  //
+  //  ],
+  //  options =
+  //  [
+  //    /*01*/  { },
+  //    /*02*/  { levels : 0 },
+  //    /*03*/  { levels : 1 },
+  //    /*04*/  { levels : 1 },
+  //    /*05*/  { levels : 2 },
+  //
+  //      /* redundant */
+  //    /*06*/  { levels : 3 },
+  //    /*07*/  { levels : 5 },
+  //      /* redundant */
+  //
+  //    /*08*/  { levels : 2, noSubObject : 1, noArray : 1 },
+  //    /*09*/  { levels : 3, noAtomic : 1 },
+  //    /*10*/  { levels : 2, noObject : 1 },
+  //
+  //
+  //    /*11*/  { wrap : 0, comma : ' | ' },
+  //    /*12*/  { wrap : 0, noString : 1, noNumber: 1, comma : ', ' },
+  //    /*13*/  { wrap : 0, comma : '* ' },
+  //    /*14*/  { wrap : 0, prependTab : 0, comma : '-> ' },
+  //    /*15*/  { wrap : 0, tab : '| ', dtab : '', comma : '> ' },
+  //    /*16*/  { wrap : 0, colon : '', comma : ' ' },
+  //    /*17*/  { wrap : 0, noRoutine : 1, comma : '.. ' },
+  //    /*18*/  { wrap : 0, noAtomic : 1, comma : ', ' },
+  //    /*19*/  { wrap : 0, onlyRoutines : 1, comma : '<< ' },
+  //    /*20*/  { wrap : 0, precision : 3, comma : '| ' },
+  //    /*21*/  { wrap : 0,  fixed : 3, comma : '^ ' },
+  //    /*22*/  { wrap : 0,  multiline : 1, comma : ', ' },
+  //    /*23*/  { wrap : 0,  escaping : 1, comma : '| ' },
+  //
+  //    /*24*/  { levels : 2, wrap : 0, comma : '. ' },
+  //    /*25*/  { levels : 2, wrap : 0, comma : '. '},
+  //    /*26*/  { levels : 2, wrap : 0, tab : '| ', dtab : '', comma : '@ ' },
+  //    /*27*/  { levels : 2, wrap : 0, colon : ' - ', comma : '-? ' },
+  //    /*28*/  { levels : 2, wrap : 0, prependTab : 0, comma : ', ' },
+  //    /*29*/  { levels : 2, wrap : 0, fixed : 1, comma : '| ' },
+  //    /*30*/  { levels : 2, wrap : 0, precision : 1, comma : '/ ' },
+  //    /*31*/  { levels : 2, wrap : 0, multiline : 1, comma : ', , ' },
+  //    /*32*/  { levels : 3, wrap : 0, escaping : 1, comma : '| ' },
+  //    /*33*/  { levels : 2, wrap : 0, noAtomic : 1, comma : '< ' },
+  //    /*34*/  { levels : 3, wrap : 0, noAtomic : 1, comma : ', ' },
+  //    /*35*/  { levels : 2, wrap : 0, noSubObject : 1, noArray : 1, comma : '' },
+  //    /*36*/  { levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '. ' },
+  //    /*37*/  { levels : 2, wrap : 0, comma : '. '},
+  //    /*38*/  { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' },
+  //    /*39*/  { levels : 2, prependTab : 0, fixed : 5 },
+  //    /*40*/  { levels : 2, prependTab : 0, precision : 5 },
+  //    /*41*/  { levels : 2, multiline : 1, escaping : 1 },
+  //    /*42*/  { levels : 2, noRoutine : 1 },
+  //    /*43*/  { levels : 3, noRoutine : 1, },
+  //    /*44*/  { levels : 3, noError : 1, noDate : 1 },
+  //    /*45*/  { escaping : 1 },
+  //    /*46*/  { escaping : 0 },
+  //    /*47*/  { escaping : 0 },
+  //    /*48*/  { multiline : 1 },
+  //    /*49*/  { levels : 2, multiline : 1, escaping : 1 },
+  //    /*50*/  { levels : 2, multiline : 1, escaping : 1 },
+  //    /*51*/  { levels : 2, multiline : 1, escaping : 1 },
+  //    /*52*/  { levels : 2, multiline : 1, escaping : 1 },
+  //    /*53*/  { levels : 2, escaping : 1 },
+  //    /*54*/  { levels : 2, escaping : 1 },
+  //    /*55*/  { levels : 2, escaping : 1 },
+  //    /*56*/  { levels : 2, escaping : 1 },
+  //    /*57*/  { levels : 3, noNumber : 1, noString : 1},
+  //    /*58*/  { levels : 3, noNumber : 1, noString : 1, noDate : 1},
+  //    /*59*/  { levels : 2, noString : 1, fixed : 1},
+  //    /*60*/  { levels : 2, noString : 1, precision : 1},
+  //    /*61*/  { levels : 2, noString : 1, noNumber :1, tab : '-', prependTab : 0 },
+  //    /*62*/  { levels : 2, noAtomic : 1, noNumber : 0 },
+  //    /*63*/  { own : 0},
+  //    /*64*/  {  },
+  //    /*65*/  {  },
+  //
+  //  ],
+  //  expected =
+  //  [
+  //    /*01*/  '{ a : 1, b : 2, c : 3 }',
+  //    /*02*/  '{- Object with 3 elements -}',
+  //    /*03*/  '{ q : 6, w : 7, e : 8 }',
+  //
+  //    /*04*/
+  //    [
+  //      '{',
+  //      '  u : 12, ',
+  //      '  i : {- Object with 1 elements -}, ',
+  //      '  p : 14',
+  //      '}'
+  //    ].join( '\n' ),
+  //
+  //    /*05*/
+  //    [
+  //      '{',
+  //      '  r : 9, ',
+  //      '  t : { a : 10 }, ',
+  //      '  y : 11',
+  //      '}'
+  //    ].join( '\n' ),
+  //
+  //      /* redundant */
+  //    /*06*/
+  //    [
+  //      '{',
+  //      '  z : \'01\', ',
+  //      '  x : ',
+  //      '  {',
+  //      '    c : { g : 4 }',
+  //      '  }, ',
+  //      '  v : \'03\'',
+  //      '}'
+  //    ].join( '\n' ),
+  //
+  //    /*07*/
+  //    [
+  //      '{',
+  //      '  u : 12, ',
+  //      '  i : ',
+  //      '  {',
+  //      '    o : ',
+  //      '    {',
+  //      '      x : ',
+  //      '      {',
+  //      '        y : [ 1, 2, 3 ]',
+  //      '      }',
+  //      '    }',
+  //      '  }, ',
+  //      '  p : 14',
+  //      '}'
+  //    ].join( '\n' ),
+  //    /* redundant */
+  //
+  //    /*08*/
+  //    [
+  //      '{',
+  //      '  w : \'c\'',
+  //      '}'
+  //    ].join( '\n' ),
+  //
+  //    /*09*/
+  //    [
+  //      '{',
+  //      '  x : ',
+  //      '  {',
+  //      '    c : {}',
+  //      '  }',
+  //      '}'
+  //    ].join( '\n' ),
+  //
+  //    /*10*/  '',
+  //
+  //
+  //    /*11*/  'a : 6 | b : 7 | c : 1',
+  //
+  //    /*12*/
+  //    [
+  //      'a : true, d : undefined'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*13*/
+  //    [
+  //      '  a : null* ',
+  //      '  b : 1* ',
+  //      '  c : \'2\'* ',
+  //      '  d : undefined* ',
+  //      '  e : true* ',
+  //      '  f : {- Symbol symbol -}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*14*/
+  //    [
+  //      '  a : \'true\'-> ',
+  //      '  b : 2-> ',
+  //      '  c : false-> ',
+  //      '  d : undefined'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*15*/
+  //
+  //      '| e : [object Error]',
+  //
+  //    /*16*/
+  //
+  //      'f1 g[ routine f ]',
+  //
+  //    /*17*/
+  //
+  //      '',
+  //
+  //    /*18*/
+  //    [
+  //      ''
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*19*/
+  //
+  //    '',
+  //
+  //    /*20*/
+  //
+  //    [
+  //      '  i : 0.00| ',
+  //      '  k : 1.00| ',
+  //      '  g : 2.00| ',
+  //      '  l : 3.00'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*21*/
+  //
+  //    [
+  //      '  o : 4.000^ ',
+  //      '  p : 5.000^ ',
+  //      '  r : 6.000^ ',
+  //      '  s : 7.000'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*22*/
+  //
+  //    [
+  //      '  m : 8, ',
+  //      '  n : 9'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*23*/
+  //
+  //    'x : \'\\n10\'| z : \'\\\\11\'',
+  //
+  //    /*24*/
+  //    [
+  //      '  a : 1. ',
+  //      '  b : d : 2. ',
+  //      '  c : 3'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*25*/
+  //    [
+  //      '  a : 3. ',
+  //      '  b : d : 2. ',
+  //      '  c : 1'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*26*/
+  //    [
+  //      '| a : 4@ ',
+  //      '| b : d : 5@ ',
+  //      '| c : 6'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*27*/
+  //    [
+  //      '  a - 7-? ',
+  //      '  b - d - 8-? ',
+  //      '  c - 9'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*28*/
+  //    [
+  //      '  a : 9, ',
+  //      '  b : d : 8, ',
+  //      '  c : 7'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*29*/
+  //    [
+  //      '  a : 10.0| ',
+  //      '  b : d : 20.0| ',
+  //      '  c : 30.0'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*30*/
+  //    [
+  //      '  a : 1e+1/ ',
+  //      '  b : d : 2e+1/ ',
+  //      '  c : 3e+1'
+  //    ].join( '\n' ),
+  //
+  //    /*31*/
+  //    [
+  //      '  a : \'a\', , ',
+  //      '  b : ',
+  //      '    d : false, , ',
+  //      '  c : 3'
+  //    ].join( '\n' ),
+  //
+  //    /*32*/
+  //    [
+  //      '  a : \'\\na\'| ',
+  //      '  b : d : \'\\ntrue\'| ',
+  //      '  c : \'\\n\''
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*33*/
+  //    '',
+  //
+  //    /*34*/
+  //    '',
+  //
+  //    /*35*/
+  //    '  c : 1',
+  //
+  //    /*36*/
+  //    [
+  //      '',
+  //    ].join( '\n' ),
+  //
+  //    /*37*/
+  //    [
+  //      '  a : 1. ',
+  //      '  b : d : 2. ',
+  //      '  c : 3',
+  //    ].join( '\n' ),
+  //
+  //    /*38*/
+  //    [
+  //      '  |  a->3, , ',
+  //      '  |  b->d->2, , ',
+  //      '  |  c->1',
+  //    ].join( '\n' ),
+  //
+  //    /*39*/
+  //    [
+  //      '{',
+  //      '  a : \'bb\', ',
+  //      '  b : { d : false }, ',
+  //      '  c : 30.00000',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*40*/
+  //    [
+  //      '{',
+  //      '  a : 100.00, ',
+  //      '  b : { d : 110.00 }, ',
+  //      '  c : 120.00',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*41*/
+  //    [
+  //      '{',
+  //      '  a : \'\\na\', ',
+  //      '  b : ',
+  //      '  {',
+  //      '    d : \'\\ntrue\'',
+  //      '  }',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*42*/
+  //    [
+  //      '{',
+  //      '  a : \'aa\', ',
+  //      '  b : {}',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*43*/
+  //    [
+  //      '{',
+  //      '  a : \'bb\', ',
+  //      '  b : {}',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*44*/
+  //    [
+  //      '{',
+  //      '  b : {}, ',
+  //      '  c : 1',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*45*/
+  //    [
+  //
+  //      '{',
+  //      '  sequence : \'\\u001b[A\', ',
+  //      '  name : \'undefined\', ',
+  //      '  shift : false, ',
+  //      '  code : \'[A\'',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*46*/
+  //    [
+  //      '{',
+  //      '  sequence : \'\\u007f[A\', ',
+  //      '  name : \'undefined\', ',
+  //      '  shift : false, ',
+  //      '  code : \'[A\'',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*47*/
+  //    [
+  //      '{',
+  //      '  sequence : \'<\\u001cb>text<\\u001cb>\', ',
+  //      '  data : {- Object with 2 elements -}, ',
+  //      '  shift : false, ',
+  //      '  code : \'<b>text<b>\'',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*48*/
+  //    [
+  //      '{',
+  //      '  sequence : \'heLLo\', ',
+  //      '  shift : false, ',
+  //      '  code : \'heLLo\'',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*49*/
+  //    [
+  //      '{',
+  //      '  sequence : \'\\nabc\', ',
+  //      '  shift : false, ',
+  //      '  code : \'abc\'',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*50*/
+  //    [
+  //      '{',
+  //      '  sequence : \'\\t[cba]\\t\', ',
+  //      '  data : 100, ',
+  //      '  code : \'\\n[cba]\\n\'',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*51*/
+  //    [
+  //      '{',
+  //      '  sequence : \'\\\\ABC\\\\\', ',
+  //      '  data : 100, ',
+  //      '  code : \'\\\\ABC\\\\\'',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*52*/
+  //    [
+  //      '{',
+  //      '  sequence : \'\\nline\\n\', ',
+  //      '  data : null, ',
+  //      '  code : \'\\nline\\n\'',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*53*/
+  //    [
+  //      '{ sequence : \'\\rspace\\r\' }'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*54*/
+  //    [
+  //      '{ sequence : \'\\btest\' }'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*55*/
+  //    [
+  //      '{ sequence : \'\\u000bsample\' }'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*56*/
+  //    [
+  //      '{ sequence : \'\\ftest\' }'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*57*/
+  //    [
+  //      '{',
+  //      '  b : {}, ',
+  //      '  c : true',
+  //      '}'
+  //
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*58*/
+  //    [
+  //      '{',
+  //      '  b : {}',
+  //      '}'
+  //
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*59*/
+  //    [
+  //      '{',
+  //      '  a : 1000.0, ',
+  //      '  b : {}, ',
+  //      '  c : 1.5',
+  //      '}'
+  //
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*60*/
+  //    [
+  //      '{ a : 1e+3, c : 2 }',
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*61*/
+  //    [
+  //      '{ c : false, d : undefined, e : null }'
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*62*/
+  //    [
+  //      '{}',
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*63*/
+  //    [
+  //      '{ c : 3, a : 1, b : 2 }',
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*64*/
+  //    [
+  //      '{ c : \'3\' }',
+  //
+  //    ].join( '\n' ),
+  //
+  //    /*65*/
+  //    [
+  //
+  //      '{',
+  //      '  sequence : \'\\u001b[A\', ',
+  //      '  name : \'undefined\', ',
+  //      '  shift : false, ',
+  //      '  code : \'[A\'',
+  //      '}'
+  //
+  //    ].join( '\n' ),
+  //
+  //
+  //  ];
+  //
+  //  testFunction( test, desc, src, options, expected );
+
+  test.case = 'default object';
+  var src = { a : 1, b : 2, c : 3 };
+  var got = _.toStr( src, { } );
+  var expected = '{ a : 1, b : 2, c : 3 }';
+  test.identical( got, expected );
+
+  test.case = 'default object, levels 0';
+  var src = { x : 3, y : 5, z : 5 };
+  var got = _.toStr( src, { levels : 0 } );
+  var expected = '{- Object with 3 elements -}';
+  test.identical( got, expected );
+
+  test.case = 'default object, levels 1';
+  var src = { q : 6, w : 7, e : 8 };
+  var got = _.toStr( src, { levels : 1 } );
+  var expected = '{ q : 6, w : 7, e : 8 }';
+  test.identical( got, expected );
+
+  test.case = 'nested object, levels 1';
+  var src = { u : 12, i : { o : 13 }, p : 14 };
+  var got = _.toStr( src, { levels : 1 } );
+  var expected =
+      ['{',
+       '  u : 12, ',
+       '  i : {- Object with 1 elements -}, ',
+       '  p : 14',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, levels 2';
+  var src = { r : 9, t : { a : 10 }, y : 11 };
+  var got = _.toStr( src, { levels : 2 } );
+  var expected =
+      ['{',
+       '  r : 9, ',
+       '  t : { a : 10 }, ',
+       '  y : 11',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, levels 3';
+  var src = { z : '01', x : { c : { g : 4 } }, v : '03' };
+  var got = _.toStr( src, { levels : 3 } );
+  var expected =
+      ['{',
+       '  z : \'01\', ',
+       '  x : ',
+       '  {',
+       '    c : { g : 4 }',
+       '  }, ',
+       '  v : \'03\'',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, levels 5';
+  var src = { u : 12, i : { o : { x : { y : [ 1, 2, 3 ] } } }, p : 14 };
+  var got = _.toStr( src, { levels : 5 } );
+  var expected =
+      ['{',
+       '  u : 12, ',
+       '  i : ',
+       '  {',
+       '    o : ',
+       '    {',
+       '      x : ',
+       '      {',
+       '        y : [ 1, 2, 3 ]',
+       '      }',
+       '    }',
+       '  }, ',
+       '  p : 14',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, noSubObject noArray';
+  var src = { q : { a : 1 }, w : 'c', e : [1] };
+  var got = _.toStr( src, { levels : 2, noSubObject : 1, noArray : 1 } );
+  var expected =
+      ['{',
+       '  w : \'c\'',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, noAtomic';
+  var src = { z : '02', x : { c : { g : 6 } }, v : '01' };
+  var got = _.toStr( src, { levels : 3, noAtomic : 1 } );
+  var expected =
+      ['{',
+       '  x : ',
+       '  {',
+       '    c : {}',
+       '  }',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, noObject';
+  var src = { h : { d : 1 }, g : 'c', c : [2] };
+  var got = _.toStr( src, { levels : 2, noObject : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'default object, wrap 0 modified comma';
+  var src = { a : 6, b : 7, c : 1 };
+  var got = _.toStr( src, { wrap : 0, comma : ' | ' } );
+  var expected = 'a : 6 | b : 7 | c : 1';
+  test.identical( got, expected );
+
+  test.case = 'default object, wrap 0 noString noNumber';
+  var src = { a : true, b : '2', c : 3, d : undefined };
+  var got = _.toStr( src, { wrap : 0, noString : 1, noNumber: 1, comma : ', ' } );
+  var expected = 'a : true, d : undefined';
+  test.identical( got, expected );
+
+  test.case = 'object with symbol, wrap 0';
+  var src = { a : null, b : 1, c : '2', d : undefined, e : true, f : Symbol( 'symbol' ) };
+  var got = _.toStr( src, { wrap : 0, comma : '* ' } );
+  var expected =
+      ['  a : null* ',
+       '  b : 1* ',
+       '  c : \'2\'* ',
+       '  d : undefined* ',
+       '  e : true* ',
+       '  f : {- Symbol symbol -}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'default object, wrap 0 prependTab 0 modified comma';
+  var src = { a : 'true', b : 2, c : false, d : undefined };
+  var got = _.toStr( src, { wrap : 0, prependTab : 0, comma : '-> ' } );
+  var expected =
+      ['  a : \'true\'-> ',
+       '  b : 2-> ',
+       '  c : false-> ',
+       '  d : undefined'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'object with error, wrap 0';
+  var src = { e : new Error( 'msg' ) };
+  var got = _.toStr( src, { wrap : 0, tab : '| ', dtab : '', comma : '> ' } );
+  var expected = '| e : [object Error]';
+  test.identical( got, expected );
+
+  test.case = 'object with a function, wrap 0';
+  var src = { f : 1, g : function f(  ) { } };
+  var got = _.toStr( src, { wrap : 0, colon : '', comma : ' ' } );
+  var expected = 'f1 g[ routine f ]';
+  test.identical( got, expected );
+
+  test.case = 'object with a function, wrap 0 noRoutine';
+  var src = { x : function y(  ) { } };
+  var got = _.toStr( src, { wrap : 0, noRoutine : 1, comma : '.. ' } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'default object, wrap 0 noAtomic';
+  var src = { a : null, b : 1, c : '2', d : undefined };
+  var got = _.toStr( src, { wrap : 0, noAtomic : 1, comma : ', ' } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'object with a function, onlyRoutines';
+  var src = { e : function r( ) { }, f : 1, g : '2', h : [ 1 ] };
+  var got = _.toStr( src, { wrap : 0, onlyRoutines : 1, comma : '<< ' } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'integer object values, precision 3 wrap 0';
+  var src = { i : 0, k : 1, g : 2, l : 3 };
+  var got = _.toStr( src, { wrap : 0, precision : 3, comma : '| ' } );
+  var expected =
+      ['  i : 0.00| ',
+       '  k : 1.00| ',
+       '  g : 2.00| ',
+       '  l : 3.00'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'integer values, wrap 0 fixed 3';
+  var src = { o : 4, p : 5, r : 6, s : 7 };
+  var got = _.toStr( src, { wrap : 0,  fixed : 3, comma : '^ ' } );
+  var expected =
+      ['  o : 4.000^ ',
+       '  p : 5.000^ ',
+       '  r : 6.000^ ',
+       '  s : 7.000'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'integer values, multiline';
+  var src = { m : 8, n : 9 };
+  var got = _.toStr( src, { wrap : 0,  multiline : 1, comma : ', ' } );
+  var expected =
+      ['  m : 8, ',
+       '  n : 9'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'object new lines, escaping';
+  var src = { x : '\n10', z : '\\11' };
+  var got = _.toStr( src, { wrap : 0,  escaping : 1, comma : '| ' } );
+  var expected = 'x : \'\\n10\'| z : \'\\\\11\'';
+  test.identical( got, expected );
+
+  test.case = 'nested object';
+  var src = { a : 1, b : { d : 2 }, c : 3 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, comma : '. ' } );
+  var expected =
+      ['  a : 1. ',
+       '  b : d : 2. ',
+       '  c : 3'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object';
+  var src = { a : 3, b : { d : 2 }, c : 1 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, comma : '. '} );
+  var expected =
+      ['  a : 3. ',
+       '  b : d : 2. ',
+       '  c : 1'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, modified tab';
+  var src = { a : 4, b : { d : 5 }, c : 6 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, tab : '| ', dtab : '', comma : '@ ' } );
+  var expected =
+      ['| a : 4@ ',
+        '| b : d : 5@ ',
+        '| c : 6'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object';
+  var src = { a : 7, b : { d : 8 }, c : 9 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, colon : ' - ', comma : '-? ' } );
+  var expected =
+      ['  a - 7-? ',
+       '  b - d - 8-? ',
+       '  c - 9'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object';
+  var src = { a : 9, b : { d : 8 }, c : 7 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, prependTab : 0, comma : ', ' } );
+  var expected =
+      ['  a : 9, ',
+       '  b : d : 8, ',
+       '  c : 7'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, fixed 1';
+  var src = { a : 10, b : { d : 20 }, c : 30 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, fixed : 1, comma : '| ' } );
+  var expected =
+      ['  a : 10.0| ',
+       '  b : d : 20.0| ',
+       '  c : 30.0'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, precision 1';
+  var src = { a : 10.00, b : { d : 20.00 }, c : 30.00 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, precision : 1, comma : '/ ' } );
+  var expected =
+      ['  a : 1e+1/ ',
+       '  b : d : 2e+1/ ',
+       '  c : 3e+1'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, multiline';
+  var src = { a : 'a', b : { d : false }, c : 3 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, multiline : 1, comma : ', , ' } );
+  var expected =
+      ['  a : \'a\', , ',
+       '  b : ',
+       '    d : false, , ',
+       '  c : 3'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, escaping 1';
+  var src = { a : '\na', b : { d : '\ntrue' }, c : '\n' };
+  var got = _.toStr( src, { levels : 3, wrap : 0, escaping : 1, comma : '| ' } );
+  var expected =
+      ['  a : \'\\na\'| ',
+       '  b : d : \'\\ntrue\'| ',
+       '  c : \'\\n\''
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, noAtomic';
+  var src = { a : 'a', b : { d : false }, c : 3 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, noAtomic : 1, comma : '< ' } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'nestedObject, noAtomic';
+  var src = { a : 'aa', b : { d : true }, c : 40 };
+  var got = _.toStr( src, { levels : 3, wrap : 0, noAtomic : 1, comma : ', ' } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'nestedObject, noSubObject noArray';
+  var src = { a : [ 'a', 'b' ], b : { d : 'true' }, c : 1 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, noSubObject : 1, noArray : 1, comma : '' } );
+  var expected = '  c : 1';
+  test.identical( got, expected );
+
+  test.case = 'nested object, noString noNumber';
+  var src = { a : [ 'a', 'b' ], b : { d : 'true' }, c : 1 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '. ' } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'nested object';
+  var src = { a : 1, b : { d : 2 }, c : 3 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, comma : '. '} );
+  var expected =
+      ['  a : 1. ',
+       '  b : d : 2. ',
+       '  c : 3',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, double comma';
+  var src = { a : 3, b : { d : 2 }, c : 1 };
+  var got = _.toStr( src, { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' } );
+  var expected =
+      ['  |  a->3, , ',
+       '  |  b->d->2, , ',
+       '  |  c->1',
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, prependTab 0 fixed 5';
+  var src = { a : 'bb', b : { d : false }, c : 30 };
+  var got = _.toStr( src, { levels : 2, prependTab : 0, fixed : 5 } );
+  var expected =
+      ['{',
+       '  a : \'bb\', ',
+       '  b : { d : false }, ',
+       '  c : 30.00000',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, prependTab 0 precision 5';
+  var src = { a : 100, b : { d : 110 }, c : 120 };
+  var got = _.toStr( src, { levels : 2, prependTab : 0, precision : 5 } );
+  var expected =
+      ['{',
+       '  a : 100.00, ',
+       '  b : { d : 110.00 }, ',
+       '  c : 120.00',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, multiline escaping';
+  var src = { a : '\na', b : { d : '\ntrue' } };
+  var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
+  var expected =
+      ['{',
+       '  a : \'\\na\', ',
+       '  b : ',
+       '  {',
+       '    d : \'\\ntrue\'',
+       '  }',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object with function, noRoutine';
+  var src = { a : 'aa', b : { d : function( ){ } } };
+  var got = _.toStr( src, { levels : 2, noRoutine : 1 } );
+  var expected =
+      ['{',
+       '  a : \'aa\', ',
+       '  b : {}',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object with function, noRoutine';
+  var src = { a : 'bb', b : { d : function( ){ } } };
+  var got = _.toStr( src, { levels : 3, noRoutine : 1, } );
+  var expected =
+      ['{',
+       '  a : \'bb\', ',
+       '  b : {}',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object with date and error, noError noDate';
+  var src = { a : new Date( Date.UTC( 1993, 12, 12 ) ), b : { d : new Error( 'msg' ) }, c : 1 };
+  var got = _.toStr( src, { levels : 3, noError : 1, noDate : 1 } );
+  var expected =
+      ['{',
+       '  b : {}, ',
+       '  c : 1',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'object json like, escaping 1';
+  var src = { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  };
+  var got = _.toStr( src, { escaping : 1 } );
+  var expected =
+      ['{',
+       '  sequence : \'\\u001b[A\', ',
+       '  name : \'undefined\', ',
+       '  shift : false, ',
+       '  code : \'[A\'',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'object json like, escaping 0';
+  var src = { "sequence" : "\x7f[A", "name" : "undefined", "shift" : false, "code" : "[A"  };
+  var got = _.toStr( src, { escaping : 0 } );
+  var expected =
+      ['{',
+       '  sequence : \'\\u007f[A\', ',
+       '  name : \'undefined\', ',
+       '  shift : false, ',
+       '  code : \'[A\'',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object json like, escaping 0';
+  var src = { "sequence" : "<\u001cb>text<\u001cb>", "data" : { "name" : "myname", "age" : 1 }, "shift" : false, "code" : "<b>text<b>"  };
+  var got = _.toStr( src, { escaping : 0 } );
+  var expected =
+      ['{',
+       '  sequence : \'<\\u001cb>text<\\u001cb>\', ',
+       '  data : {- Object with 2 elements -}, ',
+       '  shift : false, ',
+       '  code : \'<b>text<b>\'',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'object json like, multiline';
+  var src = { "sequence" : "\u0068\u0065\u004C\u004C\u006F", "shift" : false, "code" : "heLLo"  };
+  var got = _.toStr( src, { multiline : 1 } );
+  var expected =
+      ['{',
+       '  sequence : \'heLLo\', ',
+       '  shift : false, ',
+       '  code : \'heLLo\'',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'object json like, multiline escaping';
+  var src = { "sequence" : "\n\u0061\u0062\u0063", "shift" : false, "code" : "abc"  };
+  var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
+  var expected =
+      ['{',
+       '  sequence : \'\\nabc\', ',
+       '  shift : false, ',
+       '  code : \'abc\'',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'object json like, multiline escaping';
+  var src = { "sequence" : "\t\u005b\u0063\u0062\u0061\u005d\t", "data" : 100, "code" : "\n[cba]\n"  };
+  var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
+  var expected =
+      ['{',
+       '  sequence : \'\\t[cba]\\t\', ',
+       '  data : 100, ',
+       '  code : \'\\n[cba]\\n\'',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'object json like, multiline escaping';
+  var src = { "sequence" : "\u005CABC\u005C", "data" : 100, "code" : "\\ABC\\"  };
+  var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
+  var expected =
+      ['{',
+       '  sequence : \'\\\\ABC\\\\\', ',
+       '  data : 100, ',
+       '  code : \'\\\\ABC\\\\\'',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'object json like, multiline escaping';
+  var src = { "sequence" : "\u000Aline\u000A", "data" : null, "code" : "\nline\n"  };
+  var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
+  var expected =
+      ['{',
+       '  sequence : \'\\nline\\n\', ',
+       '  data : null, ',
+       '  code : \'\\nline\\n\'',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'object json like, escaping levels 2';
+  var src = { "sequence" : "\rspace\r",  };
+  var got = _.toStr( src, { levels : 2, escaping : 1 } );
+  var expected = '{ sequence : \'\\rspace\\r\' }';
+  test.identical( got, expected );
+
+  test.case = 'object json like, escaping';
+  var src = { "sequence" : "\btest",  };
+  var got = _.toStr( src, { levels : 2, escaping : 1 } );
+  var expected = '{ sequence : \'\\btest\' }';
+  test.identical( got, expected );
+
+  test.case = 'object json like, escaping';
+  var src = { "sequence" : "\vsample",  };
+  var got = _.toStr( src, { levels : 2, escaping : 1 } );
+  var expected = '{ sequence : \'\\u000bsample\' }';
+  test.identical( got, expected );
+
+  test.case = 'object json like, escaping';
+  var src = { "sequence" : "\ftest",  };
+  var got = _.toStr( src, { levels : 2, escaping : 1 } );
+  var expected = '{ sequence : \'\\ftest\' }';
+  test.identical( got, expected );
+
+  test.case = 'nested object, noNumber noString';
+  var src = { a : 1, b : { d : 'string' }, c : true };
+  var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1} );
+  var expected =
+      ['{',
+       '  b : {}, ',
+       '  c : true',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, noNumber noString noDate';
+  var src = { a : 1, b : { d : 'string' }, c : new Date(Date.UTC( ) ) };
+  var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1, noDate : 1} );
+  var expected =
+      ['{',
+       '  b : {}',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'nested object, noString fixed 1';
+  var src = { a : 1000, b : { d : 'string' }, c : 1.500 };
+  var got = _.toStr( src, { levels : 2, noString : 1, fixed : 1} );
+  var expected =
+      ['{',
+       '  a : 1000.0, ',
+       '  b : {}, ',
+       '  c : 1.5',
+       '}'  
+      ].join( '\n' );
+  test.identical( got, expected );
+
+  test.case = 'object, noString precision 1';
+  var src = { a : 1000, b : 'text', c : 1.500 };
+  var got = _.toStr( src, { levels : 2, noString : 1, precision : 1} );
+  var expected = '{ a : 1e+3, c : 2 }';
+  test.identical( got, expected );
+
+  test.case = 'object, noString noNumber prependTab 0';
+  var src = { a : 1000, b : 'text', c : false, d : undefined, e : null};
+  var got = _.toStr( src, { levels : 2, noString : 1, noNumber :1, tab : '-', prependTab : 0 } );
+  var expected = '{ c : false, d : undefined, e : null }';
+  test.identical( got, expected );
+
+  test.case = 'object, noAtomic noNumber 0';
+  var src = { a : 1001, b : 'text', c : false, d : undefined, e : null};
+  var got = _.toStr( src, { levels : 2, noAtomic : 1, noNumber : 0 } );
+  var expected = '{}';
+  test.identical( got, expected );
+
+  test.case = 'return object, own 0';
+  var src =
+      ( function( )
+      {
+        var x = { a : 1, b : 2 },
+        y = Object.create( x );
+        y.c = 3;
+        return y;
+      } )( );
+  var got = _.toStr( src, { own : 0 } );
+  var expected = '{ c : 3, a : 1, b : 2 }';
+  test.identical( got, expected );
+
+  test.case = 'return object';
+  var src =
+      ( function( )
+      {
+        var x = { a : '0', b : '1' },
+        y = Object.create( x );
+        y.c = '3';
+        return y;
+      } )( );
+  var got = _.toStr( src, { } );
+  var expected = '{ c : \'3\' }';
+  test.identical( got, expected );
+
+  test.case = 'object json like';
+  var src = { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  };
+  var got = _.toStr( src, { } );
+  var expected =
+      ['{',
+       '  sequence : \'\\u001b[A\', ',
+       '  name : \'undefined\', ',
+       '  shift : false, ',
+       '  code : \'[A\'',
+       '}'
+      ].join( '\n' );
+  test.identical( got, expected );
 
 }
 
