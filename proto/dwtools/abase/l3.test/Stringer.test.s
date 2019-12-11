@@ -3271,7 +3271,7 @@ function toStrEnumerable( test )
   var expected = '{ a : \'string\', foo : 1 }';
   test.identical( got, expected );
   
-  test.case = 'enumerable, no enum';
+  test.case = 'enumerable, onlyEnum 0';
   var src =
       ( function( )
       {
@@ -3293,7 +3293,7 @@ function toStrEnumerable( test )
   var expected = '{ getFoo : [ routine value ], foo : 1 }';
   test.identical( got, expected );
   
-  test.case = 'enumerable, no enum own 0';
+  test.case = 'enumerable, onlyEnum 0 own 0';
   var src =
       ( function( )
       {
@@ -3505,43 +3505,84 @@ function toStrNumber( test )
 
 function toStrString( test )
 {
-  var desc = 'String test',
-  src =
-  [
-    String( ),
-    'sample',
-    'sample2',
-    'sample3',
-    '\nsample4\n',
-    'sample5',
-    'sample6',
-    '\nsample7'
+  //  var desc = 'String test',
+  //  src =
+  //  [
+  //    String( ),
+  //    'sample',
+  //    'sample2',
+  //    'sample3',
+  //    '\nsample4\n',
+  //    'sample5',
+  //    'sample6',
+  //    '\nsample7'
+  //
+  //  ],
+  //  options =
+  //  [
+  //    { },
+  //    { },
+  //    { noAtomic : 1 },
+  //    { noString : 1 },
+  //    { escaping : 1 },
+  //    { tab : '---' },
+  //    { levels : 0 },
+  //    { },
+  //  ],
+  //  expected =
+  //  [
+  //    '\'\'',
+  //    '\'sample\'',
+  //    '',
+  //    '',
+  //    '\'\\nsample4\\n\'',
+  //    '\'sample5\'',
+  //    '\'sample6\'',
+  //    '\'\nsample7\''
+  //  ]
+  //
+  //  testFunction( test, desc, src, options, expected );
 
-  ],
-  options =
-  [
-    { },
-    { },
-    { noAtomic : 1 },
-    { noString : 1 },
-    { escaping : 1 },
-    { tab : '---' },
-    { levels : 0 },
-    { },
-  ],
-  expected =
-  [
-    '\'\'',
-    '\'sample\'',
-    '',
-    '',
-    '\'\\nsample4\\n\'',
-    '\'sample5\'',
-    '\'sample6\'',
-    '\'\nsample7\''
-  ]
+  test.case = 'string';
+  var got = _.toStr( String( ), { } );
+  var expected = '\'\'';
+  test.identical( got, expected );
 
-  testFunction( test, desc, src, options, expected );
+  test.case = 'trivial string';
+  var got = _.toStr( 'sample', { } );
+  var expected = '\'sample\'';
+  test.identical( got, expected );
+
+  test.case = 'string, noAtomic';
+  var got = _.toStr( 'sample2', { noAtomic : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'string, noString';
+  var got = _.toStr( 'sample3', { noString : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'string, escaping';
+  var got = _.toStr( '\nsample4\n', { escaping : 1 } );
+  var expected = '\'\\nsample4\\n\'';
+  test.identical( got, expected );
+
+  test.case = 'string, tab';
+  var got = _.toStr( 'sample5', { tab : '---' } );
+  var expected = '\'sample5\'';
+  test.identical( got, expected );
+
+  test.case = 'string, levels 0';
+  var got = _.toStr( 'sample6', { levels : 0 } );
+  var expected = '\'sample6\'';
+  test.identical( got, expected );
+
+  test.case = 'string new line inside';
+  var got = _.toStr( '\nsample7', { } );
+  var expected = '\'\nsample7\'';
+  test.identical( got, expected );
+
 }
 
 //
