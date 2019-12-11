@@ -3589,48 +3589,89 @@ function toStrString( test )
 
 function toStrAtomic( test )
 {
-  var desc = 'boolean, null, undefined test',
-  src =
-  [
-    Boolean( ),
-    true,
-    false,
-    1!=2,
+  //  var desc = 'boolean, null, undefined test',
+  //  src =
+  //  [
+  //    Boolean( ),
+  //    true,
+  //    false,
+  //    1!=2,
+  //
+  //    null,
+  //    null,
+  //
+  //    undefined,
+  //    undefined
+  //  ],
+  //  options =
+  //  [
+  //    { },
+  //    { },
+  //    { levels : 0 },
+  //    { onlyRoutines : 1 },
+  //
+  //    { },
+  //    { levels : 3 },
+  //
+  //    { },
+  //    { noAtomic : 1 }
+  //
+  //  ],
+  //  expected =
+  //  [
+  //    'false',
+  //    'true',
+  //    'false',
+  //    '',
+  //
+  //    'null',
+  //    'null',
+  //
+  //    'undefined',
+  //    ''
+  //  ]
+  //  testFunction( test, desc, src, options, expected );
 
-    null,
-    null,
+  test.case = 'boolean';
+  var got = _.toStr( Boolean( ), { } );
+  var expected = 'false';
+  test.identical( got, expected );
 
-    undefined,
-    undefined
-  ],
-  options =
-  [
-    { },
-    { },
-    { levels : 0 },
-    { onlyRoutines : 1 },
+  test.case = 'boolean with value';
+  var got = _.toStr( true, { } );
+  var expected = 'true';
+  test.identical( got, expected );
 
-    { },
-    { levels : 3 },
+  test.case = 'boolean, levels 0';
+  var got = _.toStr( false, { levels : 0 } );
+  var expected = 'false';
+  test.identical( got, expected );
 
-    { },
-    { noAtomic : 1 }
+  test.case = 'boolean, onlyRoutines';
+  var got = _.toStr( 1!=2, { onlyRoutines : 1 } );
+  var expected = '';
+  test.identical( got, expected );
 
-  ],
-  expected =
-  [
-    'false',
-    'true',
-    'false',
-    '',
+  test.case = 'boolean null';
+  var got = _.toStr( null, { } );
+  var expected = 'null';
+  test.identical( got, expected );
 
-    'null',
-    'null',
+  test.case = 'boolean null, levels 3';
+  var got = _.toStr( null, { levels : 3 } );
+  var expected = 'null';
+  test.identical( got, expected );
 
-    'undefined',
-    ''
-  ]
-  testFunction( test, desc, src, options, expected );
+  test.case = 'boolean undefined';
+  var got = _.toStr( undefined, { } );
+  var expected = 'undefined';
+  test.identical( got, expected );
+
+  test.case = 'boolean undefined, noAtomic';
+  var got = _.toStr( undefined, { noAtomic : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
 }
 
 //
