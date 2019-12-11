@@ -80,44 +80,44 @@ function stringFromFile( name, encoding, begin, end )
 
 /* qqq : eliminate that, please */
 
-function testFunction( test, desc, src, options, expected )
-{
-
-  var got = null;
-  var result = null;
-  var exp = null;
-
-  for( var k = 0; k < src.length; ++k  )
-  {
-    test.case = desc ;
-    var optionsTest = options[ k ] || options[ 0 ];
-    got = _.toStr( src[ k ], optionsTest );
-
-    if( test.case.slice( 0, 4 ) === 'json' && optionsTest.jsonLike )
-    {
-
-      try
-      {
-        result = JSON.parse( got );
-        test.identical( result, src[ k ] );
-      }
-      catch( err )
-      {
-        logger.log( 'JSON :' );
-        logger.log( got );
-        throw _.err( err );
-      }
-
-    }
-    else
-    {
-      test.identical( got, expected[ k ] ); debugger;
-    }
-
-  }
-
-  debugger;
-}
+//function testFunction( test, desc, src, options, expected )
+//{
+//
+//  var got = null;
+//  var result = null;
+//  var exp = null;
+//
+//  for( var k = 0; k < src.length; ++k  )
+//  {
+//    test.case = desc ;
+//    var optionsTest = options[ k ] || options[ 0 ];
+//    got = _.toStr( src[ k ], optionsTest );
+//
+//    if( test.case.slice( 0, 4 ) === 'json' && optionsTest.jsonLike )
+//    {
+//
+//      try
+//      {
+//        result = JSON.parse( got );
+//        test.identical( result, src[ k ] );
+//      }
+//      catch( err )
+//      {
+//        logger.log( 'JSON :' );
+//        logger.log( got );
+//        throw _.err( err );
+//      }
+//
+//    }
+//    else
+//    {
+//      test.identical( got, expected[ k ] ); debugger;
+//    }
+//
+//  }
+//
+//  debugger;
+//}
 
 // --
 // tests
@@ -6268,7 +6268,7 @@ var Self =
   {
     reportChars,
     stringFromFile,
-    testFunction,
+    //testFunction,
     _toStrJsonFromFile,
   },
 
