@@ -852,11 +852,12 @@ function toStrUnwrapped( test )
   ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected = 
-  ['    \'abc\' ',
-  '    \'edf\' ',
-  '    a : 1',
+  [
+    '    \'abc\' ',
+    '    \'edf\' ',
+    '    a : 1',
   ].join( '\n' );
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'unwrapped object inside an array';
   var src = 
@@ -869,11 +870,12 @@ function toStrUnwrapped( test )
   ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected = 
-  ['    nameLong : \'abc\' ',
-  '    description : \'edf\' ',
-  '    rewardForVisitor : a : 1',
+  [
+    '    nameLong : \'abc\' ',
+    '    description : \'edf\' ',
+    '    rewardForVisitor : a : 1',
   ].join( '\n' );
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'unwrapped object inside an array';
   var src =
@@ -887,12 +889,13 @@ function toStrUnwrapped( test )
   };
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-  ['  a : ',
-  '    nameLong : \'abc\' ',
-  '    description : \'edf\' ',
-  '    rewardForVisitor : a : 1',
+  [
+    '  a : ',
+    '    nameLong : \'abc\' ',
+    '    description : \'edf\' ',
+    '    rewardForVisitor : a : 1',
   ].join( '\n' );
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'unwrapped array inside an object';
   var src = 
@@ -906,12 +909,13 @@ function toStrUnwrapped( test )
   };
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-  ['  a : ',
-  '    \'abc\' ',
-  '    \'edf\' ',
-  '    a : 1',
+  [
+    '  a : ',
+    '    \'abc\' ',
+    '    \'edf\' ',
+    '    a : 1',
   ].join( '\n' );
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'unwrapped array inside an array, with other items';
   var src =
@@ -926,37 +930,40 @@ function toStrUnwrapped( test )
   ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected = 
-  ['    \'abc\' ',
-  '    \'edf\' ',
-  '    a : 1 ',
-  '  1 ',
-  '  2',
+  [
+    '    \'abc\' ',
+    '    \'edf\' ',
+    '    a : 1 ',
+    '  1 ',
+    '  2',
   ].join( '\n' );
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'unwrapped array with single item array';
   var src = [ 'a', 7, [ 1 ], 8, 'b' ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-  ['  \'a\' ',
-  '  7 ',
-  '    1 ',
-  '  8 ',
-  '  \'b\'',
+  [
+    '  \'a\' ',
+    '  7 ',
+    '    1 ',
+    '  8 ',
+    '  \'b\'',
   ].join( '\n' );
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'unwrapped array with single item object';
   var src = [ 'a', 7, { u : 1 }, 8, 'b' ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-  ['  \'a\' ',
-  '  7 ',
-  '  u : 1 ',
-  '  8 ',
-  '  \'b\'',
+  [
+    '  \'a\' ',
+    '  7 ',
+    '  u : 1 ',
+    '  8 ',
+    '  \'b\'',
   ].join( '\n' );
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'unwrapped array of arrays';
   var src = [ [ 5, 4 ], [ 2, 1, 0 ] ];
@@ -965,18 +972,19 @@ function toStrUnwrapped( test )
   ['    5 4 ',
   '    2 1 0',
   ].join( '\n' );
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'unwrapped array of arrays, level 2';
   var src = [ [ 5, 4, [ 3 ] ], [ 2, 1, 0 ] ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-  ['    5 ',
-  '    4 ',
-  '      3 ',
-  '    2 1 0',
+  [
+    '    5 ',
+    '    4 ',
+    '      3 ',
+    '    2 1 0',
   ].join( '\n' );
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'unwrapped function structure';
   var src =
@@ -1005,20 +1013,21 @@ function toStrUnwrapped( test )
   } )( );
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-  ['    nameLong : \'abc\' ',
-  '    description : \'edf\' ',
-  '    rewardForVisitor : a : 1 ',
-  '    stationary : 1 ',
-  '    f : \'f\' ',
-  '    quantity : 1 ',
-  '    nameLong : \'abc2\' ',
-  '    description : \'edf2\' ',
-  '    rewardForVisitor : a : 1 ',
-  '    stationary : 1 ',
-  '    f : \'f\' ',
-  '    quantity : 1',
+  [
+    '    nameLong : \'abc\' ',
+    '    description : \'edf\' ',
+    '    rewardForVisitor : a : 1 ',
+    '    stationary : 1 ',
+    '    f : \'f\' ',
+    '    quantity : 1 ',
+    '    nameLong : \'abc2\' ',
+    '    description : \'edf2\' ',
+    '    rewardForVisitor : a : 1 ',
+    '    stationary : 1 ',
+    '    f : \'f\' ',
+    '    quantity : 1',
   ].join( '\n' );
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'unwrapped object with arrays as properties';
   var src =
@@ -1031,13 +1040,14 @@ function toStrUnwrapped( test )
   };
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
   var expected =
-  ['  1 : \'a\' ',
-  '  2 :   10 20 30 ',
-  '  3 : 21 : \'aa\' 22 : \'bb\' ',
-  '  4 :   10 20 30 ',
-  '  13 :   10 20 30',
+  [
+    '  1 : \'a\' ',
+    '  2 :   10 20 30 ',
+    '  3 : 21 : \'aa\' 22 : \'bb\' ',
+    '  4 :   10 20 30 ',
+    '  13 :   10 20 30',
   ].join( '\n' );
-  test.identical( got, expected);
+  test.identical( got, expected ) ;
 
 }
 
@@ -1107,56 +1117,56 @@ function toStrError( test )
   test.case = 'error simple';
   var got = _.toStr( new Error( ), { } );
   var expected = 'Error';
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'error with message';
   var got = _.toStr( new Error( 'msg' ), { } );
   var expected = 'Error: msg';
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'error with message, levels 0';
   var got = _.toStr( new Error( 'msg2' ), { levels : 0 } );
   var expected = '[object Error]';
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'error, noError';
   var got = _.toStr( new Error( 'message' ), { noError : 1 } );
   var expected = '';
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'map-error, onlyEnumerable';
   var got = _.toStr( new Error( 'err message' ), { errorAsMap : 1, onlyEnumerable : 1 } );
   var expected = '{}';
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'map-error, onlyEnumerable own:0';
   var got = _.toStr( new Error( 'my message' ), { errorAsMap : 1, onlyEnumerable : 1, own : 0 } );
   var expected = '{}';
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'map-error stack';
   var src =
-      ( function( )
-      {
-        var err = new Error( 'my message4' );
-        err.stack = err.stack.slice( 0, 18 );
-        return err;
-      } )( );
+  ( function( )
+  {
+    var err = new Error( 'my message4' );
+    err.stack = err.stack.slice( 0, 18 );
+    return err;
+  } )( );
   var got = _.toStr( src, { errorAsMap : 1, levels : 2 } );
   var expected = '{ stack : \'Error: my message4\', message : \'my message4\' }';
-  test.identical( got, expected);
+  test.identical( got, expected );
 
   test.case = 'map-error stack, escaping';
   var src =
-      ( function( )
-      {
-        var err = new Error( 'my error' );
-        err.stack = err.stack.slice( 0, 16 );
-        return err;
-      } )( );
+  ( function( )
+  {
+    var err = new Error( 'my error' );
+    err.stack = err.stack.slice( 0, 16 );
+    return err;
+  } )( );
   var got = _.toStr( src, { errorAsMap : 1, levels : 2, escaping : 1 } );
   var expected = '{ stack : \'Error: my error\\n\', message : \'my error\' }';
-  test.identical( got, expected);
+  test.identical( got, expected );
 
 }
 
@@ -1835,11 +1845,12 @@ function toStrArray( test )
   var src = [ { a : 1 }, { b : 2 } ];
   var got = _.toStr( src, { } );
   var expected =
-      ['[',
-       '  {- Object with 1 elements -}, ',
-       '  {- Object with 1 elements -}',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  {- Object with 1 elements -}, ',
+    '  {- Object with 1 elements -}',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array of functions';
@@ -1852,12 +1863,13 @@ function toStrArray( test )
   var src = [ 1000, 2000, 3000 ];
   var got = _.toStr( src, { precision : 2, multiline : 1 } );
   var expected =
-      ['[',
-       '  1.0e+3, ',
-       '  2.0e+3, ',
-       '  3.0e+3',
-       ']',
-      ].join( '\n' );
+  [
+    '[',
+    '  1.0e+3, ',
+    '  2.0e+3, ',
+    '  3.0e+3',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array of floats, fixed 2';
@@ -1876,10 +1888,11 @@ function toStrArray( test )
   var src = [  7, { v : 0 }, 1, 'x' ];
   var got = _.toStr( src, { noAtomic : 1 } );
   var expected =
-      ['[',
-       '  {- Object with 1 elements -}',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  {- Object with 1 elements -}',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array, noArray';
@@ -1910,48 +1923,52 @@ function toStrArray( test )
   var src = [ { x : 1 }, { y : 2 } ];
   var got = _.toStr( src, { levels : 2, dtab : '-' } );
   var expected =
-      ['[',
-       '-{ x : 1 }, ',
-       '-{ y : 2 }',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '-{ x : 1 }, ',
+    '-{ y : 2 }',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested array';
   var src = [ 1, [ 2, 3, 4 ], 5 ];
   var got = _.toStr( src, { levels : 2, multiline : 1 } );
   var expected =
-      ['[',
-       '  1, ',
-       '  [',
-       '    2, ',
-       '    3, ',
-       '    4',
-       '  ], ',
-       '  5',
-       ']',
-      ].join( '\n' );
+  [
+    '[',
+    '  1, ',
+    '  [',
+    '    2, ',
+    '    3, ',
+    '    4',
+    '  ], ',
+    '  5',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested array, noNumber';
   var src = [ 6, [ 7, 8, 9 ], 10 ];
   var got = _.toStr( src, { levels : 2, noNumber : 1 } );
   var expected =
-      ['[',
-       '  []',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  []',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array of object, modified colon levels 2';
   var src = [ { k : 3 }, { l : 4 } ];
   var got = _.toStr( src, { levels : 2, colon : '->' } );
   var expected =
-      ['[',
-       '  { k->3 }, ',
-       '  { l->4 }',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  { k->3 }, ',
+    '  { l->4 }',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array with object, noObject';
@@ -1964,22 +1981,22 @@ function toStrArray( test )
   var src = [ 0, { b : 1 }, 3 ];
   var got = _.toStr( src, { levels : 2, noNumber : 1 } );
   var expected =
-      [
-       '[',
-       '  {}',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  {}',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array with object, noAtomic';
   var src = [ 'a', 7, { u : 2 }, 8, 'b' ];
   var got = _.toStr( src, { levels : 2, noAtomic : 1 } );
   var expected =
-      [
-       '[',
-       '  {}',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  {}',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array of functions, levels 2';
@@ -1998,51 +2015,56 @@ function toStrArray( test )
   var src = [ { a : { a : '1' } } ];
   var got = _.toStr( src, { levels : 3, noSubObject : 1 } );
   var expected =
-      ['[',
-       '  {}',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  {}',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array of objects, prependTab 0';
   var src = [ { c : 1 }, { d : 2 } ];
   var got = _.toStr( src, { levels : 2, tab : '|', prependTab : 0 } );
   var expected =
-      ['[',
-       '|  { c : 1 }, ',
-       '|  { d : 2 }',
-       '|]',
-      ].join( '\n' );
+  [
+    '[',
+    '|  { c : 1 }, ',
+    '|  { d : 2 }',
+    '|]',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array of date, object and error. noError noDate';
   var src = [ new Date( Date.UTC( 1993, 12, 12 ) ), { d : 2 }, new Error( 'error' ) ];
   var got = _.toStr( src, { levels : 2, noError : 1, noDate : 1 } );
   var expected =
-      ['[',
-       '  { d : 2 }',
-       ']',
-      ].join( '\n' );
+  [
+    '[',
+    '  { d : 2 }',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array with routine and object, noRoutine noSubObject';
   var src = [ function ff( ){ }, { d : 3 }, 15 ];
   var got = _.toStr( src, { levels : 2, noRoutine : 1, noSubObject : 1 } );
   var expected =
-      ['[',
-       '  { d : 3 }, ',
-       '  15',
-       ']',
-      ].join( '\n' );
+  [
+    '[',
+    '  { d : 3 }, ',
+    '  15',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested arrays, wrap 0';
   var src = [ [ 1, 2, 3 ], [ 4, 5, 6 ] ];
   var got = _.toStr( src, { wrap : 0, comma : ' | ' } );
   var expected =
-      ['  {- Array with 3 elements -} | ',
-       '  {- Array with 3 elements -}',
-      ].join( '\n' );
+  [
+    '  {- Array with 3 elements -} | ',
+    '  {- Array with 3 elements -}',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested arrays, noString noNumber wrap 0';
@@ -2109,11 +2131,12 @@ function toStrArray( test )
   var src = [  7, { v : 0 }, 1, 'x' ];
   var got = _.toStr( src, { wrap : 0, multiline : 1, comma : '. ' } );
   var expected =
-      ['  7. ',
-       '  {- Object with 1 elements -}. ',
-       '  1. ',
-       '  \'x\'',
-      ].join( '\n' );
+  [
+    '  7. ',
+    '  {- Object with 1 elements -}. ',
+    '  1. ',
+    '  \'x\'',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array, escaping wrap 0';
@@ -2126,31 +2149,34 @@ function toStrArray( test )
   var src = [ 0, [ 1, 2, 3, 4 ], 5, { a : 6 } ];
   var got = _.toStr( src, { levels : 2, wrap : 0, comma : '- ' } );
   var expected =
-      ['  0- ',
-       '    1- 2- 3- 4- ',
-       '  5- ',
-       '  a : 6',
-      ].join( '\n' );
+  [
+    '  0- ',
+    '    1- 2- 3- 4- ',
+    '  5- ',
+    '  a : 6',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested array, levels 2 wrap 0';
   var src = [ ['a', 'b', 'c'], 'd', 'e' ];
   var got = _.toStr( src, { levels : 2, wrap : 0, comma : '. '} );
   var expected =
-      ['    \'a\'. \'b\'. \'c\'. ',
-       '  \'d\'. ',
-       '  \'e\''
-      ].join( '\n' );
+  [
+    '    \'a\'. \'b\'. \'c\'. ',
+    '  \'d\'. ',
+    '  \'e\''
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array of objects, wrap 0 modified tab';
   var src = [ { a : 0 }, { b : 1 }, [ 2, 3 ] ];
   var got = _.toStr( src, { levels : 2, wrap : 0, tab : '| ', dtab : '', comma : ', ' } );
   var expected =
-      ['| a : 0, ',
-       '| b : 1, ',
-       '| 2, 3'
-      ].join( '\n' );
+  [
+    '| a : 0, ',
+    '| b : 1, ',
+    '| 2, 3'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array of an object';
@@ -2163,12 +2189,13 @@ function toStrArray( test )
   var src = [ 'a', 7, { u : 2 }, 8, 'b' ];
   var got = _.toStr( src, { levels : 2, wrap : 0, prependTab : 0, comma : ', ' } );
   var expected =
-      ['  \'a\', ',
-       '  7, ',
-       '  u : 2, ',
-       '  8, ',
-       '  \'b\'',
-      ].join( '\n' );
+  [
+    '  \'a\', ',
+    '  7, ',
+    '  u : 2, ',
+    '  8, ',
+    '  \'b\'',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array, fixed 1';
@@ -2187,28 +2214,31 @@ function toStrArray( test )
   var src = [ 0, { b : 1 }, 3 ];
   var got = _.toStr( src, { levels : 2, wrap : 0, multiline : 1, comma : '| ' } );
   var expected =
-      ['  0| ',
-       '    b : 1| ',
-       '  3',
-      ].join( '\n' );
+  [
+    '  0| ',
+    '    b : 1| ',
+    '  3',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array of nested objects, escaping';
   var src = [ { a : '\na', b : { d : '\ntrue' } } ];
   var got = _.toStr( src, { levels : 3, wrap : 0, escaping : 1, comma : '. ' } );
   var expected =
-      ['    a : \'\\na\'. ',
-       '    b : d : \'\\ntrue\'',
-      ].join( '\n' );
+  [
+    '    a : \'\\na\'. ',
+    '    b : d : \'\\ntrue\'',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array of nested objects, escaping';
   var src = [ { x : '\na', y : { z : '\ntrue' } } ];
   var got = _.toStr( src, { levels : 4, wrap : 0, escaping : 1, comma : ', ' } );
   var expected =
-      ['    x : \'\\na\', ',
-       '    y : z : \'\\ntrue\'',
-      ].join( '\n' );
+  [
+    '    x : \'\\na\', ',
+    '    y : z : \'\\ntrue\'',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array, noAtomic wrap 0';
@@ -2233,88 +2263,95 @@ function toStrArray( test )
   var src = [ [ 5, 4, [ 3 ] ], [ 2, 1, 0 ] ];
   var got = _.toStr( src, { levels : 3, wrap : 0, comma : '||' } );
   var expected =
-      ['    5||',
-       '    4||',
-       '      3||',
-       '    2||1||0',
-      ].join( '\n' );
+  [
+    '    5||',
+    '    4||',
+    '      3||',
+    '    2||1||0',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array of objects';
   var src = [ { a : 0 }, { b : 1 }, [ 2, 3 ] ];
   var got = _.toStr( src, { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' } );
   var expected =
-      ['  |  a->0, , ',
-       '  |  b->1, , ',
-       '  |    2, , 3',
-      ].join( '\n' );
+  [
+    '  |  a->0, , ',
+    '  |  b->1, , ',
+    '  |    2, , 3',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested arrays, prependTab 0 fixed 2';
   var src = [ [ 1.100, 1.200 ], [ 2, 3 ] ];
   var got = _.toStr( src, { levels : 2, prependTab : 0, fixed : 2 } );
   var expected =
-      ['[',
-       '  [ 1.10, 1.20 ], ',
-       '  [ 2.00, 3.00 ]',
-       ']',
-      ].join( '\n' );
+  [
+    '[',
+    '  [ 1.10, 1.20 ], ',
+    '  [ 2.00, 3.00 ]',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array, precision 1';
   var src = [ 9000, [ 8000, 6000], 7000 ];
   var got = _.toStr( src, { levels : 2, prependTab : 0, precision : 1 } );
   var expected =
-      ['[',
-       '  9e+3, ',
-       '  [ 8e+3, 6e+3 ], ',
-       '  7e+3',
-       ']',
-      ].join( '\n' );
+  [
+    '[',
+    '  9e+3, ',
+    '  [ 8e+3, 6e+3 ], ',
+    '  7e+3',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array of objects, multiline escaping';
   var src = [ { a : '\\test' }, { b : '\ntest' }, { c : 'test' } ];
   var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
-      ['[',
-       '  {',
-       '    a : \'\\\\test\'',
-       '  }, ',
-       '  {',
-       '    b : \'\\ntest\'',
-       '  }, ',
-       '  {',
-       '    c : \'test\'',
-       '  }',
-       ']',
-      ].join( '\n' );
+  [
+    '[',
+    '  {',
+    '    a : \'\\\\test\'',
+    '  }, ',
+    '  {',
+    '    b : \'\\ntest\'',
+    '  }, ',
+    '  {',
+    '    c : \'test\'',
+    '  }',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array with a func inside an object, noRoutine';
   var src = [ { a : function func ( ){ } }, 0, 1, 'a' ];
   var got = _.toStr( src, { levels : 2, noRoutine : 1 } );
   var expected =
-      ['[',
-       '  {}, ',
-       '  0, ',
-       '  1, ',
-       '  \'a\'',
-       ']',
-      ].join( '\n' );
+  [
+    '[',
+    '  {}, ',
+    '  0, ',
+    '  1, ',
+    '  \'a\'',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array with a func inside an object, noRoutine';
   var src = [ { b : function f ( ){ } }, 1, 2 , 3 ];
   var got = _.toStr( src, { levels : 3, noRoutine : 1 } );
   var expected =
-      ['[',
-       '  {}, ',
-       '  1, ',
-       '  2, ',
-       '  3',
-       ']',
-      ].join( '\n' );
+  [
+    '[',
+    '  {}, ',
+    '  1, ',
+    '  2, ',
+    '  3',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array with error and date, noError noDate';
@@ -2333,32 +2370,35 @@ function toStrArray( test )
   var src = [ 1, [ '2', null, undefined, '4' ], 2 ];
   var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1 } );
   var expected =
-      [ '[',
-       '  [ null, undefined ]',
-       ']',
-      ].join( '\n' );
+  [ 
+    '[',
+    '  [ null, undefined ]',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array, noObject noNumber noString';
   var src = [ [ 1, 2 ], 'string', { a : true, b : null }, undefined ];
   var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, noObject : 1 } );
   var expected =
-      [ '[',
-       '  [], ',
-       '  undefined',
-       ']',
-      ].join( '\n' );
+  [ 
+    '[',
+    '  [], ',
+    '  undefined',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array, noObject noNumber noString';
   var src = [ [ 0, 1 ], 'test', { a : Symbol( ) }, undefined ];
   var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1, noObject : 1 } );
   var expected =
-      [ '[',
-       '  [], ',
-       '  undefined',
-       ']',
-      ].join( '\n' );
+  [ 
+    '[',
+    '  [], ',
+    '  undefined',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array, noObject noNumber noString noRoutine';
@@ -2377,22 +2417,24 @@ function toStrArray( test )
   var src = [ [ 0, 1 ], 'test', { a : 'a' } ];
   var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, noSubObject : 1 } );
   var expected =
-      [ '[',
-       '  [], ',
-       '  {}',
-       ']',
-      ].join( '\n' );
+  [ 
+    '[',
+    '  [], ',
+    '  {}',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array with object, noSubObject noNumber noSring';
   var src = [ [ 1, 2 ], 'sample', { a : 'b' } ];
   var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1, noSubObject : 1 } );
   var expected =
-      [ '[',
-       '  [], ',
-       '  {}',
-       ']',
-      ].join( '\n' );
+  [ 
+    '[',
+    '  [], ',
+    '  {}',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array with function, onlyRoutines';
@@ -2405,122 +2447,133 @@ function toStrArray( test )
   var src = [ ['a', 100], ['b', 200] ];
   var got = _.toStr( src, { levels : 2, noString : 1, precision : 2 } );
   var expected =
-      ['[',
-       '  [ 1.0e+2 ], ',
-       '  [ 2.0e+2 ]',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  [ 1.0e+2 ], ',
+    '  [ 2.0e+2 ]',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested arrays, noSring precision 3';
   var src = [ ['aa', 300], ['bb', 400] ];
   var got = _.toStr( src, { levels : 3, noString : 1, precision : 3 } );
   var expected =
-      ['[',
-       '  [ 300 ], ',
-       '  [ 400 ]',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  [ 300 ], ',
+    '  [ 400 ]',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested arrays, noSring fixed 3';
   var src = [ [ 1.00, 2.00 ], [ 3.00, 4.00], 'str sample' ];
   var got = _.toStr( src, { levels : 2, noString : 1, fixed : 3 } );
   var expected =
-      ['[',
-       '  [ 1.000, 2.000 ], ',
-       '  [ 3.000, 4.000 ]',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  [ 1.000, 2.000 ], ',
+    '  [ 3.000, 4.000 ]',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested array, noString noNumber precision';
   var src = [ '1', [ 2, 3, 4 ], '2' ];
   var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, precision : 1 } );
   var expected =
-      ['[',
-       '  []',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  []',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested arrays, noNumber noString fixed 1';
   var src = [ '1', [ 2.00, 3.00, 4.00 ], '2' ];
   var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, fixed : 1 } );
   var expected =
-      ['[',
-       '  []',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  []',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested arrays, noNumber noString precision 1';
   var src = [ 'o', [ 90, 80, 70 ], 'o' ];
   var got = _.toStr( src, { levels : 3, noString : 1, noNumber : 1, precision : 1 } );
   var expected =
-      ['[',
-       '  []',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  []',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array with an object,noSring noNumber multiline';
   var src = [ 'o', 1, { a : true, b : undefined, c : null } ];
   var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, multiline : 1 } );
   var expected =
-      ['[',
-       '  {',
-       '    a : true, ',
-       '    b : undefined, ',
-       '    c : null',
-       '  }',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  {',
+    '    a : true, ',
+    '    b : undefined, ',
+    '    c : null',
+    '  }',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array with object, escaping';
   var src = [ 'a', 2, { a : '\\true', b : true, c : null } ];
   var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, multiline : 1, escaping : 1 } );
   var expected =
-      ['[',
-       '  {',
-       '    b : true, ',
-       '    c : null',
-       '  }',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  {',
+    '    b : true, ',
+    '    c : null',
+    '  }',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array, noError';
   var src = [ [ 'a', 1 ], new Error( 'err msg' ), new Date( Date.UTC( 1990, 0, 0 ) ) ];
   var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, noError : 1 } );
   var expected =
-      ['[',
-       '  [], ',
-       '  1989-12-31T00:00:00.000Z',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  [], ',
+    '  1989-12-31T00:00:00.000Z',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array with a date, modified tab';
   var src = [ [ 'a', 1 ], new Date( Date.UTC( 1999, 1, 1 ) ) ];
   var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, tab : '|', prependTab : 0 } );
   var expected =
-      ['[',
-       '|  [], ',
-       '|  1999-02-01T00:00:00.000Z',
-       '|]'
-      ].join( '\n' );
+  [
+    '[',
+    '|  [], ',
+    '|  1999-02-01T00:00:00.000Z',
+    '|]'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested array';
   var src = [ [ 1, 2, 3 ], 'a' ];
   var got = _.toStr( src, { levels : 3, noAtomic : 1, noNumber : 0 } );
   var expected =
-      ['[',
-       '  []',
-       ']'
-      ].join( '\n' );
+  [
+    '[',
+    '  []',
+    ']'
+  ].join( '\n' );
   test.identical( got, expected );
 
 }
@@ -3214,83 +3267,89 @@ function toStrObject( test )
   var src = { u : 12, i : { o : 13 }, p : 14 };
   var got = _.toStr( src, { levels : 1 } );
   var expected =
-      ['{',
-       '  u : 12, ',
-       '  i : {- Object with 1 elements -}, ',
-       '  p : 14',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  u : 12, ',
+    '  i : {- Object with 1 elements -}, ',
+    '  p : 14',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, levels 2';
   var src = { r : 9, t : { a : 10 }, y : 11 };
   var got = _.toStr( src, { levels : 2 } );
   var expected =
-      ['{',
-       '  r : 9, ',
-       '  t : { a : 10 }, ',
-       '  y : 11',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  r : 9, ',
+    '  t : { a : 10 }, ',
+    '  y : 11',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, levels 3';
   var src = { z : '01', x : { c : { g : 4 } }, v : '03' };
   var got = _.toStr( src, { levels : 3 } );
   var expected =
-      ['{',
-       '  z : \'01\', ',
-       '  x : ',
-       '  {',
-       '    c : { g : 4 }',
-       '  }, ',
-       '  v : \'03\'',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  z : \'01\', ',
+    '  x : ',
+    '  {',
+    '    c : { g : 4 }',
+    '  }, ',
+    '  v : \'03\'',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, levels 5';
   var src = { u : 12, i : { o : { x : { y : [ 1, 2, 3 ] } } }, p : 14 };
   var got = _.toStr( src, { levels : 5 } );
   var expected =
-      ['{',
-       '  u : 12, ',
-       '  i : ',
-       '  {',
-       '    o : ',
-       '    {',
-       '      x : ',
-       '      {',
-       '        y : [ 1, 2, 3 ]',
-       '      }',
-       '    }',
-       '  }, ',
-       '  p : 14',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  u : 12, ',
+    '  i : ',
+    '  {',
+    '    o : ',
+    '    {',
+    '      x : ',
+    '      {',
+    '        y : [ 1, 2, 3 ]',
+    '      }',
+    '    }',
+    '  }, ',
+    '  p : 14',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, noSubObject noArray';
   var src = { q : { a : 1 }, w : 'c', e : [1] };
   var got = _.toStr( src, { levels : 2, noSubObject : 1, noArray : 1 } );
   var expected =
-      ['{',
-       '  w : \'c\'',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  w : \'c\'',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, noAtomic';
   var src = { z : '02', x : { c : { g : 6 } }, v : '01' };
   var got = _.toStr( src, { levels : 3, noAtomic : 1 } );
   var expected =
-      ['{',
-       '  x : ',
-       '  {',
-       '    c : {}',
-       '  }',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  x : ',
+    '  {',
+    '    c : {}',
+    '  }',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, noObject';
@@ -3315,24 +3374,26 @@ function toStrObject( test )
   var src = { a : null, b : 1, c : '2', d : undefined, e : true, f : Symbol( 'symbol' ) };
   var got = _.toStr( src, { wrap : 0, comma : '* ' } );
   var expected =
-      ['  a : null* ',
-       '  b : 1* ',
-       '  c : \'2\'* ',
-       '  d : undefined* ',
-       '  e : true* ',
-       '  f : {- Symbol symbol -}'
-      ].join( '\n' );
+  [
+    '  a : null* ',
+    '  b : 1* ',
+    '  c : \'2\'* ',
+    '  d : undefined* ',
+    '  e : true* ',
+    '  f : {- Symbol symbol -}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'default object, wrap 0 prependTab 0 modified comma';
   var src = { a : 'true', b : 2, c : false, d : undefined };
   var got = _.toStr( src, { wrap : 0, prependTab : 0, comma : '-> ' } );
   var expected =
-      ['  a : \'true\'-> ',
-       '  b : 2-> ',
-       '  c : false-> ',
-       '  d : undefined'
-      ].join( '\n' );
+  [
+    '  a : \'true\'-> ',
+    '  b : 2-> ',
+    '  c : false-> ',
+    '  d : undefined'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object with error, wrap 0';
@@ -3369,31 +3430,34 @@ function toStrObject( test )
   var src = { i : 0, k : 1, g : 2, l : 3 };
   var got = _.toStr( src, { wrap : 0, precision : 3, comma : '| ' } );
   var expected =
-      ['  i : 0.00| ',
-       '  k : 1.00| ',
-       '  g : 2.00| ',
-       '  l : 3.00'
-      ].join( '\n' );
+  [
+    '  i : 0.00| ',
+    '  k : 1.00| ',
+    '  g : 2.00| ',
+    '  l : 3.00'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'integer values, wrap 0 fixed 3';
   var src = { o : 4, p : 5, r : 6, s : 7 };
   var got = _.toStr( src, { wrap : 0,  fixed : 3, comma : '^ ' } );
   var expected =
-      ['  o : 4.000^ ',
-       '  p : 5.000^ ',
-       '  r : 6.000^ ',
-       '  s : 7.000'
-      ].join( '\n' );
+  [
+    '  o : 4.000^ ',
+    '  p : 5.000^ ',
+    '  r : 6.000^ ',
+    '  s : 7.000'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'integer values, multiline';
   var src = { m : 8, n : 9 };
   var got = _.toStr( src, { wrap : 0,  multiline : 1, comma : ', ' } );
   var expected =
-      ['  m : 8, ',
-       '  n : 9'
-      ].join( '\n' );
+  [
+    '  m : 8, ',
+    '  n : 9'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object new lines, escaping';
@@ -3406,91 +3470,100 @@ function toStrObject( test )
   var src = { a : 1, b : { d : 2 }, c : 3 };
   var got = _.toStr( src, { levels : 2, wrap : 0, comma : '. ' } );
   var expected =
-      ['  a : 1. ',
-       '  b : d : 2. ',
-       '  c : 3'
-      ].join( '\n' );
+  [
+    '  a : 1. ',
+    '  b : d : 2. ',
+    '  c : 3'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object';
   var src = { a : 3, b : { d : 2 }, c : 1 };
   var got = _.toStr( src, { levels : 2, wrap : 0, comma : '. '} );
   var expected =
-      ['  a : 3. ',
-       '  b : d : 2. ',
-       '  c : 1'
-      ].join( '\n' );
+  [
+    '  a : 3. ',
+    '  b : d : 2. ',
+    '  c : 1'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, modified tab';
   var src = { a : 4, b : { d : 5 }, c : 6 };
   var got = _.toStr( src, { levels : 2, wrap : 0, tab : '| ', dtab : '', comma : '@ ' } );
   var expected =
-      ['| a : 4@ ',
-        '| b : d : 5@ ',
-        '| c : 6'
-      ].join( '\n' );
+  [
+    '| a : 4@ ',
+    '| b : d : 5@ ',
+    '| c : 6'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object';
   var src = { a : 7, b : { d : 8 }, c : 9 };
   var got = _.toStr( src, { levels : 2, wrap : 0, colon : ' - ', comma : '-? ' } );
   var expected =
-      ['  a - 7-? ',
-       '  b - d - 8-? ',
-       '  c - 9'
-      ].join( '\n' );
+  [
+    '  a - 7-? ',
+    '  b - d - 8-? ',
+    '  c - 9'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object';
   var src = { a : 9, b : { d : 8 }, c : 7 };
   var got = _.toStr( src, { levels : 2, wrap : 0, prependTab : 0, comma : ', ' } );
   var expected =
-      ['  a : 9, ',
-       '  b : d : 8, ',
-       '  c : 7'
-      ].join( '\n' );
+  [
+    '  a : 9, ',
+    '  b : d : 8, ',
+    '  c : 7'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, fixed 1';
   var src = { a : 10, b : { d : 20 }, c : 30 };
   var got = _.toStr( src, { levels : 2, wrap : 0, fixed : 1, comma : '| ' } );
   var expected =
-      ['  a : 10.0| ',
-       '  b : d : 20.0| ',
-       '  c : 30.0'
-      ].join( '\n' );
+  [
+    '  a : 10.0| ',
+    '  b : d : 20.0| ',
+    '  c : 30.0'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, precision 1';
   var src = { a : 10.00, b : { d : 20.00 }, c : 30.00 };
   var got = _.toStr( src, { levels : 2, wrap : 0, precision : 1, comma : '/ ' } );
   var expected =
-      ['  a : 1e+1/ ',
-       '  b : d : 2e+1/ ',
-       '  c : 3e+1'
-      ].join( '\n' );
+  [
+    '  a : 1e+1/ ',
+    '  b : d : 2e+1/ ',
+    '  c : 3e+1'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, multiline';
   var src = { a : 'a', b : { d : false }, c : 3 };
   var got = _.toStr( src, { levels : 2, wrap : 0, multiline : 1, comma : ', , ' } );
   var expected =
-      ['  a : \'a\', , ',
-       '  b : ',
-       '    d : false, , ',
-       '  c : 3'
-      ].join( '\n' );
+  [
+    '  a : \'a\', , ',
+    '  b : ',
+    '    d : false, , ',
+    '  c : 3'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, escaping 1';
   var src = { a : '\na', b : { d : '\ntrue' }, c : '\n' };
   var got = _.toStr( src, { levels : 3, wrap : 0, escaping : 1, comma : '| ' } );
   var expected =
-      ['  a : \'\\na\'| ',
-       '  b : d : \'\\ntrue\'| ',
-       '  c : \'\\n\''
-      ].join( '\n' );
+  [
+    '  a : \'\\na\'| ',
+    '  b : d : \'\\ntrue\'| ',
+    '  c : \'\\n\''
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, noAtomic';
@@ -3521,190 +3594,206 @@ function toStrObject( test )
   var src = { a : 1, b : { d : 2 }, c : 3 };
   var got = _.toStr( src, { levels : 2, wrap : 0, comma : '. '} );
   var expected =
-      ['  a : 1. ',
-       '  b : d : 2. ',
-       '  c : 3',
-      ].join( '\n' );
+  [
+    '  a : 1. ',
+    '  b : d : 2. ',
+    '  c : 3',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, double comma';
   var src = { a : 3, b : { d : 2 }, c : 1 };
   var got = _.toStr( src, { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' } );
   var expected =
-      ['  |  a->3, , ',
-       '  |  b->d->2, , ',
-       '  |  c->1',
-      ].join( '\n' );
+  [
+    '  |  a->3, , ',
+    '  |  b->d->2, , ',
+    '  |  c->1',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, prependTab 0 fixed 5';
   var src = { a : 'bb', b : { d : false }, c : 30 };
   var got = _.toStr( src, { levels : 2, prependTab : 0, fixed : 5 } );
   var expected =
-      ['{',
-       '  a : \'bb\', ',
-       '  b : { d : false }, ',
-       '  c : 30.00000',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a : \'bb\', ',
+    '  b : { d : false }, ',
+    '  c : 30.00000',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, prependTab 0 precision 5';
   var src = { a : 100, b : { d : 110 }, c : 120 };
   var got = _.toStr( src, { levels : 2, prependTab : 0, precision : 5 } );
   var expected =
-      ['{',
-       '  a : 100.00, ',
-       '  b : { d : 110.00 }, ',
-       '  c : 120.00',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a : 100.00, ',
+    '  b : { d : 110.00 }, ',
+    '  c : 120.00',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, multiline escaping';
   var src = { a : '\na', b : { d : '\ntrue' } };
   var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
-      ['{',
-       '  a : \'\\na\', ',
-       '  b : ',
-       '  {',
-       '    d : \'\\ntrue\'',
-       '  }',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a : \'\\na\', ',
+    '  b : ',
+    '  {',
+    '    d : \'\\ntrue\'',
+    '  }',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object with function, noRoutine';
   var src = { a : 'aa', b : { d : function( ){ } } };
   var got = _.toStr( src, { levels : 2, noRoutine : 1 } );
   var expected =
-      ['{',
-       '  a : \'aa\', ',
-       '  b : {}',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a : \'aa\', ',
+    '  b : {}',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object with function, noRoutine';
   var src = { a : 'bb', b : { d : function( ){ } } };
   var got = _.toStr( src, { levels : 3, noRoutine : 1, } );
   var expected =
-      ['{',
-       '  a : \'bb\', ',
-       '  b : {}',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a : \'bb\', ',
+    '  b : {}',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object with date and error, noError noDate';
   var src = { a : new Date( Date.UTC( 1993, 12, 12 ) ), b : { d : new Error( 'msg' ) }, c : 1 };
   var got = _.toStr( src, { levels : 3, noError : 1, noDate : 1 } );
   var expected =
-      ['{',
-       '  b : {}, ',
-       '  c : 1',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  b : {}, ',
+    '  c : 1',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object json like, escaping 1';
   var src = { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  };
   var got = _.toStr( src, { escaping : 1 } );
   var expected =
-      ['{',
-       '  sequence : \'\\u001b[A\', ',
-       '  name : \'undefined\', ',
-       '  shift : false, ',
-       '  code : \'[A\'',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  sequence : \'\\u001b[A\', ',
+    '  name : \'undefined\', ',
+    '  shift : false, ',
+    '  code : \'[A\'',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object json like, escaping 0';
   var src = { "sequence" : "\x7f[A", "name" : "undefined", "shift" : false, "code" : "[A"  };
   var got = _.toStr( src, { escaping : 0 } );
   var expected =
-      ['{',
-       '  sequence : \'\\u007f[A\', ',
-       '  name : \'undefined\', ',
-       '  shift : false, ',
-       '  code : \'[A\'',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  sequence : \'\\u007f[A\', ',
+    '  name : \'undefined\', ',
+    '  shift : false, ',
+    '  code : \'[A\'',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object json like, escaping 0';
   var src = { "sequence" : "<\u001cb>text<\u001cb>", "data" : { "name" : "myname", "age" : 1 }, "shift" : false, "code" : "<b>text<b>"  };
   var got = _.toStr( src, { escaping : 0 } );
   var expected =
-      ['{',
-       '  sequence : \'<\\u001cb>text<\\u001cb>\', ',
-       '  data : {- Object with 2 elements -}, ',
-       '  shift : false, ',
-       '  code : \'<b>text<b>\'',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  sequence : \'<\\u001cb>text<\\u001cb>\', ',
+    '  data : {- Object with 2 elements -}, ',
+    '  shift : false, ',
+    '  code : \'<b>text<b>\'',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object json like, multiline';
   var src = { "sequence" : "\u0068\u0065\u004C\u004C\u006F", "shift" : false, "code" : "heLLo"  };
   var got = _.toStr( src, { multiline : 1 } );
   var expected =
-      ['{',
-       '  sequence : \'heLLo\', ',
-       '  shift : false, ',
-       '  code : \'heLLo\'',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  sequence : \'heLLo\', ',
+    '  shift : false, ',
+    '  code : \'heLLo\'',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object json like, multiline escaping';
   var src = { "sequence" : "\n\u0061\u0062\u0063", "shift" : false, "code" : "abc"  };
   var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
-      ['{',
-       '  sequence : \'\\nabc\', ',
-       '  shift : false, ',
-       '  code : \'abc\'',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  sequence : \'\\nabc\', ',
+    '  shift : false, ',
+    '  code : \'abc\'',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object json like, multiline escaping';
   var src = { "sequence" : "\t\u005b\u0063\u0062\u0061\u005d\t", "data" : 100, "code" : "\n[cba]\n"  };
   var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
-      ['{',
-       '  sequence : \'\\t[cba]\\t\', ',
-       '  data : 100, ',
-       '  code : \'\\n[cba]\\n\'',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  sequence : \'\\t[cba]\\t\', ',
+    '  data : 100, ',
+    '  code : \'\\n[cba]\\n\'',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object json like, multiline escaping';
   var src = { "sequence" : "\u005CABC\u005C", "data" : 100, "code" : "\\ABC\\"  };
   var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
-      ['{',
-       '  sequence : \'\\\\ABC\\\\\', ',
-       '  data : 100, ',
-       '  code : \'\\\\ABC\\\\\'',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  sequence : \'\\\\ABC\\\\\', ',
+    '  data : 100, ',
+    '  code : \'\\\\ABC\\\\\'',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object json like, multiline escaping';
   var src = { "sequence" : "\u000Aline\u000A", "data" : null, "code" : "\nline\n"  };
   var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
-      ['{',
-       '  sequence : \'\\nline\\n\', ',
-       '  data : null, ',
-       '  code : \'\\nline\\n\'',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  sequence : \'\\nline\\n\', ',
+    '  data : null, ',
+    '  code : \'\\nline\\n\'',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object json like, escaping levels 2';
@@ -3735,33 +3824,36 @@ function toStrObject( test )
   var src = { a : 1, b : { d : 'string' }, c : true };
   var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1} );
   var expected =
-      ['{',
-       '  b : {}, ',
-       '  c : true',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  b : {}, ',
+    '  c : true',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, noNumber noString noDate';
   var src = { a : 1, b : { d : 'string' }, c : new Date(Date.UTC( ) ) };
   var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1, noDate : 1} );
   var expected =
-      ['{',
-       '  b : {}',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  b : {}',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'nested object, noString fixed 1';
   var src = { a : 1000, b : { d : 'string' }, c : 1.500 };
   var got = _.toStr( src, { levels : 2, noString : 1, fixed : 1} );
   var expected =
-      ['{',
-       '  a : 1000.0, ',
-       '  b : {}, ',
-       '  c : 1.5',
-       '}'  
-      ].join( '\n' );
+  [
+    '{',
+    '  a : 1000.0, ',
+    '  b : {}, ',
+    '  c : 1.5',
+    '}'  
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object, noString precision 1';
@@ -3784,26 +3876,26 @@ function toStrObject( test )
 
   test.case = 'return object, own 0';
   var src =
-      ( function( )
-      {
-        var x = { a : 1, b : 2 },
-        y = Object.create( x );
-        y.c = 3;
-        return y;
-      } )( );
+  ( function( )
+  {
+    var x = { a : 1, b : 2 },
+    y = Object.create( x );
+    y.c = 3;
+    return y;
+  } )( );
   var got = _.toStr( src, { own : 0 } );
   var expected = '{ c : 3, a : 1, b : 2 }';
   test.identical( got, expected );
 
   test.case = 'return object';
   var src =
-      ( function( )
-      {
-        var x = { a : '0', b : '1' },
-        y = Object.create( x );
-        y.c = '3';
-        return y;
-      } )( );
+  ( function( )
+  {
+    var x = { a : '0', b : '1' },
+    y = Object.create( x );
+    y.c = '3';
+    return y;
+  } )( );
   var got = _.toStr( src, { } );
   var expected = '{ c : \'3\' }';
   test.identical( got, expected );
@@ -3812,13 +3904,14 @@ function toStrObject( test )
   var src = { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  };
   var got = _.toStr( src, { } );
   var expected =
-      ['{',
-       '  sequence : \'\\u001b[A\', ',
-       '  name : \'undefined\', ',
-       '  shift : false, ',
-       '  code : \'[A\'',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  sequence : \'\\u001b[A\', ',
+    '  name : \'undefined\', ',
+    '  shift : false, ',
+    '  code : \'[A\'',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
 }
@@ -4330,86 +4423,93 @@ function toStrStringWrapper( test )
   test.case = 'stringWrapper no quotes';
   var got = _.toStr( { a : "string", b : 1, c : null , d : undefined } , { stringWrapper : '' } );
   var expected =
-      ['{',
-       '  a : string, ',
-       '  b : 1, ',
-       '  c : null, ',
-       '  d : undefined',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a : string, ',
+    '  b : 1, ',
+    '  c : null, ',
+    '  d : undefined',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'stringWrapper no quotes, levels 2';
   var src = { a : "sample", b : 0, c : false , d : [ "a" ] };
   var got = _.toStr( src, { levels : 2, stringWrapper : '' } );
   var expected =
-      ['{',
-       '  a : sample, ',
-       '  b : 0, ',
-       '  c : false, ',
-       '  d : [ a ]',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a : sample, ',
+    '  b : 0, ',
+    '  c : false, ',
+    '  d : [ a ]',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'stringWrapper no quotes, levels 3';
   var src = { a : [ "example" ], b : 1, c : null , d : [ "b" ] };
   var got = _.toStr( src, { levels : 3, stringWrapper : '' } );
   var expected =
-      ['{',
-       '  a : [ example ], ',
-       '  b : 1, ',
-       '  c : null, ',
-       '  d : [ b ]',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a : [ example ], ',
+    '  b : 1, ',
+    '  c : null, ',
+    '  d : [ b ]',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'stringWrapper with error';
   var src = { a : "test", b : new Error( "err" ) };
   var got = _.toStr( src, { levels : 2 } );
   var expected =
-      ['{',
-       '  a : \'test\', ',
-       '  b : Error: err',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a : \'test\', ',
+    '  b : Error: err',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'stringWrapper with object, levels 1';
   var src = { a : "a", b : "b", c : { d : "d" } };
   var got = _.toStr( src, { stringWrapper: '', levels : 1 } );
   var expected =
-      ['{',
-       '  a, ',
-       '  b, ',
-       '  c : {- Object with 1 elements -}',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a, ',
+    '  b, ',
+    '  c : {- Object with 1 elements -}',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'stringWrapper with objects, levels 2';
   var src = { a : { h : "a" }, b : "b", c : { d : "d" } };
   var got = _.toStr( src, { stringWrapper: '', levels : 2 } );
   var expected =
-      ['{',
-       '  a : { h : a }, ',
-       '  b, ',
-       '  c : { d }',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a : { h : a }, ',
+    '  b, ',
+    '  c : { d }',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'stringWrapper multiline \\n, levels 2';
   var src = { a : "line1\nline2\nline3" };
   var got = _.toStr( src, { levels : 2, multilinedString : 1 } );
   var expected =
-      ['{',
-       '  a : `line1',
-       'line2',
-       'line3`',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a : `line1',
+    'line2',
+    'line3`',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'stringWrapper multiline, levels 2';
@@ -4485,12 +4585,13 @@ function toStrLevel( test )
   var src = { a : { h : "a" }, b : "b", c : { d : "d" } };
   var got = _.toStr( src, { level: 1, levels : 2 } );
   var expected =
-      ['{',
-       '  a : {- Object with 1 elements -}, ',
-       '  b : \'b\', ',
-       '  c : {- Object with 1 elements -}',
-       '}'
-      ].join( '\n' );
+  [
+    '{',
+    '  a : {- Object with 1 elements -}, ',
+    '  b : \'b\', ',
+    '  c : {- Object with 1 elements -}',
+    '}'
+  ].join( '\n' );
   test.identical( got, expected );
   
   test.case = 'nested objects, level 1 levels 0';
@@ -4503,12 +4604,13 @@ function toStrLevel( test )
   var src = { a : "a", b : "b", c : { d : "d" } };
   var got = _.toStr( src, { } );
   var expected =
-      ['{',
-       '  a : \'a\', ',
-       '  b : \'b\', ',
-       '  c : {- Object with 1 elements -}',
-       '}',
-      ].join( '\n' );
+  [
+    '{',
+    '  a : \'a\', ',
+    '  b : \'b\', ',
+    '  c : {- Object with 1 elements -}',
+    '}',
+  ].join( '\n' );
   test.identical( got, expected );
 
 }
@@ -4647,117 +4749,118 @@ function toStrEnumerable( test )
 
   test.case = 'enumerable';
   var src =
-      ( function( )
+  ( function( )
+  {
+    var x = Object.create( {},
+    {
+      getFoo:
       {
-        var x = Object.create( {},
-        {
-          getFoo:
-          {
-            value: function( ) { return this.foo; },
-            enumerable: false
-          }
-        } );
+        value: function( ) { return this.foo; },
+        enumerable: false
+      }
+    } );
 
-        x.foo = 1;
+    x.foo = 1;
 
-        var y = Object.create( x );
-        y.a = "string";
+    var y = Object.create( x );
+    y.a = "string";
 
-        return y;
+    return y;
 
-      } )( );
+  } )( );
   var got = _.toStr( src, { } );
   var expected = '{ a : \'string\' }';
   test.identical( got, expected );
   
   test.case = 'enumerable, own 0';
   var src =
-      ( function( )
+  ( function( )
+  {
+    var x = Object.create( {},
+    {
+      getFoo:
       {
-        var x = Object.create( {},
-        {
-          getFoo:
-          {
-            value: function( ) { return this.foo; },
-            enumerable: false
-          }
-        } );
+        value: function( ) { return this.foo; },
+        enumerable: false
+      }
+    } );
 
-        x.foo = 1;
+    x.foo = 1;
 
-        var y = Object.create( x );
-        y.a = "string";
+    var y = Object.create( x );
+    y.a = "string";
 
-        return y;
+    return y;
 
-      } )( );
+  } )( );
   var got = _.toStr( src, { own : 0 } );
   var expected = '{ a : \'string\', foo : 1 }';
   test.identical( got, expected );
   
   test.case = 'enumerable, onlyEnum 0';
   var src =
-      ( function( )
+  ( function( )
+  {
+    var x = Object.create( {},
+    {
+      getFoo:
       {
-        var x = Object.create( {},
-        {
-          getFoo:
-          {
-            value: function( ) { return this.foo; },
-            enumerable: false
-          }
-        } );
+        value: function( ) { return this.foo; },
+        enumerable: false
+      }
+    } );
 
-        x.foo = 1;
+    x.foo = 1;
 
-        return x;
+    return x;
 
-      } )( );
+  } )( );
   var got = _.toStr( src, { onlyEnumerable : 0 } );
   var expected = '{ getFoo : [ routine value ], foo : 1 }';
   test.identical( got, expected );
   
   test.case = 'enumerable, onlyEnum 0 own 0';
   var src =
-      ( function( )
+  ( function( )
+  {
+    var x = Object.create( {},
+    {
+      getFoo:
       {
-        var x = Object.create( {},
-        {
-          getFoo:
-          {
-            value: function( ) { return this.foo; },
-            enumerable: false
-          }
-        } );
+        value: function( ) { return this.foo; },
+        enumerable: false
+      }
+    } );
 
-        x.foo = 1;
+    x.foo = 1;
 
-        var y = Object.create( x );
-        y.a = "string";
+    var y = Object.create( x );
+    y.a = "string";
 
-        return y;
+    return y;
 
-      } )( );
+  } )( );
   var got = _.toStr( src, { own : 0, onlyEnumerable : 0 } );
   var expected =
-      ['{',
-       '  a : \'string\', ',
-       '  getFoo : [ routine value ], ',
-       '  foo : 1, ',
-       '  constructor : [ routine Object ], ',
-       '  __defineGetter__ : [ routine __defineGetter__ ], ',
-       '  __defineSetter__ : [ routine __defineSetter__ ], ',
-       '  hasOwnProperty : [ routine hasOwnProperty ], ',
-       '  __lookupGetter__ : [ routine __lookupGetter__ ], ',
-       '  __lookupSetter__ : [ routine __lookupSetter__ ], ',
-       '  isPrototypeOf : [ routine isPrototypeOf ], ',
-       '  propertyIsEnumerable : [ routine propertyIsEnumerable ], ',
-       '  toString : [ routine toString ], ',
-       '  valueOf : [ routine valueOf ], ',
-       '  __proto__ : {- Object with 1 elements -}, ',
-       '  toLocaleString : [ routine toLocaleString ]',
-       '}',
-      ].join( '\n' );
+  [
+    '{',
+    '  a : \'string\', ',
+    '  getFoo : [ routine value ], ',
+    '  foo : 1, ',
+    '  constructor : [ routine Object ], ',
+    '  __defineGetter__ : [ routine __defineGetter__ ], ',
+    '  __defineSetter__ : [ routine __defineSetter__ ], ',
+    '  hasOwnProperty : [ routine hasOwnProperty ], ',
+    '  __lookupGetter__ : [ routine __lookupGetter__ ], ',
+    '  __lookupSetter__ : [ routine __lookupSetter__ ], ',
+    '  isPrototypeOf : [ routine isPrototypeOf ], ',
+    '  propertyIsEnumerable : [ routine propertyIsEnumerable ], ',
+    '  toString : [ routine toString ], ',
+    '  valueOf : [ routine valueOf ], ',
+    '  __proto__ : {- Object with 1 elements -}, ',
+    '  toLocaleString : [ routine toLocaleString ]',
+    '}',
+  ].join( '\n' );
   test.identical( got, expected );
 
 }
@@ -5396,85 +5499,92 @@ function toStrLimitElements( test )
   var src = [ 1, 2 , '3', 4, 5 ];
   var got = _.toStr( src, { limitElementsNumber : 2, multiline : 1 } );
   var expected =
-      ['[',
-       '  1, ',
-       '  2, ',
-       '  [ ... other 3 element(s) ]',
-       ']',
-      ].join( '\n' );
+  [
+    '[',
+    '  1, ',
+    '  2, ',
+    '  [ ... other 3 element(s) ]',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array, levels 2 noNumber multiline';
   var src = [ 1, 2 , '3', 4, { a : '1'  }, '5', '6' ];
   var got = _.toStr( src, { levels : 2, limitElementsNumber : 3, noNumber : 1, multiline : 1 } );
   var expected =
-      ['[',
-       '  \'3\', ',
-       '  {',
-       '    a : \'1\'',
-       '  }, ',
-       '  \'5\', ',
-       '  [ ... other 1 element(s) ]',
-       ']',
-      ].join( '\n' );
+  [
+    '[',
+    '  \'3\', ',
+    '  {',
+    '    a : \'1\'',
+    '  }, ',
+    '  \'5\', ',
+    '  [ ... other 1 element(s) ]',
+    ']',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'array, noNumber multiline wrap 0 levels 2';
   var src = [ 1, 2 , '3', 4, { a : '1'  }, '5', '6' ];
   var got = _.toStr( src, { levels : 2, limitElementsNumber : 3, noNumber : 1, multiline : 1, wrap : 0, comma : ', '  } );
   var expected =
-      ['  \'3\', ',
-       '    a : \'1\', ',
-       '  \'5\', ',
-       '  [ ... other 1 element(s) ]',
-      ].join( '\n' );
+  [
+    '  \'3\', ',
+    '    a : \'1\', ',
+    '  \'5\', ',
+    '  [ ... other 1 element(s) ]',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object, limit elements 2';
   var src = { a : 1, b : 2, c : 3, d : 4 };
   var got = _.toStr( src, { limitElementsNumber : 2 } );
   var expected =
-      ['{',
-       '  a : 1, ',
-       '  b : 2, ',
-       '  [ ... other 2 element(s) ]',
-       '}',
-      ].join( '\n' );
+  [
+    '{',
+    '  a : 1, ',
+    '  b : 2, ',
+    '  [ ... other 2 element(s) ]',
+    '}',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object, noRoutine noString levels 2';
   var src = { a : 1, b : function n( ){ }, c : { a : '1' }, d : 4 };
   var got = _.toStr( src, { limitElementsNumber : 2, levels : 2,  noRoutine : 1, noString : 1 } );
   var expected =
-      ['{',
-       '  a : 1, ',
-       '  c : {}, ',
-       '  [ ... other 1 element(s) ]',
-       '}',
-      ].join( '\n' );
+  [
+    '{',
+    '  a : 1, ',
+    '  c : {}, ',
+    '  [ ... other 1 element(s) ]',
+    '}',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object, noString multiline';
   var src = { a : 1, b : undefined, c : { a : '1' }, d : 4 };
   var got = _.toStr( src, { limitElementsNumber : 2, multiline : 1, noString : 1 } );
   var expected =
-      ['{',
-       '  a : 1, ',
-       '  b : undefined, ',
-       '  [ ... other 2 element(s) ]',
-       '}',
-      ].join( '\n' );
+  [
+    '{',
+    '  a : 1, ',
+    '  b : undefined, ',
+    '  [ ... other 2 element(s) ]',
+    '}',
+  ].join( '\n' );
   test.identical( got, expected );
 
   test.case = 'object, wrap 0 ';
   var src = { a : 1, b : 2, c : { a : 1, b : '2' }, d : 3 };
   var got = _.toStr( src, { limitElementsNumber : 4, wrap : 0, comma : ', ' } );
   var expected =
-      ['  a : 1, ',
-       '  b : 2, ',
-       '  c : {- Object with 2 elements -}, ',
-       '  d : 3',
-      ].join( '\n' );
+  [
+    '  a : 1, ',
+    '  b : 2, ',
+    '  c : {- Object with 2 elements -}, ',
+    '  d : 3',
+  ].join( '\n' );
   test.identical( got, expected );
 
 }
