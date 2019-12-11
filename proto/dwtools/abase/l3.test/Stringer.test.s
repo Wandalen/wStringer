@@ -3728,27 +3728,43 @@ function toStrDate( test )
 
 function toStrRoutine( test )
 {
-  var desc = 'Routine test',
-  src =
-  [
-    function rr( ){ },
-    function rx( ){ },
-    [ function ry( ){ } , 1],
-  ],
-  options =
-  [
-    { },
-    { noRoutine : 1 },
-    { onlyRoutines : 1 },
+  //  var desc = 'Routine test',
+  //  src =
+  //  [
+  //    function rr( ){ },
+  //    function rx( ){ },
+  //    [ function ry( ){ } , 1],
+  //  ],
+  //  options =
+  //  [
+  //    { },
+  //    { noRoutine : 1 },
+  //    { onlyRoutines : 1 },
+  //
+  //  ],
+  //  expected =
+  //  [
+  //    '[ routine rr ]',
+  //    '',
+  //    '',
+  //  ]
+  //  testFunction( test, desc, src, options, expected );
 
-  ],
-  expected =
-  [
-    '[ routine rr ]',
-    '',
-    '',
-  ]
-  testFunction( test, desc, src, options, expected );
+  test.case = 'routine';
+  var got = _.toStr( function rr( ){ }, { } );
+  var expected = '[ routine rr ]';
+  test.identical( got, expected );
+
+  test.case = 'routine, noRoutine';
+  var got = _.toStr( function rx( ){ }, { noRoutine : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
+  test.case = 'array with a routine, onlyRoutines';
+  var got = _.toStr( [ function ry( ){ } , 1], { onlyRoutines : 1 } );
+  var expected = '';
+  test.identical( got, expected );
+
 }
 
 //
