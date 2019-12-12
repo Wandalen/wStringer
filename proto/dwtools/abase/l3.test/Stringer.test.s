@@ -13,7 +13,6 @@ if( typeof module !== 'undefined' )
 
 }
 
-var _global = _global_;
 var _ = _global_.wTools;
 let fileProvider = _testerGlobal_.wTools.fileProvider;
 let path = fileProvider.path;
@@ -67,14 +66,14 @@ function reportChars( )
 
 /*reportChars( );*/
 
+// //
 //
-
-function stringFromFile( name, encoding, begin, end )
-{
-  var str = fileProvider.fileRead( { filePath : __dirname + '/../../../../asset/test/' + name, encoding } );
-  str = str.slice( begin, end );
-  return str;
-}
+// function stringFromFile( name, encoding, begin, end )
+// {
+//   var str = fileProvider.fileRead( { filePath : __dirname + '/../../../../asset/test/' + name, encoding } );
+//   str = str.slice( begin, end );
+//   return str;
+// }
 
 //
 
@@ -842,7 +841,7 @@ function toStrUnwrapped( test )
   //  testFunction( test, desc, src, options, expected );
 
   test.case = 'unwrapped array inside an array';
-  var src = 
+  var src =
   [
     [
       "abc",
@@ -851,7 +850,7 @@ function toStrUnwrapped( test )
     ],
   ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
-  var expected = 
+  var expected =
   [
     '    \'abc\' ',
     '    \'edf\' ',
@@ -860,7 +859,7 @@ function toStrUnwrapped( test )
   test.identical( got, expected );
 
   test.case = 'unwrapped object inside an array';
-  var src = 
+  var src =
   [
     {
       nameLong : "abc",
@@ -869,7 +868,7 @@ function toStrUnwrapped( test )
     },
   ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
-  var expected = 
+  var expected =
   [
     '    nameLong : \'abc\' ',
     '    description : \'edf\' ',
@@ -898,7 +897,7 @@ function toStrUnwrapped( test )
   test.identical( got, expected );
 
   test.case = 'unwrapped array inside an object';
-  var src = 
+  var src =
   {
     a :
     [
@@ -929,7 +928,7 @@ function toStrUnwrapped( test )
     2,
   ];
   var got = _.toStr( src, { wrap : 0, levels : 4 } );
-  var expected = 
+  var expected =
   [
     '    \'abc\' ',
     '    \'edf\' ',
@@ -2370,7 +2369,7 @@ function toStrArray( test )
   var src = [ 1, [ '2', null, undefined, '4' ], 2 ];
   var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1 } );
   var expected =
-  [ 
+  [
     '[',
     '  [ null, undefined ]',
     ']',
@@ -2381,7 +2380,7 @@ function toStrArray( test )
   var src = [ [ 1, 2 ], 'string', { a : true, b : null }, undefined ];
   var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, noObject : 1 } );
   var expected =
-  [ 
+  [
     '[',
     '  [], ',
     '  undefined',
@@ -2393,7 +2392,7 @@ function toStrArray( test )
   var src = [ [ 0, 1 ], 'test', { a : Symbol( ) }, undefined ];
   var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1, noObject : 1 } );
   var expected =
-  [ 
+  [
     '[',
     '  [], ',
     '  undefined',
@@ -2417,7 +2416,7 @@ function toStrArray( test )
   var src = [ [ 0, 1 ], 'test', { a : 'a' } ];
   var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, noSubObject : 1 } );
   var expected =
-  [ 
+  [
     '[',
     '  [], ',
     '  {}',
@@ -2429,7 +2428,7 @@ function toStrArray( test )
   var src = [ [ 1, 2 ], 'sample', { a : 'b' } ];
   var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1, noSubObject : 1 } );
   var expected =
-  [ 
+  [
     '[',
     '  [], ',
     '  {}',
@@ -3852,7 +3851,7 @@ function toStrObject( test )
     '  a : 1000.0, ',
     '  b : {}, ',
     '  c : 1.5',
-    '}'  
+    '}'
   ].join( '\n' );
   test.identical( got, expected );
 
@@ -3913,390 +3912,6 @@ function toStrObject( test )
     '}'
   ].join( '\n' );
   test.identical( got, expected );
-
-}
-
-
-//
-
-function toStrJson( test )
-{
-  // var desc = 'json test',
-  //
-  // src =
-  // [
-  //
-  //   /*01*/ { "a" : 100, "b" : "c", "c" : { "d" : true, "e" : null } },
-  //   /*02*/ { "b" : "a", "c" : 50, "d" : { "a" : "undefined", "e" : null } },
-  //   /*03*/ [ { "a" : 100, "b" : "x", "c" : { "d" : true, "e" : null } } ],
-  //   /*09*/ { a : '\n\nABC' },
-  //
-  //
-  //  /*
-  //     - Only way that i know to store a function inside a valid json is by setting it as
-  //     a string. Same must apply for the Error. The same may even apply for the Symbol
-  //     and Date, but i don't know.
-  //     - The *05* isn't working because there's no undefined in a JSON structure.
-  //  */
-  //   ///*04*/ { a : "aa", b : [ 1, 2, 3 ], c : function r( ){ } },
-  //   ///*05*/ [ { a : 1, b : 2, c : { d : [ null, undefined ] } } ],
-  //   ///*06*/ { a : new Date( Date.UTC( 1993, 12, 12 ) ) },
-  //   ///*07*/ { a : new Error( "r" ) },
-  //   ///*08*/ { a : Symbol( 'sm' ) },
-  //
-  // ],
-  //
-  // options =
-  // [
-  //   /*01*/ { jsonLike : 1 },
-  //   /*02*/ { jsonLike : 1 },
-  //   /*03*/ { jsonLike : 1 },
-  //   /*04*/ { jsonLike : 1 },
-  //   /*05*/ { jsonLike : 1 },
-  //   /*06*/ { jsonLike : 1 },
-  //   /*07*/ { jsonLike : 1 },
-  //   /*08*/ { jsonLike : 1 },
-  //   /*09*/ { jsonLike : 1 },
-  //
-  //
-  //   ///*04*/ { jsonLike : 1, noRoutine : 1 },
-  //
-  // ];
-  //
-  // expected =
-  // [
-  //
-  //  /*01*/
-  //  [
-  //    '{',
-  //    '  "a" : 100, ',
-  //    '  "b" : "c", ',
-  //    '  "c" : { "d" : true, "e" : null }',
-  //    '}'
-  //
-  //  ].join( '\n' ),
-  //
-  //  /*02*/
-  //  [
-  //    '{',
-  //    '  "b" : "a", ',
-  //    '  "c" : 50, ',
-  //    '  "d" : { "a" : "undefined", "e" : null }',
-  //    '}'
-  //
-  //  ].join( '\n' ),
-  //
-  //  /*03*/
-  //  [
-  //    '[',
-  //    '  {',
-  //    '    "a" : 100, ',
-  //    '    "b" : "x", ',
-  //    '    "c" : { "d" : true, "e" : null }',
-  //    '  }',
-  //    ']'
-  //
-  //  ].join( '\n' ),
-  //
-  //  /*04*/
-  //  [
-  //    '{',
-  //    '  "a" : "aa", ',
-  //    '  "b" : [ 1, 2, 3 ], ',
-  //    '  "c" : [ routine r ]',
-  //    '}',
-  //
-  //  ].join( '\n' ),
-  //
-  //  /*05*/
-  //  [
-  //
-  //    '[',
-  //    '  {',
-  //    '    "a" : 1, ',
-  //    '    "b" : 2, ',
-  //    '    "c" : ',
-  //    '    {',
-  //    '      "d" : [ null, null ]',
-  //    '    }',
-  //    '  }',
-  //    ']',
-  //
-  //  ].join( '\n' ),
-  //
-  //  /*06*/
-  //  [
-  //
-  //    '{',
-  //    '  "a" : "1994-01-12T00:00:00.000Z"',
-  //    '}',
-  //
-  //  ].join( '\n' ),
-  //
-  //  /*07*/
-  //  [
-  //
-  //    '{',
-  //    '  "a" : Error: r',
-  //    '}',
-  //
-  //  ].join( '\n' ),
-  //
-  //  /*08*/
-  //  [
-  //
-  //    '{ "a" : Symbol( sm ) }'
-  //
-  //  ].join( '\n' ),
-  //
-  //  /*09*/
-  //  [
-  //
-  //    '{ "a" : "\\n\\nABC" }'
-  //
-  //  ].join( '\n' ),
-  //
-  //     /*10*/
-  //     [
-  //       '',
-  //     ].join( '\n' ),
-  //
-  //     /*11*/
-  //     [
-  //       ''
-  //     ].join( '\n' ),
-  //
-  //     /*12*/
-  //     [
-  //       ''
-  //
-  //     ].join( '\n' ),
-  //
-  //     /*13*/
-  //     [
-  //       ''
-  //     ].join( '\n' ),
-  //
-  //     /*14*/
-  //     [
-  //       ''
-  //     ].join( '\n' ),
-  //
-  //   /*15*/
-  //   [
-  //     ''
-  //   ].join( '\n' ),
-  //
-  //   /*16*/
-  //   [
-  //     ''
-  //   ].join( '\n' ),
-  //
-  //   /*17*/
-  //   [
-  //     ''
-  //   ].join( '\n' ),
-  //
-  //   /*18*/
-  //   [
-  //     ''
-  //   ].join( '\n' ),
-  //
-  //   /*19*/
-  //   [
-  //     ''
-  //   ].join( '\n' ),
-  //
-  //   /*20*/
-  //   [
-  //     ''
-  //   ].join( '\n' ),
-  //
-  //   /*21*/
-  //   [
-  //     ''
-  //   ].join( '\n' ),
-   //
-  // ];
-
-  // If the it converted to string and can be parsed back to JSON without loss, it's good
-
-  test.case = 'json with valid json as property';
-  var src = { "a" : 100, "b" : "c", "c" : { "d" : true, "e" : null } };
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = 'json with valid json as property(2)';
-  var src = { "b" : "a", "c" : 50, "d" : { "a" : "undefined", "e" : null } };
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = 'array as a json';
-  var src = [ { "a" : 100, "b" : "x", "c" : { "d" : true, "e" : null } } ];
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = 'trivial json';
-  var src = { a : '\n\nABC' };
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-  
-}
-
-//
-
-function _toStrJsonFromFile( test, encoding )
-{
-  //  var desc = 'json from file as ' + encoding,
-  //
-  //  src =
-  //  [
-  //
-  //    stringFromFile( 'file1', encoding ),
-  //    stringFromFile( 'file4.pdf', encoding ),
-  //    stringFromFile( 'test.exe', encoding ),
-  //    stringFromFile( 'small', encoding ),
-  //    stringFromFile( 'small2', encoding ),
-  //    stringFromFile( 'small3', encoding ),
-  //    stringFromFile( 'small4', encoding ),
-  //    stringFromFile( 'small5', encoding ),
-  //    stringFromFile( 'small6', encoding ),
-  //    stringFromFile( 'small7', encoding ),
-  //    stringFromFile( 'small5', encoding ),
-  //
-  //    { a : stringFromFile( 'file1', encoding ), b : stringFromFile( 'file2', encoding ), c : 1 },
-  //    { a : stringFromFile( 'file3', encoding ), b : stringFromFile( 'file4.pdf', encoding ), c : 1 },
-  //    { a : [ stringFromFile( 'test.exe', encoding ) ], b : stringFromFile( 'small', encoding ) },
-  //    { a : stringFromFile( 'small2', encoding ), b : stringFromFile( 'small3', encoding ) },
-  //    { a : stringFromFile( 'small4', encoding ), b : stringFromFile( 'small5', encoding ) },
-  //    { a : stringFromFile( 'small6', encoding ), b : stringFromFile( 'small7', encoding ) },
-  //
-  //  ],
-  //
-  //  options =
-  //  [
-  //    { jsonLike : 1 },
-  //  ];
-  //
-  //  testFunction( test, desc, src, options );
-
-  test.case = encoding + ' file1';
-  var src = stringFromFile( 'file1', encoding );
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' file4.pdf';
-  var src = stringFromFile( 'file4.pdf', encoding );
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' test.exe';
-  var src = stringFromFile( 'test.exe', encoding );
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' small';
-  var src = stringFromFile( 'small', encoding );
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' small2';
-  var src = stringFromFile( 'small2', encoding );
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' small3';
-  var src = stringFromFile( 'small3', encoding );
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-  
-  test.case = encoding + ' small4';
-  var src = stringFromFile( 'small4', encoding );
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' small5';
-  var src = stringFromFile( 'small5', encoding );
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' small6';
-  var src = stringFromFile( 'small6', encoding );
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' small7';
-  var src = stringFromFile( 'small7', encoding );
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' file as json property value';
-  var src = { a : stringFromFile( 'file1', encoding ), b : stringFromFile( 'file2', encoding ), c : 1 };
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' file as json property value';;
-  var src = { a : stringFromFile( 'file3', encoding ), b : stringFromFile( 'file4.pdf', encoding ), c : 1 };
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' file as json property value';;
-  var src = { a : [ stringFromFile( 'test.exe', encoding ) ], b : stringFromFile( 'small', encoding ) };
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-  
-  test.case = encoding + ' file as json property value';;
-  var src = { a : stringFromFile( 'small2', encoding ), b : stringFromFile( 'small3', encoding ) };
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' file as json property value';;
-  var src = { a : stringFromFile( 'small4', encoding ), b : stringFromFile( 'small5', encoding ) };
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-  test.case = encoding + ' file as json property value';;
-  var src = { a : stringFromFile( 'small6', encoding ), b : stringFromFile( 'small7', encoding ) };
-  var got = _.toStr( src, { jsonLike : 1 } );
-  var expected = src;
-  test.identical( JSON.parse( got ), expected );
-
-}
-
-//
-
-function toStrJsonFromFileU( test )
-{
-
-  return _toStrJsonFromFile( test, 'utf8' );
-
-}
-
-//
-
-function toStrJsonFromFileA( test )
-{
-
-  return _toStrJsonFromFile( test, 'ascii' );
 
 }
 
@@ -4593,7 +4208,7 @@ function toStrLevel( test )
     '}'
   ].join( '\n' );
   test.identical( got, expected );
-  
+
   test.case = 'nested objects, level 1 levels 0';
   var src = { a : [ "example" ], b : 1, c : null , d : [ "b" ] };
   var got = _.toStr( src, { level: 1, levels : 0 } );
@@ -4771,7 +4386,7 @@ function toStrEnumerable( test )
   var got = _.toStr( src, { } );
   var expected = '{ a : \'string\' }';
   test.identical( got, expected );
-  
+
   test.case = 'enumerable, own 0';
   var src =
   ( function( )
@@ -4796,7 +4411,7 @@ function toStrEnumerable( test )
   var got = _.toStr( src, { own : 0 } );
   var expected = '{ a : \'string\', foo : 1 }';
   test.identical( got, expected );
-  
+
   test.case = 'enumerable, onlyEnum 0';
   var src =
   ( function( )
@@ -4818,7 +4433,7 @@ function toStrEnumerable( test )
   var got = _.toStr( src, { onlyEnumerable : 0 } );
   var expected = '{ getFoo : [ routine value ], foo : 1 }';
   test.identical( got, expected );
-  
+
   test.case = 'enumerable, onlyEnum 0 own 0';
   var src =
   ( function( )
@@ -6377,9 +5992,9 @@ var Self =
   context :
   {
     reportChars,
-    stringFromFile,
-    //testFunction,
-    _toStrJsonFromFile,
+    // stringFromFile,
+    // testFunction,
+    // _toStrJsonFromFile,
   },
 
   tests :
@@ -6390,9 +6005,9 @@ var Self =
     toStrError,
     toStrArray,
     toStrObject,
-    toStrJson,
-    toStrJsonFromFileU,
-    toStrJsonFromFileA,
+    // toStrJson,
+    // toStrJsonFromFileU,
+    // toStrJsonFromFileA,
     toStrStringWrapper,
     toStrLevel,
     toStrEnumerable,
