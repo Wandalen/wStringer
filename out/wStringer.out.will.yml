@@ -166,6 +166,20 @@ module:
           - ../proto/dwtools/abase/l3.test
           - ../proto/dwtools/abase/l3.test/Stringer.test.s
           - ../proto/dwtools/abase/l3.test/StrJson.test.s
+          - ../proto/dwtools/abase/l3.test/_asset
+          - ../proto/dwtools/abase/l3.test/_asset/file
+          - ../proto/dwtools/abase/l3.test/_asset/file/file1
+          - ../proto/dwtools/abase/l3.test/_asset/file/file2
+          - ../proto/dwtools/abase/l3.test/_asset/file/file3
+          - ../proto/dwtools/abase/l3.test/_asset/file/file4.pdf
+          - ../proto/dwtools/abase/l3.test/_asset/file/small
+          - ../proto/dwtools/abase/l3.test/_asset/file/small2
+          - ../proto/dwtools/abase/l3.test/_asset/file/small3
+          - ../proto/dwtools/abase/l3.test/_asset/file/small4
+          - ../proto/dwtools/abase/l3.test/_asset/file/small5
+          - ../proto/dwtools/abase/l3.test/_asset/file/small6
+          - ../proto/dwtools/abase/l3.test/_asset/file/small7
+          - ../proto/dwtools/abase/l3.test/_asset/file/test.exe
           - ../proto/dwtools/amid
           - ../proto/dwtools/atop
     submodule:
