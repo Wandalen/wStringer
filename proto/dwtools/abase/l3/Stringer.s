@@ -69,7 +69,7 @@ function toStrMethods( src, o )
 {
   var o = o || Object.create( null );
   o.onlyRoutines = 1;
-  var result = toStrFine( src, o );
+  var result = _.toStrFine( src, o );
   return result;
 }
 
@@ -103,7 +103,7 @@ function toStrFields( src, o )
 {
   var o = o || Object.create( null );
   o.noRoutine = 1;
-  var result = toStrFine( src, o );
+  var result = _.toStrFine( src, o );
   return result;
 }
 
@@ -358,7 +358,7 @@ function toStrFields( src, o )
  *
  */
 
-function toStrFine_functor()
+function _toStrFine_functor()
 {
 
   var primeFilter =
@@ -515,6 +515,78 @@ function toStrShort( src )
   _.assert( arguments.length === 1 );
   var result = _.toStr( src, { levels : 0 } );
   return result;
+}
+
+//
+
+function toStrNice( src, o )
+{
+  _.assert( arguments.length === 1 || arguments.length === 2 );
+
+  o = _.routineOptions( toStrNice, o );
+
+  var result = _.toStr( src, o );
+
+  return result;
+}
+
+toStrNice.defaults =
+{
+  escaping : 0,
+  multilinedString : 0,
+  multiline : 1,
+  levels : 9,
+  stringWrapper : '',
+  keyWrapper : '',
+  wrap : 0
+}
+
+//
+
+function toJson( src, o )
+{
+  _.assert( arguments.length === 1 || arguments.length === 2 );
+
+  o = _.routineOptions( toJson, o );
+
+  if( o.cloning )
+  src = _.cloneData({ src });
+
+  delete o.cloning;
+
+  var result = _.toStr( src, o );
+
+  return result;
+}
+
+toJson.defaults =
+{
+  jsonLike : 1,
+  levels : 1 << 20,
+  cloning : 1,
+}
+
+//
+
+function toJs( src, o )
+{
+  _.assert( arguments.length === 1 || arguments.length === 2 );
+
+  o = _.routineOptions( toJs, o );
+
+  var result = _.toStr( src, o );
+
+  return result;
+}
+
+toJs.defaults =
+{
+  escaping : 1,
+  multilinedString : 1,
+  levels : 1 << 20,
+  stringWrapper : '`',
+  keyWrapper : '"',
+  jsLike : 1,
 }
 
 //
@@ -1785,90 +1857,26 @@ function _toStrFromObject( src, o )
   return { text : result, simple };
 }
 
-//
-
-function toJson( src, o )
-{
-  _.assert( arguments.length === 1 || arguments.length === 2 );
-
-  o = _.routineOptions( toJson, o );
-
-  if( o.cloning )
-  src = _.cloneData({ src });
-
-  delete o.cloning;
-
-  var result = _.toStr( src, o );
-
-  return result;
-}
-
-toJson.defaults =
-{
-  jsonLike : 1,
-  levels : 1 << 20,
-  cloning : 1,
-}
-
-//
-
-function toJs( src, o )
-{
-  _.assert( arguments.length === 1 || arguments.length === 2 );
-
-  o = _.routineOptions( toJs, o );
-
-  var result = _.toStr( src, o );
-
-  return result;
-}
-
-toJs.defaults =
-{
-  escaping : 1,
-  multilinedString : 1,
-  levels : 1 << 20,
-  stringWrapper : '`',
-  keyWrapper : '"',
-  jsLike : 1,
-}
-
-//
-
-function toStrNice( src, o )
-{
-  _.assert( arguments.length === 1 || arguments.length === 2 );
-
-  o = _.routineOptions( toStrNice, o );
-
-  var result = _.toStr( src, o );
-
-  return result;
-}
-
-toStrNice.defaults =
-{
-  escaping : 0,
-  multilinedString : 0,
-  multiline : 1,
-  levels : 9,
-  stringWrapper : '',
-  keyWrapper : '',
-  wrap : 0
-}
-
 // --
 // declare
 // --
 
+var toStrFine = _toStrFine_functor();
+var toStr = toStrFine;
+
 var Proto =
 {
 
+  toStr,
+  toStrFine,
   toStrMethods,
   toStrFields,
-
-  toStrFine_functor,
   toStrShort,
+  toStrNice,
+  toJson,
+  toJs,
+
+  _toStrFine_functor,
 
   _toStr,
   _toStrShort,
@@ -1897,20 +1905,14 @@ var Proto =
   _toStrFromObjectKeysFiltered,
   _toStrFromObject,
 
-  toJson,
-  toJs,
-  toStrNice,
-
   Stringer : 1,
 
 }
 
 _.mapExtend( Self, Proto );
 
-//
-
-var toStrFine = Self.toStrFine = Self.toStrFine_functor();
-var toStr = Self.toStr = Self.strFrom = toStrFine;
+// var toStrFine = Self.toStrFine = Self._toStrFine_functor();
+// var toStr = Self.toStr = Self.strFrom = toStrFine;
 
 // --
 // export
