@@ -77,7 +77,7 @@ function reportChars( )
 
 //
 
-/* qqq : eliminate that, please */
+/* qqq : eliminate that, please | Dmytro : eliminated a time ago */
 
 //function testFunction( test, desc, src, options, expected )
 //{
@@ -122,498 +122,485 @@ function reportChars( )
 // tests
 // --
 
-/* qqq : normalize test */
+/* qqq : normalize test | Dmytro : normalized */
 
 function toStr( test )
 {
-  var self = this;
+  test.case = 'in - boolean';
+  var got = _.toStr( false, {} );
+  test.identical( got, 'false' );
 
-  var samples =
-  [
+  test.case = 'in - number';
+  var got = _.toStr( 13, {} );
+  test.identical( got, '13' );
 
-    {
-      options : {},
-      in : false,
-      out : 'false',
-      description : 'boolean',
-    },
+  test.case = 'in - number, levels - 2';
+  var got = _.toStr( 0, { levels : 2 } );
+  test.identical( got, '0' );
 
-    {
-      options : {},
-      in : 13,
-      out : '13',
-      description : 'number',
-    },
+  test.case = 'in - Date, levels - 2';
+  var got = _.toStr( new Date( Date.UTC( 2020, 0, 13 ) ), { levels : 2 } );
+  test.identical( got, '2020-01-13T00:00:00.000Z' );
 
-    {
-      options : { levels : 2 },
-      in : 0,
-      out : '0',
-    },
+  test.case = 'in - string, level - 2';
+  var got = _.toStr( 'text', { levels : 2 } );
+  test.identical( got, '\'text\'' );
 
-    {
-      options : { levels : 2 },
-      in : new Date( Date.UTC( 2020, 0, 13 ) ),
-      out : '2020-01-13T00:00:00.000Z',
-    },
+  test.case = 'in - empty array, levels - 2';
+  var got = _.toStr( [], { levels : 2 } );
+  test.identical( got, '[]' );
 
-    {
-      options : { levels : 2 },
-      in : 'text',
-      out : '\'text\'',
-    },
+  test.case = 'in - array with empty maps, levels - 2';
+  var got = _.toStr( [ {}, {}, {} ], { levels : 2 } );
+  test.identical( got, '[ {}, {}, {} ]' );
 
-    {
-      options : { levels : 2 },
-      in : [],
-      out : '[]',
-    },
+  test.case = 'in - array with numbers, levels - 2';
+  var got = _.toStr( [ 1, 2, 3, 4 ], { levels : 2 } );
+  test.identical( got, '[ 1, 2, 3, 4 ]' );
 
-    {
-      options : { levels : 2 },
-      in : [ {}, {}, {} ],
-      out : '[ {}, {}, {} ]',
-    },
+  test.case = 'in - empty map, levels - 2';
+  var got = _.toStr( {}, { levels : 2 } );
+  test.identical( got, '{}' );
 
-    {
-      options : { levels : 2 },
-      in : {},
-      out : '{}',
-    },
+  test.case = 'in - filled map, levels - 2';
+  var got = _.toStr( { a : {}, b : {} }, { levels : 2 } );
+  test.identical( got, '{ a : {}, b : {} }' );
 
-    {
-      options : { levels : 2 },
-      in : { a : {}, b : {} },
-      out : '{ a : {}, b : {} }',
-    },
-
-    {
-      options : { levels : 2 },
-      in : [ 1, 2, 3, 4 ],
-      out : '[ 1, 2, 3, 4 ]',
-    },
-
-    {
-      options : { levels : 2 },
-      in : { 1 : 'a', 2: 'b', 3: 'c' },
-      out : '{ 1 : \'a\', 2 : \'b\', 3 : \'c\' }',
-    },
-
-    {
-      options : { levels : 2 },
-      in :
-      {
-        1 : 'a',
-        2: [ 10, 20, 30 ],
-        3: { 21 : 'aa', 22 : 'bb' }
-      },
-      out :
-      [
-        '{',
-        '  1 : \'a\', ',
-        '  2 : [ 10, 20, 30 ], ',
-        '  3 : { 21 : \'aa\', 22 : \'bb\' }',
-        '}',
-      ].join( '\n' ),
-    },
-
-    {
-      options : { levels : 2 },
-      in :
-      {
-        1 : 'a',
-        2 : [ 10, 20, 30 ],
-        3 : { 21 : 'aa', 22 : 'bb' },
-        4 : [ 10, 20, 30 ],
-        5 : [ 10, 20, 30 ],
-      },
-      out :
-      [
-        '{',
-        '  1 : \'a\', ',
-        '  2 : [ 10, 20, 30 ], ',
-        '  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
-        '  4 : [ 10, 20, 30 ], ',
-        '  5 : [ 10, 20, 30 ]',
-        '}',
-      ].join( '\n' ),
-    },
-
-    {
-      options : { levels : 2 },
-      in :
-      [
-        'a',
-        [ 10, 20, 30 ],
-        { 21 : 'aa', 22 : 'bb' },
-        { 31 : '111', 32 : '222' },
-        [ 10, 20, 30 ],
-        [ 10, 20, 30 ],
-      ],
-      out :
-      [
-        '[',
-        '  \'a\', ',
-        '  [ 10, 20, 30 ], ',
-        '  { 21 : \'aa\', 22 : \'bb\' }, ',
-        '  { 31 : \'111\', 32 : \'222\' }, ',
-        '  [ 10, 20, 30 ], ',
-        '  [ 10, 20, 30 ]',
-        ']',
-      ].join( '\n' ),
-    },
-
-    // complex
-
-    {
-      options : { levels : 3 },
-      in :
-      [
-        'a',
-        [ 10, 20, 30 ],
-        {
-          21 : [ 1, 2, 3 ],
-          22 : [ 1, 2, 3, 4 ],
-        },
-        {
-          31 : { a : 'a', b : 'b' },
-          32 : { a : 'a', b : 'b', c : 'c' }
-        },
-        [
-          [ 1, 2, 3 ],
-          [ 1, 2, 3, 4 ]
-        ],
-        [
-          { a : 'a', b : 'b' },
-          { a : 'a', b : 'b', c : 'c' }
-        ],
-      ],
-      out :
-      [
-        '[',
-        '  \'a\', ',
-        '  [ 10, 20, 30 ], ',
-        '  {',
-        '    21 : [ 1, 2, 3 ], ',
-        '    22 : [ 1, 2, 3, 4 ]',
-        '  }, ',
-        '  {',
-        '    31 : { a : \'a\', b : \'b\' }, ',
-        '    32 : { a : \'a\', b : \'b\', c : \'c\' }',
-        '  }, ',
-        '  [',
-        '    [ 1, 2, 3 ], ',
-        '    [ 1, 2, 3, 4 ]',
-        '  ], ',
-        '  [',
-        '    { a : \'a\', b : \'b\' }, ',
-        '    { a : \'a\', b : \'b\', c : \'c\' }',
-        '  ]',
-        ']',
-      ].join( '\n' ),
-    },
-
-    {
-      options : { levels : 5 },
-      in :
-      [
-        'a',
-        [ 10, 20, 30 ],
-        {
-          21 : [ 1, 2, 3 ],
-          22 : [ 1, 2, 3, 4 ],
-        },
-        {
-          31 :
-          {
-            a : { a : 'a', b : 'b' },
-            b : { a : 'a', b : 'b' }
-          },
-          32 :
-          {
-            a : 'a',
-            b : 'b',
-            c : { a : 'a', b : 'b' },
-          }
-        },
-        [
-          [
-            [ 100, 200 ],
-            [ 100, 200 ]
-          ],
-          [ 1, 2, 3, 4 ]
-        ],
-        [
-          { a : 'a', b : 'b' },
-          {
-            a : 'a',
-            b : 'b',
-            c : { a : 'a', b : 'b' }
-          }
-        ],
-      ],
-      out :
-      [
-        '[',
-        '  \'a\', ',
-        '  [ 10, 20, 30 ], ',
-        '  {',
-        '    21 : [ 1, 2, 3 ], ',
-        '    22 : [ 1, 2, 3, 4 ]',
-        '  }, ',
-        '  {',
-        '    31 : ',
-        '    {',
-        '      a : { a : \'a\', b : \'b\' }, ',
-        '      b : { a : \'a\', b : \'b\' }',
-        '    }, ',
-        '    32 : ',
-        '    {',
-        '      a : \'a\', ',
-        '      b : \'b\', ',
-        '      c : { a : \'a\', b : \'b\' }',
-        '    }',
-        '  }, ',
-        '  [',
-        '    [',
-        '      [ 100, 200 ], ',
-        '      [ 100, 200 ]',
-        '    ], ',
-        '    [ 1, 2, 3, 4 ]',
-        '  ], ',
-        '  [',
-        '    { a : \'a\', b : \'b\' }, ',
-        '    {',
-        '      a : \'a\', ',
-        '      b : \'b\', ',
-        '      c : { a : \'a\', b : \'b\' }',
-        '    }',
-        '  ]',
-        ']',
-      ].join( '\n' ),
-    },
-
-    // levels
-
-    {
-      options : { levels : 1 },
-      in :
-      [
-        'a',
-        [ 10, 20, 30 ],
-        { 21 : 'aa', 22 : 'bb' },
-        { 31 : '111', 32 : '222' },
-        [ 10, 20, 30 ],
-        [ 10, 20, 30 ],
-      ],
-      out :
-      [
-        '[',
-        '  \'a\', ',
-        '  {- Array with 3 elements -}, ',
-        '  {- Object with 2 elements -}, ',
-        '  {- Object with 2 elements -}, ',
-        '  {- Array with 3 elements -}, ',
-        '  {- Array with 3 elements -}',
-        ']',
-      ].join( '\n' ),
-    },
-
-    {
-      options : { levels : 2 },
-      in :
-      [
-        'a',
-        [ 10, 20, 30 ],
-        {
-          21 : [ 1, 2, 3 ],
-          22 : [ 1, 2, 3, 4 ],
-        },
-        {
-          31 : { a : 'a', b : 'b' },
-          32 : { a : 'a', b : 'b', c : 'c' }
-        },
-        [
-          [ 1, 2, 3 ],
-          [ 1, 2, 3, 4 ]
-        ],
-        [
-          { a : 'a', b : 'b' },
-          { a : 'a', b : 'b', c : 'c' }
-        ],
-      ],
-      out :
-      [
-        '[',
-        '  \'a\', ',
-        '  [ 10, 20, 30 ], ',
-        '  {',
-        '    21 : {- Array with 3 elements -}, ',
-        '    22 : {- Array with 4 elements -}',
-        '  }, ',
-        '  {',
-        '    31 : {- Object with 2 elements -}, ',
-        '    32 : {- Object with 3 elements -}',
-        '  }, ',
-        '  [',
-        '    {- Array with 3 elements -}, ',
-        '    {- Array with 4 elements -}',
-        '  ], ',
-        '  [',
-        '    {- Object with 2 elements -}, ',
-        '    {- Object with 3 elements -}',
-        '  ]',
-        ']',
-      ].join( '\n' ),
-    },
-
-    // tab
-
-    {
-      options : { levels : 2, tab : '---', dtab : '+' },
-      in :
-      {
-        1 : 'a',
-        2 : [ 10, 20, 30 ],
-        3 : { 21 : 'aa', 22 : 'bb' },
-        4 : [ 10, 20, 30 ],
-        13 : [ 10, 20, 30 ],
-      },
-      out :
-      [
-        '---{',
-        '---+1 : \'a\', ',
-        '---+2 : [ 10, 20, 30 ], ',
-        '---+3 : { 21 : \'aa\', 22 : \'bb\' }, ',
-        '---+4 : [ 10, 20, 30 ], ',
-        '---+13 : [ 10, 20, 30 ]',
-        '---}',
-      ].join( '\n' ),
-    },
-
-    // prependTab
-
-    {
-      options : { levels : 2, wrap : 0, tab : '-', prependTab : 0 },
-      in :
-      {
-        1 : 'a',
-        2 : [ 10, 20, 30 ],
-        3 : { 21 : 'aa', 22 : 'bb' },
-        4 : [ 10, 20, 30 ],
-        13 : [ 10, 20, 30 ],
-      },
-      out :
-      [
-        '  1 : \'a\' ',
-        '-  2 :   10 20 30 ',
-        '-  3 : 21 : \'aa\' 22 : \'bb\' ',
-        '-  4 :   10 20 30 ',
-        '-  13 :   10 20 30',
-      ].join( '\n' ),
-    },
-
-    {
-      options : { levels : 2, wrap : 0, tab : '-', prependTab : 1 },
-      in :
-      {
-        1 : 'a',
-        2 : [ 10, 20, 30 ],
-        3 : { 21 : 'aa', 22 : 'bb' },
-        4 : [ 10, 20, 30 ],
-        13 : [ 10, 20, 30 ],
-      },
-      out :
-      [
-        '-  1 : \'a\' ',
-        '-  2 :   10 20 30 ',
-        '-  3 : 21 : \'aa\' 22 : \'bb\' ',
-        '-  4 :   10 20 30 ',
-        '-  13 :   10 20 30',
-      ].join( '\n' ),
-    },
-
-
-
-    {
-      options : { levels : 2, wrap : 1, tab : '-', prependTab : 0 },
-      in :
-      {
-        1 : 'a',
-        2 : [ 10, 20, 30 ],
-        3 : { 21 : 'aa', 22 : 'bb' },
-        4 : [ 10, 20, 30 ],
-        5 : [ 10, 20, 30 ],
-      },
-      out :
-      [
-        '{',
-        '-  1 : \'a\', ',
-        '-  2 : [ 10, 20, 30 ], ',
-        '-  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
-        '-  4 : [ 10, 20, 30 ], ',
-        '-  5 : [ 10, 20, 30 ]',
-        '-}',
-      ].join( '\n' ),
-    },
-
-    {
-      options : { levels : 2, wrap : 1, tab : '-', prependTab : 1 },
-      in :
-      {
-        1 : 'a',
-        2 : [ 10, 20, 30 ],
-        3 : { 21 : 'aa', 22 : 'bb' },
-        4 : [ 10, 20, 30 ],
-        5 : [ 10, 20, 30 ],
-      },
-      out :
-      [
-        '-{',
-        '-  1 : \'a\', ',
-        '-  2 : [ 10, 20, 30 ], ',
-        '-  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
-        '-  4 : [ 10, 20, 30 ], ',
-        '-  5 : [ 10, 20, 30 ]',
-        '-}',
-      ].join( '\n' ),
-    },
-
-    {
-      options : { levels : 2, noSubObject : 1, noArray : 1, dtab : '  ' },
-      in :
-      {
-        1 : [ 1, 2, 3 ],
-        2 : 'abc',
-        3 : 4,
-      },
-      out :
-      [
-        '{',
-        '  2 : \'abc\', ',
-        '  3 : 4',
-        '}',
-      ].join( '\n' ),
-    },
-
-  ];
+  test.case = 'in - filled map with strings values, levels - 2';
+  var got = _.toStr( { 1 : 'a', 2: 'b', 3: 'c' }, { levels : 2 } );
+  test.identical( got, '{ 1 : \'a\', 2 : \'b\', 3 : \'c\' }' );
 
   /* */
 
-  debugger;
-  for( var s = 0 ; s < samples.length ; s++ )
+  test.case = 'in - filled map, complex values, levels - 2';
+  var src = { 1 : 'a', 2 : [ 10, 20, 30 ], 3 : { 21 : 'aa', 22 : 'bb' } };
+  var got = _.toStr( src, { levels : 2 } );
+  var exp =
+  [
+    '{',
+    '  1 : \'a\', ',
+    '  2 : [ 10, 20, 30 ], ',
+    '  3 : { 21 : \'aa\', 22 : \'bb\' }',
+    '}',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2';
+  var src = 
   {
-    var sample = samples[ s ];
-    debugger;
-    var got = _.toStr( sample.in, sample.options );
-    debugger;
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.toStr( src, { levels : 2 } );
+  var exp =
+  [
+    '{',
+    '  1 : \'a\', ',
+    '  2 : [ 10, 20, 30 ], ',
+    '  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
+    '  4 : [ 10, 20, 30 ], ',
+    '  5 : [ 10, 20, 30 ]',
+    '}',
+  ].join( '\n' );
+  test.identical( got, exp );
+  
+  /* */
 
-    test.case = sample.description || '';
-    test.identical( got, sample.out );
+  test.case = 'in - filled map, complex values, levels - 2';
+  var src = 
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.toStr( src, { levels : 2 } );
+  var exp =
+  [
+    '{',
+    '  1 : \'a\', ',
+    '  2 : [ 10, 20, 30 ], ',
+    '  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
+    '  4 : [ 10, 20, 30 ], ',
+    '  5 : [ 10, 20, 30 ]',
+    '}',
+  ].join( '\n' );
+  test.identical( got, exp );
 
-  }
-  debugger;
+  /* */
 
+  test.case = 'in - filled array, complex values, levels - 2';
+  var src = 
+  [
+    'a',
+    [ 10, 20, 30 ],
+    { 21 : 'aa', 22 : 'bb' },
+    { 31 : '111', 32 : '222' },
+    [ 10, 20, 30 ],
+    [ 10, 20, 30 ],
+  ];
+  var got = _.toStr( src, { levels : 2 } );
+  var exp =
+  [
+    '[',
+    '  \'a\', ',
+    '  [ 10, 20, 30 ], ',
+    '  { 21 : \'aa\', 22 : \'bb\' }, ',
+    '  { 31 : \'111\', 32 : \'222\' }, ',
+    '  [ 10, 20, 30 ], ',
+    '  [ 10, 20, 30 ]',
+    ']',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, levels - 3';
+  var src = 
+  [
+    'a',
+    [ 10, 20, 30 ],
+    {
+      21 : [ 1, 2, 3 ],
+      22 : [ 1, 2, 3, 4 ],
+    },
+    {
+      31 : { a : 'a', b : 'b' },
+      32 : { a : 'a', b : 'b', c : 'c' }
+    },
+    [
+      [ 1, 2, 3 ],
+      [ 1, 2, 3, 4 ]
+    ],
+    [
+      { a : 'a', b : 'b' },
+      { a : 'a', b : 'b', c : 'c' }
+    ],
+  ];
+  var got = _.toStr( src, { levels : 3 } );
+  var exp =
+  [
+    '[',
+    '  \'a\', ',
+    '  [ 10, 20, 30 ], ',
+    '  {',
+    '    21 : [ 1, 2, 3 ], ',
+    '    22 : [ 1, 2, 3, 4 ]',
+    '  }, ',
+    '  {',
+    '    31 : { a : \'a\', b : \'b\' }, ',
+    '    32 : { a : \'a\', b : \'b\', c : \'c\' }',
+    '  }, ',
+    '  [',
+    '    [ 1, 2, 3 ], ',
+    '    [ 1, 2, 3, 4 ]',
+    '  ], ',
+    '  [',
+    '    { a : \'a\', b : \'b\' }, ',
+    '    { a : \'a\', b : \'b\', c : \'c\' }',
+    '  ]',
+    ']',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, a few levels of nesting, levels - 5';
+  var src = 
+  [
+    'a',
+    [ 10, 20, 30 ],
+    {
+      21 : [ 1, 2, 3 ],
+      22 : [ 1, 2, 3, 4 ],
+    },
+    {
+      31 :
+      {
+        a : { a : 'a', b : 'b' },
+        b : { a : 'a', b : 'b' }
+      },
+      32 :
+      {
+        a : 'a',
+        b : 'b',
+        c : { a : 'a', b : 'b' },
+      }
+    },
+    [
+      [
+        [ 100, 200 ],
+        [ 100, 200 ]
+      ],
+      [ 1, 2, 3, 4 ]
+    ],
+    [
+      { a : 'a', b : 'b' },
+      {
+        a : 'a',
+        b : 'b',
+        c : { a : 'a', b : 'b' }
+      }
+    ],
+  ];
+  var got = _.toStr( src, { levels : 5 } );
+  var exp =
+  [
+    '[',
+    '  \'a\', ',
+    '  [ 10, 20, 30 ], ',
+    '  {',
+    '    21 : [ 1, 2, 3 ], ',
+    '    22 : [ 1, 2, 3, 4 ]',
+    '  }, ',
+    '  {',
+    '    31 : ',
+    '    {',
+    '      a : { a : \'a\', b : \'b\' }, ',
+    '      b : { a : \'a\', b : \'b\' }',
+    '    }, ',
+    '    32 : ',
+    '    {',
+    '      a : \'a\', ',
+    '      b : \'b\', ',
+    '      c : { a : \'a\', b : \'b\' }',
+    '    }',
+    '  }, ',
+    '  [',
+    '    [',
+    '      [ 100, 200 ], ',
+    '      [ 100, 200 ]',
+    '    ], ',
+    '    [ 1, 2, 3, 4 ]',
+    '  ], ',
+    '  [',
+    '    { a : \'a\', b : \'b\' }, ',
+    '    {',
+    '      a : \'a\', ',
+    '      b : \'b\', ',
+    '      c : { a : \'a\', b : \'b\' }',
+    '    }',
+    '  ]',
+    ']',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, levels - 1';
+  var src = 
+  [
+    'a',
+    [ 10, 20, 30 ],
+    { 21 : 'aa', 22 : 'bb' },
+    { 31 : '111', 32 : '222' },
+    [ 10, 20, 30 ],
+    [ 10, 20, 30 ],
+  ];
+  var got = _.toStr( src, { levels : 1 } );
+  var exp =
+  [
+    '[',
+    '  \'a\', ',
+    '  {- Array with 3 elements -}, ',
+    '  {- Object with 2 elements -}, ',
+    '  {- Object with 2 elements -}, ',
+    '  {- Array with 3 elements -}, ',
+    '  {- Array with 3 elements -}',
+    ']',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, 3 levels of nesting, levels - 2';
+  var src = 
+  [
+    'a',
+    [ 10, 20, 30 ],
+    {
+      21 : [ 1, 2, 3 ],
+      22 : [ 1, 2, 3, 4 ],
+    },
+    {
+      31 : { a : 'a', b : 'b' },
+      32 : { a : 'a', b : 'b', c : 'c' }
+    },
+    [
+      [ 1, 2, 3 ],
+      [ 1, 2, 3, 4 ]
+    ],
+    [
+      { a : 'a', b : 'b' },
+      { a : 'a', b : 'b', c : 'c' }
+    ],
+  ];
+  var got = _.toStr( src, { levels : 2 } );
+  var exp =
+  [
+    '[',
+    '  \'a\', ',
+    '  [ 10, 20, 30 ], ',
+    '  {',
+    '    21 : {- Array with 3 elements -}, ',
+    '    22 : {- Array with 4 elements -}',
+    '  }, ',
+    '  {',
+    '    31 : {- Object with 2 elements -}, ',
+    '    32 : {- Object with 3 elements -}',
+    '  }, ',
+    '  [',
+    '    {- Array with 3 elements -}, ',
+    '    {- Array with 4 elements -}',
+    '  ], ',
+    '  [',
+    '    {- Object with 2 elements -}, ',
+    '    {- Object with 3 elements -}',
+    '  ]',
+    ']',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, tab - "-", dtab - "+"';
+  var src = 
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    13 : [ 10, 20, 30 ],
+  };
+  var got = _.toStr( src, { levels : 2, tab : '---', dtab : '+' } );
+  var exp =
+  [
+    '---{',
+    '---+1 : \'a\', ',
+    '---+2 : [ 10, 20, 30 ], ',
+    '---+3 : { 21 : \'aa\', 22 : \'bb\' }, ',
+    '---+4 : [ 10, 20, 30 ], ',
+    '---+13 : [ 10, 20, 30 ]',
+    '---}',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, wrap - 0, tab - "-", prependTab - 0';
+  var src = 
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    13 : [ 10, 20, 30 ],
+  };
+  var got = _.toStr( src, { levels : 2, wrap : 0, tab : '-', prependTab : 0 } );
+  var exp =
+  [
+    '  1 : \'a\' ',
+    '-  2 :   10 20 30 ',
+    '-  3 : 21 : \'aa\' 22 : \'bb\' ',
+    '-  4 :   10 20 30 ',
+    '-  13 :   10 20 30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, wrap - 0, tab - "-", prependTab - 1';
+  var src = 
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    13 : [ 10, 20, 30 ],
+  };
+  var got = _.toStr( src, { levels : 2, wrap : 0, tab : '-', prependTab : 1 } );
+  var exp =
+  [
+    '-  1 : \'a\' ',
+    '-  2 :   10 20 30 ',
+    '-  3 : 21 : \'aa\' 22 : \'bb\' ',
+    '-  4 :   10 20 30 ',
+    '-  13 :   10 20 30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, wrap - 1, tab - "-", prependTab - 0';
+  var src = 
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.toStr( src, { levels : 2, wrap : 1, tab : '-', prependTab : 0 } );
+  var exp =
+  [
+    '{',
+    '-  1 : \'a\', ',
+    '-  2 : [ 10, 20, 30 ], ',
+    '-  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
+    '-  4 : [ 10, 20, 30 ], ',
+    '-  5 : [ 10, 20, 30 ]',
+    '-}',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, wrap - 1, tab - "-", prependTab - 1';
+  var src = 
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.toStr( src, { levels : 2, wrap : 1, tab : '-', prependTab : 1 } );
+  var exp =
+  [
+    '-{',
+    '-  1 : \'a\', ',
+    '-  2 : [ 10, 20, 30 ], ',
+    '-  3 : { 21 : \'aa\', 22 : \'bb\' }, ',
+    '-  4 : [ 10, 20, 30 ], ',
+    '-  5 : [ 10, 20, 30 ]',
+    '-}',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, noSubObject - 1, noArray - 1, dtab - "  "';
+  var src = 
+  {
+    1 : [ 1, 2, 3 ],
+    2 : 'abc',
+    3 : 4,
+  };
+  var got = _.toStr( src, { levels : 2, noSubObject : 1, noArray : 1, dtab : '  ' } );
+  var exp =
+  [
+    '{',
+    '  2 : \'abc\', ',
+    '  3 : 4',
+    '}',
+  ].join( '\n' );
+  test.identical( got, exp );
 }
 
 // --
