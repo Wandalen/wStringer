@@ -1177,10 +1177,8 @@ function _toStrFromBigInt( src, o )
 
 function _toStrFromSymbol( src, o )
 {
-  // let result = String( src );
   let text = src.toString().slice( 7, -1 );
   let result = `{- Symbol${text ? ' ' + text + ' ' : ' '}-}`;
-  debugger;
   return result;
 }
 
