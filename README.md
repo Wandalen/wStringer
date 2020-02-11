@@ -6,7 +6,7 @@ Stringer nicely stringifies structures does not matter how complex or cycled the
 ### Try out
 ```
 npm install
-node sample/Sample.s
+node sample/Sample.js
 ```
 
 
