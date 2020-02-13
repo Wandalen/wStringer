@@ -1671,7 +1671,8 @@ function _toStrFromContainer( o )
     {
       if( optionsContainer.keyWrapper )
       result += optionsContainer.keyWrapper + String( names[ n ] ) + optionsContainer.keyWrapper + optionsContainer.colon;
-      else if( String( names[ n ] ) !== r.text )
+      // else if( String( names[ n ] ) !== r.text ) // Dmytro : this code write only key, if key and value in map is identical
+      else
       result += String( names[ n ] ) + optionsContainer.colon;
 
       if( !r.simple )

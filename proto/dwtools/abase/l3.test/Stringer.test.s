@@ -4075,28 +4075,54 @@ function toStrStringWrapper( test )
   ].join( '\n' );
   test.identical( got, expected );
 
-  test.case = 'stringWrapper with object, levels 1';
+  // test.case = 'stringWrapper with object, levels 1'; // Dmytro : old test case, if key and value is identical, then routine write only key
+  // var src = { a : "a", b : "b", c : { d : "d" } };
+  // var got = _.toStr( src, { stringWrapper: '', levels : 1 } );
+  // var expected =
+  // [
+  //   '{',
+  //   '  a, ',
+  //   '  b, ',
+  //   '  c : {- Object with 1 elements -}',
+  //   '}'
+  // ].join( '\n' );
+  // test.identical( got, expected );
+
+  test.case = 'stringWrapper with object, levels 1'; // Dmytro : new test case, if key and value is identical, routine write key and value
   var src = { a : "a", b : "b", c : { d : "d" } };
   var got = _.toStr( src, { stringWrapper: '', levels : 1 } );
   var expected =
   [
     '{',
-    '  a, ',
-    '  b, ',
+    '  a : a, ',
+    '  b : b, ',
     '  c : {- Object with 1 elements -}',
     '}'
   ].join( '\n' );
   test.identical( got, expected );
 
-  test.case = 'stringWrapper with objects, levels 2';
+  // test.case = 'stringWrapper with objects, levels 2'; // Dmytro : old test case, if key and value is identical, then routine write only key
+  // var src = { a : { h : "a" }, b : "b", c : { d : "d" } };
+  // var got = _.toStr( src, { stringWrapper: '', levels : 2 } );
+  // var expected =
+  // [
+  //   '{',
+  //   '  a : { h : a }, ',
+  //   '  b, ',
+  //   '  c : { d }',
+  //   '}'
+  // ].join( '\n' );
+  // test.identical( got, expected );
+
+  test.case = 'stringWrapper with objects, levels 2'; // Dmytro : new test case, if key and value is identical, routine write key and value
   var src = { a : { h : "a" }, b : "b", c : { d : "d" } };
   var got = _.toStr( src, { stringWrapper: '', levels : 2 } );
   var expected =
   [
     '{',
     '  a : { h : a }, ',
-    '  b, ',
-    '  c : { d }',
+    '  b : b, ',
+    '  c : { d : d }',
     '}'
   ].join( '\n' );
   test.identical( got, expected );
@@ -5965,6 +5991,22 @@ function _toStrFromContainer( test )
 
 }
 
+//
+
+function toStrNice( test ) 
+{
+  test.case = 'key and value is identical';
+  var src = { proto : 'proto' };
+  debugger;
+  var got = _.toStrNice( src );
+  test.identical( got, '  proto : proto' );
+
+  test.case = 'key and value is different';
+  var src = { proto : 'aaa' };
+  var got = _.toStrNice( src );
+  test.identical( got, '  proto : aaa' );
+}
+
 // --
 // declare test suite
 // --
@@ -6022,6 +6064,8 @@ var Self =
     _toStrFromArray,
     _toStrFromObject,
     _toStrFromContainer,
+
+    toStrNice,
 
   }
 
