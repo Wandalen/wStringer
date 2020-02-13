@@ -5965,6 +5965,21 @@ function _toStrFromContainer( test )
 
 }
 
+//
+
+function toStrNice( test ) 
+{
+  // test.case = 'key and value is identical';
+  // var src = { proto : 'proto' };
+  // var got = _.toStrNice( src );
+  // test.identical( got, '   proto : proto' );
+
+  test.case = 'key and value is different';
+  var src = { proto : 'aaa' };
+  var got = _.toStrNice( src );
+  test.identical( got, '  proto : aaa' );
+}
+
 // --
 // declare test suite
 // --
@@ -6022,6 +6037,8 @@ var Self =
     _toStrFromArray,
     _toStrFromObject,
     _toStrFromContainer,
+
+    toStrNice,
 
   }
 
