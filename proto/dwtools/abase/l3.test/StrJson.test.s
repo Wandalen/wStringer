@@ -2144,8 +2144,8 @@ function complex( test )
 
   test.case = 'trivial'; /* */
 
-  var expected = '[\n  ' + _.arrayFromRange([ 1,100 ]).join( ', \n  ' ) + '\n]';
-  var src = _.arrayFromRange([ 1,100 ]);
+  var expected = '[\n  ' + _.longFromRange([ 1,100 ]).join( ', \n  ' ) + '\n]';
+  var src = _.longFromRange([ 1,100 ]);
   var json = _.toJson( src );
   test.identical( json , expected );
 
