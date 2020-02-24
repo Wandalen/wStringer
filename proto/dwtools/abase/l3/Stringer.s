@@ -644,7 +644,7 @@ function _toStr( src, o )
   }
   else if( _.vectorAdapterIs( src ) )
   {
-    result += _.vector.toStr( src, o );
+    result += _.vectorAdapter.toStr( src, o );
   }
   else if( _.errIs( src ) )
   {
