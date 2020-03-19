@@ -108,6 +108,7 @@ function toStrFields( src, o )
 }
 
 //
+
 /**
 * @summary Options object for toStr function.
 * @typedef {Object} toStrOptions
@@ -538,7 +539,8 @@ toStrNice.defaults =
   levels : 9,
   stringWrapper : '',
   keyWrapper : '',
-  wrap : 0
+  tab : '',
+  wrap : 0,
 }
 
 //
