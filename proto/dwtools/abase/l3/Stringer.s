@@ -13,7 +13,7 @@
 
 /**
  * Collection of tools for fast diagnostic and inspection of data during development and in production.
-  @namespace Tools( module::Stringer )
+  @namespace Tools.Stringer 
   @memberof module:Tools/base/Stringer
 */
 
