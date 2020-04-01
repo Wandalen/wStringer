@@ -4,18 +4,14 @@
 
 /**
  * Stringer nicely stringifies structures does not matter how complex or cycled them are. Convenient tool for fast diagnostic and inspection of data during development and in production. Use it to see more, faster. Refactoring required.
-  @module Tools/base/Stringer
+ * Collection of tools for fast diagnostic and inspection of data during development and in production.
+ @module Tools/base/Stringer
+ @extends Tools
 */
 
 /**
  * @file aStringer.s.
  */
-
-/**
- * Collection of tools for fast diagnostic and inspection of data during development and in production.
-  @namespace Tools.Stringer 
-  @memberof module:Tools/base/Stringer
-*/
 
 if( typeof module !== 'undefined' )
 {
@@ -47,7 +43,7 @@ var strType = _.strType;
  * options provided by argument( o ).
  *
  * @param {object} src - Source object.
- * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
+ * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
  * @param {boolean} [ options.onlyRoutines=true ] - makes object behavior Routine only.
  * @see {@link wTools.toStrFine} Check out main function for more usage options and details.
  * @returns {string} Returns string that represents object data.
@@ -61,7 +57,7 @@ var strType = _.strType;
  * _.toStrMethods( ( function(){} ), { } )
  *
  * @function toStrMethods
- * @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+ * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
  *
  */
 
@@ -81,7 +77,7 @@ function toStrMethods( src, o )
  * options provided by argument( o ).
  *
  * @param {object} src - Source object.
- * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
+ * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
  * @param {boolean} [ options.noRoutine=false ] - Ignores all entities of type Routine.
  * @see {@link wTools.toStrFine} Check out main function for more usage options and details.
  * @returns {string} Returns string that represents object data.
@@ -95,7 +91,7 @@ function toStrMethods( src, o )
  * _.toStrFields( { a : function b(){},  c : 1 , d : '2' }, {} )
  *
  * @function toStrFields
- * @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+ * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
  *
  */
 
@@ -148,7 +144,7 @@ function toStrFields( src, o )
 * @property {boolean} [ o.escaping=false ] - enable escaping of special characters.
 * @property {boolean} [ o.jsonLike=false ] - enable conversion to JSON string.
 * @property {boolean} [ o.jsLike=false ] - enable conversion to JS string.
-* @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+* @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
 */
 
 /**
@@ -156,7 +152,7 @@ function toStrFields( src, o )
  * by argument( o ).If object ( src ) has own ( toStr ) method defined function uses it for conversion.
  *
  * @param {object} src - Source object for representing it as string.
- * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
+ * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
  * @returns {string} Returns string that represents object data.
  *
  * @example
@@ -355,7 +351,7 @@ function toStrFields( src, o )
  * @throws { Exception } Throw an exception if( o.multilinedString ) is not equal false when ( o.jsonLike ) is true.
  * @throws { RangeError } Throw an exception if( o.precision ) is not between 1 and 21.
  * @throws { RangeError } Throw an exception if( o.fixed ) is not between 0 and 20.
- * @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+ * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
  *
  */
 
@@ -767,7 +763,7 @@ function _toStr( src, o )
  * For object, array and row returns count of elemets, example: '[ Row with 3 elements ]'.
  *
  * @param {object} src - Source object.
- * @param {Object} o - Conversion options {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
+ * @param {Object} o - Conversion options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
  * @returns {string} Returns string that represents object data.
  *
  * @example
@@ -775,7 +771,7 @@ function _toStr( src, o )
  * _._toStrShort( [ function del(){}, 0, 'a' ], { levels : 0 } )
  *
  * @function _toStrShort
- * @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+ * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
  *
  */
 
@@ -897,7 +893,7 @@ function _toStrShort( src, o )
  * Returns false if object must be ignored.
  *
  * @param {object} src - Source object.
- * @param {Object} o - Filters {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
+ * @param {Object} o - Filters {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
  * @returns {boolean} Returns result of filter check.
  *
  * @example
@@ -905,7 +901,7 @@ function _toStrShort( src, o )
  * _.toStrIsVisibleElement( function del(){}, { noRoutine : 1 } );
  *
  * @function _toStrIsVisibleElement
- * @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+ * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
  *
  */
 
@@ -1019,7 +1015,7 @@ function _toStrIsVisibleElement( src, o )
  * Returns true if object can be represented as one line.
  *
  * @param {object} element - Source object.
- * @param {Object} o - Check options {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
+ * @param {Object} o - Check options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
  * @param {boolean} [ o.escaping=false ] - enable escaping of special characters.
  * @returns {boolean} Returns result of length check.
  *
@@ -1033,7 +1029,7 @@ function _toStrIsVisibleElement( src, o )
  *
  * @function _toStrIsSimpleElement
  * @throws { Exception } Throw an exception if( arguments.length ) is not equal 2.
- * @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+ * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
  *
  */
 
@@ -1066,7 +1062,7 @@ function _toStrIsSimpleElement( element, o )
  * from argument( o ).
  *
  * @param {object} src - Source object.
- * @param {Object} o - conversion options {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
+ * @param {Object} o - conversion options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
  * @returns {string} Returns routine as string.
  *
  * @example
@@ -1074,7 +1070,7 @@ function _toStrIsSimpleElement( element, o )
  * _.toStrFromRoutine( function a(){}, {} );
  *
  * @function _toStrFromRoutine
- * @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+ * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
  *
  */
 
@@ -1108,7 +1104,7 @@ function _toStrFromRoutine( src, o )
  * If no option specified returns source( src ) as simple string.
  *
  * @param {Number} src - Number to convert.
- * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
+ * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
  * @returns {String} Returns number converted to the string.
  *
  * @example
@@ -1129,7 +1125,7 @@ function _toStrFromRoutine( src, o )
  * @throws {Exception} If( o ) is not a Object.
  * @throws {RangeError} If( o.precision ) is not between 1 and 21.
  * @throws {RangeError} If( o.fixed ) is not between 0 and 20.
- * @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+ * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
  *
 */
 
@@ -1193,7 +1189,7 @@ function _toStrFromSymbol( src, o )
  * Returns result as new string or source string if no changes maded.
  *
  * @param {object} src - String to parse.
- * @param {Object} o - Contains conversion  options {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
+ * @param {Object} o - Contains conversion  options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
  * @returns {String} Returns result of adjustments as new string.
  *
  * @example
@@ -1216,7 +1212,7 @@ function _toStrFromSymbol( src, o )
  * @throws {Exception} If no arguments provided.
  * @throws {Exception} If( src ) is not a String.
  * @throws {Exception} If( o ) is not a Object.
- * @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+ * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
  *
 */
 
@@ -1444,7 +1440,7 @@ function _toStrFromArrayFiltered( src, o )
  * Converts array provided by argument( src ) into string representation using options provided by argument( o ).
  *
  * @param {object} src - Array to convert.
- * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
+ * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
  * @returns {String} Returns string representation of array.
  *
  * @example
@@ -1472,7 +1468,7 @@ function _toStrFromArrayFiltered( src, o )
  * @throws { Exception } If( src ) is undefined.
  * @throws { Exception } If no arguments provided.
  * @throws { Exception } If( o ) is not a Object.
- * @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+ * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
  *
  */
 
@@ -1551,14 +1547,14 @@ function _toStrFromArray( src, o )
  * @param {array} [ o.names ] - Source object keys.
  * @param {string} [ o.prefix ] - Denotes begin of container.
  * @param {string} [ o.postfix ] - Denotes end of container.
- * @param {Object} o.optionsContainer - Options for container {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
- * @param {Object} o.optionsItem - Options for item {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
+ * @param {Object} o.optionsContainer - Options for container {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o.optionsItem - Options for item {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
  * @returns {String} Returns string representation of container.
  *
  * @function _toStrFromContainer
  * @throws { Exception } If no argument provided.
  * @throws { Exception } If( o ) is not a Object.
- * @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+ * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
  *
  */
 
@@ -1766,7 +1762,7 @@ function _toStrFromObjectKeysFiltered( src, o )
  * Converts object provided by argument( src ) into string representation using options provided by argument( o ).
  *
  * @param {object} src - Object to convert.
- * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Tools( module::Stringer ).toStrOptions}.
+ * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
  * @returns {String} Returns string representation of object.
  *
  * @example
@@ -1786,7 +1782,7 @@ function _toStrFromObjectKeysFiltered( src, o )
  * @throws { Exception } If( src ) is not a object-like.
  * @throws { Exception } If not all arguments provided.
  * @throws { Exception } If( o ) is not a Object.
- * @memberof module:Tools/base/Stringer.Tools( module::Stringer )
+ * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
  *
 */
 
