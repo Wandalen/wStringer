@@ -57,7 +57,8 @@ var strType = _.strType;
  * _.toStrMethods( ( function(){} ), { } )
  *
  * @function toStrMethods
- * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+ * @namespace Tools
+ * @module Tools/base/Stringer
  *
  */
 
@@ -91,7 +92,8 @@ function toStrMethods( src, o )
  * _.toStrFields( { a : function b(){},  c : 1 , d : '2' }, {} )
  *
  * @function toStrFields
- * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+ * @namespace Tools
+ * @module Tools/base/Stringer
  *
  */
 
@@ -144,7 +146,8 @@ function toStrFields( src, o )
 * @property {boolean} [ o.escaping=false ] - enable escaping of special characters.
 * @property {boolean} [ o.jsonLike=false ] - enable conversion to JSON string.
 * @property {boolean} [ o.jsLike=false ] - enable conversion to JS string.
-* @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+* @namespace Tools
+ * @module Tools/base/Stringer
 */
 
 /**
@@ -351,7 +354,8 @@ function toStrFields( src, o )
  * @throws { Exception } Throw an exception if( o.multilinedString ) is not equal false when ( o.jsonLike ) is true.
  * @throws { RangeError } Throw an exception if( o.precision ) is not between 1 and 21.
  * @throws { RangeError } Throw an exception if( o.fixed ) is not between 0 and 20.
- * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+ * @namespace Tools
+ * @module Tools/base/Stringer
  *
  */
 
@@ -771,7 +775,8 @@ function _toStr( src, o )
  * _._toStrShort( [ function del(){}, 0, 'a' ], { levels : 0 } )
  *
  * @function _toStrShort
- * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+ * @namespace Tools
+ * @module Tools/base/Stringer
  *
  */
 
@@ -901,7 +906,8 @@ function _toStrShort( src, o )
  * _.toStrIsVisibleElement( function del(){}, { noRoutine : 1 } );
  *
  * @function _toStrIsVisibleElement
- * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+ * @namespace Tools
+ * @module Tools/base/Stringer
  *
  */
 
@@ -1029,7 +1035,8 @@ function _toStrIsVisibleElement( src, o )
  *
  * @function _toStrIsSimpleElement
  * @throws { Exception } Throw an exception if( arguments.length ) is not equal 2.
- * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+ * @namespace Tools
+ * @module Tools/base/Stringer
  *
  */
 
@@ -1070,7 +1077,8 @@ function _toStrIsSimpleElement( element, o )
  * _.toStrFromRoutine( function a(){}, {} );
  *
  * @function _toStrFromRoutine
- * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+ * @namespace Tools
+ * @module Tools/base/Stringer
  *
  */
 
@@ -1125,7 +1133,8 @@ function _toStrFromRoutine( src, o )
  * @throws {Exception} If( o ) is not a Object.
  * @throws {RangeError} If( o.precision ) is not between 1 and 21.
  * @throws {RangeError} If( o.fixed ) is not between 0 and 20.
- * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+ * @namespace Tools
+ * @module Tools/base/Stringer
  *
 */
 
@@ -1212,7 +1221,8 @@ function _toStrFromSymbol( src, o )
  * @throws {Exception} If no arguments provided.
  * @throws {Exception} If( src ) is not a String.
  * @throws {Exception} If( o ) is not a Object.
- * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+ * @namespace Tools
+ * @module Tools/base/Stringer
  *
 */
 
@@ -1468,7 +1478,8 @@ function _toStrFromArrayFiltered( src, o )
  * @throws { Exception } If( src ) is undefined.
  * @throws { Exception } If no arguments provided.
  * @throws { Exception } If( o ) is not a Object.
- * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+ * @namespace Tools
+ * @module Tools/base/Stringer
  *
  */
 
@@ -1554,7 +1565,8 @@ function _toStrFromArray( src, o )
  * @function _toStrFromContainer
  * @throws { Exception } If no argument provided.
  * @throws { Exception } If( o ) is not a Object.
- * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+ * @namespace Tools
+ * @module Tools/base/Stringer
  *
  */
 
@@ -1782,7 +1794,8 @@ function _toStrFromObjectKeysFiltered( src, o )
  * @throws { Exception } If( src ) is not a object-like.
  * @throws { Exception } If not all arguments provided.
  * @throws { Exception } If( o ) is not a Object.
- * @memberofs "module:Tools/base/Stringer","module:Tools/base/Fundamental.wTools"
+ * @namespace Tools
+ * @module Tools/base/Stringer
  *
 */
 
