@@ -2142,7 +2142,9 @@ function complex( test )
 {
   let context = this;
 
-  test.case = 'trivial'; /* */
+  /* */
+
+  test.case = 'trivial';
 
   var expected = '[\n  ' + _.longFromRange([ 1,100 ]).join( ', \n  ' ) + '\n]';
   var src = _.longFromRange([ 1,100 ]);
@@ -2153,7 +2155,9 @@ function complex( test )
   var expected = src;
   test.identical( got , expected );
 
-  test.case = 'long object'; /* */
+  /* */
+
+  test.case = 'long object';
 
   var object =
   {
@@ -2182,7 +2186,9 @@ function complex( test )
   var expected = src;
   test.identical( got , expected );
 
-  test.case = 'object with length'; /* */
+  /* */
+
+  test.case = 'object with length';
 
   var src = {};
   src.length = 4;
@@ -2193,7 +2199,9 @@ function complex( test )
   var expected = src;
   test.identical( got , expected );
 
-  test.case = 'object with length'; /* */
+  /* */
+
+  test.case = 'object with length';
 
   var object =
   {
@@ -2219,7 +2227,9 @@ function complex( test )
   var expected = src;
   test.identical( got , expected );
 
-  test.case = 'comlex'; /* */
+  /* */
+
+  test.case = 'comlex';
 
   var src = context.complexData;
   var json = _.toJson( src );
