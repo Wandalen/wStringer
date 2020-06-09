@@ -7,7 +7,7 @@ if( typeof module !== 'undefined' )
 
   let _ = require( '../../../dwtools/Tools.s' );
 
-  _.include( 'wAppBasic' );
+  _.include( 'wProcess' );
   _.include( 'wCopyable' );
   _.include( 'wStringer' );
   _.include( 'wTesting' );
