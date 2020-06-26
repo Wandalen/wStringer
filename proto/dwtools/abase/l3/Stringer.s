@@ -454,13 +454,24 @@ function _toStrFine_functor()
     if( o.levels === undefined && ( o.jsonLike || o.jsLike ) )
     o.levels = 1 << 20;
 
-    if( o.jsonLike || o.jsLike )
+    if( o.jsLike ) /* yyy */
     {
-      if( o.escaping === undefined )
+      debugger;
+      if( o.escaping === undefined || o.escaping === null )
       o.escaping = 1;
-      if( o.keyWrapper === undefined )
+      if( o.keyWrapper === undefined || o.keyWrapper === null )
       o.keyWrapper = '"';
-      if( o.stringWrapper === undefined )
+      if( o.stringWrapper === undefined || o.stringWrapper === null )
+      o.stringWrapper = '`';
+    }
+
+    if( o.jsonLike )
+    {
+      if( o.escaping === undefined || o.escaping === null )
+      o.escaping = 1;
+      if( o.keyWrapper === undefined || o.keyWrapper === null )
+      o.keyWrapper = '"';
+      if( o.stringWrapper === undefined || o.stringWrapper === null )
       o.stringWrapper = '"';
     }
 
@@ -491,6 +502,8 @@ function _toStrFine_functor()
 
     if( o.jsonLike )
     {
+      debugger;
+      if( !o.jsLike )
       _.assert( o.stringWrapper === '"', 'Expects double quote ( o.stringWrapper ) true if either ( o.jsonLike ) or ( o.jsLike ) is true' );
       _.assert( !o.multilinedString, 'Expects {-o.multilinedString-} false if either ( o.jsonLike ) or ( o.jsLike ) is true to make valid JSON' );
     }
@@ -586,8 +599,10 @@ toJs.defaults =
   escaping : 1,
   multilinedString : 1,
   levels : 1 << 20,
-  stringWrapper : '`',
-  keyWrapper : '"',
+  stringWrapper : null,
+  keyWrapper : null,
+  // stringWrapper : '`',
+  // keyWrapper : '"',
   jsLike : 1,
 }
 
@@ -1679,11 +1694,12 @@ function _toStrFromContainer( o )
 
     if( names )
     {
+      let name = _.strEscape({ src : names[ n ], stringWrapper : o.keyWrapper });
       if( optionsContainer.keyWrapper )
-      result += optionsContainer.keyWrapper + String( names[ n ] ) + optionsContainer.keyWrapper + optionsContainer.colon;
-      // else if( String( names[ n ] ) !== r.text ) // Dmytro : this code write only key, if key and value in map is identical
+      // result += optionsContainer.keyWrapper + String( names[ n ] ) + optionsContainer.keyWrapper + optionsContainer.colon; /* yyy */
+      result += optionsContainer.keyWrapper + name + optionsContainer.keyWrapper + optionsContainer.colon;
       else
-      result += String( names[ n ] ) + optionsContainer.colon;
+      result += name + optionsContainer.colon;
 
       if( !r.simple )
       result += '\n' + optionsItem.tab;
@@ -1698,12 +1714,6 @@ function _toStrFromContainer( o )
   }
 
   /* other */
-
-  function other( length )
-  {
-    debugger;
-    return linePostfix + '[ ... other '+ ( length - l ) +' element(s) ]';
-  }
 
   // if( names && l < names.length )
   // result += other( names.length );
@@ -1730,6 +1740,13 @@ function _toStrFromContainer( o )
   }
 
   return result;
+
+  function other( length )
+  {
+    debugger;
+    return linePostfix + '[ ... other '+ ( length - l ) +' element(s) ]';
+  }
+
 }
 
 //
@@ -1862,6 +1879,8 @@ function _toStrFromObject( src, o )
     simple,
     prefix : '{',
     postfix : '}',
+    keyWrapper : o.keyWrapper,
+    stringWrapper : o.stringWrapper,
   });
 
   return { text : result, simple };
