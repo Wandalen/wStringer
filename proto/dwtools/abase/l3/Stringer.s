@@ -456,7 +456,6 @@ function _toStrFine_functor()
 
     if( o.jsLike ) /* yyy */
     {
-      debugger;
       if( o.escaping === undefined || o.escaping === null )
       o.escaping = 1;
       if( o.keyWrapper === undefined || o.keyWrapper === null )
