@@ -13,7 +13,7 @@ if( typeof module !== 'undefined' )
 
 }
 
-var _ = _global_.wTools;
+let _ = _global_.wTools;
 let fileProvider = _testerGlobal_.wTools.fileProvider;
 let path = fileProvider.path;
 
@@ -6011,7 +6011,7 @@ function toStrNice( test )
 // declare test suite
 // --
 
-var Self =
+let Self =
 {
 
   name : 'Tools.base.l3.Stringer',

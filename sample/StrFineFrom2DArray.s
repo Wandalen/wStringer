@@ -1,7 +1,7 @@
 if( typeof module !== 'undefined' )
 require( 'wstringer' );
 
-var _ = wTools;
+let _ = wTools;
 
 var data =
 [

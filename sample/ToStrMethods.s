@@ -1,7 +1,7 @@
 if( typeof module !== 'undefined' )
 require( 'wstringer' );
 
-var _ = wTools;
+let _ = wTools;
 
 console.log( 'toStrMethods : ', _.toStrMethods( ( function add(){} ), {} ) );
 // log : 'toStrMethods : [ routine add ]'
