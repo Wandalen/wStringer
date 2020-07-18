@@ -6014,7 +6014,7 @@ function toStrNice( test )
 let Self =
 {
 
-  name : 'Tools.base.l3.Stringer',
+  name : 'Tools.l3.Stringer',
   silencing : 1,
   enabled : 1,
 

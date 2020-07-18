@@ -2364,7 +2364,7 @@ function fromFile( test )
 let Self =
 {
 
-  name : 'Tools.base.l4.String.ToJson',
+  name : 'Tools.l4.String.ToJson',
   silencing : 1,
 
   context :
