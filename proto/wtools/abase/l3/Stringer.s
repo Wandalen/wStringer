@@ -1253,7 +1253,15 @@ function _toStrFromStr( src, o )
 
   if( o.limitStringLength )
   {
-    result = _.strStrShort({ src, limit : o.limitStringLength, prefix : q, postfix : q, onEscape : 1 });
+    result = _.strStrShort
+    ({
+      src,
+      limit : o.limitStringLength,
+      prefix : q,
+      postfix : q,
+      infix : 1,
+      onEscape : 1,
+    });
     if( result.length > o.limitStringLength )
     {
       result = '[ ' + result + ' ]';
