@@ -1255,12 +1255,12 @@ function _toStrFromStr( src, o )
   {
     result = _.strStrShort
     ({
-      src,
+      src : _.strEscape( src ),
       limit : o.limitStringLength,
-      prefix : q,
-      postfix : q,
+      prefix : _.strEscape( q ),
+      postfix : _.strEscape( q ),
       infix : 1,
-      onEscape : 1,
+      // onEscape : 1,
     });
     if( result.length > o.limitStringLength )
     {
