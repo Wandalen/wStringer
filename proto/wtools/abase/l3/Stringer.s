@@ -501,7 +501,6 @@ function _toStrFine_functor()
 
     if( o.jsonLike )
     {
-      debugger;
       if( !o.jsLike )
       _.assert( o.stringWrapper === '"', 'Expects double quote ( o.stringWrapper ) true if either ( o.jsonLike ) or ( o.jsLike ) is true' );
       _.assert( !o.multilinedString, 'Expects {-o.multilinedString-} false if either ( o.jsonLike ) or ( o.jsLike ) is true to make valid JSON' );
