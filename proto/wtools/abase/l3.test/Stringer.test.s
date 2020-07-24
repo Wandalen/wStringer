@@ -5315,27 +5315,27 @@ function toStrFields( test )
 function toStrShort( test )
 {
   test.case = 'Array length test';
-  var got = _._toStrShort( [ 1, 2, 'text', undefined ], {} );
+  var got = _._toStrShort( [ 1, 2, 'text', undefined ], { stringWrapper : '' } );
   var expected = '{- Array with 4 elements -}';
   test.identical( got, expected );
 
   test.case = 'date to string';
-  var got = _._toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), {}  );
+  var got = _._toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), { stringWrapper : '' } );
   var expected = '1994-01-12T00:00:00.000Z';
   test.identical( got, expected );
 
   test.case = 'string length > 40';
   var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
-  var expected = '[ "toxtndmtmdbmmlzoirmf" ... "pyhnrrqfuvybuuvixyrx" ]';
+  var expected = '"toxtndmtmdbmmlzoirmf" ... "pyhnrrqfuvybuuvixyrx"';
   test.identical( got, expected );
 
   test.case = 'string with options';
-  var got = _._toStrShort( '\toxtndmtmdb', { escaping : 1 } );
+  var got = _._toStrShort( '\toxtndmtmdb', { escaping : 1, stringWrapper : '' } );
   var expected = '\\toxtndmtmdb';
   test.identical( got, expected );
 
   test.case = 'error to string ';
-  var got = _._toStrShort( new Error( 'err' ), {} );
+  var got = _._toStrShort( new Error( 'err' ), { stringWrapper : '' } );
   var expected = '[object Error]';
   test.identical( got, expected );
 
@@ -5806,7 +5806,7 @@ function _toStrFromArray( test )
 
 function _toStrFromObject( test )
 {
-  var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0};
+  var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0, stringWrapper : '' };
 
   test.case = 'default options';
   var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );
