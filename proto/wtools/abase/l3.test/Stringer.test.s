@@ -5326,7 +5326,6 @@ function toStrShort( test )
 
   test.case = 'string length > 40';
   // var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
-  debugger
   var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { prefix : '"', postfix : '"', infix : '...' } );
   var expected = '"toxtndmtmdbmmlzoir...nrrqfuvybuuvixyrx"';
   test.identical( got, expected );
