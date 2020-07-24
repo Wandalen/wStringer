@@ -813,7 +813,7 @@ function _toStrShort( src, o )
         prefix : o.prefix ? o.prefix : '',
         postfix : o.postfix ? o.postfix : '',
         infix : o.infix ? o.infix : '',
-        escaping : 1,
+        // escaping : 1,
       }
       debugger;
       result = _toStrFromStr( src, o2 );
