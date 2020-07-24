@@ -5325,12 +5325,14 @@ function toStrShort( test )
   test.identical( got, expected );
 
   test.case = 'string length > 40';
-  var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
-  var expected = '"toxtndmtmdbmmlzoirmf" ... "pyhnrrqfuvybuuvixyrx"';
+  // var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
+  debugger
+  var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { prefix : '"', postfix : '"', infix : '...' } );
+  var expected = '"toxtndmtmdbmmlzoir...nrrqfuvybuuvixyrx"';
   test.identical( got, expected );
 
   test.case = 'string with options';
-  var got = _._toStrShort( '\toxtndmtmdb', { escaping : 1, stringWrapper : '' } );
+  var got = _._toStrShort( '\toxtndmtmdb', { stringWrapper : '' } );
   var expected = '\\toxtndmtmdb';
   test.identical( got, expected );
 

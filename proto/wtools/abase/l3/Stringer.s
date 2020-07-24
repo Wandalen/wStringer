@@ -810,6 +810,9 @@ function _toStrShort( src, o )
       {
         limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength, 40 ) : 40,
         stringWrapper : o.stringWrapper,
+        prefix : o.prefix ? o.prefix : '',
+        postfix : o.postfix ? o.postfix : '',
+        infix : o.infix ? o.infix : '',
         escaping : 1,
       }
       debugger;
@@ -1256,9 +1259,12 @@ function _toStrFromStr( src, o )
     ({
       src : _.strEscape( src ),
       limit : o.limitStringLength,
-      prefix : _.strEscape( q ),
-      postfix : _.strEscape( q ),
-      infix : 1,
+      prefix : o.stringWrapper ? _.strEscape( q ) : o.prefix,
+      // prefix : _.strEscape( o.prefix ),
+      postfix : o.stringWrapper ? _.strEscape( q ) : o.postfix,
+      // postfix : _.strEscape( o.postfix ),
+      infix : o.infix === 1 ? '...' : o.infix,
+      // infix : _.strEscape( o.infix ),
       // onEscape : 1,
     });
     if( result.length > o.limitStringLength )
