@@ -809,10 +809,11 @@ function _toStrShort( src, o )
       var o2 =
       {
         limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength, 40 ) : 40,
-        stringWrapper : o.stringWrapper ? o.stringWrapper : '',
-        prefix : o.prefix ? o.prefix : '',
-        postfix : o.postfix ? o.postfix : '',
-        infix : o.infix ? o.infix : '',
+        stringWrapper : o.stringWrapper,
+        prefix : o.prefix,
+        postfix : o.postfix,
+        infix : o.infix
+
       }
       result = _toStrFromStr( src, o2 );
 
