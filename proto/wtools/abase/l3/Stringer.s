@@ -813,9 +813,7 @@ function _toStrShort( src, o )
         prefix : o.prefix ? o.prefix : '',
         postfix : o.postfix ? o.postfix : '',
         infix : o.infix ? o.infix : '',
-        // escaping : 1,
       }
-      debugger;
       result = _toStrFromStr( src, o2 );
 
     }
@@ -1247,7 +1245,7 @@ function _toStrFromStr( src, o )
   var result = '';
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
-  _.assert( _.strIs( src ), 'Expects string {-src-}'  );
+  _.assert( _.strIs( src ), 'Expects string {-src-}' );
   _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
 
   //var q = o.multilinedString ? '`' : o.stringWrapper;
@@ -1259,13 +1257,9 @@ function _toStrFromStr( src, o )
     ({
       src : _.strEscape( src ),
       limit : o.limitStringLength,
-      prefix : o.stringWrapper ? _.strEscape( q ) : o.prefix,
-      // prefix : _.strEscape( o.prefix ),
-      postfix : o.stringWrapper ? _.strEscape( q ) : o.postfix,
-      // postfix : _.strEscape( o.postfix ),
-      infix : o.infix === 1 ? '...' : o.infix,
-      // infix : _.strEscape( o.infix ),
-      // onEscape : 1,
+      prefix : q ? q : o.prefix,
+      postfix : q ? q : o.postfix,
+      infix : o.infix ? o.infix : '',
     });
     if( result.length > o.limitStringLength )
     {
@@ -1282,7 +1276,7 @@ function _toStrFromStr( src, o )
     result = src;
   }
 
-  if( o.stringWrapper )
+  if( o.stringWrapper && !o.limitStringLength )
   {
     result = q + result + q;
   }
