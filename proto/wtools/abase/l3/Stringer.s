@@ -10,8 +10,7 @@
 */
 
 /**
- * @file aStringer.s.
- */
+ *  */
 
 if( typeof module !== 'undefined' )
 {
