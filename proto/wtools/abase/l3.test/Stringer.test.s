@@ -8,7 +8,6 @@ if( typeof module !== 'undefined' )
   let _ = require( '../../../wtools/Tools.s' );
 
   _.include( 'wTesting' );
-  _.include( 'wConsequence' );
 
   require( '../l3/Stringer.s' );
 
@@ -5767,7 +5766,7 @@ function _toStrFromArray( test )
   test.identical( got, expected );
 
   test.case = 'dtab & multiline test';
-  var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab: '-', level : 0, comma : ', ', wrap : 1, multiline : 1 } ).text;
+  var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '-', level : 0, comma : ', ', wrap : 1, multiline : 1 } ).text;
   var expected =
   [
     '[',
@@ -5808,7 +5807,7 @@ function _toStrFromArray( test )
 
 function _toStrFromObject( test )
 {
-  var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0, stringWrapper : '' };
+  var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0 };
 
   test.case = 'default options';
   var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );
