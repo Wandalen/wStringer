@@ -5325,9 +5325,9 @@ function toStrShort( test )
   var expected = '1994-01-12T00:00:00.000Z';
   test.identical( got, expected );
 
-  test.case = 'string length > 40';
+  test.case = 'string length > 40, prefix, postfix, infix';
   // var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
-  var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { prefix : '"', postfix : '"', infix : '...', stringWrapper : '' } );
+  var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { prefix : '"', postfix : '"', infix : '...' } );
   var expected = '"toxtndmtmdbmmlzoir...nrrqfuvybuuvixyrx"';
   test.identical( got, expected );
 
