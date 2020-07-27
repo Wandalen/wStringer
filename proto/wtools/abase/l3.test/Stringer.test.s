@@ -5316,12 +5316,12 @@ function toStrFields( test )
 function toStrShort( test )
 {
   test.case = 'Array length test';
-  var got = _._toStrShort( [ 1, 2, 'text', undefined ], { stringWrapper : '' } );
+  var got = _._toStrShort( [ 1, 2, 'text', undefined ], {} );
   var expected = '{- Array with 4 elements -}';
   test.identical( got, expected );
 
   test.case = 'date to string';
-  var got = _._toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), { stringWrapper : '' } );
+  var got = _._toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), {} );
   var expected = '1994-01-12T00:00:00.000Z';
   test.identical( got, expected );
 
@@ -5332,12 +5332,12 @@ function toStrShort( test )
   test.identical( got, expected );
 
   test.case = 'string with options';
-  var got = _._toStrShort( '\toxtndmtmdb', { stringWrapper : '' } );
+  var got = _._toStrShort( '\toxtndmtmdb', {} );
   var expected = '\\toxtndmtmdb';
   test.identical( got, expected );
 
   test.case = 'error to string ';
-  var got = _._toStrShort( new Error( 'err' ), { stringWrapper : '' } );
+  var got = _._toStrShort( new Error( 'err', {} ), {} );
   var expected = '[object Error]';
   test.identical( got, expected );
 
