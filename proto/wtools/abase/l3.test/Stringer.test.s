@@ -5807,7 +5807,7 @@ function _toStrFromArray( test )
 
 function _toStrFromObject( test )
 {
-  var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0 };
+  var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0, stringWrapper : '' };
 
   test.case = 'default options';
   var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );

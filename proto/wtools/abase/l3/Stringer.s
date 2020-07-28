@@ -1261,11 +1261,13 @@ function _toStrFromStr( src, o )
       postfix : q ? q : o.postfix,
       infix : o.infix ? o.infix : '',
     });
-    if( result.length > o.limitStringLength )
-    {
-      result = '[ ' + result + ' ]';
-      q = '';
-    }
+
+    return result;
+    // if( result.length > o.limitStringLength )
+    // {
+    //   result = '[ ' + result + ' ]';
+    //   q = '';
+    // }
   }
   else if( o.escaping )
   {
