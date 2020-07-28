@@ -17,6 +17,6 @@
     "url" : "https://github.com/Wandalen/wStringer/issues"
   },
   "dependencies" : { "wTools" : "" },
-  "devDependencies" : { "wTesting" : "" },
+  "devDependencies" : { "wTesting" : "", "wstringer" : "file:." },
   "keywords" : [ "wTools" ]
 }
