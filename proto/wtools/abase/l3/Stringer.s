@@ -1262,12 +1262,12 @@ function _toStrFromStr( src, o )
       infix : o.infix ? o.infix : '',
     });
 
-    return result;
-    // if( result.length > o.limitStringLength )
-    // {
-    //   result = '[ ' + result + ' ]';
-    //   q = '';
-    // }
+    // return result;
+    if( result.length > o.limitStringLength )
+    {
+      result = '[ ' + result + ' ]';
+      q = '';
+    }
   }
   else if( o.escaping )
   {
