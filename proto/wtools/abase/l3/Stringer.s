@@ -808,7 +808,7 @@ function _toStrShort( src, o )
       var o2 =
       {
         limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength, 40 ) : 40,
-        stringWrapper : o.stringWrapper,
+        stringWrapper : o.stringWrapper ? o.stringWrapper : '',
         prefix : o.prefix,
         postfix : o.postfix,
         infix : o.infix
