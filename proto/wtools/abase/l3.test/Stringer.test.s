@@ -188,7 +188,7 @@ function toStr( test )
   /* */
 
   test.case = 'in - filled map, complex values, levels - 2';
-  var src = 
+  var src =
   {
     1 : 'a',
     2 : [ 10, 20, 30 ],
@@ -208,11 +208,11 @@ function toStr( test )
     '}',
   ].join( '\n' );
   test.identical( got, exp );
-  
+
   /* */
 
   test.case = 'in - filled map, complex values, levels - 2';
-  var src = 
+  var src =
   {
     1 : 'a',
     2 : [ 10, 20, 30 ],
@@ -236,7 +236,7 @@ function toStr( test )
   /* */
 
   test.case = 'in - filled array, complex values, levels - 2';
-  var src = 
+  var src =
   [
     'a',
     [ 10, 20, 30 ],
@@ -262,7 +262,7 @@ function toStr( test )
   /* */
 
   test.case = 'in - filled array, complex values, levels - 3';
-  var src = 
+  var src =
   [
     'a',
     [ 10, 20, 30 ],
@@ -312,7 +312,7 @@ function toStr( test )
   /* */
 
   test.case = 'in - filled array, complex values, a few levels of nesting, levels - 5';
-  var src = 
+  var src =
   [
     'a',
     [ 10, 20, 30 ],
@@ -394,7 +394,7 @@ function toStr( test )
   /* */
 
   test.case = 'in - filled array, complex values, levels - 1';
-  var src = 
+  var src =
   [
     'a',
     [ 10, 20, 30 ],
@@ -420,7 +420,7 @@ function toStr( test )
   /* */
 
   test.case = 'in - filled array, complex values, 3 levels of nesting, levels - 2';
-  var src = 
+  var src =
   [
     'a',
     [ 10, 20, 30 ],
@@ -470,7 +470,7 @@ function toStr( test )
   /* */
 
   test.case = 'in - filled map, complex values, levels - 2, tab - "-", dtab - "+"';
-  var src = 
+  var src =
   {
     1 : 'a',
     2 : [ 10, 20, 30 ],
@@ -494,7 +494,7 @@ function toStr( test )
   /* */
 
   test.case = 'in - filled map, complex values, levels - 2, wrap - 0, tab - "-", prependTab - 0';
-  var src = 
+  var src =
   {
     1 : 'a',
     2 : [ 10, 20, 30 ],
@@ -516,7 +516,7 @@ function toStr( test )
   /* */
 
   test.case = 'in - filled map, complex values, levels - 2, wrap - 0, tab - "-", prependTab - 1';
-  var src = 
+  var src =
   {
     1 : 'a',
     2 : [ 10, 20, 30 ],
@@ -538,7 +538,7 @@ function toStr( test )
   /* */
 
   test.case = 'in - filled map, complex values, levels - 2, wrap - 1, tab - "-", prependTab - 0';
-  var src = 
+  var src =
   {
     1 : 'a',
     2 : [ 10, 20, 30 ],
@@ -562,7 +562,7 @@ function toStr( test )
   /* */
 
   test.case = 'in - filled map, complex values, levels - 2, wrap - 1, tab - "-", prependTab - 1';
-  var src = 
+  var src =
   {
     1 : 'a',
     2 : [ 10, 20, 30 ],
@@ -586,7 +586,7 @@ function toStr( test )
   /* */
 
   test.case = 'in - filled map, complex values, levels - 2, noSubObject - 1, noArray - 1, dtab - "  "';
-  var src = 
+  var src =
   {
     1 : [ 1, 2, 3 ],
     2 : 'abc',
@@ -2562,6 +2562,25 @@ function toStrArray( test )
   ].join( '\n' );
   test.identical( got, expected );
 
+}
+
+//
+
+function toStrArray2( test )
+{
+  /* */
+
+  var src = [ 'a', 'b' ];
+  var got = _.toStr( src );
+  var expected = `[ 'a', 'b' ]`
+  test.identical( got, expected );
+
+  /* */
+
+  var src = [ 'a b' ];
+  var got = _.toStr( src );
+  var expected = `[ 'a b' ]`
+  test.identical( got, expected );
 }
 
 //
@@ -5993,7 +6012,7 @@ function _toStrFromContainer( test )
 
 //
 
-function toStrNice( test ) 
+function toStrNice( test )
 {
   test.case = 'key and value is identical';
   var src = { proto : 'proto' };
@@ -6033,6 +6052,7 @@ let Self =
     toStrUnwrapped,
     toStrError,
     toStrArray,
+    toStrArray2,
     toStrObject,
     // toStrJson,
     // toStrJsonFromFileU,
