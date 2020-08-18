@@ -8,7 +8,6 @@ if( typeof module !== 'undefined' )
   let _ = require( '../../../wtools/Tools.s' );
 
   _.include( 'wTesting' );
-
   require( '../l3/Stringer.s' );
 
 }
@@ -5320,22 +5319,23 @@ function toStrShort( test )
   test.identical( got, expected );
 
   test.case = 'date to string';
-  var got = _._toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), {}  );
+  var got = _._toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), {} );
   var expected = '1994-01-12T00:00:00.000Z';
   test.identical( got, expected );
 
-  test.case = 'string length > 40';
-  var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
-  var expected = '[ "toxtndmtmdbmmlzoirmf" ... "pyhnrrqfuvybuuvixyrx" ]';
+  test.case = 'string length > 40, prefix, postfix, infix';
+  // var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
+  var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { prefix : '"', postfix : '"', infix : '...' } );
+  var expected = '"toxtndmtmdbmmlzoir...nrrqfuvybuuvixyrx"';
   test.identical( got, expected );
 
   test.case = 'string with options';
-  var got = _._toStrShort( '\toxtndmtmdb', { escaping : 1 } );
+  var got = _._toStrShort( '\toxtndmtmdb', {} );
   var expected = '\\toxtndmtmdb';
   test.identical( got, expected );
 
   test.case = 'error to string ';
-  var got = _._toStrShort( new Error( 'err' ), {} );
+  var got = _._toStrShort( new Error( 'err', {} ), {} );
   var expected = '[object Error]';
   test.identical( got, expected );
 
@@ -5765,7 +5765,7 @@ function _toStrFromArray( test )
   test.identical( got, expected );
 
   test.case = 'dtab & multiline test';
-  var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab: '-', level : 0, comma : ', ', wrap : 1, multiline : 1 } ).text;
+  var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '-', level : 0, comma : ', ', wrap : 1, multiline : 1 } ).text;
   var expected =
   [
     '[',
@@ -5806,7 +5806,7 @@ function _toStrFromArray( test )
 
 function _toStrFromObject( test )
 {
-  var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0};
+  var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0 };
 
   test.case = 'default options';
   var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );

@@ -809,9 +809,11 @@ function _toStrShort( src, o )
       {
         limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength, 40 ) : 40,
         stringWrapper : o.stringWrapper,
-        escaping : 1,
-      }
+        prefix : o.prefix,
+        postfix : o.postfix,
+        infix : o.infix
 
+      }
       result = _toStrFromStr( src, o2 );
 
     }
@@ -1243,7 +1245,7 @@ function _toStrFromStr( src, o )
   var result = '';
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
-  _.assert( _.strIs( src ), 'Expects string {-src-}'  );
+  _.assert( _.strIs( src ), 'Expects string {-src-}' );
   _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
 
   //var q = o.multilinedString ? '`' : o.stringWrapper;
@@ -1255,11 +1257,12 @@ function _toStrFromStr( src, o )
     ({
       src : _.strEscape( src ),
       limit : o.limitStringLength,
-      prefix : _.strEscape( q ),
-      postfix : _.strEscape( q ),
-      infix : 1,
-      // onEscape : 1,
+      prefix : q ? q : o.prefix,
+      postfix : q ? q : o.postfix,
+      infix : o.infix ? o.infix : '',
     });
+
+    // return result;
     if( result.length > o.limitStringLength )
     {
       result = '[ ' + result + ' ]';
@@ -1275,7 +1278,7 @@ function _toStrFromStr( src, o )
     result = src;
   }
 
-  if( o.stringWrapper )
+  if( o.stringWrapper && !o.limitStringLength )
   {
     result = q + result + q;
   }
