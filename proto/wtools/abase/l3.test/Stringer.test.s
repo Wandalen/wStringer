@@ -2561,12 +2561,6 @@ function toStrArray( test )
   ].join( '\n' );
   test.identical( got, expected );
 
-}
-
-//
-
-function toStrArray2( test )
-{
   /* */
 
   var src = [ 'a', 'b' ];
@@ -2580,6 +2574,9 @@ function toStrArray2( test )
   var got = _.toStr( src );
   var expected = `[ 'a b' ]`
   test.identical( got, expected );
+
+  /* */
+
 }
 
 //
@@ -6052,7 +6049,6 @@ let Self =
     toStrUnwrapped,
     toStrError,
     toStrArray,
-    toStrArray2,
     toStrObject,
     // toStrJson,
     // toStrJsonFromFileU,
