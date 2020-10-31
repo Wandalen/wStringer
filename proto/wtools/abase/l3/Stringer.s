@@ -831,72 +831,12 @@ function _toStrShort( src, o )
     }
     else
     {
-      result = _.strShort( src );
+      result = _.strEntityShort( src );
     }
-
-    // if( _.vectorAdapterIs( src ) )
-    // {
-    //   result += '{- VectorAdapter with ' + src.length + ' elements' + ' -}';
-    // }
-    // else if( _.errIs( src ) )
-    // {
-    //   result += _ObjectToString.call( src );
-    // }
-    // else if( _.routineIs( src ) )
-    // {
-    //   result += _toStrFromRoutine( src, o );
-    // }
-    // else if( _.numberIs( src ) )
-    // {
-    //   result += _toStrFromNumber( src, o );
-    // }
-    // else if( _.strIs( src ) )
-    // {
-    //
-    //   var optionsStr =
-    //   {
-    //     limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength, 40 ) : 40,
-    //     stringWrapper : o.stringWrapper,
-    //     escaping : 1,
-    //   }
-    //
-    //   result = _toStrFromStr( src, optionsStr );
-    //
-    // }
-    // else if( _.setLike( src ) || _.hashMapLike( src ) )
-    // {
-    //
-    //   result += '{- ' + strType( src ) + ' with ' + _.entityLength( src ) + ' elements -}';
-    //
-    // }
-    // else if( src && !_.objectIs( src ) && _.numberIs( src.length ) )
-    // {
-    //
-    //   result += '{- ' + strType( src ) + ' with ' + src.length + ' elements -}';
-    //
-    // }
-    // else if( src instanceof Date )
-    // {
-    //   result += src.toISOString();
-    // }
-    // else if( _.objectLike( src ) )
-    // {
-    //
-    //   if( _.routineIs( src.exportString ) )
-    //   result += src.exportString({ verbosity : 1 });
-    //   else
-    //   result += '{- ' + strType( src ) + ' with ' + _.entityLength( src ) + ' elements' + ' -}';
-    //
-    // }
-    // else
-    // {
-    //   result += String( src );
-    // }
 
   }
   catch( err )
   {
-    // result = String( err );
     debugger;
     throw _.err( err );
   }
