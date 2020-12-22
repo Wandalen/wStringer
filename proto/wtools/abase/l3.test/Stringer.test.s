@@ -13,8 +13,8 @@ if( typeof module !== 'undefined' )
 }
 
 let _ = _global_.wTools;
-let fileProvider = _testerGlobal_.wTools.fileProvider;
-let path = fileProvider.path;
+// let fileProvider = _testerGlobal_.wTools.fileProvider;
+// let path = fileProvider.path;
 
 // --
 // context

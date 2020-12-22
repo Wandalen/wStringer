@@ -16,8 +16,8 @@ if( typeof module !== 'undefined' )
 }
 
 let _ = _global_.wTools;
-let fileProvider = _testerGlobal_.wTools.fileProvider;
-let path = fileProvider.path;
+// let fileProvider = _testerGlobal_.wTools.fileProvider;
+// let path = fileProvider.path;
 
 // --
 // context
@@ -2249,7 +2249,7 @@ function fromFile( test )
 
   function stringFromFile( name, encoding, begin, end )
   {
-    var str = fileProvider.fileRead( { filePath : __dirname + '/_asset/file/' + name, encoding } );
+    var str = _.fileProvider.fileRead( { filePath : __dirname + '/_asset/file/' + name, encoding } );
     str = str.slice( begin, end );
     return str;
   }

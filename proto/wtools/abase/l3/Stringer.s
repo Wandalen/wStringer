@@ -831,7 +831,9 @@ function _toStrShort( src, o )
     }
     else
     {
-      result = _.strShort( src );
+      // result = _.strShort( src );
+      result = _.strEntityShort( src );
+
     }
 
     // if( _.vectorAdapterIs( src ) )
@@ -1775,8 +1777,10 @@ function _toStrFromObjectKeysFiltered( src, o )
   var keys = _._mapKeys
   ({
     srcMap : src,
-    own : o.own,
-    enumerable : o.onlyEnumerable || o.onlyEnumerable === undefined || false,
+    // own : o.own,
+    // enumerable : o.onlyEnumerable || o.onlyEnumerable === undefined || false,
+    onlyOwn : o.own,
+    onlyEnumerable : o.onlyEnumerable || o.onlyEnumerable === undefined || false,
   });
 
   /* filter */
