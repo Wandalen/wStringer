@@ -44,6 +44,10 @@ function samples( test )
     filePath : path.join( sampleDir, '**/*.(s|ss)' ),
     withStem : 0,
     withDirs : 0,
+    filter :
+    {
+      maskTransientDirectory : { excludeAny : [ /asset/, /out/ ] }
+    },
     mode : 'distinct',
     mandatory : 0,
   });
@@ -52,7 +56,7 @@ function samples( test )
 
   for( let i = 0 ; i < found.length ; i++ )
   {
-    if( _.longHas( found[ i ].exts, 'browser' ) )
+    if( _.longHasAny( found[ i ].exts, [ 'browser', 'manual', 'experiment' ] ) )
     continue;
 
     let startTime;
@@ -115,15 +119,35 @@ function eslint( test )
   let sampleDir = path.join( rootPath, 'sample' );
   let ready = new _.Consequence().take( null );
 
-  if( _.process.insideTestContainer() && process.platform !== 'linux' )
-  return test.is( true );
+  // if( _.process.insideTestContainer() && process.platform !== 'linux' )
+  // return test.true( true );
+
+  if( process.platform !== 'linux' )
+  return test.true( true );
 
   let start = _.process.starter
   ({
     execPath : eslint,
     mode : 'fork',
     currentPath : rootPath,
-    args : [ '-c', '.eslintrc.yml', '--ext', '.js,.s,.ss', '--ignore-pattern', '*.html', '--ignore-pattern', '*.txt', '--ignore-pattern', '*.png', '--ignore-pattern', '*.json', '--quiet' ],
+    args :
+    [
+      '-c', '.eslintrc.yml',
+      '--ext', '.js,.s,.ss',
+      '--ignore-pattern', '*.ts',
+      '--ignore-pattern', '*.html',
+      '--ignore-pattern', '*.txt',
+      '--ignore-pattern', '*.png',
+      '--ignore-pattern', '*.json',
+      '--ignore-pattern', '*.yml',
+      '--ignore-pattern', '*.yaml',
+      '--ignore-pattern', '*.md',
+      '--ignore-pattern', '*.xml',
+      '--ignore-pattern', '*.css',
+      '--ignore-pattern', '_asset',
+      '--ignore-pattern', 'out',
+      '--quiet'
+    ],
     throwingExitCode : 0,
     outputCollecting : 1,
   })

@@ -119,7 +119,7 @@ function toStrFields( src, o )
 * @property {number} [ o.limitStringLength=0 ] - Outputs limited number of characters from source string.
 * @property {boolean} [ o.prependTab=true ] - Prepend tab before first line.
 * @property {boolean} [ o.errorAsMap=false ] - Interprets Error as Map if true.
-* @property {boolean} [ o.own=true ] - Use only own properties of ( src ), ignore properties of ( src ) prototype.
+* @property {boolean} [ o.onlyOwn=true ] - Use only onlyOwn properties of ( src ), ignore properties of ( src ) prototype.
 * @property {string} [ o.tab='' ] - Prepended before each line tab.
 * @property {string} [ o.dtab='  ' ] - String attached to ( o.tab ) each time the function parses next level of object depth.
 * @property {string} [ o.colon=' : ' ] - Colon between name and value, example : { a : 1 }.
@@ -151,7 +151,7 @@ function toStrFields( src, o )
 
 /**
  * Converts object passed by argument( src ) to string format using parameters passed
- * by argument( o ).If object ( src ) has own ( toStr ) method defined function uses it for conversion.
+ * by argument( o ).If object ( src ) has onlyOwn ( toStr ) method defined function uses it for conversion.
  *
  * @param {object} src - Source object for representing it as string.
  * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
@@ -275,7 +275,7 @@ function toStrFields( src, o )
  * _.toStr( function add( ){ }, { levels : 0 } );
  *
  * @example
- * //If object ( src ) has own ( toStr ) method defined function uses it for conversion
+ * //If object ( src ) has onlyOwn ( toStr ) method defined function uses it for conversion
  * //returns
  * //function func(  ) {
  * //console.log('sample');
@@ -388,7 +388,7 @@ function _toStrFine_functor()
     keyWrapper : '',
     prependTab : 1,
     errorAsMap : 0,
-    own : 1,
+    onlyOwn : 1,
     tab : '',
     dtab : '  ',
     colon : ' : ',
@@ -831,74 +831,12 @@ function _toStrShort( src, o )
     }
     else
     {
-      // result = _.strShort( src );
       result = _.strEntityShort( src );
-
     }
-
-    // if( _.vectorAdapterIs( src ) )
-    // {
-    //   result += '{- VectorAdapter with ' + src.length + ' elements' + ' -}';
-    // }
-    // else if( _.errIs( src ) )
-    // {
-    //   result += _ObjectToString.call( src );
-    // }
-    // else if( _.routineIs( src ) )
-    // {
-    //   result += _toStrFromRoutine( src, o );
-    // }
-    // else if( _.numberIs( src ) )
-    // {
-    //   result += _toStrFromNumber( src, o );
-    // }
-    // else if( _.strIs( src ) )
-    // {
-    //
-    //   var optionsStr =
-    //   {
-    //     limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength, 40 ) : 40,
-    //     stringWrapper : o.stringWrapper,
-    //     escaping : 1,
-    //   }
-    //
-    //   result = _toStrFromStr( src, optionsStr );
-    //
-    // }
-    // else if( _.setLike( src ) || _.hashMapLike( src ) )
-    // {
-    //
-    //   result += '{- ' + strType( src ) + ' with ' + _.entityLength( src ) + ' elements -}';
-    //
-    // }
-    // else if( src && !_.objectIs( src ) && _.numberIs( src.length ) )
-    // {
-    //
-    //   result += '{- ' + strType( src ) + ' with ' + src.length + ' elements -}';
-    //
-    // }
-    // else if( src instanceof Date )
-    // {
-    //   result += src.toISOString();
-    // }
-    // else if( _.objectLike( src ) )
-    // {
-    //
-    //   if( _.routineIs( src.exportString ) )
-    //   result += src.exportString({ verbosity : 1 });
-    //   else
-    //   result += '{- ' + strType( src ) + ' with ' + _.entityLength( src ) + ' elements' + ' -}';
-    //
-    // }
-    // else
-    // {
-    //   result += String( src );
-    // }
 
   }
   catch( err )
   {
-    // result = String( err );
     debugger;
     throw _.err( err );
   }
@@ -1777,9 +1715,7 @@ function _toStrFromObjectKeysFiltered( src, o )
   var keys = _._mapKeys
   ({
     srcMap : src,
-    // own : o.own,
-    // enumerable : o.onlyEnumerable || o.onlyEnumerable === undefined || false,
-    onlyOwn : o.own,
+    onlyOwn : o.onlyOwn,
     onlyEnumerable : o.onlyEnumerable || o.onlyEnumerable === undefined || false,
   });
 
