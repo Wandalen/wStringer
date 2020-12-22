@@ -2249,7 +2249,7 @@ function fromFile( test )
 
   function stringFromFile( name, encoding, begin, end )
   {
-    var str = _.fileProvider.fileRead( { filePath : __dirname + '/_asset/file/' + name, encoding } );
+    var str = fileProvider.fileRead( { filePath : __dirname + '/_asset/file/' + name, encoding } );
     str = str.slice( begin, end );
     return str;
   }
