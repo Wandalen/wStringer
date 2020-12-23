@@ -1125,7 +1125,7 @@ function toStrError( test )
   test.identical( got, expected );
 
   test.case = 'map-error, onlyEnumerable own:0';
-  var got = _.toStr( new Error( 'my message' ), { errorAsMap : 1, onlyEnumerable : 1, own : 0 } );
+  var got = _.toStr( new Error( 'my message' ), { errorAsMap : 1, onlyEnumerable : 1, onlyOwn : 0 } );
   var expected = '{}';
   test.identical( got, expected );
 
@@ -3884,7 +3884,7 @@ function toStrObject( test )
     y.c = 3;
     return y;
   } )( );
-  var got = _.toStr( src, { own : 0 } );
+  var got = _.toStr( src, { onlyOwn : 0 } );
   var expected = '{ c : 3, a : 1, b : 2 }';
   test.identical( got, expected );
 
@@ -4436,7 +4436,7 @@ function toStrEnumerable( test )
     return y;
 
   } )( );
-  var got = _.toStr( src, { own : 0 } );
+  var got = _.toStr( src, { onlyOwn : 0 } );
   var expected = '{ a : \'string\', foo : 1 }';
   test.identical( got, expected );
 
@@ -4483,7 +4483,7 @@ function toStrEnumerable( test )
     return y;
 
   } )( );
-  var got = _.toStr( src, { own : 0, onlyEnumerable : 0 } );
+  var got = _.toStr( src, { onlyOwn : 0, onlyEnumerable : 0 } );
   var expected =
   [
     '{',
