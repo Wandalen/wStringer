@@ -8,7 +8,7 @@ Stringer nicely stringifies structures does not matter how complex or cycled the
 git clone https://github.com/Wandalen/wStringer
 cd wStringer
 npm install
-node sample/Sample.s
+node sample/trivial/Sample.s
 ```
 
 ## To add to your project
