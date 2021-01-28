@@ -1010,7 +1010,7 @@ function _toStrIsSimpleElement( element, o )
   else if( element && !_.objectIs( element ) && _.numberIs( element.length ) )
   return !element.length;
   else if( _.objectIs( element ) || _.objectLike( element ) )
-  return !_.entityLength( element );
+  return !_.entityLengthOf( element );
   else
   return _.primitiveIs( element );
 
