@@ -433,13 +433,20 @@ function _toStrFine_functor()
 
   var def;
 
-  /* !!! : remove dependency of prototypeUnitedInterface */
-  if( _.prototypeUnitedInterface )
-  def = _.prototypeUnitedInterface([ primeFilter, composes, optional ]);
-  else
+  // /* xxx yyy : remove dependency of prototypeUnitedInterface */
+  // if( _.prototypeUnitedInterface )
+  // def = _.prototypeUnitedInterface([ primeFilter, composes, optional ]);
+  // else
   def = _.mapExtend( null, primeFilter, composes, optional );
 
-  var routine = function toStrFine( src, o )
+  var routine = toStrFine;
+  routine.defaults = def;
+  routine.methods = toStrMethods;
+  routine.fields = toStrFields;
+  routine.notMethod = 1;
+  return routine;
+
+  function toStrFine( src, o )
   {
 
     _.assert( arguments.length === 1 || arguments.length === 2 );
@@ -510,14 +517,12 @@ function _toStrFine_functor()
     return r ? r.text : '';
   }
 
-  routine.defaults = def;
-  routine.methods = toStrMethods;
-  routine.fields = toStrFields;
-
-  routine.notMethod = 1;
-
-  return routine;
 }
+
+//
+
+let toStrFine = _toStrFine_functor();
+let toStr = toStrFine;
 
 //
 
@@ -543,6 +548,7 @@ function toStrNice( src, o )
 
 toStrNice.defaults =
 {
+  ... toStrFine.defaults,
   escaping : 0,
   multilinedString : 0,
   multiline : 1,
@@ -551,6 +557,23 @@ toStrNice.defaults =
   keyWrapper : '',
   tab : '',
   wrap : 0,
+}
+
+//
+
+function toStrSolo( src, o )
+{
+  _.assert( arguments.length === 1 || arguments.length === 2 );
+  o = _.routineOptions( toStrSolo, o );
+  return _.toStrNice( src, o )
+  .split( '\n' )
+  .map( ( e ) => e.trim() )
+  .join( ' ' );
+}
+
+toStrSolo.defaults =
+{
+  ... toStrNice.defaults,
 }
 
 //
@@ -607,9 +630,15 @@ toJs.defaults =
 
 function _toStr( src, o )
 {
-  if( o.precision < 1 || o.precision > 21 )
-  throw _.err( 'RangeError' );
 
+  if( o.precision !== null )
+  if( o.precision < 1 || o.precision > 21 )
+  {
+    debugger;
+    throw _.err( 'RangeError' );
+  }
+
+  if( o.fixed !== null )
   if( o.fixed < 0 || o.fixed > 20 )
   throw _.err( 'RangeError' );
 
@@ -1099,9 +1128,11 @@ function _toStrFromNumber( src, o )
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( _.numberIs( src ) && _.objectIs( o ) );
 
+  if( o.precision !== null )
   if( o.precision < 1 || o.precision > 21 )
   throw _.err( 'RangeError' );
 
+  if( o.fixed !== null )
   if( o.fixed < 0 || o.fixed > 20 )
   throw _.err( 'RangeError' );
 
@@ -1838,9 +1869,6 @@ function _toStrFromObject( src, o )
 // declare
 // --
 
-var toStrFine = _toStrFine_functor();
-var toStr = toStrFine;
-
 var Proto =
 {
 
@@ -1850,6 +1878,7 @@ var Proto =
   toStrFields,
   toStrShort,
   toStrNice,
+  toStrSolo,
   toJson,
   toJs,
 
