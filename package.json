@@ -1,6 +1,6 @@
 {
   "name": "wstringer",
-  "version": "0.3.229",
+  "version": "0.3.230",
   "description": "Stringer nicely stringifies structures does not matter how complex or cycled them are. Convenient tool for fast diagnostic and inspection of data during development and in production. Use it to see more, faster. Refactoring required.",
   "author": "Kostiantyn Wandalen <wanalen@01.school>",
   "license": "MIT",
