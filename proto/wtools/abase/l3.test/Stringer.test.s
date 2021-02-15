@@ -408,8 +408,8 @@ function toStr( test )
     '[',
     '  \'a\', ',
     '  {- Array with 3 elements -}, ',
-    '  {- Object with 2 elements -}, ',
-    '  {- Object with 2 elements -}, ',
+    '  {- Map.polluted with 2 elements -}, ',
+    '  {- Map.polluted with 2 elements -}, ',
     '  {- Array with 3 elements -}, ',
     '  {- Array with 3 elements -}',
     ']',
@@ -451,16 +451,16 @@ function toStr( test )
     '    22 : {- Array with 4 elements -}',
     '  }, ',
     '  {',
-    '    31 : {- Object with 2 elements -}, ',
-    '    32 : {- Object with 3 elements -}',
+    '    31 : {- Map.polluted with 2 elements -}, ',
+    '    32 : {- Map.polluted with 3 elements -}',
     '  }, ',
     '  [',
     '    {- Array with 3 elements -}, ',
     '    {- Array with 4 elements -}',
     '  ], ',
     '  [',
-    '    {- Object with 2 elements -}, ',
-    '    {- Object with 3 elements -}',
+    '    {- Map.polluted with 2 elements -}, ',
+    '    {- Map.polluted with 3 elements -}',
     '  ]',
     ']',
   ].join( '\n' );
@@ -1334,8 +1334,8 @@ function toStrArray( test )
   //    /*02*/
   //    [
   //      '[',
-  //      '  {- Object with 1 elements -}, ',
-  //      '  {- Object with 1 elements -}',
+  //      '  {- Map.polluted with 1 elements -}, ',
+  //      '  {- Map.polluted with 1 elements -}',
   //      ']'
   //    ].join( '\n' ),
   //
@@ -1357,7 +1357,7 @@ function toStrArray( test )
   //    /*07*/
   //    [
   //      '[',
-  //      '  {- Object with 1 elements -}',
+  //      '  {- Map.polluted with 1 elements -}',
   //      ']'
   //    ].join( '\n' ),
   //
@@ -1477,7 +1477,7 @@ function toStrArray( test )
   //    /*29*/
   //    '| 15. 16. 17. 18',
   //    /*30*/
-  //    '  {- Object with 3 elements -}',
+  //    '  {- Map.polluted with 3 elements -}',
   //    /*31*/
   //    '  \'a\'. 1. false',
   //    /*32*/
@@ -1492,7 +1492,7 @@ function toStrArray( test )
   //    /*36*/
   //    [
   //      '  7. ',
-  //      '  {- Object with 1 elements -}. ',
+  //      '  {- Map.polluted with 1 elements -}. ',
   //      '  1. ',
   //      '  \'x\'',
   //    ].join( '\n' ),
@@ -1832,8 +1832,8 @@ function toStrArray( test )
   var expected =
   [
     '[',
-    '  {- Object with 1 elements -}, ',
-    '  {- Object with 1 elements -}',
+    '  {- Map.polluted with 1 elements -}, ',
+    '  {- Map.polluted with 1 elements -}',
     ']'
   ].join( '\n' );
   test.identical( got, expected );
@@ -1875,7 +1875,7 @@ function toStrArray( test )
   var expected =
   [
     '[',
-    '  {- Object with 1 elements -}',
+    '  {- Map.polluted with 1 elements -}',
     ']'
   ].join( '\n' );
   test.identical( got, expected );
@@ -2079,7 +2079,7 @@ function toStrArray( test )
   test.case = 'array of an object, wrap 0';
   var src = [ { a : 5, b : 6, c : 7 } ];
   var got = _.toStr( src, { wrap : 0, colon : '->', comma : '.' } );
-  var expected = '  {- Object with 3 elements -}';
+  var expected = '  {- Map.polluted with 3 elements -}';
   test.identical( got, expected );
 
   test.case = 'array with a function, noRoutine';
@@ -2118,7 +2118,7 @@ function toStrArray( test )
   var expected =
   [
     '  7. ',
-    '  {- Object with 1 elements -}. ',
+    '  {- Map.polluted with 1 elements -}. ',
     '  1. ',
     '  \'x\'',
   ].join( '\n' );
@@ -2748,14 +2748,14 @@ function toStrObject( test )
   //  expected =
   //  [
   //    /*01*/  '{ a : 1, b : 2, c : 3 }',
-  //    /*02*/  '{- Object with 3 elements -}',
+  //    /*02*/  '{- Map.polluted with 3 elements -}',
   //    /*03*/  '{ q : 6, w : 7, e : 8 }',
   //
   //    /*04*/
   //    [
   //      '{',
   //      '  u : 12, ',
-  //      '  i : {- Object with 1 elements -}, ',
+  //      '  i : {- Map.polluted with 1 elements -}, ',
   //      '  p : 14',
   //      '}'
   //    ].join( '\n' ),
@@ -3088,7 +3088,7 @@ function toStrObject( test )
   //    [
   //      '{',
   //      '  sequence : \'<\\u001cb>text<\\u001cb>\', ',
-  //      '  data : {- Object with 2 elements -}, ',
+  //      '  data : {- Map.polluted with 2 elements -}, ',
   //      '  shift : false, ',
   //      '  code : \'<b>text<b>\'',
   //      '}'
@@ -3255,7 +3255,7 @@ function toStrObject( test )
   test.case = 'default object, levels 0';
   var src = { x : 3, y : 5, z : 5 };
   var got = _.toStr( src, { levels : 0 } );
-  var expected = '{- Object with 3 elements -}';
+  var expected = '{- Map.polluted with 3 elements -}';
   test.identical( got, expected );
 
   test.case = 'default object, levels 1';
@@ -3271,7 +3271,7 @@ function toStrObject( test )
   [
     '{',
     '  u : 12, ',
-    '  i : {- Object with 1 elements -}, ',
+    '  i : {- Map.polluted with 1 elements -}, ',
     '  p : 14',
     '}'
   ].join( '\n' );
@@ -3725,7 +3725,7 @@ function toStrObject( test )
   [
     '{',
     '  sequence : \'<\\u001cb>text<\\u001cb>\', ',
-    '  data : {- Object with 2 elements -}, ',
+    '  data : {- Map.polluted with 2 elements -}, ',
     '  shift : false, ',
     '  code : \'<b>text<b>\'',
     '}'
@@ -3999,7 +3999,7 @@ function toStrStringWrapper( test )
   //       '{',
   //       '  a, ',
   //       '  b, ',
-  //       '  c : {- Object with 1 elements -}',
+  //       '  c : {- Map.polluted with 1 elements -}',
   //       '}'
   //
   //     ].join( '\n' ),
@@ -4098,7 +4098,7 @@ function toStrStringWrapper( test )
   //   '{',
   //   '  a, ',
   //   '  b, ',
-  //   '  c : {- Object with 1 elements -}',
+  //   '  c : {- Map.polluted with 1 elements -}',
   //   '}'
   // ].join( '\n' );
   // test.identical( got, expected );
@@ -4111,7 +4111,7 @@ function toStrStringWrapper( test )
     '{',
     '  a : a, ',
     '  b : b, ',
-    '  c : {- Object with 1 elements -}',
+    '  c : {- Map.polluted with 1 elements -}',
     '}'
   ].join( '\n' );
   test.identical( got, expected );
@@ -4187,22 +4187,22 @@ function toStrLevel( test )
   //   [
   //    /*01*/
   //      [
-  //       '{- Object with 3 elements -}',
+  //       '{- Map.polluted with 3 elements -}',
   //      ].join( '\n' ),
   //
   //    /*02*/
   //      [
   //       '{',
-  //       '  a : {- Object with 1 elements -}, ',
+  //       '  a : {- Map.polluted with 1 elements -}, ',
   //       '  b : \'b\', ',
-  //       '  c : {- Object with 1 elements -}',
+  //       '  c : {- Map.polluted with 1 elements -}',
   //       '}'
   //
   //      ].join( '\n' ),
   //
   //    /*03*/
   //      [
-  //       '{- Object with 4 elements -}',
+  //       '{- Map.polluted with 4 elements -}',
   //      ].join( '\n' ),
   //
   //    /*04*/
@@ -4210,7 +4210,7 @@ function toStrLevel( test )
   //       '{',
   //       '  a : \'a\', ',
   //       '  b : \'b\', ',
-  //       '  c : {- Object with 1 elements -}',
+  //       '  c : {- Map.polluted with 1 elements -}',
   //       '}',
   //
   //      ].join( '\n' ),
@@ -4221,7 +4221,7 @@ function toStrLevel( test )
   test.case = 'nested objects, level 0 and levels 0';
   var src = { a : "a", b : "b", c : { d : "d" } };
   var got = _.toStr( src, { level: 0, levels : 0 } );
-  var expected = '{- Object with 3 elements -}';
+  var expected = '{- Map.polluted with 3 elements -}';
   test.identical( got, expected );
 
   test.case = 'nested objects, level 1 levels 2';
@@ -4230,9 +4230,9 @@ function toStrLevel( test )
   var expected =
   [
     '{',
-    '  a : {- Object with 1 elements -}, ',
+    '  a : {- Map.polluted with 1 elements -}, ',
     '  b : \'b\', ',
-    '  c : {- Object with 1 elements -}',
+    '  c : {- Map.polluted with 1 elements -}',
     '}'
   ].join( '\n' );
   test.identical( got, expected );
@@ -4240,7 +4240,7 @@ function toStrLevel( test )
   test.case = 'nested objects, level 1 levels 0';
   var src = { a : [ "example" ], b : 1, c : null , d : [ "b" ] };
   var got = _.toStr( src, { level: 1, levels : 0 } );
-  var expected = '{- Object with 4 elements -}';
+  var expected = '{- Map.polluted with 4 elements -}';
   test.identical( got, expected );
 
   test.case = 'nested objects';
@@ -4251,7 +4251,7 @@ function toStrLevel( test )
     '{',
     '  a : \'a\', ',
     '  b : \'b\', ',
-    '  c : {- Object with 1 elements -}',
+    '  c : {- Map.polluted with 1 elements -}',
     '}',
   ].join( '\n' );
   test.identical( got, expected );
@@ -4383,7 +4383,7 @@ function toStrEnumerable( test )
   //        '  propertyIsEnumerable : [ routine propertyIsEnumerable ], ',
   //        '  toString : [ routine toString ], ',
   //        '  valueOf : [ routine valueOf ], ',
-  //        '  __proto__ : {- Object with 1 elements -}, ',
+  //        '  __proto__ : {- Map.polluted with 1 elements -}, ',
   //        '  toLocaleString : [ routine toLocaleString ]',
   //        '}',
   //      ].join( '\n' ),
@@ -4500,7 +4500,7 @@ function toStrEnumerable( test )
     '  propertyIsEnumerable : [ routine propertyIsEnumerable ], ',
     '  toString : [ routine toString ], ',
     '  valueOf : [ routine valueOf ], ',
-    '  __proto__ : {- Object with 1 elements -}, ',
+    '  __proto__ : {- MapLike.polluted.prototyped with 1 elements -}, ',
     '  toLocaleString : [ routine toLocaleString ]',
     '}',
   ].join( '\n' );
@@ -5106,7 +5106,7 @@ function toStrLimitElements( test )
   //  [
   //    '  a : 1, ',
   //    '  b : 2, ',
-  //    '  c : {- Object with 2 elements -}, ',
+  //    '  c : {- Map.polluted with 2 elements -}, ',
   //    '  d : 3',
   //
   //  ].join( '\n' ),
@@ -5225,7 +5225,7 @@ function toStrLimitElements( test )
   [
     '  a : 1, ',
     '  b : 2, ',
-    '  c : {- Object with 2 elements -}, ',
+    '  c : {- Map.polluted with 2 elements -}, ',
     '  d : 3',
   ].join( '\n' );
   test.identical( got, expected );
@@ -5832,7 +5832,7 @@ function _toStrFromObject( test )
   test.case = 'levels 0 test';
   def.levels = 0;
   var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );
-  var expected = '{- Object with 3 elements -}';
+  var expected = '{- Map.polluted with 3 elements -}';
   test.identical( got.text, expected );
 
   test.case = 'wrap 0 test';

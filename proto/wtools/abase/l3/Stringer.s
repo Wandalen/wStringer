@@ -644,7 +644,7 @@ function _toStr( src, o )
 
   var result = '';
   var simple = 1;
-  var type = _.strPrimitiveType( src );
+  var type = _.strTypeSecondary( src );
 
   if( o.level >= o.levels )
   {
@@ -659,6 +659,8 @@ function _toStr( src, o )
   var isArray = _.arrayIs( src );
   var isObject = !isLong && _.objectIs( src );
   var isObjectLike = !isLong && _.objectLike( src ) && !( 'toString' in src );
+
+  _.debugger;
 
   /* */
 
@@ -900,7 +902,7 @@ function _toStrIsVisibleElement( src, o )
   var isPrimitive = _.primitiveIs( src );
   var isArray = _.longIs( src );
   var isObject = !isArray && _.objectLike( src );
-  var type = _.strPrimitiveType( src );
+  var type = _.strTypeSecondary( src );
 
   /* */
 
@@ -1800,7 +1802,7 @@ function _toStrFromObject( src, o )
   var result = '';
 
   _.assert( arguments.length === 2 );
-  _.assert( _.objectLike( src ) || _.strPrimitiveType( src ) === 'Error' );
+  _.assert( _.objectLike( src ) || _.strTypeSecondary( src ) === 'Error' );
   _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
 
 
