@@ -443,7 +443,7 @@ function _toStrFine_functor()
   routine.defaults = def;
   routine.methods = toStrMethods;
   routine.fields = toStrFields;
-  routine.notMethod = 1;
+  // routine.notMethod = 1;
   return routine;
 
   function toStrFine( src, o )
@@ -454,7 +454,8 @@ function _toStrFine_functor()
 
     var o = o || Object.create( null );
     var toStrDefaults = Object.create( null );
-    if( !_.primitiveIs( src ) && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod && _.objectIs( src.toStr.defaults ) )
+    // if( !_.primitiveIs( src ) && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod && _.objectIs( src.toStr.defaults ) )
+    if( !_.primitiveIs( src ) && 'toStr' in src && _.routineIs( src.toStr ) && _.instanceIs( src ) && _.objectIs( src.toStr.defaults ) )
     toStrDefaults = src.toStr.defaults;
 
     if( o.levels === undefined && ( o.jsonLike || o.jsLike ) )
@@ -669,7 +670,8 @@ function _toStr( src, o )
   // if( src && src.constructor && src.constructor.name === 'eGdcHeader' )
   // debugger;
 
-  if( !isPrimitive && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod && !_ObjectHasOwnProperty.call( src, 'constructor' ) )
+  // if( !isPrimitive && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod && !_ObjectHasOwnProperty.call( src, 'constructor' ) )
+  if( !isPrimitive && 'toStr' in src && _.routineIs( src.toStr ) && _.instanceIs( src ) )
   {
 
     var r = src.toStr( o );
@@ -906,7 +908,8 @@ function _toStrIsVisibleElement( src, o )
 
   /* */
 
-  if( !isPrimitive && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod )
+  // if( !isPrimitive && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod )
+  if( !isPrimitive && 'toStr' in src && _.routineIs( src.toStr ) && _.instanceIs( src ) )
   {
     if( isObject && o.noObject )
     return false;
@@ -1270,7 +1273,8 @@ function _toStrFromHashMap( src, o )
 
   src.forEach( function( e, k )
   {
-    result += '\n' + k + ' : ' + e;
+    // result += '\n' + k + ' : ' + e;
+    result += '\n' + k + ' : ' + _.toStrShort( e );
   });
 
   return { text : result, simple : 0 };
