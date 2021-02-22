@@ -2112,25 +2112,25 @@ function trivial( test )
 
   test.case = 'json with valid json as property';
   var src = { "a" : 100, "b" : "c", "c" : { "d" : true, "e" : null } };
-  var got = _.toStr( src, { jsonLike : 1 } );
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
   var expected = src;
   test.identical( JSON.parse( got ), expected );
 
   test.case = 'json with valid json as property(2)';
   var src = { "b" : "a", "c" : 50, "d" : { "a" : "undefined", "e" : null } };
-  var got = _.toStr( src, { jsonLike : 1 } );
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
   var expected = src;
   test.identical( JSON.parse( got ), expected );
 
   test.case = 'array as a json';
   var src = [ { "a" : 100, "b" : "x", "c" : { "d" : true, "e" : null } } ];
-  var got = _.toStr( src, { jsonLike : 1 } );
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
   var expected = src;
   test.identical( JSON.parse( got ), expected );
 
   test.case = 'trivial json';
   var src = { a : '\n\nABC' };
-  var got = _.toStr( src, { jsonLike : 1 } );
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
   var expected = src;
   test.identical( JSON.parse( got ), expected );
 
@@ -2148,7 +2148,7 @@ function complex( test )
 
   var expected = '[\n  ' + _.longFromRange([ 1,100 ]).join( ', \n  ' ) + '\n]';
   var src = _.longFromRange([ 1,100 ]);
-  var json = _.toJson( src );
+  var json = _.entity.exportJson( src );
   test.identical( json , expected );
 
   var got = _.exec({ code : json, prependingReturn : 1 });
@@ -2181,7 +2181,7 @@ function complex( test )
     object : { object : { object : { object : { object : { object }}}}}
   }
 
-  var json = _.toJson( src );
+  var json = _.entity.exportJson( src );
   var got = _.exec({ code : json, prependingReturn : 1 });
   var expected = src;
   test.identical( got , expected );
@@ -2194,7 +2194,7 @@ function complex( test )
   src.length = 4;
   src.object = {};
 
-  var json = _.toJson( src );
+  var json = _.entity.exportJson( src );
   var got = _.exec({ code : json, prependingReturn : 1 });
   var expected = src;
   test.identical( got , expected );
@@ -2222,7 +2222,7 @@ function complex( test )
   src.length = 4;
   src.object = object;
 
-  var json = _.toJson( src );
+  var json = _.entity.exportJson( src );
   var got = _.exec({ code : json, prependingReturn : 1 });
   var expected = src;
   test.identical( got , expected );
@@ -2232,7 +2232,7 @@ function complex( test )
   test.case = 'comlex';
 
   var src = context.complexData;
-  var json = _.toJson( src );
+  var json = _.entity.exportJson( src );
   var got = _.exec({ code : json, prependingReturn : 1 });
   var expected = src;
   test.identical( got , expected );
@@ -2259,97 +2259,97 @@ function fromFile( test )
 
     test.case = encoding + ' file1';
     var src = stringFromFile( 'file1', encoding );
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' file4.pdf';
     var src = stringFromFile( 'file4.pdf', encoding );
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' test.exe';
     var src = stringFromFile( 'test.exe', encoding );
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' small';
     var src = stringFromFile( 'small', encoding );
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' small2';
     var src = stringFromFile( 'small2', encoding );
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' small3';
     var src = stringFromFile( 'small3', encoding );
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' small4';
     var src = stringFromFile( 'small4', encoding );
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' small5';
     var src = stringFromFile( 'small5', encoding );
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' small6';
     var src = stringFromFile( 'small6', encoding );
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' small7';
     var src = stringFromFile( 'small7', encoding );
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' file as json property value';
     var src = { a : stringFromFile( 'file1', encoding ), b : stringFromFile( 'file2', encoding ), c : 1 };
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' file as json property value';;
     var src = { a : stringFromFile( 'file3', encoding ), b : stringFromFile( 'file4.pdf', encoding ), c : 1 };
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' file as json property value';;
     var src = { a : [ stringFromFile( 'test.exe', encoding ) ], b : stringFromFile( 'small', encoding ) };
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' file as json property value';;
     var src = { a : stringFromFile( 'small2', encoding ), b : stringFromFile( 'small3', encoding ) };
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' file as json property value';;
     var src = { a : stringFromFile( 'small4', encoding ), b : stringFromFile( 'small5', encoding ) };
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
     test.case = encoding + ' file as json property value';;
     var src = { a : stringFromFile( 'small6', encoding ), b : stringFromFile( 'small7', encoding ) };
-    var got = _.toStr( src, { jsonLike : 1 } );
+    var got = _.entity.exportString( src, { jsonLike : 1 } );
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 

@@ -32,83 +32,83 @@ var _ObjectHasOwnProperty = Object.hasOwnProperty;
 
 // var __assert = _.assert;
 var _arraySlice = _.longSlice;
-var strType = _.strType;
+var strType = _.entity.strType;
 
 //
 
 /**
- * Short-cut for toStr function that works only with Routine type entities.
+ * Short-cut for exportString function that works only with Routine type entities.
  * Converts object passed by argument( src ) to string representation using
  * options provided by argument( o ).
  *
  * @param {object} src - Source object.
- * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
  * @param {boolean} [ options.onlyRoutines=true ] - makes object behavior Routine only.
- * @see {@link wTools.toStrFine} Check out main function for more usage options and details.
+ * @see {@link wTools.exportStringFine} Check out main function for more usage options and details.
  * @returns {string} Returns string that represents object data.
  *
  * @example
  * //returns { routine add }
- * _.toStrMethods( ( function add(){} ), { } )
+ * _.entity.exportStringMethods( ( function add(){} ), { } )
  *
  * @example
  * //returns { routine noname }
- * _.toStrMethods( ( function(){} ), { } )
+ * _.entity.exportStringMethods( ( function(){} ), { } )
  *
- * @function toStrMethods
+ * @function exportStringMethods
  * @namespace Tools
  * @module Tools/base/Stringer
  *
  */
 
-function toStrMethods( src, o )
+function exportStringMethods( src, o )
 {
   var o = o || Object.create( null );
   o.onlyRoutines = 1;
-  var result = _.toStrFine( src, o );
+  var result = _.entity.exportStringFine( src, o );
   return result;
 }
 
 //
 
 /**
- * Short-cut for toStr function that works with all entities, but ingnores Routine type.
+ * Short-cut for exportString function that works with all entities, but ingnores Routine type.
  * Converts object passed by argument( src ) to string representation using
  * options provided by argument( o ).
  *
  * @param {object} src - Source object.
- * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
  * @param {boolean} [ options.noRoutine=false ] - Ignores all entities of type Routine.
- * @see {@link wTools.toStrFine} Check out main function for more usage options and details.
+ * @see {@link wTools.exportStringFine} Check out main function for more usage options and details.
  * @returns {string} Returns string that represents object data.
  *
  * @example
  * //returns [ 0, "a" ]
- * _.toStrFields( [ function del(){}, 0, 'a' ], {} )
+ * _.entity.exportStringFields( [ function del(){}, 0, 'a' ], {} )
  *
  * @example
  * //returns { c : 1, d : "2" }
- * _.toStrFields( { a : function b(){},  c : 1 , d : '2' }, {} )
+ * _.entity.exportStringFields( { a : function b(){},  c : 1 , d : '2' }, {} )
  *
- * @function toStrFields
+ * @function exportStringFields
  * @namespace Tools
  * @module Tools/base/Stringer
  *
  */
 
-function toStrFields( src, o )
+function exportStringFields( src, o )
 {
   var o = o || Object.create( null );
   o.noRoutine = 1;
-  var result = _.toStrFine( src, o );
+  var result = _.entity.exportStringFine( src, o );
   return result;
 }
 
 //
 
 /**
-* @summary Options object for toStr function.
-* @typedef {Object} toStrOptions
+* @summary Options object for exportString function.
+* @typedef {Object} exportStringOptions
 * @property {boolean} [ o.wrap=true ] - Wrap array-like and object-like entities
 * into "[ .. ]" / "{ .. }" respecitvely.
 * @property {boolean} [ o.stringWrapper='\'' ] - Wrap string into specified string.
@@ -151,10 +151,10 @@ function toStrFields( src, o )
 
 /**
  * Converts object passed by argument( src ) to string format using parameters passed
- * by argument( o ).If object ( src ) has onlyOwn ( toStr ) method defined function uses it for conversion.
+ * by argument( o ).If object ( src ) has onlyOwn ( exportString ) method defined function uses it for conversion.
  *
  * @param {object} src - Source object for representing it as string.
- * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o - conversion o {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
  * @returns {string} Returns string that represents object data.
  *
  * @example
@@ -171,49 +171,49 @@ function toStrFields( src, o )
  * // --subf : {  x : 1  // level 3}
  * // -}
  * // }
- * _.toStr( { a : 1, b : 2, c : { subd : 'some test', sube : true, subf : { x : 1 } } }, { levels : 3, dtab : '-'} );
+ * _.entity.exportString( { a : 1, b : 2, c : { subd : 'some test', sube : true, subf : { x : 1 } } }, { levels : 3, dtab : '-'} );
  *
  * @example
  * //returns " \n1500 "
- * _.toStr( ' \n1500 ', { escaping : 1 } );
+ * _.entity.exportString( ' \n1500 ', { escaping : 1 } );
  *
  * @example
  * //returns
  * // "
  * // 1500 "
- * _.toStr( ' \n1500 ' );
+ * _.entity.exportString( ' \n1500 ' );
  *
  * @example
  * //returns 14.5333
- * _.toStr( 14.5333 );
+ * _.entity.exportString( 14.5333 );
  *
  * @example
  * //returns 1.50e+3
- * _.toStr( 1500, { precision : 3 } );
+ * _.entity.exportString( 1500, { precision : 3 } );
  *
  * @example
  * //returns 14.53
- * _.toStr( 14.5333, { fixed : 2 } );
+ * _.entity.exportString( 14.5333, { fixed : 2 } );
  *
  * @example
  * //returns true
- * _.toStr( 1 !== 2 );
+ * _.entity.exportString( 1 !== 2 );
  *
  * @example
  * //returns ''
- * _.toStr( 1 !== 2, { noAtomic :  1 } );
+ * _.entity.exportString( 1 !== 2, { noAtomic :  1 } );
  *
  * @example
  * //returns [ 1, 2, 3, 4 ]
- * _.toStr( [ 1, 2, 3, 4 ] );
+ * _.entity.exportString( [ 1, 2, 3, 4 ] );
  *
  * @example
  * //returns [Array with 3 elements]
- * _.toStr( [ 'a', 'b', 'c' ], { levels : 0 } );
+ * _.entity.exportString( [ 'a', 'b', 'c' ], { levels : 0 } );
  *
  * @example
  * //returns [ 1, 2, 3 ]
- * _.toStr( _.toStr( [ 'a', 'b', 'c', 1, 2, 3 ], { levels : 2, noString : 1} ) );
+ * _.entity.exportString( _.entity.exportString( [ 'a', 'b', 'c', 1, 2, 3 ], { levels : 2, noString : 1} ) );
  *
  * @example
  * //returns
@@ -221,13 +221,13 @@ function toStrFields( src, o )
  * //  { Object with 1 elements },
  * //  { Object with 1 elements }
  * // ]
- * _.toStr( [ { a : 1 }, { b : 2 } ] );
+ * _.entity.exportString( [ { a : 1 }, { b : 2 } ] );
  *
  * @example
  * //returns
  * // "    a : 1
  * //      b : 2"
- * _.toStr( [ { a : 1 }, { b : 2 } ], { levels : 2, wrap : 0 } );
+ * _.entity.exportString( [ { a : 1 }, { b : 2 } ], { levels : 2, wrap : 0 } );
  *
  * @example
  * //returns
@@ -235,19 +235,19 @@ function toStrFields( src, o )
  * //  { a : 1 },
  * //  { b : 2 }
  * // ]
- * _.toStr( [ { a : 1 }, { b : 2 } ], { levels : 2 } );
+ * _.entity.exportString( [ { a : 1 }, { b : 2 } ], { levels : 2 } );
  *
  * @example
  * //returns 1 , 2 , 3 , 4
- * _.toStr( [ 1, 2, 3, 4 ], { wrap : 0, comma : ' , ' } );
+ * _.entity.exportString( [ 1, 2, 3, 4 ], { wrap : 0, comma : ' , ' } );
  *
  * @example
  * //returns [ 0.11, 40 ]
- * _.toStr( [ 0.11112, 40.4 ], { precision : 2 } );
+ * _.entity.exportString( [ 0.11112, 40.4 ], { precision : 2 } );
  *
  * @example
  * //returns [ 2.00, 1.56 ]
- * _.toStr( [ 1.9999, 1.5555 ], { fixed : 2 } );
+ * _.entity.exportString( [ 1.9999, 1.5555 ], { fixed : 2 } );
  *
  * @example
  * //returns
@@ -260,22 +260,22 @@ function toStrFields( src, o )
  * //  ],
  * //  4
  * // ]
- * _.toStr( [ 0, [ 1, 2, 3 ], 4 ], { levels : 2, multiline : 1 } );
+ * _.entity.exportString( [ 0, [ 1, 2, 3 ], 4 ], { levels : 2, multiline : 1 } );
  *
  * @example
  * //returns [ 1, 2, [ other 3 element(s) ] ]
- * _.toStr( [ 1, 2 , 3, 4, 5 ], { limitElementsNumber : 2 } );
+ * _.entity.exportString( [ 1, 2 , 3, 4, 5 ], { limitElementsNumber : 2 } );
  *
  * @example
  * //returns [ routine sample ]
- * _.toStr( function sample( ){ });
+ * _.entity.exportString( function sample( ){ });
  *
  * @example
  * //returns [ rotuine without name ]
- * _.toStr( function add( ){ }, { levels : 0 } );
+ * _.entity.exportString( function add( ){ }, { levels : 0 } );
  *
  * @example
- * //If object ( src ) has onlyOwn ( toStr ) method defined function uses it for conversion
+ * //If object ( src ) has onlyOwn ( exportString ) method defined function uses it for conversion
  * //returns
  * //function func(  ) {
  * //console.log('sample');
@@ -284,46 +284,46 @@ function toStrFields( src, o )
  * {
  *   console.log( 'sample' );
  * }
- * x.toStr = x.toString;
- * _.toStr( x );
+ * x.exportString = x.toString;
+ * _.entity.exportString( x );
  *
  * @example
  * //returns { o : 1, y : 3 }
- * _.toStr( { o : 1, y : 3 } );
+ * _.entity.exportString( { o : 1, y : 3 } );
  *
  * @example
  * //returns { Object with 1 elements }
- * _.toStr( { o : 1 }, { levels : 0 } );
+ * _.entity.exportString( { o : 1 }, { levels : 0 } );
  *
  * @example
  * //returns
  * {
  *    o : { p : "value" }
  * }
- * _.toStr( { o : { p : 'value' } }, { levels : 2 } );
+ * _.entity.exportString( { o : { p : 'value' } }, { levels : 2 } );
  *
  * @example
  * //returns
  * // {
  * //   y : "value1"
  * // }
- * _.toStr( { y : 'value1', o : { p : 'value2' } }, { levels : 2, noSubObject : 1} );
+ * _.entity.exportString( { y : 'value1', o : { p : 'value2' } }, { levels : 2, noSubObject : 1} );
  *
  * @example
  * //returns a : 1 | b : 2
- * _.toStr( { a : 1, b : 2 }, { wrap : 0, comma : ' | ' } );
+ * _.entity.exportString( { a : 1, b : 2 }, { wrap : 0, comma : ' | ' } );
  *
  * @example
  * //returns { b : 1, c : 2 }
- * _.toStr( { a : 'string', b : 1 , c : 2  }, { levels : 2 , noString : 1 } );
+ * _.entity.exportString( { a : 'string', b : 1 , c : 2  }, { levels : 2 , noString : 1 } );
  *
  * @example
  * //returns { a : string, b : str, c : 2 }
- * _.toStr( { a : 'string', b : "str" , c : 2  }, { levels : 2 , stringWrapper : '' } );
+ * _.entity.exportString( { a : 'string', b : "str" , c : 2  }, { levels : 2 , stringWrapper : '' } );
  *
  * @example
  * //returns { "a" : "string", "b" : 1, "c" : 2 }
- * _.toStr( { a : 'string', b : 1 , c : 2  }, { levels : 2 , jsonLike : 1 } );
+ * _.entity.exportString( { a : 'string', b : 1 , c : 2  }, { levels : 2 , jsonLike : 1 } );
  *
  * @example
  * //returns
@@ -332,11 +332,11 @@ function toStrFields( src, o )
  * // ' b : 2, ',
  * // '{ other 2 element(s) }',
  * // '}',
- * _.toStr( { a : 1, b : 2, c : 3, d : 4 }, { limitElementsNumber : 2 } );
+ * _.entity.exportString( { a : 1, b : 2, c : 3, d : 4 }, { limitElementsNumber : 2 } );
  *
  * @example
  * //returns { stack : "Error: my message2"..., message : "my message2" }
- * _.toStr( new Error('my message2'), { onlyEnumerable : 0, errorAsMap : 1 } );
+ * _.entity.exportString( new Error('my message2'), { onlyEnumerable : 0, errorAsMap : 1 } );
  *
  * @example
  * //returns
@@ -345,9 +345,9 @@ function toStrFields( src, o )
  * // line2
  * // line3`
  * // }"
- * _.toStr( { a : "line1\nline2\nline3" }, { levels: 2, multilinedString : 1 } );
+ * _.entity.exportString( { a : "line1\nline2\nline3" }, { levels: 2, multilinedString : 1 } );
  *
- * @function toStr
+ * @function exportString
  * @throws { Exception } Throw an exception if( o ) is not a Object.
  * @throws { Exception } Throw an exception if( o.stringWrapper ) is not equal true when ( o.jsonLike ) is true.
  * @throws { Exception } Throw an exception if( o.multilinedString ) is not equal false when ( o.jsonLike ) is true.
@@ -358,7 +358,7 @@ function toStrFields( src, o )
  *
  */
 
-function _toStrFine_functor()
+function _exportStringFine_functor()
 {
 
   var primeFilter =
@@ -439,24 +439,24 @@ function _toStrFine_functor()
   // else
   def = _.mapExtend( null, primeFilter, composes, optional );
 
-  var routine = toStrFine;
+  var routine = exportStringFine;
   routine.defaults = def;
-  routine.methods = toStrMethods;
-  routine.fields = toStrFields;
+  routine.methods = exportStringMethods;
+  routine.fields = exportStringFields;
   // routine.notMethod = 1;
   return routine;
 
-  function toStrFine( src, o )
+  function exportStringFine( src, o )
   {
 
     _.assert( arguments.length === 1 || arguments.length === 2 );
     _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
 
     var o = o || Object.create( null );
-    var toStrDefaults = Object.create( null );
-    // if( !_.primitiveIs( src ) && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod && _.objectIs( src.toStr.defaults ) )
-    if( !_.primitiveIs( src ) && 'toStr' in src && _.routineIs( src.toStr ) && _.instanceIs( src ) && _.objectIs( src.toStr.defaults ) )
-    toStrDefaults = src.toStr.defaults;
+    var exportStringDefaults = Object.create( null );
+    // if( !_.primitiveIs( src ) && 'exportString' in src && _.routineIs( src.exportString ) && !src.exportString.notMethod && _.objectIs( src.exportString.defaults ) )
+    if( !_.primitiveIs( src ) && 'exportString' in src && _.routineIs( src.exportString ) && _.instanceIs( src ) && _.objectIs( src.exportString.defaults ) )
+    exportStringDefaults = src.exportString.defaults;
 
     if( o.levels === undefined && ( o.jsonLike || o.jsLike ) )
     o.levels = 1 << 20;
@@ -485,7 +485,7 @@ function _toStrFine_functor()
     o.stringWrapper = '`';
 
     _.assertMapHasOnly( o, [ composes, primeFilter, optional ] );
-    o = _.mapSupplement( null, o, toStrDefaults, composes, primeFilter );
+    o = _.mapSupplement( null, o, exportStringDefaults, composes, primeFilter );
 
     if( o.onlyRoutines )
     {
@@ -513,7 +513,7 @@ function _toStrFine_functor()
       _.assert( !o.multilinedString, 'Expects {-o.multilinedString-} false if either ( o.jsonLike ) or ( o.jsLike ) is true to make valid JSON' );
     }
 
-    var r = _toStr( src, o );
+    var r = _exportString( src, o );
 
     return r ? r.text : '';
   }
@@ -522,34 +522,34 @@ function _toStrFine_functor()
 
 //
 
-let toStrFine = _toStrFine_functor();
-let toStr = toStrFine;
+let exportStringFine = _exportStringFine_functor();
+let exportString = exportStringFine;
 
 //
 
-function toStrShort( src )
+function exportStringShort( src )
 {
   _.assert( arguments.length === 1 );
-  var result = _.toStr( src, { levels : 0 } );
+  var result = _.entity.exportString( src, { levels : 0 } );
   return result;
 }
 
 //
 
-function toStrNice( src, o )
+function exportStringNice( src, o )
 {
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
-  o = _.routineOptions( toStrNice, o );
+  o = _.routineOptions( exportStringNice, o );
 
-  var result = _.toStr( src, o );
+  var result = _.entity.exportString( src, o );
 
   return result;
 }
 
-toStrNice.defaults =
+exportStringNice.defaults =
 {
-  ... toStrFine.defaults,
+  ... exportStringFine.defaults,
   escaping : 0,
   multilinedString : 0,
   multiline : 1,
@@ -562,40 +562,40 @@ toStrNice.defaults =
 
 //
 
-function toStrSolo( src, o )
+function exportStringSolo( src, o )
 {
   _.assert( arguments.length === 1 || arguments.length === 2 );
-  o = _.routineOptions( toStrSolo, o );
-  return _.toStrNice( src, o )
+  o = _.routineOptions( exportStringSolo, o );
+  return _.entity.exportStringNice( src, o )
   .split( '\n' )
   .map( ( e ) => e.trim() )
   .join( ' ' );
 }
 
-toStrSolo.defaults =
+exportStringSolo.defaults =
 {
-  ... toStrNice.defaults,
+  ... exportStringNice.defaults,
 }
 
 //
 
-function toJson( src, o )
+function exportJson( src, o )
 {
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
-  o = _.routineOptions( toJson, o );
+  o = _.routineOptions( exportJson, o );
 
   if( o.cloning )
   src = _.cloneData({ src });
 
   delete o.cloning;
 
-  var result = _.toStr( src, o );
+  var result = _.entity.exportString( src, o );
 
   return result;
 }
 
-toJson.defaults =
+exportJson.defaults =
 {
   jsonLike : 1,
   levels : 1 << 20,
@@ -604,18 +604,18 @@ toJson.defaults =
 
 //
 
-function toJs( src, o )
+function exportJs( src, o )
 {
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
-  o = _.routineOptions( toJs, o );
+  o = _.routineOptions( exportJs, o );
 
-  var result = _.toStr( src, o );
+  var result = _.entity.exportString( src, o );
 
   return result;
 }
 
-toJs.defaults =
+exportJs.defaults =
 {
   escaping : 1,
   multilinedString : 1,
@@ -629,7 +629,7 @@ toJs.defaults =
 
 //
 
-function _toStr( src, o )
+function _exportString( src, o )
 {
 
   if( o.precision !== null )
@@ -645,14 +645,14 @@ function _toStr( src, o )
 
   var result = '';
   var simple = 1;
-  var type = _.strTypeSecondary( src );
+  var type = _.entity.strTypeSecondary( src );
 
   if( o.level >= o.levels )
   {
-    return { text : _toStrShort( src, o ), simple : 1 };
+    return { text : _exportStringShort( src, o ), simple : 1 };
   }
 
-  if( !_toStrIsVisibleElement( src, o ) )
+  if( !_exportStringIsVisibleElement( src, o ) )
   return;
 
   var isPrimitive = _.primitiveIs( src );
@@ -665,16 +665,16 @@ function _toStr( src, o )
 
   /* */
 
-  // if( src && src.toStr && src.toStr.notMethod )
+  // if( src && src.exportString && src.exportString.notMethod )
   // debugger;
   // if( src && src.constructor && src.constructor.name === 'eGdcHeader' )
   // debugger;
 
-  // if( !isPrimitive && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod && !_ObjectHasOwnProperty.call( src, 'constructor' ) )
-  if( !isPrimitive && 'toStr' in src && _.routineIs( src.toStr ) && _.instanceIs( src ) )
+  // if( !isPrimitive && 'exportString' in src && _.routineIs( src.exportString ) && !src.exportString.notMethod && !_ObjectHasOwnProperty.call( src, 'constructor' ) )
+  if( !isPrimitive && 'exportString' in src && _.routineIs( src.exportString ) && _.instanceIs( src ) )
   {
 
-    var r = src.toStr( o );
+    var r = src.exportString( o );
     if( _.objectIs( r ) )
     {
       _.assert( r.simple !== undefined && r.text !== undefined );
@@ -691,7 +691,7 @@ function _toStr( src, o )
   }
   else if( _.vectorAdapterIs( src ) )
   {
-    result += _.vectorAdapter.toStr( src, o );
+    result += _.vectorAdapter.exportString( src, o );
   }
   else if( _.errIs( src ) )
   {
@@ -704,7 +704,7 @@ function _toStr( src, o )
     {
       if( o.onlyEnumerable === undefined )
       o.onlyEnumerable = 0;
-      var r = _toStrFromObject( src, o );
+      var r = _exportStringFromObject( src, o );
       result += r.text;
       simple = r.simple;
     }
@@ -712,19 +712,19 @@ function _toStr( src, o )
   }
   else if( type === 'Function' )
   {
-    result += _toStrFromRoutine( src, o );
+    result += _exportStringFromRoutine( src, o );
   }
   else if( type === 'Number' )
   {
-    result += _toStrFromNumber( src, o );
+    result += _exportStringFromNumber( src, o );
   }
   else if( type === 'BigInt' )
   {
-    result += _toStrFromBigInt( src, o );
+    result += _exportStringFromBigInt( src, o );
   }
   else if( type === 'String' )
   {
-    result += _toStrFromStr( src, o );
+    result += _exportStringFromStr( src, o );
   }
   else if( type === 'Date' )
   {
@@ -737,47 +737,47 @@ function _toStr( src, o )
   }
   else if( type === 'Symbol' )
   {
-    result += _toStrFromSymbol( src, o );
+    result += _exportStringFromSymbol( src, o );
   }
   else if( _.bufferRawIs( src ) )
   {
-    var r = _toStrFromBufferRaw( src, o );
+    var r = _exportStringFromBufferRaw( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( _.bufferTypedIs( src ) )
   {
-    var r = _toStrFromBufferTyped( src, o );
+    var r = _exportStringFromBufferTyped( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( _.bufferNodeIs( src ) )
   {
-    var r = _toStrFromBufferNode( src, o );
+    var r = _exportStringFromBufferNode( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( isLong )
   {
-    var r = _toStrFromArray( src, o );
+    var r = _exportStringFromArray( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( isObject )
   {
-    var r = _toStrFromObject( src, o );
+    var r = _exportStringFromObject( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( _.hashMapLike( src ) )
   {
-    var r = _toStrFromHashMap( src, o );
+    var r = _exportStringFromHashMap( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( _.setLike( src ) )
   {
-    var r = _toStrFromSet( src, o );
+    var r = _exportStringFromSet( src, o );
     result += r.text;
     simple = r.simple;
   }
@@ -812,20 +812,20 @@ function _toStr( src, o )
  * For object, array and row returns count of elemets, example: '[ Row with 3 elements ]'.
  *
  * @param {object} src - Source object.
- * @param {Object} o - Conversion options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o - Conversion options {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
  * @returns {string} Returns string that represents object data.
  *
  * @example
  * //returns [ Array with 3 elements ]
- * _._toStrShort( [ function del(){}, 0, 'a' ], { levels : 0 } )
+ * _._exportStringShort( [ function del(){}, 0, 'a' ], { levels : 0 } )
  *
- * @function _toStrShort
+ * @function _exportStringShort
  * @namespace Tools
  * @module Tools/base/Stringer
  *
  */
 
-function _toStrShort( src, o )
+function _exportStringShort( src, o )
 {
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( _.objectIs( o ), 'Expects map {-o-}' );
@@ -847,7 +847,7 @@ function _toStrShort( src, o )
         infix : o.infix
 
       }
-      result = _toStrFromStr( src, o2 );
+      result = _exportStringFromStr( src, o2 );
 
     }
     else if( _.errIs( src ) )
@@ -856,15 +856,15 @@ function _toStrShort( src, o )
     }
     else if( _.routineIs( src ) )
     {
-      result += _toStrFromRoutine( src, o );
+      result += _exportStringFromRoutine( src, o );
     }
     else if( _.numberIs( src ) )
     {
-      result += _toStrFromNumber( src, o );
+      result += _exportStringFromNumber( src, o );
     }
     else
     {
-      result = _.strEntityShort( src );
+      result = _.entity.exportStringShortFine( src );
     }
 
   }
@@ -880,36 +880,36 @@ function _toStrShort( src, o )
 //
 
 /**
- * Checks if object provided by argument( src ) must be ignored by toStr() function.
+ * Checks if object provided by argument( src ) must be ignored by exportString() function.
  * Filters are provided by argument( o ).
  * Returns false if object must be ignored.
  *
  * @param {object} src - Source object.
- * @param {Object} o - Filters {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o - Filters {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
  * @returns {boolean} Returns result of filter check.
  *
  * @example
  * //returns false
- * _.toStrIsVisibleElement( function del(){}, { noRoutine : 1 } );
+ * _.entity.exportStringIsVisibleElement( function del(){}, { noRoutine : 1 } );
  *
- * @function _toStrIsVisibleElement
+ * @function _exportStringIsVisibleElement
  * @namespace Tools
  * @module Tools/base/Stringer
  *
  */
 
-function _toStrIsVisibleElement( src, o )
+function _exportStringIsVisibleElement( src, o )
 {
 
   var isPrimitive = _.primitiveIs( src );
   var isArray = _.longIs( src );
   var isObject = !isArray && _.objectLike( src );
-  var type = _.strTypeSecondary( src );
+  var type = _.entity.strTypeSecondary( src );
 
   /* */
 
-  // if( !isPrimitive && 'toStr' in src && _.routineIs( src.toStr ) && !src.toStr.notMethod )
-  if( !isPrimitive && 'toStr' in src && _.routineIs( src.toStr ) && _.instanceIs( src ) )
+  // if( !isPrimitive && 'exportString' in src && _.routineIs( src.exportString ) && !src.exportString.notMethod )
+  if( !isPrimitive && 'exportString' in src && _.routineIs( src.exportString ) && _.instanceIs( src ) )
   {
     if( isObject && o.noObject )
     return false;
@@ -961,7 +961,7 @@ function _toStrIsVisibleElement( src, o )
 
     if( !o.wrap )
     {
-      src = _toStrFromArrayFiltered( src, o );
+      src = _exportStringFromArrayFiltered( src, o );
       if( !src.length )
       return false;
     }
@@ -975,7 +975,7 @@ function _toStrIsVisibleElement( src, o )
 
     if( !o.wrap )
     {
-      var keys = _toStrFromObjectKeysFiltered( src, o );
+      var keys = _exportStringFromObjectKeysFiltered( src, o );
       if( !keys.length )
       return false;
     }
@@ -1009,26 +1009,26 @@ function _toStrIsVisibleElement( src, o )
  * Returns true if object can be represented as one line.
  *
  * @param {object} element - Source object.
- * @param {Object} o - Check options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o - Check options {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
  * @param {boolean} [ o.escaping=false ] - enable escaping of special characters.
  * @returns {boolean} Returns result of length check.
  *
  * @example
  * //returns true
- * _.toStrIsSimpleElement( 'string', { } );
+ * _.entity.exportStringIsSimpleElement( 'string', { } );
  *
  * @example
  * //returns false
- * _.toStrIsSimpleElement( { a : 1, b : 2, c : 3, d : 4, e : 5 }, { } );
+ * _.entity.exportStringIsSimpleElement( { a : 1, b : 2, c : 3, d : 4, e : 5 }, { } );
  *
- * @function _toStrIsSimpleElement
+ * @function _exportStringIsSimpleElement
  * @throws { Exception } Throw an exception if( arguments.length ) is not equal 2.
  * @namespace Tools
  * @module Tools/base/Stringer
  *
  */
 
-function _toStrIsSimpleElement( element, o )
+function _exportStringIsSimpleElement( element, o )
 {
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
@@ -1057,20 +1057,20 @@ function _toStrIsSimpleElement( element, o )
  * from argument( o ).
  *
  * @param {object} src - Source object.
- * @param {Object} o - conversion options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o - conversion options {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
  * @returns {string} Returns routine as string.
  *
  * @example
  * //returns [ routine a ]
- * _.toStrFromRoutine( function a(){}, {} );
+ * _.entity.exportStringFromRoutine( function a(){}, {} );
  *
- * @function _toStrFromRoutine
+ * @function _exportStringFromRoutine
  * @namespace Tools
  * @module Tools/base/Stringer
  *
  */
 
-function _toStrFromRoutine( src, o )
+function _exportStringFromRoutine( src, o )
 {
   var result = '';
 
@@ -1100,22 +1100,22 @@ function _toStrFromRoutine( src, o )
  * If no option specified returns source( src ) as simple string.
  *
  * @param {Number} src - Number to convert.
- * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
  * @returns {String} Returns number converted to the string.
  *
  * @example
  * //returns 8.9
- * _._toStrFromNumber( 8.923964453, { precision : 2 } );
+ * _._exportStringFromNumber( 8.923964453, { precision : 2 } );
  *
  * @example
  * //returns 8.9240
- * _._toStrFromNumber( 8.923964453, { fixed : 4 } );
+ * _._exportStringFromNumber( 8.923964453, { fixed : 4 } );
  *
  * @example
  * //returns 8.92
- * _._toStrFromNumber( 8.92, { } );
+ * _._exportStringFromNumber( 8.92, { } );
  *
- * @function _toStrFromNumber
+ * @function _exportStringFromNumber
  * @throws {Exception} If no arguments provided.
  * @throws {Exception} If( src ) is not a Number.
  * @throws {Exception} If( o ) is not a Object.
@@ -1126,7 +1126,7 @@ function _toStrFromRoutine( src, o )
  *
 */
 
-function _toStrFromNumber( src, o )
+function _exportStringFromNumber( src, o )
 {
   var result = '';
 
@@ -1156,7 +1156,7 @@ function _toStrFromNumber( src, o )
 
 //
 
-function _toStrFromBigInt( src, o )
+function _exportStringFromBigInt( src, o )
 {
   let result = '';
 
@@ -1172,7 +1172,7 @@ function _toStrFromBigInt( src, o )
 
 //
 
-function _toStrFromSymbol( src, o )
+function _exportStringFromSymbol( src, o )
 {
   let text = src.toString().slice( 7, -1 );
   let result = `{- Symbol${text ? ' ' + text + ' ' : ' '}-}`;
@@ -1188,26 +1188,26 @@ function _toStrFromSymbol( src, o )
  * Returns result as new string or source string if no changes maded.
  *
  * @param {object} src - String to parse.
- * @param {Object} o - Contains conversion  options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o - Contains conversion  options {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
  * @returns {String} Returns result of adjustments as new string.
  *
  * @example
  * //returns "hello"
- * _._toStrFromStr( 'hello', {} );
+ * _._exportStringFromStr( 'hello', {} );
  *
  * @example
  * //returns "test\n"
- * _._toStrFromStr( 'test\n', { escaping : 1 } );
+ * _._exportStringFromStr( 'test\n', { escaping : 1 } );
  *
  * @example
  * //returns [ "t" ... "t" ]
- * _._toStrFromStr( 'test', { limitStringLength: 2 } );
+ * _._exportStringFromStr( 'test', { limitStringLength: 2 } );
  *
  * @example
  * //returns `test`
- * _._toStrFromStr( 'test', { stringWrapper : '`' } );
+ * _._exportStringFromStr( 'test', { stringWrapper : '`' } );
  *
- * @function _toStrFromStr
+ * @function _exportStringFromStr
  * @throws {Exception} If no arguments provided.
  * @throws {Exception} If( src ) is not a String.
  * @throws {Exception} If( o ) is not a Object.
@@ -1216,7 +1216,7 @@ function _toStrFromSymbol( src, o )
  *
 */
 
-function _toStrFromStr( src, o )
+function _exportStringFromStr( src, o )
 {
   var result = '';
 
@@ -1264,7 +1264,7 @@ function _toStrFromStr( src, o )
 
 //
 
-function _toStrFromHashMap( src, o )
+function _exportStringFromHashMap( src, o )
 {
   var result = 'HashMap\n';
   var simple = 0;
@@ -1274,7 +1274,7 @@ function _toStrFromHashMap( src, o )
   src.forEach( function( e, k )
   {
     // result += '\n' + k + ' : ' + e;
-    result += '\n' + k + ' : ' + _.toStrShort( e );
+    result += '\n' + k + ' : ' + _.entity.exportStringShort( e );
   });
 
   return { text : result, simple : 0 };
@@ -1289,7 +1289,7 @@ function _toStrFromHashMap( src, o )
 
   /* get names */
 
-  var keys = _toStrFromObjectKeysFiltered( src, o );
+  var keys = _exportStringFromObjectKeysFiltered( src, o );
 
   /* empty case */
 
@@ -1309,14 +1309,14 @@ function _toStrFromHashMap( src, o )
   if( simple )
   for( var k in src )
   {
-    simple = _toStrIsSimpleElement( src[ k ], optionsItem );
+    simple = _exportStringIsSimpleElement( src[ k ], optionsItem );
     if( !simple )
     break;
   }
 
   /* */
 
-  result += _toStrFromContainer
+  result += _exportStringFromContainer
   ({
     values : src,
     names : keys,
@@ -1332,16 +1332,16 @@ function _toStrFromHashMap( src, o )
 
 //
 
-function _toStrFromSet( src, o )
+function _exportStringFromSet( src, o )
 {
-  let result = _._toStrFromArray( _.arrayFrom( src ), o );
+  let result = _._exportStringFromArray( _.arrayFrom( src ), o );
   result.text = `new Set(${result.text})` ;
   return result;
 }
 
 //
 
-function _toStrFromBufferTyped( src, o )
+function _exportStringFromBufferTyped( src, o )
 {
   var result = '';
 
@@ -1351,7 +1351,7 @@ function _toStrFromBufferTyped( src, o )
   {
     if( k !== 0 )
     result += ', ';
-    result += _toStrFromNumber( e, o );
+    result += _exportStringFromNumber( e, o );
   });
 
   result = '( new ' + src.constructor.name + '([ ' + result + ' ]) )';
@@ -1361,7 +1361,7 @@ function _toStrFromBufferTyped( src, o )
 
 //
 
-function _toStrFromBufferRaw( src, o )
+function _exportStringFromBufferRaw( src, o )
 {
   var result = '';
 
@@ -1381,7 +1381,7 @@ function _toStrFromBufferRaw( src, o )
 
 //
 
-function _toStrFromBufferNode( src, o )
+function _exportStringFromBufferNode( src, o )
 {
   var result = '';
 
@@ -1403,7 +1403,7 @@ function _toStrFromBufferNode( src, o )
 
 //
 
-function _toStrFromArrayFiltered( src, o )
+function _exportStringFromArrayFiltered( src, o )
 {
   var result = '';
 
@@ -1420,7 +1420,7 @@ function _toStrFromArrayFiltered( src, o )
   var length = src.length;
   for( var i = 0 ; i < length ; i++ )
   {
-    v += !!_toStrIsVisibleElement( src[ i ], optionsItem );
+    v += !!_exportStringIsVisibleElement( src[ i ], optionsItem );
   }
 
   if( v !== length )
@@ -1430,7 +1430,7 @@ function _toStrFromArrayFiltered( src, o )
     var src2 = _.longMakeUndefined( src, v );
     while( i < length )
     {
-      if( _toStrIsVisibleElement( src[ i ], optionsItem ) )
+      if( _exportStringIsVisibleElement( src[ i ], optionsItem ) )
       {
         src2[ i2 ] = src[ i ];
         i2 += 1;
@@ -1450,7 +1450,7 @@ function _toStrFromArrayFiltered( src, o )
  * Converts array provided by argument( src ) into string representation using options provided by argument( o ).
  *
  * @param {object} src - Array to convert.
- * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
  * @returns {String} Returns string representation of array.
  *
  * @example
@@ -1459,7 +1459,7 @@ function _toStrFromArrayFiltered( src, o )
  * //  [ Object with 1 elements ],
  * //  [ Object with 1 elements ]
  * //]
- * _.toStrFromArray( [ { a : 1 }, { b : 2 } ], {} );
+ * _.entity.exportStringFromArray( [ { a : 1 }, { b : 2 } ], {} );
  *
  * @example
  * //returns
@@ -1472,9 +1472,9 @@ function _toStrFromArrayFiltered( src, o )
  * //   ],
  * //   5
  * // ]
- * _.toStrFromArray( [ 1, [ 2, 3, 4 ], 5 ], { levels : 2, multiline : 1 } );
+ * _.entity.exportStringFromArray( [ 1, [ 2, 3, 4 ], 5 ], { levels : 2, multiline : 1 } );
  *
- * @function _toStrFromArray
+ * @function _exportStringFromArray
  * @throws { Exception } If( src ) is undefined.
  * @throws { Exception } If no arguments provided.
  * @throws { Exception } If( o ) is not a Object.
@@ -1483,7 +1483,7 @@ function _toStrFromArrayFiltered( src, o )
  *
  */
 
-function _toStrFromArray( src, o )
+function _exportStringFromArray( src, o )
 {
   var result = '';
 
@@ -1494,7 +1494,7 @@ function _toStrFromArray( src, o )
 
   if( o.level >= o.levels )
   {
-    return { text : _toStrShort( src, o ), simple : 1 };
+    return { text : _exportStringShort( src, o ), simple : 1 };
   }
 
   /* item options */
@@ -1515,7 +1515,7 @@ function _toStrFromArray( src, o )
 
   /* filter */
 
-  src = _toStrFromArrayFiltered( src, o );
+  src = _exportStringFromArrayFiltered( src, o );
 
   /* is simple */
 
@@ -1526,14 +1526,14 @@ function _toStrFromArray( src, o )
   if( simple )
   for( var i = 0 ; i < length ; i++ )
   {
-    simple = _toStrIsSimpleElement( src[ i ], optionsItem );;
+    simple = _exportStringIsSimpleElement( src[ i ], optionsItem );;
     if( !simple )
     break;
   }
 
   /* */
 
-  result += _toStrFromContainer
+  result += _exportStringFromContainer
   ({
     values : src,
     optionsContainer : o,
@@ -1558,11 +1558,11 @@ function _toStrFromArray( src, o )
  * @param {array} [ o.names ] - Source object keys.
  * @param {string} [ o.prefix ] - Denotes begin of container.
  * @param {string} [ o.postfix ] - Denotes end of container.
- * @param {Object} o.optionsContainer - Options for container {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
- * @param {Object} o.optionsItem - Options for item {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o.optionsContainer - Options for container {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
+ * @param {Object} o.optionsItem - Options for item {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
  * @returns {String} Returns string representation of container.
  *
- * @function _toStrFromContainer
+ * @function _exportStringFromContainer
  * @throws { Exception } If no argument provided.
  * @throws { Exception } If( o ) is not a Object.
  * @namespace Tools
@@ -1570,7 +1570,7 @@ function _toStrFromArray( src, o )
  *
  */
 
-function _toStrFromContainer( o )
+function _exportStringFromContainer( o )
 {
   var result = '';
 
@@ -1659,9 +1659,9 @@ function _toStrFromContainer( o )
     // console.log( _.process.memoryUsageInfo() );
 
     if( names )
-    r = _toStr( values[ names[ n ] ], optionsItem );
+    r = _exportString( values[ names[ n ] ], optionsItem );
     else
-    r = _toStr( values[ n ], optionsItem );
+    r = _exportString( values[ n ], optionsItem );
 
     _.assert( _.objectIs( r ) && _.strIs( r.text ) );
     _.assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
@@ -1736,7 +1736,7 @@ function _toStrFromContainer( o )
 
 //
 
-function _toStrFromObjectKeysFiltered( src, o )
+function _exportStringFromObjectKeysFiltered( src, o )
 {
   var result = '';
 
@@ -1760,7 +1760,7 @@ function _toStrFromObjectKeysFiltered( src, o )
 
   for( var n = 0 ; n < keys.length ; n++ )
   {
-    if( !_toStrIsVisibleElement( src[ keys[ n ] ], optionsItem ) )
+    if( !_exportStringIsVisibleElement( src[ keys[ n ] ], optionsItem ) )
     {
       keys.splice( n, 1 );
       n -= 1;
@@ -1776,7 +1776,7 @@ function _toStrFromObjectKeysFiltered( src, o )
  * Converts object provided by argument( src ) into string representation using options provided by argument( o ).
  *
  * @param {object} src - Object to convert.
- * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Tools.Stringer.toStrOptions}.
+ * @param {Object} o - Contains conversion options {@link module:Tools/base/Stringer.Tools.Stringer.exportStringOptions}.
  * @returns {String} Returns string representation of object.
  *
  * @example
@@ -1786,13 +1786,13 @@ function _toStrFromObjectKeysFiltered( src, o )
  * //  t : { a : 10 },
  * //  y : 11
  * // }
- * _.toStrFromObject( { r : 9, t : { a : 10 }, y : 11 }, { levels : 2 } );
+ * _.entity.exportStringFromObject( { r : 9, t : { a : 10 }, y : 11 }, { levels : 2 } );
  *
  * @example
  * //returns ''
- * _.toStrFromObject( { h : { d : 1 }, g : 'c', c : [2] }, { levels : 2, noObject : 1 } );
+ * _.entity.exportStringFromObject( { h : { d : 1 }, g : 'c', c : [2] }, { levels : 2, noObject : 1 } );
  *
- * @function _toStrFromObject
+ * @function _exportStringFromObject
  * @throws { Exception } If( src ) is not a object-like.
  * @throws { Exception } If not all arguments provided.
  * @throws { Exception } If( o ) is not a Object.
@@ -1801,18 +1801,18 @@ function _toStrFromObjectKeysFiltered( src, o )
  *
 */
 
-function _toStrFromObject( src, o )
+function _exportStringFromObject( src, o )
 {
   var result = '';
 
   _.assert( arguments.length === 2 );
-  _.assert( _.objectLike( src ) || _.strTypeSecondary( src ) === 'Error' );
+  _.assert( _.objectLike( src ) || _.entity.strTypeSecondary( src ) === 'Error' );
   _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
 
 
   if( o.level >= o.levels )
   {
-    return { text : _toStrShort( src, o ), simple : 1 };
+    return { text : _exportStringShort( src, o ), simple : 1 };
   }
 
   if( o.noObject )
@@ -1828,7 +1828,7 @@ function _toStrFromObject( src, o )
 
   /* get names */
 
-  var keys = _toStrFromObjectKeysFiltered( src, o );
+  var keys = _exportStringFromObjectKeysFiltered( src, o );
 
   /* empty case */
 
@@ -1848,14 +1848,14 @@ function _toStrFromObject( src, o )
   if( simple )
   for( var k in src )
   {
-    simple = _toStrIsSimpleElement( src[ k ], optionsItem );
+    simple = _exportStringIsSimpleElement( src[ k ], optionsItem );
     if( !simple )
     break;
   }
 
   /* */
 
-  result += _toStrFromContainer
+  result += _exportStringFromContainer
   ({
     values : src,
     names : keys,
@@ -1875,56 +1875,102 @@ function _toStrFromObject( src, o )
 // declare
 // --
 
-var Proto =
+let EntityExtension =
 {
 
-  toStr,
-  toStrFine,
-  toStrMethods,
-  toStrFields,
-  toStrShort,
-  toStrNice,
-  toStrSolo,
-  toJson,
-  toJs,
+  exportString,
+  exportStringFine,
+  exportStringMethods,
+  exportStringFields,
+  exportStringShort,
+  exportStringNice,
+  exportStringSolo,
+  exportJson,
+  exportJs,
 
-  _toStrFine_functor,
+  _exportStringFine_functor,
 
-  _toStr,
-  _toStrShort,
+  _exportString,
+  _exportStringShort,
 
-  _toStrIsVisibleElement,
-  _toStrIsSimpleElement,
+  _exportStringIsVisibleElement,
+  _exportStringIsSimpleElement,
 
-  _toStrFromRoutine,
-  _toStrFromNumber,
-  _toStrFromBigInt,
-  _toStrFromSymbol,
-  _toStrFromStr,
+  _exportStringFromRoutine,
+  _exportStringFromNumber,
+  _exportStringFromBigInt,
+  _exportStringFromSymbol,
+  _exportStringFromStr,
 
-  _toStrFromHashMap,
-  _toStrFromSet,
+  _exportStringFromHashMap,
+  _exportStringFromSet,
 
-  _toStrFromBufferRaw,
-  _toStrFromBufferNode,
-  _toStrFromBufferTyped,
+  _exportStringFromBufferRaw,
+  _exportStringFromBufferNode,
+  _exportStringFromBufferTyped,
 
-  _toStrFromArrayFiltered,
-  _toStrFromArray,
+  _exportStringFromArrayFiltered,
+  _exportStringFromArray,
 
-  _toStrFromContainer,
+  _exportStringFromContainer,
 
-  _toStrFromObjectKeysFiltered,
-  _toStrFromObject,
+  _exportStringFromObjectKeysFiltered,
+  _exportStringFromObject,
 
   Stringer : 1,
+}
+
+var ToolsExtension =
+{
+
+  // exportString,
+  // exportStringFine,
+  // exportStringMethods,
+  // exportStringFields,
+  // exportStringShort,
+  // exportStringNice,
+  // exportStringSolo,
+  // exportJson,
+  // exportJs,
+  //
+  // _exportStringFine_functor,
+  //
+  // _exportString,
+  // _exportStringShort,
+  //
+  // _exportStringIsVisibleElement,
+  // _exportStringIsSimpleElement,
+  //
+  // _exportStringFromRoutine,
+  // _exportStringFromNumber,
+  // _exportStringFromBigInt,
+  // _exportStringFromSymbol,
+  // _exportStringFromStr,
+  //
+  // _exportStringFromHashMap,
+  // _exportStringFromSet,
+  //
+  // _exportStringFromBufferRaw,
+  // _exportStringFromBufferNode,
+  // _exportStringFromBufferTyped,
+  //
+  // _exportStringFromArrayFiltered,
+  // _exportStringFromArray,
+  //
+  // _exportStringFromContainer,
+  //
+  // _exportStringFromObjectKeysFiltered,
+  // _exportStringFromObject,
+  //
+  // Stringer : 1,
 
 }
 
-_.mapExtend( Self, Proto );
+_.mapExtend( _.entity, EntityExtension );
+_.mapExtend( _, ToolsExtension );
 
-// var toStrFine = Self.toStrFine = Self._toStrFine_functor();
-// var toStr = Self.toStr = Self.strFrom = toStrFine;
+// var exportStringFine = Self.exportStringFine = Self._exportStringFine_functor();
+// var exportString = Self.exportString = Self.strFrom = exportStringFine;
 
 // --
 // export

@@ -89,7 +89,7 @@ function reportChars( )
 //  {
 //    test.case = desc ;
 //    var optionsTest = options[ k ] || options[ 0 ];
-//    got = _.toStr( src[ k ], optionsTest );
+//    got = _.entity.exportString( src[ k ], optionsTest );
 //
 //    if( test.case.slice( 0, 4 ) === 'json' && optionsTest.jsonLike )
 //    {
@@ -126,54 +126,56 @@ function reportChars( )
 function toStr( test )
 {
   test.case = 'in - boolean';
-  var got = _.toStr( false, {} );
+  var got = _.entity.exportString( false, {} );
   test.identical( got, 'false' );
 
   test.case = 'in - number';
-  var got = _.toStr( 13, {} );
+  var got = _.entity.exportString( 13, {} );
   test.identical( got, '13' );
 
   test.case = 'in - number, levels - 2';
-  var got = _.toStr( 0, { levels : 2 } );
+  var got = _.entity.exportString( 0, { levels : 2 } );
   test.identical( got, '0' );
 
   test.case = 'in - Date, levels - 2';
-  var got = _.toStr( new Date( Date.UTC( 2020, 0, 13 ) ), { levels : 2 } );
+  debugger;
+  var got = _.entity.exportString( new Date( Date.UTC( 2020, 0, 13 ) ), { levels : 2 } );
+  debugger;
   test.identical( got, '2020-01-13T00:00:00.000Z' );
 
   test.case = 'in - string, level - 2';
-  var got = _.toStr( 'text', { levels : 2 } );
+  var got = _.entity.exportString( 'text', { levels : 2 } );
   test.identical( got, '\'text\'' );
 
   test.case = 'in - empty array, levels - 2';
-  var got = _.toStr( [], { levels : 2 } );
+  var got = _.entity.exportString( [], { levels : 2 } );
   test.identical( got, '[]' );
 
   test.case = 'in - array with empty maps, levels - 2';
-  var got = _.toStr( [ {}, {}, {} ], { levels : 2 } );
+  var got = _.entity.exportString( [ {}, {}, {} ], { levels : 2 } );
   test.identical( got, '[ {}, {}, {} ]' );
 
   test.case = 'in - array with numbers, levels - 2';
-  var got = _.toStr( [ 1, 2, 3, 4 ], { levels : 2 } );
+  var got = _.entity.exportString( [ 1, 2, 3, 4 ], { levels : 2 } );
   test.identical( got, '[ 1, 2, 3, 4 ]' );
 
   test.case = 'in - empty map, levels - 2';
-  var got = _.toStr( {}, { levels : 2 } );
+  var got = _.entity.exportString( {}, { levels : 2 } );
   test.identical( got, '{}' );
 
   test.case = 'in - filled map, levels - 2';
-  var got = _.toStr( { a : {}, b : {} }, { levels : 2 } );
+  var got = _.entity.exportString( { a : {}, b : {} }, { levels : 2 } );
   test.identical( got, '{ a : {}, b : {} }' );
 
   test.case = 'in - filled map with strings values, levels - 2';
-  var got = _.toStr( { 1 : 'a', 2: 'b', 3: 'c' }, { levels : 2 } );
+  var got = _.entity.exportString( { 1 : 'a', 2: 'b', 3: 'c' }, { levels : 2 } );
   test.identical( got, '{ 1 : \'a\', 2 : \'b\', 3 : \'c\' }' );
 
   /* */
 
   test.case = 'in - filled map, complex values, levels - 2';
   var src = { 1 : 'a', 2 : [ 10, 20, 30 ], 3 : { 21 : 'aa', 22 : 'bb' } };
-  var got = _.toStr( src, { levels : 2 } );
+  var got = _.entity.exportString( src, { levels : 2 } );
   var exp =
   [
     '{',
@@ -195,7 +197,7 @@ function toStr( test )
     4 : [ 10, 20, 30 ],
     5 : [ 10, 20, 30 ],
   };
-  var got = _.toStr( src, { levels : 2 } );
+  var got = _.entity.exportString( src, { levels : 2 } );
   var exp =
   [
     '{',
@@ -219,7 +221,7 @@ function toStr( test )
     4 : [ 10, 20, 30 ],
     5 : [ 10, 20, 30 ],
   };
-  var got = _.toStr( src, { levels : 2 } );
+  var got = _.entity.exportString( src, { levels : 2 } );
   var exp =
   [
     '{',
@@ -244,7 +246,7 @@ function toStr( test )
     [ 10, 20, 30 ],
     [ 10, 20, 30 ],
   ];
-  var got = _.toStr( src, { levels : 2 } );
+  var got = _.entity.exportString( src, { levels : 2 } );
   var exp =
   [
     '[',
@@ -282,7 +284,7 @@ function toStr( test )
       { a : 'a', b : 'b', c : 'c' }
     ],
   ];
-  var got = _.toStr( src, { levels : 3 } );
+  var got = _.entity.exportString( src, { levels : 3 } );
   var exp =
   [
     '[',
@@ -348,7 +350,7 @@ function toStr( test )
       }
     ],
   ];
-  var got = _.toStr( src, { levels : 5 } );
+  var got = _.entity.exportString( src, { levels : 5 } );
   var exp =
   [
     '[',
@@ -402,7 +404,7 @@ function toStr( test )
     [ 10, 20, 30 ],
     [ 10, 20, 30 ],
   ];
-  var got = _.toStr( src, { levels : 1 } );
+  var got = _.entity.exportString( src, { levels : 1 } );
   var exp =
   [
     '[',
@@ -440,7 +442,7 @@ function toStr( test )
       { a : 'a', b : 'b', c : 'c' }
     ],
   ];
-  var got = _.toStr( src, { levels : 2 } );
+  var got = _.entity.exportString( src, { levels : 2 } );
   var exp =
   [
     '[',
@@ -477,7 +479,7 @@ function toStr( test )
     4 : [ 10, 20, 30 ],
     13 : [ 10, 20, 30 ],
   };
-  var got = _.toStr( src, { levels : 2, tab : '---', dtab : '+' } );
+  var got = _.entity.exportString( src, { levels : 2, tab : '---', dtab : '+' } );
   var exp =
   [
     '---{',
@@ -501,7 +503,7 @@ function toStr( test )
     4 : [ 10, 20, 30 ],
     13 : [ 10, 20, 30 ],
   };
-  var got = _.toStr( src, { levels : 2, wrap : 0, tab : '-', prependTab : 0 } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, tab : '-', prependTab : 0 } );
   var exp =
   [
     '  1 : \'a\' ',
@@ -523,7 +525,7 @@ function toStr( test )
     4 : [ 10, 20, 30 ],
     13 : [ 10, 20, 30 ],
   };
-  var got = _.toStr( src, { levels : 2, wrap : 0, tab : '-', prependTab : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, tab : '-', prependTab : 1 } );
   var exp =
   [
     '-  1 : \'a\' ',
@@ -545,7 +547,7 @@ function toStr( test )
     4 : [ 10, 20, 30 ],
     5 : [ 10, 20, 30 ],
   };
-  var got = _.toStr( src, { levels : 2, wrap : 1, tab : '-', prependTab : 0 } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 1, tab : '-', prependTab : 0 } );
   var exp =
   [
     '{',
@@ -569,7 +571,7 @@ function toStr( test )
     4 : [ 10, 20, 30 ],
     5 : [ 10, 20, 30 ],
   };
-  var got = _.toStr( src, { levels : 2, wrap : 1, tab : '-', prependTab : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 1, tab : '-', prependTab : 1 } );
   var exp =
   [
     '-{',
@@ -591,7 +593,7 @@ function toStr( test )
     2 : 'abc',
     3 : 4,
   };
-  var got = _.toStr( src, { levels : 2, noSubObject : 1, noArray : 1, dtab : '  ' } );
+  var got = _.entity.exportString( src, { levels : 2, noSubObject : 1, noArray : 1, dtab : '  ' } );
   var exp =
   [
     '{',
@@ -835,7 +837,7 @@ function toStrUnwrapped( test )
       { a : 1 },
     ],
   ];
-  var got = _.toStr( src, { wrap : 0, levels : 4 } );
+  var got = _.entity.exportString( src, { wrap : 0, levels : 4 } );
   var expected =
   [
     '    \'abc\' ',
@@ -853,7 +855,7 @@ function toStrUnwrapped( test )
       rewardForVisitor : { a : 1 },
     },
   ];
-  var got = _.toStr( src, { wrap : 0, levels : 4 } );
+  var got = _.entity.exportString( src, { wrap : 0, levels : 4 } );
   var expected =
   [
     '    nameLong : \'abc\' ',
@@ -872,7 +874,7 @@ function toStrUnwrapped( test )
       rewardForVisitor : { a : 1 },
     },
   };
-  var got = _.toStr( src, { wrap : 0, levels : 4 } );
+  var got = _.entity.exportString( src, { wrap : 0, levels : 4 } );
   var expected =
   [
     '  a : ',
@@ -892,7 +894,7 @@ function toStrUnwrapped( test )
       { a : 1 },
     ],
   };
-  var got = _.toStr( src, { wrap : 0, levels : 4 } );
+  var got = _.entity.exportString( src, { wrap : 0, levels : 4 } );
   var expected =
   [
     '  a : ',
@@ -913,7 +915,7 @@ function toStrUnwrapped( test )
     1,
     2,
   ];
-  var got = _.toStr( src, { wrap : 0, levels : 4 } );
+  var got = _.entity.exportString( src, { wrap : 0, levels : 4 } );
   var expected =
   [
     '    \'abc\' ',
@@ -926,7 +928,7 @@ function toStrUnwrapped( test )
 
   test.case = 'unwrapped array with single item array';
   var src = [ 'a', 7, [ 1 ], 8, 'b' ];
-  var got = _.toStr( src, { wrap : 0, levels : 4 } );
+  var got = _.entity.exportString( src, { wrap : 0, levels : 4 } );
   var expected =
   [
     '  \'a\' ',
@@ -939,7 +941,7 @@ function toStrUnwrapped( test )
 
   test.case = 'unwrapped array with single item object';
   var src = [ 'a', 7, { u : 1 }, 8, 'b' ];
-  var got = _.toStr( src, { wrap : 0, levels : 4 } );
+  var got = _.entity.exportString( src, { wrap : 0, levels : 4 } );
   var expected =
   [
     '  \'a\' ',
@@ -952,7 +954,7 @@ function toStrUnwrapped( test )
 
   test.case = 'unwrapped array of arrays';
   var src = [ [ 5, 4 ], [ 2, 1, 0 ] ];
-  var got = _.toStr( src, { wrap : 0, levels : 4 } );
+  var got = _.entity.exportString( src, { wrap : 0, levels : 4 } );
   var expected =
   ['    5 4 ',
   '    2 1 0',
@@ -961,7 +963,7 @@ function toStrUnwrapped( test )
 
   test.case = 'unwrapped array of arrays, level 2';
   var src = [ [ 5, 4, [ 3 ] ], [ 2, 1, 0 ] ];
-  var got = _.toStr( src, { wrap : 0, levels : 4 } );
+  var got = _.entity.exportString( src, { wrap : 0, levels : 4 } );
   var expected =
   [
     '    5 ',
@@ -996,7 +998,7 @@ function toStrUnwrapped( test )
     ];
     return structure;
   } )( );
-  var got = _.toStr( src, { wrap : 0, levels : 4 } );
+  var got = _.entity.exportString( src, { wrap : 0, levels : 4 } );
   var expected =
   [
     '    nameLong : \'abc\' ',
@@ -1023,7 +1025,7 @@ function toStrUnwrapped( test )
     4 : [ 10, 20, 30 ],
     13 : [ 10, 20, 30 ],
   };
-  var got = _.toStr( src, { wrap : 0, levels : 4 } );
+  var got = _.entity.exportString( src, { wrap : 0, levels : 4 } );
   var expected =
   [
     '  1 : \'a\' ',
@@ -1100,32 +1102,32 @@ function toStrError( test )
   //  testFunction( test, desc, src, options, expected );
 
   test.case = 'error simple';
-  var got = _.toStr( new Error( ), { } );
+  var got = _.entity.exportString( new Error( ), { } );
   var expected = 'Error';
   test.identical( got, expected );
 
   test.case = 'error with message';
-  var got = _.toStr( new Error( 'msg' ), { } );
+  var got = _.entity.exportString( new Error( 'msg' ), { } );
   var expected = 'Error: msg';
   test.identical( got, expected );
 
   test.case = 'error with message, levels 0';
-  var got = _.toStr( new Error( 'msg2' ), { levels : 0 } );
+  var got = _.entity.exportString( new Error( 'msg2' ), { levels : 0 } );
   var expected = '[object Error]';
   test.identical( got, expected );
 
   test.case = 'error, noError';
-  var got = _.toStr( new Error( 'message' ), { noError : 1 } );
+  var got = _.entity.exportString( new Error( 'message' ), { noError : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'map-error, onlyEnumerable';
-  var got = _.toStr( new Error( 'err message' ), { errorAsMap : 1, onlyEnumerable : 1 } );
+  var got = _.entity.exportString( new Error( 'err message' ), { errorAsMap : 1, onlyEnumerable : 1 } );
   var expected = '{}';
   test.identical( got, expected );
 
   test.case = 'map-error, onlyEnumerable own:0';
-  var got = _.toStr( new Error( 'my message' ), { errorAsMap : 1, onlyEnumerable : 1, onlyOwn : 0 } );
+  var got = _.entity.exportString( new Error( 'my message' ), { errorAsMap : 1, onlyEnumerable : 1, onlyOwn : 0 } );
   var expected = '{}';
   test.identical( got, expected );
 
@@ -1137,7 +1139,7 @@ function toStrError( test )
     err.stack = err.stack.slice( 0, 18 );
     return err;
   } )( );
-  var got = _.toStr( src, { errorAsMap : 1, levels : 2 } );
+  var got = _.entity.exportString( src, { errorAsMap : 1, levels : 2 } );
   var expected = '{ stack : \'Error: my message4\', message : \'my message4\' }';
   test.identical( got, expected );
 
@@ -1149,7 +1151,7 @@ function toStrError( test )
     err.stack = err.stack.slice( 0, 16 );
     return err;
   } )( );
-  var got = _.toStr( src, { errorAsMap : 1, levels : 2, escaping : 1 } );
+  var got = _.entity.exportString( src, { errorAsMap : 1, levels : 2, escaping : 1 } );
   var expected = '{ stack : \'Error: my error\\n\', message : \'my error\' }';
   test.identical( got, expected );
 
@@ -1822,13 +1824,13 @@ function toStrArray( test )
 
   test.case = 'trivial array';
   var src = [ 1, 2, 3 ];
-  var got = _.toStr( src, { } );
+  var got = _.entity.exportString( src, { } );
   var expected = '[ 1, 2, 3 ]';
   test.identical( got, expected );
 
   test.case = 'array of objects';
   var src = [ { a : 1 }, { b : 2 } ];
-  var got = _.toStr( src, { } );
+  var got = _.entity.exportString( src, { } );
   var expected =
   [
     '[',
@@ -1840,13 +1842,13 @@ function toStrArray( test )
 
   test.case = 'array of functions';
   var src = [ function( ){ }, function add( ){ } ];
-  var got = _.toStr( src, { } );
+  var got = _.entity.exportString( src, { } );
   var expected = '[ [ routine without name ], [ routine add ] ]';
   test.identical( got, expected );
 
   test.case = 'array of integers, precision 2 multiline';
   var src = [ 1000, 2000, 3000 ];
-  var got = _.toStr( src, { precision : 2, multiline : 1 } );
+  var got = _.entity.exportString( src, { precision : 2, multiline : 1 } );
   var expected =
   [
     '[',
@@ -1859,19 +1861,19 @@ function toStrArray( test )
 
   test.case = 'array of floats, fixed 2';
   var src = [ 1.1111, 2.2222, 3.3333 ];
-  var got = _.toStr( src, { fixed : 2 } );
+  var got = _.entity.exportString( src, { fixed : 2 } );
   var expected = '[ 1.11, 2.22, 3.33 ]';
   test.identical( got, expected );
 
   test.case = 'array, noArray';
   var src = [ 0, 1, 2 ];
-  var got = _.toStr( src, { noArray : 1 } );
+  var got = _.entity.exportString( src, { noArray : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'array with object, noAtomic';
   var src = [  7, { v : 0 }, 1, 'x' ];
-  var got = _.toStr( src, { noAtomic : 1 } );
+  var got = _.entity.exportString( src, { noAtomic : 1 } );
   var expected =
   [
     '[',
@@ -1882,31 +1884,31 @@ function toStrArray( test )
 
   test.case = 'array, noArray';
   var src = [ 'e', 'e', 'e' ];
-  var got = _.toStr( src, { noArray : 1 } );
+  var got = _.entity.exportString( src, { noArray : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'array, escaping';
   var src = [ '\n\nEscaping test' ];
-  var got = _.toStr( src, { escaping : 1, levels : 2 } );
+  var got = _.entity.exportString( src, { escaping : 1, levels : 2 } );
   var expected = '[ \'\\n\\nEscaping test\' ]';
   test.identical( got, expected );
 
   test.case = 'default array, levels 0';
   var src = [ 0, 1, 2 ];
-  var got = _.toStr( src, { levels : 0 } );
+  var got = _.entity.exportString( src, { levels : 0 } );
   var expected = '{- Array with 3 elements -}';
   test.identical( got, expected );
 
   test.case = 'default array, noSring levels 2';
   var src = [ 'a', 'b', 'c', 1, 2, 3 ];
-  var got = _.toStr( src, { levels : 2, noString : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noString : 1 } );
   var expected = '[ 1, 2, 3 ]';
   test.identical( got, expected );
 
   test.case = 'array with objects, levels 2';
   var src = [ { x : 1 }, { y : 2 } ];
-  var got = _.toStr( src, { levels : 2, dtab : '-' } );
+  var got = _.entity.exportString( src, { levels : 2, dtab : '-' } );
   var expected =
   [
     '[',
@@ -1918,7 +1920,7 @@ function toStrArray( test )
 
   test.case = 'nested array';
   var src = [ 1, [ 2, 3, 4 ], 5 ];
-  var got = _.toStr( src, { levels : 2, multiline : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, multiline : 1 } );
   var expected =
   [
     '[',
@@ -1935,7 +1937,7 @@ function toStrArray( test )
 
   test.case = 'nested array, noNumber';
   var src = [ 6, [ 7, 8, 9 ], 10 ];
-  var got = _.toStr( src, { levels : 2, noNumber : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noNumber : 1 } );
   var expected =
   [
     '[',
@@ -1946,7 +1948,7 @@ function toStrArray( test )
 
   test.case = 'array of object, modified colon levels 2';
   var src = [ { k : 3 }, { l : 4 } ];
-  var got = _.toStr( src, { levels : 2, colon : '->' } );
+  var got = _.entity.exportString( src, { levels : 2, colon : '->' } );
   var expected =
   [
     '[',
@@ -1958,13 +1960,13 @@ function toStrArray( test )
 
   test.case = 'array with object, noObject';
   var src = [ 1, { a : 2 }, 5 ];
-  var got = _.toStr( src, { levels : 2, noObject : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noObject : 1 } );
   var expected = '[ 1, 5 ]';
   test.identical( got, expected );
 
   test.case = 'array with object, noNumber';
   var src = [ 0, { b : 1 }, 3 ];
-  var got = _.toStr( src, { levels : 2, noNumber : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noNumber : 1 } );
   var expected =
   [
     '[',
@@ -1975,7 +1977,7 @@ function toStrArray( test )
 
   test.case = 'array with object, noAtomic';
   var src = [ 'a', 7, { u : 2 }, 8, 'b' ];
-  var got = _.toStr( src, { levels : 2, noAtomic : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noAtomic : 1 } );
   var expected =
   [
     '[',
@@ -1986,19 +1988,19 @@ function toStrArray( test )
 
   test.case = 'array of functions, levels 2';
   var src = [ function f1( ){ }, function( ){ } ];
-  var got = _.toStr( src, { levels : 2 } );
+  var got = _.entity.exportString( src, { levels : 2 } );
   var expected = '[ [ routine f1 ], [ routine without name ] ]';
   test.identical( got, expected );
 
   test.case = 'array of functions, noRoutine';
   var src = [ function f2( ){ }, function f3( ){ } ];
-  var got = _.toStr( src, { levels : 2, noRoutine : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noRoutine : 1 } );
   var expected = '[]';
   test.identical( got, expected );
 
   test.case = 'array of nested object, noSubObject';
   var src = [ { a : { a : '1' } } ];
-  var got = _.toStr( src, { levels : 3, noSubObject : 1 } );
+  var got = _.entity.exportString( src, { levels : 3, noSubObject : 1 } );
   var expected =
   [
     '[',
@@ -2009,7 +2011,7 @@ function toStrArray( test )
 
   test.case = 'array of objects, prependTab 0';
   var src = [ { c : 1 }, { d : 2 } ];
-  var got = _.toStr( src, { levels : 2, tab : '|', prependTab : 0 } );
+  var got = _.entity.exportString( src, { levels : 2, tab : '|', prependTab : 0 } );
   var expected =
   [
     '[',
@@ -2021,7 +2023,7 @@ function toStrArray( test )
 
   test.case = 'array of date, object and error. noError noDate';
   var src = [ new Date( Date.UTC( 1993, 12, 12 ) ), { d : 2 }, new Error( 'error' ) ];
-  var got = _.toStr( src, { levels : 2, noError : 1, noDate : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noError : 1, noDate : 1 } );
   var expected =
   [
     '[',
@@ -2032,7 +2034,7 @@ function toStrArray( test )
 
   test.case = 'array with routine and object, noRoutine noSubObject';
   var src = [ function ff( ){ }, { d : 3 }, 15 ];
-  var got = _.toStr( src, { levels : 2, noRoutine : 1, noSubObject : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noRoutine : 1, noSubObject : 1 } );
   var expected =
   [
     '[',
@@ -2044,7 +2046,7 @@ function toStrArray( test )
 
   test.case = 'nested arrays, wrap 0';
   var src = [ [ 1, 2, 3 ], [ 4, 5, 6 ] ];
-  var got = _.toStr( src, { wrap : 0, comma : ' | ' } );
+  var got = _.entity.exportString( src, { wrap : 0, comma : ' | ' } );
   var expected =
   [
     '  {- Array with 3 elements -} | ',
@@ -2054,67 +2056,67 @@ function toStrArray( test )
 
   test.case = 'nested arrays, noString noNumber wrap 0';
   var src = [ [ 1, 2, 3 ], [ '4, 5, 6' ], undefined, false ];
-  var got = _.toStr( src, { wrap : 0, noString : 1, noNumber: 1, comma : ', ' } );
+  var got = _.entity.exportString( src, { wrap : 0, noString : 1, noNumber: 1, comma : ', ' } );
   var expected = '  undefined, false';
   test.identical( got, expected );
 
   test.case = 'array, wrap 0';
   var src = [ 'e', 'e', 'e' ];
-  var got = _.toStr( src, { wrap : 0, comma : ' ' } );
+  var got = _.entity.exportString( src, { wrap : 0, comma : ' ' } );
   var expected = '  \'e\' \'e\' \'e\'';
   test.identical( got, expected );
 
   test.case = 'array, wrap 0 prependTab 0';
   var src = [ 'a', 'b', 'c', 1, 2, 3 ];
-  var got = _.toStr( src, { wrap : 0, prependTab : 0, comma : ', ' } );
+  var got = _.entity.exportString( src, { wrap : 0, prependTab : 0, comma : ', ' } );
   var expected = '  \'a\', \'b\', \'c\', 1, 2, 3';
   test.identical( got, expected );
 
   test.case = 'array, wrap 0 modified tab';
   var src = [ 15, 16, 17, 18 ];
-  var got = _.toStr( src, { wrap : 0, tab : '| ', dtab : '', comma : '. ' } );
+  var got = _.entity.exportString( src, { wrap : 0, tab : '| ', dtab : '', comma : '. ' } );
   var expected = '| 15. 16. 17. 18';
   test.identical( got, expected );
 
   test.case = 'array of an object, wrap 0';
   var src = [ { a : 5, b : 6, c : 7 } ];
-  var got = _.toStr( src, { wrap : 0, colon : '->', comma : '.' } );
+  var got = _.entity.exportString( src, { wrap : 0, colon : '->', comma : '.' } );
   var expected = '  {- Map.polluted with 3 elements -}';
   test.identical( got, expected );
 
   test.case = 'array with a function, noRoutine';
   var src = [ 'a', 1, function( ) { }, false ];
-  var got = _.toStr( src, { wrap : 0, noRoutine : 1, comma : '. ' } );
+  var got = _.entity.exportString( src, { wrap : 0, noRoutine : 1, comma : '. ' } );
   var expected = '  \'a\'. 1. false';
   test.identical( got, expected );
 
   test.case = 'array with function, noAtomic';
   var src = [ 'b', 2, function( ) { }, true ];
-  var got = _.toStr( src, { wrap : 0, noAtomic : 1, comma : '. ' } );
+  var got = _.entity.exportString( src, { wrap : 0, noAtomic : 1, comma : '. ' } );
   var expected = '  [ routine without name ]';
   test.identical( got, expected );
 
   test.case = 'array with a function, onlyRoutines';
   var src = [ function( ) { } ];
-  var got = _.toStr( src, { wrap : 0, onlyRoutines : 1, comma : '| ' } );
+  var got = _.entity.exportString( src, { wrap : 0, onlyRoutines : 1, comma : '| ' } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'array, precision 3';
   var src = [ 'a', 1000, 2000, 3000 ];
-  var got = _.toStr( src, { wrap : 0, precision : 3, comma : '* ' } );
+  var got = _.entity.exportString( src, { wrap : 0, precision : 3, comma : '* ' } );
   var expected = '  \'a\'* 1.00e+3* 2.00e+3* 3.00e+3';
   test.identical( got, expected );
 
   test.case = 'array, fixed 3';
   var src = [ 1.1111, 2.2222, 3.3333 ];
-  var got = _.toStr( src, { wrap : 0, fixed : 3, comma : ', ' } );
+  var got = _.entity.exportString( src, { wrap : 0, fixed : 3, comma : ', ' } );
   var expected = '  1.111, 2.222, 3.333';
   test.identical( got, expected );
 
   test.case = 'array, multiline';
   var src = [  7, { v : 0 }, 1, 'x' ];
-  var got = _.toStr( src, { wrap : 0, multiline : 1, comma : '. ' } );
+  var got = _.entity.exportString( src, { wrap : 0, multiline : 1, comma : '. ' } );
   var expected =
   [
     '  7. ',
@@ -2126,13 +2128,13 @@ function toStrArray( test )
 
   test.case = 'array, escaping wrap 0';
   var src = [ '\n\nEscaping & wrap test' ];
-  var got = _.toStr( src, { wrap : 0, escaping : 1, comma : '. ' } );
+  var got = _.entity.exportString( src, { wrap : 0, escaping : 1, comma : '. ' } );
   var expected = '  \'\\n\\nEscaping & wrap test\'';
   test.identical( got, expected );
 
   test.case = 'nested array, levels 2 wrap 0';
   var src = [ 0, [ 1, 2, 3, 4 ], 5, { a : 6 } ];
-  var got = _.toStr( src, { levels : 2, wrap : 0, comma : '- ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, comma : '- ' } );
   var expected =
   [
     '  0- ',
@@ -2144,7 +2146,7 @@ function toStrArray( test )
 
   test.case = 'nested array, levels 2 wrap 0';
   var src = [ ['a', 'b', 'c'], 'd', 'e' ];
-  var got = _.toStr( src, { levels : 2, wrap : 0, comma : '. '} );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, comma : '. '} );
   var expected =
   [
     '    \'a\'. \'b\'. \'c\'. ',
@@ -2155,7 +2157,7 @@ function toStrArray( test )
 
   test.case = 'array of objects, wrap 0 modified tab';
   var src = [ { a : 0 }, { b : 1 }, [ 2, 3 ] ];
-  var got = _.toStr( src, { levels : 2, wrap : 0, tab : '| ', dtab : '', comma : ', ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, tab : '| ', dtab : '', comma : ', ' } );
   var expected =
   [
     '| a : 0, ',
@@ -2166,13 +2168,13 @@ function toStrArray( test )
 
   test.case = 'array of an object';
   var src = [ { a : 'a', b : 'b', c : 'c' } ];
-  var got = _.toStr( src, { levels : 2, wrap : 0, colon : ' - ', comma : '| ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, colon : ' - ', comma : '| ' } );
   var expected = '  a - \'a\'| b - \'b\'| c - \'c\'';
   test.identical( got, expected );
 
   test.case = 'array, levels 2';
   var src = [ 'a', 7, { u : 2 }, 8, 'b' ];
-  var got = _.toStr( src, { levels : 2, wrap : 0, prependTab : 0, comma : ', ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, prependTab : 0, comma : ', ' } );
   var expected =
   [
     '  \'a\', ',
@@ -2185,19 +2187,19 @@ function toStrArray( test )
 
   test.case = 'array, fixed 1';
   var src = [ 0.1111, 0.2222, 0.3333 ];
-  var got = _.toStr( src, { levels : 2, wrap : 0, fixed : 1, comma : '* ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, fixed : 1, comma : '* ' } );
   var expected = '  0.1* 0.2* 0.3';
   test.identical( got, expected );
 
   test.case = 'array, precision 1 levels 2';
   var src = [ 'x', 2000, 3000, 4000 ];
-  var got = _.toStr( src, { levels : 2, wrap : 0, precision : 1, comma : ', ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, precision : 1, comma : ', ' } );
   var expected = '  \'x\', 2e+3, 3e+3, 4e+3';
   test.identical( got, expected );
 
   test.case = 'array, multiline';
   var src = [ 0, { b : 1 }, 3 ];
-  var got = _.toStr( src, { levels : 2, wrap : 0, multiline : 1, comma : '| ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, multiline : 1, comma : '| ' } );
   var expected =
   [
     '  0| ',
@@ -2208,7 +2210,7 @@ function toStrArray( test )
 
   test.case = 'array of nested objects, escaping';
   var src = [ { a : '\na', b : { d : '\ntrue' } } ];
-  var got = _.toStr( src, { levels : 3, wrap : 0, escaping : 1, comma : '. ' } );
+  var got = _.entity.exportString( src, { levels : 3, wrap : 0, escaping : 1, comma : '. ' } );
   var expected =
   [
     '    a : \'\\na\'. ',
@@ -2218,7 +2220,7 @@ function toStrArray( test )
 
   test.case = 'array of nested objects, escaping';
   var src = [ { x : '\na', y : { z : '\ntrue' } } ];
-  var got = _.toStr( src, { levels : 4, wrap : 0, escaping : 1, comma : ', ' } );
+  var got = _.entity.exportString( src, { levels : 4, wrap : 0, escaping : 1, comma : ', ' } );
   var expected =
   [
     '    x : \'\\na\', ',
@@ -2228,25 +2230,25 @@ function toStrArray( test )
 
   test.case = 'array, noAtomic wrap 0';
   var src = [ 1, { a : 2 }, '03' ];
-  var got = _.toStr( src, { levels : 3, wrap : 0, noAtomic : 1, comma : ' , ' } );
+  var got = _.entity.exportString( src, { levels : 3, wrap : 0, noAtomic : 1, comma : ' , ' } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'array, noArray wrap 0';
   var src = [ 0, [ 1, 2, 3, 4 ], 5, { a : 6 } ];
-  var got = _.toStr( src, { levels : 2, wrap : 0, noSubObject : 1, noArray : 1, comma : ' ..' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, noSubObject : 1, noArray : 1, comma : ' ..' } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'array, wrap 0 noSring noNumber';
   var src = [ { a : 'string' }, [ true ], 1 ];
-  var got = _.toStr( src, { levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '/ ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '/ ' } );
   var expected = '    true';
   test.identical( got, expected );
 
   test.case = 'nested arrays, wrap 0 modified comma';
   var src = [ [ 5, 4, [ 3 ] ], [ 2, 1, 0 ] ];
-  var got = _.toStr( src, { levels : 3, wrap : 0, comma : '||' } );
+  var got = _.entity.exportString( src, { levels : 3, wrap : 0, comma : '||' } );
   var expected =
   [
     '    5||',
@@ -2258,7 +2260,7 @@ function toStrArray( test )
 
   test.case = 'array of objects';
   var src = [ { a : 0 }, { b : 1 }, [ 2, 3 ] ];
-  var got = _.toStr( src, { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' } );
   var expected =
   [
     '  |  a->0, , ',
@@ -2269,7 +2271,7 @@ function toStrArray( test )
 
   test.case = 'nested arrays, prependTab 0 fixed 2';
   var src = [ [ 1.100, 1.200 ], [ 2, 3 ] ];
-  var got = _.toStr( src, { levels : 2, prependTab : 0, fixed : 2 } );
+  var got = _.entity.exportString( src, { levels : 2, prependTab : 0, fixed : 2 } );
   var expected =
   [
     '[',
@@ -2281,7 +2283,7 @@ function toStrArray( test )
 
   test.case = 'array, precision 1';
   var src = [ 9000, [ 8000, 6000], 7000 ];
-  var got = _.toStr( src, { levels : 2, prependTab : 0, precision : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, prependTab : 0, precision : 1 } );
   var expected =
   [
     '[',
@@ -2294,7 +2296,7 @@ function toStrArray( test )
 
   test.case = 'array of objects, multiline escaping';
   var src = [ { a : '\\test' }, { b : '\ntest' }, { c : 'test' } ];
-  var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
   [
     '[',
@@ -2313,7 +2315,7 @@ function toStrArray( test )
 
   test.case = 'array with a func inside an object, noRoutine';
   var src = [ { a : function func ( ){ } }, 0, 1, 'a' ];
-  var got = _.toStr( src, { levels : 2, noRoutine : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noRoutine : 1 } );
   var expected =
   [
     '[',
@@ -2327,7 +2329,7 @@ function toStrArray( test )
 
   test.case = 'array with a func inside an object, noRoutine';
   var src = [ { b : function f ( ){ } }, 1, 2 , 3 ];
-  var got = _.toStr( src, { levels : 3, noRoutine : 1 } );
+  var got = _.entity.exportString( src, { levels : 3, noRoutine : 1 } );
   var expected =
   [
     '[',
@@ -2341,19 +2343,19 @@ function toStrArray( test )
 
   test.case = 'array with error and date, noError noDate';
   var src = [ new Error( 'msg' ), new Date( Date.UTC( 1990, 0, 0 ) ), 'test' ];
-  var got = _.toStr( src, { levels : 3, noError : 1, noDate : 1 } );
+  var got = _.entity.exportString( src, { levels : 3, noError : 1, noDate : 1 } );
   var expected = '[ \'test\' ]';
   test.identical( got, expected );
 
   test.case = 'nested arrays, noArray';
   var src = [ 1, [ 2, 3, 4 ], 2 ];
-  var got = _.toStr( src, { levels : 2, noArray : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noArray : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'nested array, noNumber';
   var src = [ 1, [ '2', null, undefined, '4' ], 2 ];
-  var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noNumber : 1, noString : 1 } );
   var expected =
   [
     '[',
@@ -2364,7 +2366,7 @@ function toStrArray( test )
 
   test.case = 'array, noObject noNumber noString';
   var src = [ [ 1, 2 ], 'string', { a : true, b : null }, undefined ];
-  var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, noObject : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noNumber : 1, noString : 1, noObject : 1 } );
   var expected =
   [
     '[',
@@ -2376,7 +2378,7 @@ function toStrArray( test )
 
   test.case = 'array, noObject noNumber noString';
   var src = [ [ 0, 1 ], 'test', { a : Symbol( ) }, undefined ];
-  var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1, noObject : 1 } );
+  var got = _.entity.exportString( src, { levels : 3, noNumber : 1, noString : 1, noObject : 1 } );
   var expected =
   [
     '[',
@@ -2388,19 +2390,19 @@ function toStrArray( test )
 
   test.case = 'array, noObject noNumber noString noRoutine';
   var src = [ 0, 'str', { a : Symbol( ) }, function test( ){ }, null ];
-  var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, noObject : 1, noRoutine : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noNumber : 1, noString : 1, noObject : 1, noRoutine : 1 } );
   var expected = '[ null ]';
   test.identical( got, expected );
 
   test.case = 'array, noObject noNumber noString noRoutine noDate';
   var src = [ 0, 'str', { a : Symbol( ) }, function test( ){ }, true, new Date( Date.UTC( 1990, 0, 0 ) ) ];
-  var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, noObject : 1, noRoutine : 1, noDate : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noNumber : 1, noString : 1, noObject : 1, noRoutine : 1, noDate : 1 } );
   var expected = '[ true ]';
   test.identical( got, expected );
 
   test.case = 'array with object, noSubObject noNumber noSring';
   var src = [ [ 0, 1 ], 'test', { a : 'a' } ];
-  var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, noSubObject : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noNumber : 1, noString : 1, noSubObject : 1 } );
   var expected =
   [
     '[',
@@ -2412,7 +2414,7 @@ function toStrArray( test )
 
   test.case = 'array with object, noSubObject noNumber noSring';
   var src = [ [ 1, 2 ], 'sample', { a : 'b' } ];
-  var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1, noSubObject : 1 } );
+  var got = _.entity.exportString( src, { levels : 3, noNumber : 1, noString : 1, noSubObject : 1 } );
   var expected =
   [
     '[',
@@ -2424,13 +2426,13 @@ function toStrArray( test )
 
   test.case = 'array with function, onlyRoutines';
   var src = [ 11, 22, function routine( ){ }, { a : 'string' } ];
-  var got = _.toStr( src, { levels : 2, noNumber : 1, noString : 1, onlyRoutines : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noNumber : 1, noString : 1, onlyRoutines : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'nested arrays, noSring precision 2';
   var src = [ ['a', 100], ['b', 200] ];
-  var got = _.toStr( src, { levels : 2, noString : 1, precision : 2 } );
+  var got = _.entity.exportString( src, { levels : 2, noString : 1, precision : 2 } );
   var expected =
   [
     '[',
@@ -2442,7 +2444,7 @@ function toStrArray( test )
 
   test.case = 'nested arrays, noSring precision 3';
   var src = [ ['aa', 300], ['bb', 400] ];
-  var got = _.toStr( src, { levels : 3, noString : 1, precision : 3 } );
+  var got = _.entity.exportString( src, { levels : 3, noString : 1, precision : 3 } );
   var expected =
   [
     '[',
@@ -2454,7 +2456,7 @@ function toStrArray( test )
 
   test.case = 'nested arrays, noSring fixed 3';
   var src = [ [ 1.00, 2.00 ], [ 3.00, 4.00], 'str sample' ];
-  var got = _.toStr( src, { levels : 2, noString : 1, fixed : 3 } );
+  var got = _.entity.exportString( src, { levels : 2, noString : 1, fixed : 3 } );
   var expected =
   [
     '[',
@@ -2466,7 +2468,7 @@ function toStrArray( test )
 
   test.case = 'nested array, noString noNumber precision';
   var src = [ '1', [ 2, 3, 4 ], '2' ];
-  var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, precision : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noString : 1, noNumber : 1, precision : 1 } );
   var expected =
   [
     '[',
@@ -2477,7 +2479,7 @@ function toStrArray( test )
 
   test.case = 'nested arrays, noNumber noString fixed 1';
   var src = [ '1', [ 2.00, 3.00, 4.00 ], '2' ];
-  var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, fixed : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noString : 1, noNumber : 1, fixed : 1 } );
   var expected =
   [
     '[',
@@ -2488,7 +2490,7 @@ function toStrArray( test )
 
   test.case = 'nested arrays, noNumber noString precision 1';
   var src = [ 'o', [ 90, 80, 70 ], 'o' ];
-  var got = _.toStr( src, { levels : 3, noString : 1, noNumber : 1, precision : 1 } );
+  var got = _.entity.exportString( src, { levels : 3, noString : 1, noNumber : 1, precision : 1 } );
   var expected =
   [
     '[',
@@ -2499,7 +2501,7 @@ function toStrArray( test )
 
   test.case = 'array with an object,noSring noNumber multiline';
   var src = [ 'o', 1, { a : true, b : undefined, c : null } ];
-  var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, multiline : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noString : 1, noNumber : 1, multiline : 1 } );
   var expected =
   [
     '[',
@@ -2514,7 +2516,7 @@ function toStrArray( test )
 
   test.case = 'array with object, escaping';
   var src = [ 'a', 2, { a : '\\true', b : true, c : null } ];
-  var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, multiline : 1, escaping : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noString : 1, noNumber : 1, multiline : 1, escaping : 1 } );
   var expected =
   [
     '[',
@@ -2528,7 +2530,7 @@ function toStrArray( test )
 
   test.case = 'array, noError';
   var src = [ [ 'a', 1 ], new Error( 'err msg' ), new Date( Date.UTC( 1990, 0, 0 ) ) ];
-  var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, noError : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noString : 1, noNumber : 1, noError : 1 } );
   var expected =
   [
     '[',
@@ -2540,7 +2542,7 @@ function toStrArray( test )
 
   test.case = 'array with a date, modified tab';
   var src = [ [ 'a', 1 ], new Date( Date.UTC( 1999, 1, 1 ) ) ];
-  var got = _.toStr( src, { levels : 2, noString : 1, noNumber : 1, tab : '|', prependTab : 0 } );
+  var got = _.entity.exportString( src, { levels : 2, noString : 1, noNumber : 1, tab : '|', prependTab : 0 } );
   var expected =
   [
     '[',
@@ -2552,7 +2554,7 @@ function toStrArray( test )
 
   test.case = 'nested array';
   var src = [ [ 1, 2, 3 ], 'a' ];
-  var got = _.toStr( src, { levels : 3, noAtomic : 1, noNumber : 0 } );
+  var got = _.entity.exportString( src, { levels : 3, noAtomic : 1, noNumber : 0 } );
   var expected =
   [
     '[',
@@ -2564,14 +2566,14 @@ function toStrArray( test )
   /* */
 
   var src = [ 'a', 'b' ];
-  var got = _.toStr( src );
+  var got = _.entity.exportString( src );
   var expected = `[ 'a', 'b' ]`
   test.identical( got, expected );
 
   /* */
 
   var src = [ 'a b' ];
-  var got = _.toStr( src );
+  var got = _.entity.exportString( src );
   var expected = `[ 'a b' ]`
   test.identical( got, expected );
 
@@ -3248,25 +3250,25 @@ function toStrObject( test )
 
   test.case = 'default object';
   var src = { a : 1, b : 2, c : 3 };
-  var got = _.toStr( src, { } );
+  var got = _.entity.exportString( src, { } );
   var expected = '{ a : 1, b : 2, c : 3 }';
   test.identical( got, expected );
 
   test.case = 'default object, levels 0';
   var src = { x : 3, y : 5, z : 5 };
-  var got = _.toStr( src, { levels : 0 } );
+  var got = _.entity.exportString( src, { levels : 0 } );
   var expected = '{- Map.polluted with 3 elements -}';
   test.identical( got, expected );
 
   test.case = 'default object, levels 1';
   var src = { q : 6, w : 7, e : 8 };
-  var got = _.toStr( src, { levels : 1 } );
+  var got = _.entity.exportString( src, { levels : 1 } );
   var expected = '{ q : 6, w : 7, e : 8 }';
   test.identical( got, expected );
 
   test.case = 'nested object, levels 1';
   var src = { u : 12, i : { o : 13 }, p : 14 };
-  var got = _.toStr( src, { levels : 1 } );
+  var got = _.entity.exportString( src, { levels : 1 } );
   var expected =
   [
     '{',
@@ -3279,7 +3281,7 @@ function toStrObject( test )
 
   test.case = 'nested object, levels 2';
   var src = { r : 9, t : { a : 10 }, y : 11 };
-  var got = _.toStr( src, { levels : 2 } );
+  var got = _.entity.exportString( src, { levels : 2 } );
   var expected =
   [
     '{',
@@ -3292,7 +3294,7 @@ function toStrObject( test )
 
   test.case = 'nested object, levels 3';
   var src = { z : '01', x : { c : { g : 4 } }, v : '03' };
-  var got = _.toStr( src, { levels : 3 } );
+  var got = _.entity.exportString( src, { levels : 3 } );
   var expected =
   [
     '{',
@@ -3308,7 +3310,7 @@ function toStrObject( test )
 
   test.case = 'nested object, levels 5';
   var src = { u : 12, i : { o : { x : { y : [ 1, 2, 3 ] } } }, p : 14 };
-  var got = _.toStr( src, { levels : 5 } );
+  var got = _.entity.exportString( src, { levels : 5 } );
   var expected =
   [
     '{',
@@ -3330,7 +3332,7 @@ function toStrObject( test )
 
   test.case = 'nested object, noSubObject noArray';
   var src = { q : { a : 1 }, w : 'c', e : [1] };
-  var got = _.toStr( src, { levels : 2, noSubObject : 1, noArray : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noSubObject : 1, noArray : 1 } );
   var expected =
   [
     '{',
@@ -3341,7 +3343,7 @@ function toStrObject( test )
 
   test.case = 'nested object, noAtomic';
   var src = { z : '02', x : { c : { g : 6 } }, v : '01' };
-  var got = _.toStr( src, { levels : 3, noAtomic : 1 } );
+  var got = _.entity.exportString( src, { levels : 3, noAtomic : 1 } );
   var expected =
   [
     '{',
@@ -3355,25 +3357,25 @@ function toStrObject( test )
 
   test.case = 'nested object, noObject';
   var src = { h : { d : 1 }, g : 'c', c : [2] };
-  var got = _.toStr( src, { levels : 2, noObject : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noObject : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'default object, wrap 0 modified comma';
   var src = { a : 6, b : 7, c : 1 };
-  var got = _.toStr( src, { wrap : 0, comma : ' | ' } );
+  var got = _.entity.exportString( src, { wrap : 0, comma : ' | ' } );
   var expected = 'a : 6 | b : 7 | c : 1';
   test.identical( got, expected );
 
   test.case = 'default object, wrap 0 noString noNumber';
   var src = { a : true, b : '2', c : 3, d : undefined };
-  var got = _.toStr( src, { wrap : 0, noString : 1, noNumber: 1, comma : ', ' } );
+  var got = _.entity.exportString( src, { wrap : 0, noString : 1, noNumber: 1, comma : ', ' } );
   var expected = 'a : true, d : undefined';
   test.identical( got, expected );
 
   test.case = 'object with symbol, wrap 0';
   var src = { a : null, b : 1, c : '2', d : undefined, e : true, f : Symbol( 'symbol' ) };
-  var got = _.toStr( src, { wrap : 0, comma : '* ' } );
+  var got = _.entity.exportString( src, { wrap : 0, comma : '* ' } );
   var expected =
   [
     '  a : null* ',
@@ -3387,7 +3389,7 @@ function toStrObject( test )
 
   test.case = 'default object, wrap 0 prependTab 0 modified comma';
   var src = { a : 'true', b : 2, c : false, d : undefined };
-  var got = _.toStr( src, { wrap : 0, prependTab : 0, comma : '-> ' } );
+  var got = _.entity.exportString( src, { wrap : 0, prependTab : 0, comma : '-> ' } );
   var expected =
   [
     '  a : \'true\'-> ',
@@ -3399,37 +3401,37 @@ function toStrObject( test )
 
   test.case = 'object with error, wrap 0';
   var src = { e : new Error( 'msg' ) };
-  var got = _.toStr( src, { wrap : 0, tab : '| ', dtab : '', comma : '> ' } );
+  var got = _.entity.exportString( src, { wrap : 0, tab : '| ', dtab : '', comma : '> ' } );
   var expected = '| e : [object Error]';
   test.identical( got, expected );
 
   test.case = 'object with a function, wrap 0';
   var src = { f : 1, g : function f(  ) { } };
-  var got = _.toStr( src, { wrap : 0, colon : '', comma : ' ' } );
+  var got = _.entity.exportString( src, { wrap : 0, colon : '', comma : ' ' } );
   var expected = 'f1 g[ routine f ]';
   test.identical( got, expected );
 
   test.case = 'object with a function, wrap 0 noRoutine';
   var src = { x : function y(  ) { } };
-  var got = _.toStr( src, { wrap : 0, noRoutine : 1, comma : '.. ' } );
+  var got = _.entity.exportString( src, { wrap : 0, noRoutine : 1, comma : '.. ' } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'default object, wrap 0 noAtomic';
   var src = { a : null, b : 1, c : '2', d : undefined };
-  var got = _.toStr( src, { wrap : 0, noAtomic : 1, comma : ', ' } );
+  var got = _.entity.exportString( src, { wrap : 0, noAtomic : 1, comma : ', ' } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'object with a function, onlyRoutines';
   var src = { e : function r( ) { }, f : 1, g : '2', h : [ 1 ] };
-  var got = _.toStr( src, { wrap : 0, onlyRoutines : 1, comma : '<< ' } );
+  var got = _.entity.exportString( src, { wrap : 0, onlyRoutines : 1, comma : '<< ' } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'integer object values, precision 3 wrap 0';
   var src = { i : 0, k : 1, g : 2, l : 3 };
-  var got = _.toStr( src, { wrap : 0, precision : 3, comma : '| ' } );
+  var got = _.entity.exportString( src, { wrap : 0, precision : 3, comma : '| ' } );
   var expected =
   [
     '  i : 0.00| ',
@@ -3441,7 +3443,7 @@ function toStrObject( test )
 
   test.case = 'integer values, wrap 0 fixed 3';
   var src = { o : 4, p : 5, r : 6, s : 7 };
-  var got = _.toStr( src, { wrap : 0,  fixed : 3, comma : '^ ' } );
+  var got = _.entity.exportString( src, { wrap : 0,  fixed : 3, comma : '^ ' } );
   var expected =
   [
     '  o : 4.000^ ',
@@ -3453,7 +3455,7 @@ function toStrObject( test )
 
   test.case = 'integer values, multiline';
   var src = { m : 8, n : 9 };
-  var got = _.toStr( src, { wrap : 0,  multiline : 1, comma : ', ' } );
+  var got = _.entity.exportString( src, { wrap : 0,  multiline : 1, comma : ', ' } );
   var expected =
   [
     '  m : 8, ',
@@ -3463,13 +3465,13 @@ function toStrObject( test )
 
   test.case = 'object new lines, escaping';
   var src = { x : '\n10', z : '\\11' };
-  var got = _.toStr( src, { wrap : 0,  escaping : 1, comma : '| ' } );
+  var got = _.entity.exportString( src, { wrap : 0,  escaping : 1, comma : '| ' } );
   var expected = 'x : \'\\n10\'| z : \'\\\\11\'';
   test.identical( got, expected );
 
   test.case = 'nested object';
   var src = { a : 1, b : { d : 2 }, c : 3 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, comma : '. ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, comma : '. ' } );
   var expected =
   [
     '  a : 1. ',
@@ -3480,7 +3482,7 @@ function toStrObject( test )
 
   test.case = 'nested object';
   var src = { a : 3, b : { d : 2 }, c : 1 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, comma : '. '} );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, comma : '. '} );
   var expected =
   [
     '  a : 3. ',
@@ -3491,7 +3493,7 @@ function toStrObject( test )
 
   test.case = 'nested object, modified tab';
   var src = { a : 4, b : { d : 5 }, c : 6 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, tab : '| ', dtab : '', comma : '@ ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, tab : '| ', dtab : '', comma : '@ ' } );
   var expected =
   [
     '| a : 4@ ',
@@ -3502,7 +3504,7 @@ function toStrObject( test )
 
   test.case = 'nested object';
   var src = { a : 7, b : { d : 8 }, c : 9 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, colon : ' - ', comma : '-? ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, colon : ' - ', comma : '-? ' } );
   var expected =
   [
     '  a - 7-? ',
@@ -3513,7 +3515,7 @@ function toStrObject( test )
 
   test.case = 'nested object';
   var src = { a : 9, b : { d : 8 }, c : 7 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, prependTab : 0, comma : ', ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, prependTab : 0, comma : ', ' } );
   var expected =
   [
     '  a : 9, ',
@@ -3524,7 +3526,7 @@ function toStrObject( test )
 
   test.case = 'nested object, fixed 1';
   var src = { a : 10, b : { d : 20 }, c : 30 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, fixed : 1, comma : '| ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, fixed : 1, comma : '| ' } );
   var expected =
   [
     '  a : 10.0| ',
@@ -3535,7 +3537,7 @@ function toStrObject( test )
 
   test.case = 'nested object, precision 1';
   var src = { a : 10.00, b : { d : 20.00 }, c : 30.00 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, precision : 1, comma : '/ ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, precision : 1, comma : '/ ' } );
   var expected =
   [
     '  a : 1e+1/ ',
@@ -3546,7 +3548,7 @@ function toStrObject( test )
 
   test.case = 'nested object, multiline';
   var src = { a : 'a', b : { d : false }, c : 3 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, multiline : 1, comma : ', , ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, multiline : 1, comma : ', , ' } );
   var expected =
   [
     '  a : \'a\', , ',
@@ -3558,7 +3560,7 @@ function toStrObject( test )
 
   test.case = 'nested object, escaping 1';
   var src = { a : '\na', b : { d : '\ntrue' }, c : '\n' };
-  var got = _.toStr( src, { levels : 3, wrap : 0, escaping : 1, comma : '| ' } );
+  var got = _.entity.exportString( src, { levels : 3, wrap : 0, escaping : 1, comma : '| ' } );
   var expected =
   [
     '  a : \'\\na\'| ',
@@ -3569,31 +3571,31 @@ function toStrObject( test )
 
   test.case = 'nested object, noAtomic';
   var src = { a : 'a', b : { d : false }, c : 3 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, noAtomic : 1, comma : '< ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, noAtomic : 1, comma : '< ' } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'nestedObject, noAtomic';
   var src = { a : 'aa', b : { d : true }, c : 40 };
-  var got = _.toStr( src, { levels : 3, wrap : 0, noAtomic : 1, comma : ', ' } );
+  var got = _.entity.exportString( src, { levels : 3, wrap : 0, noAtomic : 1, comma : ', ' } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'nestedObject, noSubObject noArray';
   var src = { a : [ 'a', 'b' ], b : { d : 'true' }, c : 1 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, noSubObject : 1, noArray : 1, comma : '' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, noSubObject : 1, noArray : 1, comma : '' } );
   var expected = '  c : 1';
   test.identical( got, expected );
 
   test.case = 'nested object, noString noNumber';
   var src = { a : [ 'a', 'b' ], b : { d : 'true' }, c : 1 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '. ' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '. ' } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'nested object';
   var src = { a : 1, b : { d : 2 }, c : 3 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, comma : '. '} );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, comma : '. '} );
   var expected =
   [
     '  a : 1. ',
@@ -3604,7 +3606,7 @@ function toStrObject( test )
 
   test.case = 'nested object, double comma';
   var src = { a : 3, b : { d : 2 }, c : 1 };
-  var got = _.toStr( src, { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' } );
+  var got = _.entity.exportString( src, { levels : 2, wrap : 0, comma : ', , ', tab :'  |', colon : '->' } );
   var expected =
   [
     '  |  a->3, , ',
@@ -3615,7 +3617,7 @@ function toStrObject( test )
 
   test.case = 'nested object, prependTab 0 fixed 5';
   var src = { a : 'bb', b : { d : false }, c : 30 };
-  var got = _.toStr( src, { levels : 2, prependTab : 0, fixed : 5 } );
+  var got = _.entity.exportString( src, { levels : 2, prependTab : 0, fixed : 5 } );
   var expected =
   [
     '{',
@@ -3628,7 +3630,7 @@ function toStrObject( test )
 
   test.case = 'nested object, prependTab 0 precision 5';
   var src = { a : 100, b : { d : 110 }, c : 120 };
-  var got = _.toStr( src, { levels : 2, prependTab : 0, precision : 5 } );
+  var got = _.entity.exportString( src, { levels : 2, prependTab : 0, precision : 5 } );
   var expected =
   [
     '{',
@@ -3641,7 +3643,7 @@ function toStrObject( test )
 
   test.case = 'nested object, multiline escaping';
   var src = { a : '\na', b : { d : '\ntrue' } };
-  var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
   [
     '{',
@@ -3656,7 +3658,7 @@ function toStrObject( test )
 
   test.case = 'nested object with function, noRoutine';
   var src = { a : 'aa', b : { d : function( ){ } } };
-  var got = _.toStr( src, { levels : 2, noRoutine : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, noRoutine : 1 } );
   var expected =
   [
     '{',
@@ -3668,7 +3670,7 @@ function toStrObject( test )
 
   test.case = 'nested object with function, noRoutine';
   var src = { a : 'bb', b : { d : function( ){ } } };
-  var got = _.toStr( src, { levels : 3, noRoutine : 1, } );
+  var got = _.entity.exportString( src, { levels : 3, noRoutine : 1, } );
   var expected =
   [
     '{',
@@ -3680,7 +3682,7 @@ function toStrObject( test )
 
   test.case = 'nested object with date and error, noError noDate';
   var src = { a : new Date( Date.UTC( 1993, 12, 12 ) ), b : { d : new Error( 'msg' ) }, c : 1 };
-  var got = _.toStr( src, { levels : 3, noError : 1, noDate : 1 } );
+  var got = _.entity.exportString( src, { levels : 3, noError : 1, noDate : 1 } );
   var expected =
   [
     '{',
@@ -3692,7 +3694,7 @@ function toStrObject( test )
 
   test.case = 'object json like, escaping 1';
   var src = { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  };
-  var got = _.toStr( src, { escaping : 1 } );
+  var got = _.entity.exportString( src, { escaping : 1 } );
   var expected =
   [
     '{',
@@ -3706,7 +3708,7 @@ function toStrObject( test )
 
   test.case = 'object json like, escaping 0';
   var src = { "sequence" : "\x7f[A", "name" : "undefined", "shift" : false, "code" : "[A"  };
-  var got = _.toStr( src, { escaping : 0 } );
+  var got = _.entity.exportString( src, { escaping : 0 } );
   var expected =
   [
     '{',
@@ -3720,7 +3722,7 @@ function toStrObject( test )
 
   test.case = 'nested object json like, escaping 0';
   var src = { "sequence" : "<\u001cb>text<\u001cb>", "data" : { "name" : "myname", "age" : 1 }, "shift" : false, "code" : "<b>text<b>"  };
-  var got = _.toStr( src, { escaping : 0 } );
+  var got = _.entity.exportString( src, { escaping : 0 } );
   var expected =
   [
     '{',
@@ -3734,7 +3736,7 @@ function toStrObject( test )
 
   test.case = 'object json like, multiline';
   var src = { "sequence" : "\u0068\u0065\u004C\u004C\u006F", "shift" : false, "code" : "heLLo"  };
-  var got = _.toStr( src, { multiline : 1 } );
+  var got = _.entity.exportString( src, { multiline : 1 } );
   var expected =
   [
     '{',
@@ -3747,7 +3749,7 @@ function toStrObject( test )
 
   test.case = 'object json like, multiline escaping';
   var src = { "sequence" : "\n\u0061\u0062\u0063", "shift" : false, "code" : "abc"  };
-  var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
   [
     '{',
@@ -3760,7 +3762,7 @@ function toStrObject( test )
 
   test.case = 'object json like, multiline escaping';
   var src = { "sequence" : "\t\u005b\u0063\u0062\u0061\u005d\t", "data" : 100, "code" : "\n[cba]\n"  };
-  var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
   [
     '{',
@@ -3773,7 +3775,7 @@ function toStrObject( test )
 
   test.case = 'object json like, multiline escaping';
   var src = { "sequence" : "\u005CABC\u005C", "data" : 100, "code" : "\\ABC\\"  };
-  var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
   [
     '{',
@@ -3786,7 +3788,7 @@ function toStrObject( test )
 
   test.case = 'object json like, multiline escaping';
   var src = { "sequence" : "\u000Aline\u000A", "data" : null, "code" : "\nline\n"  };
-  var got = _.toStr( src, { levels : 2, multiline : 1, escaping : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
   [
     '{',
@@ -3799,31 +3801,31 @@ function toStrObject( test )
 
   test.case = 'object json like, escaping levels 2';
   var src = { "sequence" : "\rspace\r",  };
-  var got = _.toStr( src, { levels : 2, escaping : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, escaping : 1 } );
   var expected = '{ sequence : \'\\rspace\\r\' }';
   test.identical( got, expected );
 
   test.case = 'object json like, escaping';
   var src = { "sequence" : "\btest",  };
-  var got = _.toStr( src, { levels : 2, escaping : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, escaping : 1 } );
   var expected = '{ sequence : \'\\btest\' }';
   test.identical( got, expected );
 
   test.case = 'object json like, escaping';
   var src = { "sequence" : "\vsample",  };
-  var got = _.toStr( src, { levels : 2, escaping : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, escaping : 1 } );
   var expected = '{ sequence : \'\\u000bsample\' }';
   test.identical( got, expected );
 
   test.case = 'object json like, escaping';
   var src = { "sequence" : "\ftest",  };
-  var got = _.toStr( src, { levels : 2, escaping : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, escaping : 1 } );
   var expected = '{ sequence : \'\\ftest\' }';
   test.identical( got, expected );
 
   test.case = 'nested object, noNumber noString';
   var src = { a : 1, b : { d : 'string' }, c : true };
-  var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1} );
+  var got = _.entity.exportString( src, { levels : 3, noNumber : 1, noString : 1} );
   var expected =
   [
     '{',
@@ -3835,7 +3837,7 @@ function toStrObject( test )
 
   test.case = 'nested object, noNumber noString noDate';
   var src = { a : 1, b : { d : 'string' }, c : new Date(Date.UTC( ) ) };
-  var got = _.toStr( src, { levels : 3, noNumber : 1, noString : 1, noDate : 1} );
+  var got = _.entity.exportString( src, { levels : 3, noNumber : 1, noString : 1, noDate : 1} );
   var expected =
   [
     '{',
@@ -3846,7 +3848,7 @@ function toStrObject( test )
 
   test.case = 'nested object, noString fixed 1';
   var src = { a : 1000, b : { d : 'string' }, c : 1.500 };
-  var got = _.toStr( src, { levels : 2, noString : 1, fixed : 1} );
+  var got = _.entity.exportString( src, { levels : 2, noString : 1, fixed : 1} );
   var expected =
   [
     '{',
@@ -3859,19 +3861,19 @@ function toStrObject( test )
 
   test.case = 'object, noString precision 1';
   var src = { a : 1000, b : 'text', c : 1.500 };
-  var got = _.toStr( src, { levels : 2, noString : 1, precision : 1} );
+  var got = _.entity.exportString( src, { levels : 2, noString : 1, precision : 1} );
   var expected = '{ a : 1e+3, c : 2 }';
   test.identical( got, expected );
 
   test.case = 'object, noString noNumber prependTab 0';
   var src = { a : 1000, b : 'text', c : false, d : undefined, e : null};
-  var got = _.toStr( src, { levels : 2, noString : 1, noNumber :1, tab : '-', prependTab : 0 } );
+  var got = _.entity.exportString( src, { levels : 2, noString : 1, noNumber :1, tab : '-', prependTab : 0 } );
   var expected = '{ c : false, d : undefined, e : null }';
   test.identical( got, expected );
 
   test.case = 'object, noAtomic noNumber 0';
   var src = { a : 1001, b : 'text', c : false, d : undefined, e : null};
-  var got = _.toStr( src, { levels : 2, noAtomic : 1, noNumber : 0 } );
+  var got = _.entity.exportString( src, { levels : 2, noAtomic : 1, noNumber : 0 } );
   var expected = '{}';
   test.identical( got, expected );
 
@@ -3884,7 +3886,7 @@ function toStrObject( test )
     y.c = 3;
     return y;
   } )( );
-  var got = _.toStr( src, { onlyOwn : 0 } );
+  var got = _.entity.exportString( src, { onlyOwn : 0 } );
   var expected = '{ c : 3, a : 1, b : 2 }';
   test.identical( got, expected );
 
@@ -3897,13 +3899,13 @@ function toStrObject( test )
     y.c = '3';
     return y;
   } )( );
-  var got = _.toStr( src, { } );
+  var got = _.entity.exportString( src, { } );
   var expected = '{ c : \'3\' }';
   test.identical( got, expected );
 
   test.case = 'object json like';
   var src = { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  };
-  var got = _.toStr( src, { } );
+  var got = _.entity.exportString( src, { } );
   var expected =
   [
     '{',
@@ -4038,7 +4040,7 @@ function toStrStringWrapper( test )
   //testFunction( test, desc, src, options, expected );
 
   test.case = 'stringWrapper no quotes';
-  var got = _.toStr( { a : "string", b : 1, c : null , d : undefined } , { stringWrapper : '' } );
+  var got = _.entity.exportString( { a : "string", b : 1, c : null , d : undefined } , { stringWrapper : '' } );
   var expected =
   [
     '{',
@@ -4052,7 +4054,7 @@ function toStrStringWrapper( test )
 
   test.case = 'stringWrapper no quotes, levels 2';
   var src = { a : "sample", b : 0, c : false , d : [ "a" ] };
-  var got = _.toStr( src, { levels : 2, stringWrapper : '' } );
+  var got = _.entity.exportString( src, { levels : 2, stringWrapper : '' } );
   var expected =
   [
     '{',
@@ -4066,7 +4068,7 @@ function toStrStringWrapper( test )
 
   test.case = 'stringWrapper no quotes, levels 3';
   var src = { a : [ "example" ], b : 1, c : null , d : [ "b" ] };
-  var got = _.toStr( src, { levels : 3, stringWrapper : '' } );
+  var got = _.entity.exportString( src, { levels : 3, stringWrapper : '' } );
   var expected =
   [
     '{',
@@ -4080,7 +4082,7 @@ function toStrStringWrapper( test )
 
   test.case = 'stringWrapper with error';
   var src = { a : "test", b : new Error( "err" ) };
-  var got = _.toStr( src, { levels : 2 } );
+  var got = _.entity.exportString( src, { levels : 2 } );
   var expected =
   [
     '{',
@@ -4092,7 +4094,7 @@ function toStrStringWrapper( test )
 
   // test.case = 'stringWrapper with object, levels 1'; // Dmytro : old test case, if key and value is identical, then routine write only key
   // var src = { a : "a", b : "b", c : { d : "d" } };
-  // var got = _.toStr( src, { stringWrapper: '', levels : 1 } );
+  // var got = _.entity.exportString( src, { stringWrapper: '', levels : 1 } );
   // var expected =
   // [
   //   '{',
@@ -4105,7 +4107,7 @@ function toStrStringWrapper( test )
 
   test.case = 'stringWrapper with object, levels 1'; // Dmytro : new test case, if key and value is identical, routine write key and value
   var src = { a : "a", b : "b", c : { d : "d" } };
-  var got = _.toStr( src, { stringWrapper: '', levels : 1 } );
+  var got = _.entity.exportString( src, { stringWrapper: '', levels : 1 } );
   var expected =
   [
     '{',
@@ -4118,7 +4120,7 @@ function toStrStringWrapper( test )
 
   // test.case = 'stringWrapper with objects, levels 2'; // Dmytro : old test case, if key and value is identical, then routine write only key
   // var src = { a : { h : "a" }, b : "b", c : { d : "d" } };
-  // var got = _.toStr( src, { stringWrapper: '', levels : 2 } );
+  // var got = _.entity.exportString( src, { stringWrapper: '', levels : 2 } );
   // var expected =
   // [
   //   '{',
@@ -4131,7 +4133,7 @@ function toStrStringWrapper( test )
 
   test.case = 'stringWrapper with objects, levels 2'; // Dmytro : new test case, if key and value is identical, routine write key and value
   var src = { a : { h : "a" }, b : "b", c : { d : "d" } };
-  var got = _.toStr( src, { stringWrapper: '', levels : 2 } );
+  var got = _.entity.exportString( src, { stringWrapper: '', levels : 2 } );
   var expected =
   [
     '{',
@@ -4144,7 +4146,7 @@ function toStrStringWrapper( test )
 
   test.case = 'stringWrapper multiline \\n, levels 2';
   var src = { a : "line1\nline2\nline3" };
-  var got = _.toStr( src, { levels : 2, multilinedString : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, multilinedString : 1 } );
   var expected =
   [
     '{',
@@ -4157,7 +4159,7 @@ function toStrStringWrapper( test )
 
   test.case = 'stringWrapper multiline, levels 2';
   var src = { a : "line1" };
-  var got = _.toStr( src, { levels : 2, multilinedString : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, multilinedString : 1 } );
   var expected = '{ a : `line1` }';
   test.identical( got, expected );
 
@@ -4220,13 +4222,13 @@ function toStrLevel( test )
 
   test.case = 'nested objects, level 0 and levels 0';
   var src = { a : "a", b : "b", c : { d : "d" } };
-  var got = _.toStr( src, { level: 0, levels : 0 } );
+  var got = _.entity.exportString( src, { level: 0, levels : 0 } );
   var expected = '{- Map.polluted with 3 elements -}';
   test.identical( got, expected );
 
   test.case = 'nested objects, level 1 levels 2';
   var src = { a : { h : "a" }, b : "b", c : { d : "d" } };
-  var got = _.toStr( src, { level: 1, levels : 2 } );
+  var got = _.entity.exportString( src, { level: 1, levels : 2 } );
   var expected =
   [
     '{',
@@ -4239,13 +4241,13 @@ function toStrLevel( test )
 
   test.case = 'nested objects, level 1 levels 0';
   var src = { a : [ "example" ], b : 1, c : null , d : [ "b" ] };
-  var got = _.toStr( src, { level: 1, levels : 0 } );
+  var got = _.entity.exportString( src, { level: 1, levels : 0 } );
   var expected = '{- Map.polluted with 4 elements -}';
   test.identical( got, expected );
 
   test.case = 'nested objects';
   var src = { a : "a", b : "b", c : { d : "d" } };
-  var got = _.toStr( src, { } );
+  var got = _.entity.exportString( src, { } );
   var expected =
   [
     '{',
@@ -4411,7 +4413,7 @@ function toStrEnumerable( test )
     return y;
 
   } )( );
-  var got = _.toStr( src, { } );
+  var got = _.entity.exportString( src, { } );
   var expected = '{ a : \'string\' }';
   test.identical( got, expected );
 
@@ -4436,7 +4438,7 @@ function toStrEnumerable( test )
     return y;
 
   } )( );
-  var got = _.toStr( src, { onlyOwn : 0 } );
+  var got = _.entity.exportString( src, { onlyOwn : 0 } );
   var expected = '{ a : \'string\', foo : 1 }';
   test.identical( got, expected );
 
@@ -4458,7 +4460,7 @@ function toStrEnumerable( test )
     return x;
 
   } )( );
-  var got = _.toStr( src, { onlyEnumerable : 0 } );
+  var got = _.entity.exportString( src, { onlyEnumerable : 0 } );
   var expected = '{ getFoo : [ routine value ], foo : 1 }';
   test.identical( got, expected );
 
@@ -4483,7 +4485,7 @@ function toStrEnumerable( test )
     return y;
 
   } )( );
-  var got = _.toStr( src, { onlyOwn : 0, onlyEnumerable : 0 } );
+  var got = _.entity.exportString( src, { onlyOwn : 0, onlyEnumerable : 0 } );
   var expected =
   [
     '{',
@@ -4520,17 +4522,17 @@ function toStrEmptyArgs( test )
   //  testFunction( test, desc, src, options, expected );
 
   test.case = 'empty arguments, object';
-  var got = _.toStr( { }, { } );
+  var got = _.entity.exportString( { }, { } );
   var expected = '{}';
   test.identical( got, expected );
 
   test.case = 'empty arguments, string';
-  var got = _.toStr( '', { } );
+  var got = _.entity.exportString( '', { } );
   var expected = '\'\'';
   test.identical( got, expected );
 
   test.case = 'empty arguments, array';
-  var got = _.toStr( [], { } );
+  var got = _.entity.exportString( [], { } );
   var expected = '[]';
   test.identical( got, expected );
 
@@ -4567,22 +4569,22 @@ function toStrSymbol( test )
   //  testFunction( test, desc, src, options, expected );
 
   test.case = 'symbol';
-  var got = _.toStr( Symbol( ), { } );
+  var got = _.entity.exportString( Symbol( ), { } );
   var expected = '{- Symbol -}';
   test.identical( got, expected );
 
   test.case = 'symbol sm';
-  var got = _.toStr( Symbol( 'sm' ), { } );
+  var got = _.entity.exportString( Symbol( 'sm' ), { } );
   var expected = '{- Symbol sm -}';
   test.identical( got, expected );
 
   test.case = 'symbol sx, level 0';
-  var got = _.toStr( Symbol( 'sx' ), { levels : 0 } );
+  var got = _.entity.exportString( Symbol( 'sx' ), { levels : 0 } );
   var expected = '{- Symbol sx -}';
   test.identical( got, expected );
 
   test.case = 'symbol sy, noAtomic';
-  var got = _.toStr( Symbol( 'sy' ), { noAtomic : 1 } );
+  var got = _.entity.exportString( Symbol( 'sy' ), { noAtomic : 1 } );
   var expected = '';
   test.identical( got, expected );
 
@@ -4630,42 +4632,42 @@ function toStrNumber( test )
   //  testFunction( test, desc, src, options, expected );
 
   test.case = 'number';
-  var got = _.toStr( Number( ), { } );
+  var got = _.entity.exportString( Number( ), { } );
   var expected = '0';
   test.identical( got, expected );
 
   test.case = 'integer';
-  var got = _.toStr( 5, { } );
+  var got = _.entity.exportString( 5, { } );
   var expected = '5';
   test.identical( got, expected );
 
   test.case = 'number, precision 3';
-  var got = _.toStr( 15000, { precision : 3 } );
+  var got = _.entity.exportString( 15000, { precision : 3 } );
   var expected = '1.50e+4';
   test.identical( got, expected );
 
   test.case = 'float number, fixed 1';
-  var got = _.toStr( 1222.222, { fixed : 1 } );
+  var got = _.entity.exportString( 1222.222, { fixed : 1 } );
   var expected = '1222.2';
   test.identical( got, expected );
 
   test.case = 'float number, noNumber';
-  var got = _.toStr( 1234.4321, { noNumber : 1 } );
+  var got = _.entity.exportString( 1234.4321, { noNumber : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'integer, noAtomic';
-  var got = _.toStr( 15, { noAtomic : 1 } );
+  var got = _.entity.exportString( 15, { noAtomic : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'integer, levels 0';
-  var got = _.toStr( 99, { levels : 0 } );
+  var got = _.entity.exportString( 99, { levels : 0 } );
   var expected = '99';
   test.identical( got, expected );
 
   test.case = 'integer, noRoutine';
-  var got = _.toStr( 22, { noRoutine : 1 } );
+  var got = _.entity.exportString( 22, { noRoutine : 1 } );
   var expected = '22';
   test.identical( got, expected );
 
@@ -4714,42 +4716,42 @@ function toStrString( test )
   //  testFunction( test, desc, src, options, expected );
 
   test.case = 'string';
-  var got = _.toStr( String( ), { } );
+  var got = _.entity.exportString( String( ), { } );
   var expected = '\'\'';
   test.identical( got, expected );
 
   test.case = 'trivial string';
-  var got = _.toStr( 'sample', { } );
+  var got = _.entity.exportString( 'sample', { } );
   var expected = '\'sample\'';
   test.identical( got, expected );
 
   test.case = 'string, noAtomic';
-  var got = _.toStr( 'sample2', { noAtomic : 1 } );
+  var got = _.entity.exportString( 'sample2', { noAtomic : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'string, noString';
-  var got = _.toStr( 'sample3', { noString : 1 } );
+  var got = _.entity.exportString( 'sample3', { noString : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'string, escaping';
-  var got = _.toStr( '\nsample4\n', { escaping : 1 } );
+  var got = _.entity.exportString( '\nsample4\n', { escaping : 1 } );
   var expected = '\'\\nsample4\\n\'';
   test.identical( got, expected );
 
   test.case = 'string, tab';
-  var got = _.toStr( 'sample5', { tab : '---' } );
+  var got = _.entity.exportString( 'sample5', { tab : '---' } );
   var expected = '\'sample5\'';
   test.identical( got, expected );
 
   test.case = 'string, levels 0';
-  var got = _.toStr( 'sample6', { levels : 0 } );
+  var got = _.entity.exportString( 'sample6', { levels : 0 } );
   var expected = '\'sample6\'';
   test.identical( got, expected );
 
   test.case = 'string new line inside';
-  var got = _.toStr( '\nsample7', { } );
+  var got = _.entity.exportString( '\nsample7', { } );
   var expected = '\'\nsample7\'';
   test.identical( got, expected );
 
@@ -4803,42 +4805,42 @@ function toStrAtomic( test )
   //  testFunction( test, desc, src, options, expected );
 
   test.case = 'boolean';
-  var got = _.toStr( Boolean( ), { } );
+  var got = _.entity.exportString( Boolean( ), { } );
   var expected = 'false';
   test.identical( got, expected );
 
   test.case = 'boolean with value';
-  var got = _.toStr( true, { } );
+  var got = _.entity.exportString( true, { } );
   var expected = 'true';
   test.identical( got, expected );
 
   test.case = 'boolean, levels 0';
-  var got = _.toStr( false, { levels : 0 } );
+  var got = _.entity.exportString( false, { levels : 0 } );
   var expected = 'false';
   test.identical( got, expected );
 
   test.case = 'boolean, onlyRoutines';
-  var got = _.toStr( 1!=2, { onlyRoutines : 1 } );
+  var got = _.entity.exportString( 1!=2, { onlyRoutines : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'boolean null';
-  var got = _.toStr( null, { } );
+  var got = _.entity.exportString( null, { } );
   var expected = 'null';
   test.identical( got, expected );
 
   test.case = 'boolean null, levels 3';
-  var got = _.toStr( null, { levels : 3 } );
+  var got = _.entity.exportString( null, { levels : 3 } );
   var expected = 'null';
   test.identical( got, expected );
 
   test.case = 'boolean undefined';
-  var got = _.toStr( undefined, { } );
+  var got = _.entity.exportString( undefined, { } );
   var expected = 'undefined';
   test.identical( got, expected );
 
   test.case = 'boolean undefined, noAtomic';
-  var got = _.toStr( undefined, { noAtomic : 1 } );
+  var got = _.entity.exportString( undefined, { noAtomic : 1 } );
   var expected = '';
   test.identical( got, expected );
 
@@ -4873,22 +4875,22 @@ function toStrDate( test )
   //  testFunction( test, desc, src, options, expected );
 
   test.case = 'date';
-  var got = _.toStr( new Date( Date.UTC( 1993, 12, 12 ) ), { } );
+  var got = _.entity.exportString( new Date( Date.UTC( 1993, 12, 12 ) ), { } );
   var expected = '1994-01-12T00:00:00.000Z';
   test.identical( got, expected );
 
   test.case = 'date';
-  var got = _.toStr( new Date( Date.UTC( 1990, 0, 0 ) ), { } );
+  var got = _.entity.exportString( new Date( Date.UTC( 1990, 0, 0 ) ), { } );
   var expected = '1989-12-31T00:00:00.000Z';
   test.identical( got, expected );
 
   test.case = 'date, levels 0';
-  var got = _.toStr( new Date( Date.UTC( 2016, 12, 8 ) ), { levels : 0 } );
+  var got = _.entity.exportString( new Date( Date.UTC( 2016, 12, 8 ) ), { levels : 0 } );
   var expected = '2017-01-08T00:00:00.000Z';
   test.identical( got, expected );
 
   test.case = 'date, noDate';
-  var got = _.toStr( new Date( Date.UTC( 2016, 1, 2 ) ), { noDate : 1 } );
+  var got = _.entity.exportString( new Date( Date.UTC( 2016, 1, 2 ) ), { noDate : 1 } );
   var expected = '';
   test.identical( got, expected );
 
@@ -4921,17 +4923,17 @@ function toStrRoutine( test )
   //  testFunction( test, desc, src, options, expected );
 
   test.case = 'routine';
-  var got = _.toStr( function rr( ){ }, { } );
+  var got = _.entity.exportString( function rr( ){ }, { } );
   var expected = '[ routine rr ]';
   test.identical( got, expected );
 
   test.case = 'routine, noRoutine';
-  var got = _.toStr( function rx( ){ }, { noRoutine : 1 } );
+  var got = _.entity.exportString( function rx( ){ }, { noRoutine : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'array with a routine, onlyRoutines';
-  var got = _.toStr( [ function ry( ){ } , 1], { onlyRoutines : 1 } );
+  var got = _.entity.exportString( [ function ry( ){ } , 1], { onlyRoutines : 1 } );
   var expected = '';
   test.identical( got, expected );
 
@@ -4946,43 +4948,43 @@ function toStrThrow( test )
     test.case = 'wrong type of argument';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.toStr( { a : 1 }, null );
+      _.entity.exportString( { a : 1 }, null );
     } );
 
     test.case = '( o.precision ) is not between 1 and 21';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.toStr( { a : 1 }, { precision : 0 } );
+      _.entity.exportString( { a : 1 }, { precision : 0 } );
     } );
 
     test.case = '( o.fixed ) is not between 0 and 20';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.toStr( { a : 1 }, { fixed : 22 } );
+      _.entity.exportString( { a : 1 }, { fixed : 22 } );
     } );
 
     test.case = 'if jsonLike : 1, multilinedString 1 " ';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.toStr( { a : 1 }, { jsonLike : 1, multilinedString : 1 } );
+      _.entity.exportString( { a : 1 }, { jsonLike : 1, multilinedString : 1 } );
     } );
 
     test.case = 'wrong arguments count';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.toStr( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
+      _.entity.exportString( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
     } );
 
     test.case = 'invalid json if multilinedString is true`';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.toStr( { a : 1, b : "text" }, { jsonLike : 1, multilinedString : 1 } );
+      _.entity.exportString( { a : 1, b : "text" }, { jsonLike : 1, multilinedString : 1 } );
     } );
 
     test.case = 'onlyRoutines & noRoutine both true';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.toStr( { a : function f( ){}, b : "text" }, { onlyRoutines : 1, noRoutine : 1 } );
+      _.entity.exportString( { a : function f( ){}, b : "text" }, { onlyRoutines : 1, noRoutine : 1 } );
     } );
 
 
@@ -5116,31 +5118,31 @@ function toStrLimitElements( test )
 
   test.case = 'array, limit elements 2';
   var src = [ 1, 2 , 3, 4, 5 ];
-  var got = _.toStr( src, { limitElementsNumber : 2 } );
+  var got = _.entity.exportString( src, { limitElementsNumber : 2 } );
   var expected = '[ 1, 2, [ ... other 3 element(s) ] ]';
   test.identical( got, expected );
 
   test.case = 'array, noString limit elements 3';
   var src = [ 1, 2 , '3', 4, 5 ];
-  var got = _.toStr( src, { limitElementsNumber : 3, noString : 1 } );
+  var got = _.entity.exportString( src, { limitElementsNumber : 3, noString : 1 } );
   var expected = '[ 1, 2, 4, [ ... other 1 element(s) ] ]';
   test.identical( got, expected );
 
   test.case = 'array, noNumber limit elements 2';
   var src = [ 1, 2 , '3', 4, 5 ];
-  var got = _.toStr( src, { limitElementsNumber : 2, noNumber : 1 } );
+  var got = _.entity.exportString( src, { limitElementsNumber : 2, noNumber : 1 } );
   var expected = '[ \'3\' ]';
   test.identical( got, expected );
 
   test.case = 'array, noArray limit elements 5';
   var src = [ 1, 2 , '3', 4, 5 ];
-  var got = _.toStr( src, { limitElementsNumber : 5, noArray : 1 } );
+  var got = _.entity.exportString( src, { limitElementsNumber : 5, noArray : 1 } );
   var expected = '';
   test.identical( got, expected );
 
   test.case = 'array, multiline limit elements';
   var src = [ 1, 2 , '3', 4, 5 ];
-  var got = _.toStr( src, { limitElementsNumber : 2, multiline : 1 } );
+  var got = _.entity.exportString( src, { limitElementsNumber : 2, multiline : 1 } );
   var expected =
   [
     '[',
@@ -5153,7 +5155,7 @@ function toStrLimitElements( test )
 
   test.case = 'array, levels 2 noNumber multiline';
   var src = [ 1, 2 , '3', 4, { a : '1'  }, '5', '6' ];
-  var got = _.toStr( src, { levels : 2, limitElementsNumber : 3, noNumber : 1, multiline : 1 } );
+  var got = _.entity.exportString( src, { levels : 2, limitElementsNumber : 3, noNumber : 1, multiline : 1 } );
   var expected =
   [
     '[',
@@ -5169,7 +5171,7 @@ function toStrLimitElements( test )
 
   test.case = 'array, noNumber multiline wrap 0 levels 2';
   var src = [ 1, 2 , '3', 4, { a : '1'  }, '5', '6' ];
-  var got = _.toStr( src, { levels : 2, limitElementsNumber : 3, noNumber : 1, multiline : 1, wrap : 0, comma : ', '  } );
+  var got = _.entity.exportString( src, { levels : 2, limitElementsNumber : 3, noNumber : 1, multiline : 1, wrap : 0, comma : ', '  } );
   var expected =
   [
     '  \'3\', ',
@@ -5181,7 +5183,7 @@ function toStrLimitElements( test )
 
   test.case = 'object, limit elements 2';
   var src = { a : 1, b : 2, c : 3, d : 4 };
-  var got = _.toStr( src, { limitElementsNumber : 2 } );
+  var got = _.entity.exportString( src, { limitElementsNumber : 2 } );
   var expected =
   [
     '{',
@@ -5194,7 +5196,7 @@ function toStrLimitElements( test )
 
   test.case = 'object, noRoutine noString levels 2';
   var src = { a : 1, b : function n( ){ }, c : { a : '1' }, d : 4 };
-  var got = _.toStr( src, { limitElementsNumber : 2, levels : 2,  noRoutine : 1, noString : 1 } );
+  var got = _.entity.exportString( src, { limitElementsNumber : 2, levels : 2,  noRoutine : 1, noString : 1 } );
   var expected =
   [
     '{',
@@ -5207,7 +5209,7 @@ function toStrLimitElements( test )
 
   test.case = 'object, noString multiline';
   var src = { a : 1, b : undefined, c : { a : '1' }, d : 4 };
-  var got = _.toStr( src, { limitElementsNumber : 2, multiline : 1, noString : 1 } );
+  var got = _.entity.exportString( src, { limitElementsNumber : 2, multiline : 1, noString : 1 } );
   var expected =
   [
     '{',
@@ -5220,7 +5222,7 @@ function toStrLimitElements( test )
 
   test.case = 'object, wrap 0 ';
   var src = { a : 1, b : 2, c : { a : 1, b : '2' }, d : 3 };
-  var got = _.toStr( src, { limitElementsNumber : 4, wrap : 0, comma : ', ' } );
+  var got = _.entity.exportString( src, { limitElementsNumber : 4, wrap : 0, comma : ', ' } );
   var expected =
   [
     '  a : 1, ',
@@ -5238,17 +5240,17 @@ function toStrMethods( test )
 {
 
   test.case = 'converts routine to string default options';
-  var got = _.toStrMethods( function route( ) {} );
+  var got = _.entity.exportStringMethods( function route( ) {} );
   var expected = '[ routine route ]';
   test.identical( got, expected );
 
   test.case = 'converts routine to string, levels:0';
-  var got = _.toStrMethods( function route( ) {}, { levels : 0 } );
+  var got = _.entity.exportStringMethods( function route( ) {}, { levels : 0 } );
   var expected = '[ routine route ]';
   test.identical( got, expected );
 
   test.case = 'different input data types';
-  var got = _.toStrMethods( [ function route( ) {}, 0, '1', null ] );
+  var got = _.entity.exportStringMethods( [ function route( ) {}, 0, '1', null ] );
   var expected = '';
   test.identical( got, expected );
 
@@ -5257,19 +5259,19 @@ function toStrMethods( test )
   test.case = 'invalid argument type';
   test.shouldThrowErrorOfAnyKind( function( )
   {
-    _.toStrMethods( 'one', 'two' );
+    _.entity.exportStringMethods( 'one', 'two' );
   } );
 
   test.case = 'wrong arguments count';
   test.shouldThrowErrorOfAnyKind( function( )
   {
-    _.toStrMethods( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
+    _.entity.exportStringMethods( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
   } );
 
   test.case = 'onlyRoutines & noRoutine both true';
   test.shouldThrowErrorOfAnyKind( function( )
   {
-    _.toStrMethods( function f ( ) {}, { noRoutine : 1 } );
+    _.entity.exportStringMethods( function f ( ) {}, { noRoutine : 1 } );
   } );
 
 }
@@ -5279,22 +5281,22 @@ function toStrMethods( test )
 function toStrFields( test )
 {
   test.case = 'Fields default options';
-  var got = _.toStrFields( [ 1, 2, 'text', undefined ] );
+  var got = _.entity.exportStringFields( [ 1, 2, 'text', undefined ] );
   var expected = '[ 1, 2, \'text\', undefined ]';
   test.identical( got, expected );
 
   test.case = 'Fields, levels : 0';
-  var got = _.toStrFields( [ 1, 2, 'text', undefined ], { levels : 0 } );
+  var got = _.entity.exportStringFields( [ 1, 2, 'text', undefined ], { levels : 0 } );
   var expected = '{- Array with 4 elements -}';
   test.identical( got, expected );
 
   test.case = 'Ignore routine';
-  var got = _.toStrFields( [ function f ( ) {}, 1, 2, 3 ] );
+  var got = _.entity.exportStringFields( [ function f ( ) {}, 1, 2, 3 ] );
   var expected = '[ 1, 2, 3 ]';
   test.identical( got, expected );
 
   test.case = 'no arguments';
-  var got = _.toStrFields( );
+  var got = _.entity.exportStringFields( );
   var expected = 'undefined';
   test.identical( got, expected );
 
@@ -5307,19 +5309,19 @@ function toStrFields( test )
     test.case = 'invalid argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.toStrFields( 'one', 'two' );
+      _.entity.exportStringFields( 'one', 'two' );
     } );
 
     test.case = 'wrong arguments count';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.toStrFields( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
+      _.entity.exportStringFields( { a : 1 }, { b : 1 }, { jsonLike : 1 } );
     } );
 
     test.case = 'onlyRoutines & noRoutine both true';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.toStrFields( function f ( ) {}, { onlyRoutines : 1 } );
+      _.entity.exportStringFields( function f ( ) {}, { onlyRoutines : 1 } );
     } );
 
   }
@@ -5330,28 +5332,28 @@ function toStrFields( test )
 function toStrShort( test )
 {
   test.case = 'Array length test';
-  var got = _._toStrShort( [ 1, 2, 'text', undefined ], {} );
+  var got = _.entity._exportStringShort( [ 1, 2, 'text', undefined ], {} );
   var expected = '{- Array with 4 elements -}';
   test.identical( got, expected );
 
   test.case = 'date to string';
-  var got = _._toStrShort( new Date( Date.UTC( 1993, 12, 12 ) ), {} );
+  var got = _.entity._exportStringShort( new Date( Date.UTC( 1993, 12, 12 ) ), {} );
   var expected = '1994-01-12T00:00:00.000Z';
   test.identical( got, expected );
 
   test.case = 'string length > 40, prefix, postfix, infix';
-  // var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
-  var got = _._toStrShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { prefix : '"', postfix : '"', infix : '...' } );
+  // var got = _.entity._exportStringShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
+  var got = _.entity._exportStringShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { prefix : '"', postfix : '"', infix : '...' } );
   var expected = '"toxtndmtmdbmmlzoir...nrrqfuvybuuvixyrx"';
   test.identical( got, expected );
 
   test.case = 'string with options';
-  var got = _._toStrShort( '\toxtndmtmdb', {} );
+  var got = _.entity._exportStringShort( '\toxtndmtmdb', {} );
   var expected = '\\toxtndmtmdb';
   test.identical( got, expected );
 
   test.case = 'error to string ';
-  var got = _._toStrShort( new Error( 'err', {} ), {} );
+  var got = _.entity._exportStringShort( new Error( 'err', {} ), {} );
   var expected = '[object Error]';
   test.identical( got, expected );
 
@@ -5363,19 +5365,19 @@ function toStrShort( test )
     test.case = 'invalid second argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrShort( '1', 2 );
+      _.entity._exportStringShort( '1', 2 );
     } );
 
     test.case = 'only one argument provided';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrShort( '1' );
+      _.entity._exportStringShort( '1' );
     } );
 
     test.case = 'no arguments';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrShort( );
+      _.entity._exportStringShort( );
     } );
 
   }
@@ -5386,17 +5388,17 @@ function toStrShort( test )
 function _toStrIsVisibleElement( test )
 {
   test.case = 'default options';
-  var got = _._toStrIsVisibleElement( 123, {} );
+  var got = _.entity._exportStringIsVisibleElement( 123, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'noAtomic';
-  var got = _._toStrIsVisibleElement( 'test', { noAtomic : 1 } );
+  var got = _.entity._exportStringIsVisibleElement( 'test', { noAtomic : 1 } );
   var expected = false;
   test.identical( got, expected );
 
   test.case = 'noObject';
-  var got = _._toStrIsVisibleElement( { a : 'test' }, { noObject : 1 } );
+  var got = _.entity._exportStringIsVisibleElement( { a : 'test' }, { noObject : 1 } );
   var expected = false;
   test.identical( got, expected );
 
@@ -5408,19 +5410,19 @@ function _toStrIsVisibleElement( test )
     test.case = 'invalid arguments count';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrIsVisibleElement( '1' );
+      _.entity._exportStringIsVisibleElement( '1' );
     } );
 
     // test.case = 'second argument is not a object';
     // test.shouldThrowErrorOfAnyKind( function( )
     // {
-    //   _._toStrIsVisibleElement( '1', 2 );
+    //   _.entity._exportStringIsVisibleElement( '1', 2 );
     // } );
 
     test.case = 'no arguments';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrIsVisibleElement( );
+      _.entity._exportStringIsVisibleElement( );
     } );
 
   }
@@ -5431,27 +5433,27 @@ function _toStrIsVisibleElement( test )
 function _toStrIsSimpleElement( test )
 {
   test.case = 'default options';
-  var got = _._toStrIsSimpleElement( 123, {} );
+  var got = _.entity._exportStringIsSimpleElement( 123, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'string length > 40';
-  var got = _._toStrIsSimpleElement( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', {} );
+  var got = _.entity._exportStringIsSimpleElement( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', {} );
   var expected = false;
   test.identical( got, expected );
 
   test.case = 'object test';
-  var got = _._toStrIsSimpleElement( { a : 1 }, {} );
+  var got = _.entity._exportStringIsSimpleElement( { a : 1 }, {} );
   var expected = false;
   test.identical( got, expected );
 
   test.case = 'atomic test';
-  var got = _._toStrIsSimpleElement( undefined, {} );
+  var got = _.entity._exportStringIsSimpleElement( undefined, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'escaping test';
-  var got = _._toStrIsSimpleElement( '\naaa', { escaping : 1 } );
+  var got = _.entity._exportStringIsSimpleElement( '\naaa', { escaping : 1 } );
   var expected = true;
   test.identical( got, expected );
 
@@ -5463,19 +5465,19 @@ function _toStrIsSimpleElement( test )
     test.case = 'invalid arguments count';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrIsSimpleElement( '1' );
+      _.entity._exportStringIsSimpleElement( '1' );
     } );
 
     test.case = 'second argument is not a object';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrIsSimpleElement( '1', 2 );
+      _.entity._exportStringIsSimpleElement( '1', 2 );
     } );
 
     test.case = 'no arguments';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrIsSimpleElement( );
+      _.entity._exportStringIsSimpleElement( );
     } );
 
   }
@@ -5486,12 +5488,12 @@ function _toStrIsSimpleElement( test )
 function _toStrFromRoutine( test )
 {
   test.case = 'routine test';
-  var got = _._toStrFromRoutine( function a ( ) {}, {} );
+  var got = _.entity._exportStringFromRoutine( function a ( ) {}, {} );
   var expected = '[ routine a ]';
   test.identical( got, expected );
 
   test.case = 'routine without name';
-  var got = _._toStrFromRoutine( function( ) {}, {} );
+  var got = _.entity._exportStringFromRoutine( function( ) {}, {} );
   var expected = '[ routine without name ]';
   test.identical( got, expected );
 
@@ -5503,13 +5505,13 @@ function _toStrFromRoutine( test )
     test.case = 'invalid argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromRoutine( '1' );
+      _.entity._exportStringFromRoutine( '1' );
     } );
 
     test.case = 'no arguments';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromRoutine( );
+      _.entity._exportStringFromRoutine( );
     } );
 
   }
@@ -5520,22 +5522,22 @@ function _toStrFromRoutine( test )
 function _toStrFromNumber( test )
 {
   test.case = 'default options';
-  var got = _._toStrFromNumber( 123, {} );
+  var got = _.entity._exportStringFromNumber( 123, {} );
   var expected = '123';
   test.identical( got, expected );
 
   test.case = 'number precision test';
-  var got = _._toStrFromNumber( 123, { precision : 2 } );
+  var got = _.entity._exportStringFromNumber( 123, { precision : 2 } );
   var expected = '1.2e+2';
   test.identical( got, expected );
 
   test.case = 'number fixed test';
-  var got = _._toStrFromNumber( 123, { fixed : 2 } );
+  var got = _.entity._exportStringFromNumber( 123, { fixed : 2 } );
   var expected = '123.00';
   test.identical( got, expected );
 
   test.case = 'invalid option type';
-  var got = _._toStrFromNumber( 123, { fixed : '2' } );
+  var got = _.entity._exportStringFromNumber( 123, { fixed : '2' } );
   var expected = '123';
   test.identical( got, expected );
 
@@ -5547,31 +5549,31 @@ function _toStrFromNumber( test )
     test.case = 'invalid first argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromNumber( '1', {} );
+      _.entity._exportStringFromNumber( '1', {} );
     } );
 
     test.case = 'invalid second argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromNumber( 1, 2 );
+      _.entity._exportStringFromNumber( 1, 2 );
     } );
 
     test.case = 'no arguments';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromNumber( );
+      _.entity._exportStringFromNumber( );
     } );
 
     test.case = 'precision out of range';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromNumber( 1, { precision : 22 } );
+      _.entity._exportStringFromNumber( 1, { precision : 22 } );
     } );
 
     test.case = 'fixed out of range';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromNumber( 1, { fixed : 22 } );
+      _.entity._exportStringFromNumber( 1, { fixed : 22 } );
     } );
 
   }
@@ -5584,37 +5586,37 @@ function _toStrFromNumber2( test )
 
   test.case = 'returns with precision until 5';
   var options = { precision : 5 };
-  var got = _._toStrFromNumber( 3.123456, options );
+  var got = _.entity._exportStringFromNumber( 3.123456, options );
   var expected = '3.1235';
   test.identical( got, expected );
 
   test.case = 'returns with precision until 2';
   var options = { precision : 2 };
-  var got = _._toStrFromNumber( 3.123456, options );
+  var got = _.entity._exportStringFromNumber( 3.123456, options );
   var expected = '3.1';
   test.identical( got, expected );
 
   test.case = 'is returned with four numbers after dot';
   var options = { fixed : 4 };
-  var got = _._toStrFromNumber( 13.75, options );
+  var got = _.entity._exportStringFromNumber( 13.75, options );
   var expected = '13.7500';
   test.identical( got, expected );
 
   test.case = 'is returned the rounded number to the top';
   var options = { fixed : 0 };
-  var got = _._toStrFromNumber( 13.50, options );
+  var got = _.entity._exportStringFromNumber( 13.50, options );
   var expected = '14';
   test.identical( got, expected );
 
   test.case = 'is returned the rounded number to the bottom';
   var options = { fixed : 0 };
-  var got = _._toStrFromNumber( 13.49, options );
+  var got = _.entity._exportStringFromNumber( 13.49, options );
   var expected = '13';
   test.identical( got, expected );
 
   test.case = 'returns string';
   var options = {  };
-  var got = _._toStrFromNumber( 13.75, options );
+  var got = _.entity._exportStringFromNumber( 13.75, options );
   var expected = '13.75';
   test.identical( got, expected );
 
@@ -5626,25 +5628,25 @@ function _toStrFromNumber2( test )
   test.case = 'no arguments';
   test.shouldThrowErrorOfAnyKind( function( )
   {
-    _._toStrFromNumber( );
+    _.entity._exportStringFromNumber( );
   } );
 
   test.case = 'first argument is wrong';
   test.shouldThrowErrorOfAnyKind( function( )
   {
-    _._toStrFromNumber( 'wrong argument', { fixed : 3 } );
+    _.entity._exportStringFromNumber( 'wrong argument', { fixed : 3 } );
   } );
 
   test.case = 'second argument is not provided';
   test.shouldThrowErrorOfAnyKind( function( )
   {
-    _._toStrFromNumber( 13.75 );
+    _.entity._exportStringFromNumber( 13.75 );
   } );
 
   test.case = 'second argument is wrong precision must be between 1 and 21';
   test.shouldThrowErrorOfAnyKind( function( )
   {
-    _._toStrFromNumber( 13.75, { precision : 0 } );
+    _.entity._exportStringFromNumber( 13.75, { precision : 0 } );
   } );
 
 };
@@ -5655,48 +5657,48 @@ function _toStrIsSimpleElement2( test )
 {
 
   test.case = 'argument\'s length is less than 40 symbols';
-  var got = _._toStrIsSimpleElement( 'test', {} );
+  var got = _.entity._exportStringIsSimpleElement( 'test', {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument is number';
-  var got = _._toStrIsSimpleElement( 13, {} );
+  var got = _.entity._exportStringIsSimpleElement( 13, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument is boolean';
-  var got = _._toStrIsSimpleElement( true, {} );
+  var got = _.entity._exportStringIsSimpleElement( true, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument is null';
-  var got = _._toStrIsSimpleElement( null, {} );
+  var got = _.entity._exportStringIsSimpleElement( null, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument is undefined';
-  var got = _._toStrIsSimpleElement( undefined, {} );
+  var got = _.entity._exportStringIsSimpleElement( undefined, {} );
   var expected = true;
   test.identical( got, expected );
 
   test.case = 'argument\'s length is greater than 40 symbols';
-  var got = _._toStrIsSimpleElement( 'test, test, test, test, test, test, test, test, test.', {} );
+  var got = _.entity._exportStringIsSimpleElement( 'test, test, test, test, test, test, test, test, test.', {} );
   var expected = false;
   test.identical( got, expected );
 
   test.case = 'argument is an object';
-  var got = _._toStrIsSimpleElement( { a: 33 }, {} );
+  var got = _.entity._exportStringIsSimpleElement( { a: 33 }, {} );
   var expected = false;
   test.identical( got, expected );
 
   test.case = 'argument is an array';
-  var got = _._toStrIsSimpleElement( [ 1, 2, 3 ], {} );
+  var got = _.entity._exportStringIsSimpleElement( [ 1, 2, 3 ], {} );
   var expected = false;
   test.identical( got, expected );
 
   test.case = 'argument is an array-like';
   var arrLike = ( function( ) { return arguments; } )( 1, 2, 3 );
-  var got = _._toStrIsSimpleElement( arrLike, {} );
+  var got = _.entity._exportStringIsSimpleElement( arrLike, {} );
   var expected = false;
   test.identical( got, expected );
 
@@ -5714,22 +5716,22 @@ function _toStrIsSimpleElement2( test )
 function _toStrFromStr( test )
 {
   test.case = 'default options';
-  var got = _._toStrFromStr( '123', {} );
+  var got = _.entity._exportStringFromStr( '123', {} );
   var expected = '123';
   test.identical( got, expected );
 
   test.case = 'escaping';
-  var got = _._toStrFromStr( '\n123\u001b', { escaping : 1 } );
+  var got = _.entity._exportStringFromStr( '\n123\u001b', { escaping : 1 } );
   var expected = '\\n123\\u001b';
   test.identical( got, expected );
 
   test.case = 'stringWrapper';
-  var got = _._toStrFromStr( 'string', { stringWrapper : '"' } );
+  var got = _.entity._exportStringFromStr( 'string', { stringWrapper : '"' } );
   var expected = '"string"';
   test.identical( got, expected );
 
   test.case = 'multilinedString';
-  var got = _._toStrFromStr( 'string\nstring2', { stringWrapper : '`' } );
+  var got = _.entity._exportStringFromStr( 'string\nstring2', { stringWrapper : '`' } );
   var expected = "`string\nstring2`";
   test.identical( got, expected );
 
@@ -5742,19 +5744,19 @@ function _toStrFromStr( test )
     test.case = 'invalid first argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromStr( 2, {} );
+      _.entity._exportStringFromStr( 2, {} );
     } );
 
     test.case = 'invalid second argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromStr( '1', 2 );
+      _.entity._exportStringFromStr( '1', 2 );
     } );
 
     test.case = 'no arguments';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromStr( );
+      _.entity._exportStringFromStr( );
     } );
 
   }
@@ -5766,22 +5768,22 @@ function _toStrFromArray( test )
 {
 
   test.case = 'default options';
-  var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 1 } ).text;
+  var got = _.entity._exportStringFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 1 } ).text;
   var expected = '[ 1, 2, 3 ]';
   test.identical( got, expected );
 
   test.case = 'wrap test';
-  var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 0 } ).text;
+  var got = _.entity._exportStringFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 0 } ).text;
   var expected = '   1, 2, 3';
   test.identical( got, expected );
 
   test.case = 'levels 0 test';
-  var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 0, levels : 0, comma : ', ', wrap : 1 } ).text;
+  var got = _.entity._exportStringFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 0, levels : 0, comma : ', ', wrap : 1 } ).text;
   var expected = '{- Array with 3 elements -}';
   test.identical( got, expected );
 
   test.case = 'dtab & multiline test';
-  var got = _._toStrFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '-', level : 0, comma : ', ', wrap : 1, multiline : 1 } ).text;
+  var got = _.entity._exportStringFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '-', level : 0, comma : ', ', wrap : 1, multiline : 1 } ).text;
   var expected =
   [
     '[',
@@ -5800,19 +5802,19 @@ function _toStrFromArray( test )
     test.case = 'invalid first argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromArray( 2, {} );
+      _.entity._exportStringFromArray( 2, {} );
     } );
 
     test.case = 'invalid second argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromArray( [], 2 );
+      _.entity._exportStringFromArray( [], 2 );
     } );
 
     test.case = 'no arguments';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromArray( );
+      _.entity._exportStringFromArray( );
     } );
 
   }
@@ -5825,26 +5827,26 @@ function _toStrFromObject( test )
   var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0 };
 
   test.case = 'default options';
-  var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );
+  var got = _.entity._exportStringFromObject( { a : 1, b : 2 , c : 'text' }, def );
   var expected = '{ a : 1, b : 2, c : text }';
   test.identical( got.text, expected );
 
   test.case = 'levels 0 test';
   def.levels = 0;
-  var got = _._toStrFromObject( { a : 1, b : 2 , c : 'text' }, def );
+  var got = _.entity._exportStringFromObject( { a : 1, b : 2 , c : 'text' }, def );
   var expected = '{- Map.polluted with 3 elements -}';
   test.identical( got.text, expected );
 
   test.case = 'wrap 0 test';
   def.levels = 1;
   def.wrap = 0;
-  var got = _._toStrFromObject( { a : 1, b : 2, c : 'text' }, def );
+  var got = _.entity._exportStringFromObject( { a : 1, b : 2, c : 'text' }, def );
   var expected = 'a : 1, b : 2, c : text';
   test.identical( got.text, expected );
 
   test.case = 'noObject test';
   def.noObject = 1;
-  var got = _._toStrFromObject( { a : 1, b : 2, c : 'text' }, def );
+  var got = _.entity._exportStringFromObject( { a : 1, b : 2, c : 'text' }, def );
   var expected = undefined;
   test.identical( got, expected );
 
@@ -5853,7 +5855,7 @@ function _toStrFromObject( test )
   def.dtab = '*';
   def.multiline  = 1;
   def.prependTab = 1;
-  var got = _._toStrFromObject( { a : 1, b : 2, c : 'text' }, def );
+  var got = _.entity._exportStringFromObject( { a : 1, b : 2, c : 'text' }, def );
   var expected =
   [
     ' *a : 1, ',
@@ -5870,25 +5872,25 @@ function _toStrFromObject( test )
     test.case = 'invalid first argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromObject( 1, {} );
+      _.entity._exportStringFromObject( 1, {} );
     } );
 
     test.case = 'empty options';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromObject( { a : 1 }, {} );
+      _.entity._exportStringFromObject( { a : 1 }, {} );
     } );
 
     test.case = 'invalid second argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromObject( { a : 1 }, 2 );
+      _.entity._exportStringFromObject( { a : 1 }, 2 );
     } );
 
     test.case = 'no arguments';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromObject( );
+      _.entity._exportStringFromObject( );
     } );
 
   }
@@ -5914,7 +5916,7 @@ function _toStrFromContainer( test )
 
   test.case = 'default options';
   item_options( );
-  var got = _._toStrFromContainer
+  var got = _.entity._exportStringFromContainer
   ( {
     values : src,
     names,
@@ -5936,7 +5938,7 @@ function _toStrFromContainer( test )
   o.multiline = 1;
   item_options( );
 
-  var got = _._toStrFromContainer
+  var got = _.entity._exportStringFromContainer
   ( {
     values : src,
     names,
@@ -5966,7 +5968,7 @@ function _toStrFromContainer( test )
   o.levels = 256;
   item_options( );
 
-  var got = _._toStrFromContainer
+  var got = _.entity._exportStringFromContainer
   ( {
     values : src,
     names,
@@ -5988,19 +5990,19 @@ function _toStrFromContainer( test )
     test.case = 'invalid  argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromContainer( 1 );
+      _.entity._exportStringFromContainer( 1 );
     } );
 
     test.case = 'empty object';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromContainer( { } );
+      _.entity._exportStringFromContainer( { } );
     } );
 
     test.case = 'no arguments';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _._toStrFromContainer( );
+      _.entity._exportStringFromContainer( );
     } );
 
   }
@@ -6014,12 +6016,12 @@ function toStrNice( test )
   test.case = 'key and value is identical';
   var src = { proto : 'proto' };
   debugger;
-  var got = _.toStrNice( src );
+  var got = _.entity.exportStringNice( src );
   test.identical( got, '  proto : proto' );
 
   test.case = 'key and value is different';
   var src = { proto : 'aaa' };
-  var got = _.toStrNice( src );
+  var got = _.entity.exportStringNice( src );
   test.identical( got, '  proto : aaa' );
 }
 
