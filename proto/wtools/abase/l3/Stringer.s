@@ -1229,7 +1229,7 @@ function _exportStringFromStr( src, o )
 
   if( o.limitStringLength )
   {
-    result = _.strStrShort
+    result = _.strShort
     ({
       src : _.strEscape( src ),
       limit : o.limitStringLength,
