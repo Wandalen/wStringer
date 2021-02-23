@@ -1,4 +1,5 @@
-( function _Stringer_test_s_( ) {
+( function _Stringer_test_s_()
+{
 
 'use strict';
 
@@ -121,9 +122,9 @@ function reportChars( )
 // tests
 // --
 
-/* qqq : normalize test | Dmytro : normalized */
+/* aaa : normalize test | Dmytro : normalized */
 
-function toStr( test )
+function exportString( test )
 {
   test.case = 'in - boolean';
   var got = _.entity.exportString( false, {} );
@@ -138,9 +139,7 @@ function toStr( test )
   test.identical( got, '0' );
 
   test.case = 'in - Date, levels - 2';
-  debugger;
   var got = _.entity.exportString( new Date( Date.UTC( 2020, 0, 13 ) ), { levels : 2 } );
-  debugger;
   test.identical( got, '2020-01-13T00:00:00.000Z' );
 
   test.case = 'in - string, level - 2';
@@ -608,7 +607,7 @@ function toStr( test )
 // str unwrapped
 // --
 
-function toStrUnwrapped( test )
+function exportStringUnwrapped( test )
 {
   //var desc = 'Error test',
   //src =
@@ -1040,7 +1039,7 @@ function toStrUnwrapped( test )
 
 //
 
-function toStrError( test )
+function exportStringError( test )
 {
   //  var desc = 'Error test',
   //  src =
@@ -1159,7 +1158,7 @@ function toStrError( test )
 
 //
 
-function toStrArray( test )
+function exportStringArray( test )
 {
   //  var  desc = 'Array test',
   //  src =
@@ -1585,7 +1584,7 @@ function toStrArray( test )
   ////[ { a : 'string' }, [ true ], 1 ],
   ////{ levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '/ ' },
   //
-  //    /*51*/ // !!! please move to toStrUnwrapped
+  //    /*51*/ // !!! please move to exportStringUnwrapped
   //    [
   //      '    5||',
   //      '    4||',
@@ -2583,7 +2582,7 @@ function toStrArray( test )
 
 //
 
-function toStrObject( test )
+function exportStringObject( test )
 {
   //  var desc = 'Object test',
   //  src =
@@ -3921,7 +3920,7 @@ function toStrObject( test )
 
 //
 
-function toStrStringWrapper( test )
+function exportStringStringWrapper( test )
 {
   //   var desc = 'stringWrapper test',
   //   src =
@@ -4167,7 +4166,7 @@ function toStrStringWrapper( test )
 
 //
 
-function toStrLevel( test )
+function exportStringLevel( test )
 {
   //   var desc = 'level test',
   //   src =
@@ -4262,7 +4261,7 @@ function toStrLevel( test )
 
 //
 
-function toStrEnumerable( test )
+function exportStringEnumerable( test )
 {
   //   var desc = 'onlyEnumerable test',
   //   src =
@@ -4512,7 +4511,7 @@ function toStrEnumerable( test )
 
 // xxx
 
-function toStrEmptyArgs( test )
+function exportStringEmptyArgs( test )
 {
   //  var desc = 'empty arguments',
   //  src = [ {}, '', [] ],
@@ -4540,7 +4539,7 @@ function toStrEmptyArgs( test )
 
 //
 
-function toStrSymbol( test )
+function exportStringSymbol( test )
 {
   //  var desc = 'Symbol test',
   //  src =
@@ -4592,7 +4591,7 @@ function toStrSymbol( test )
 
 //
 
-function toStrNumber( test )
+function exportStringNumber( test )
 {
   //  var desc = 'Number test',
   //  src =
@@ -4675,7 +4674,7 @@ function toStrNumber( test )
 
 //
 
-function toStrString( test )
+function exportStringString( test )
 {
   //  var desc = 'String test',
   //  src =
@@ -4759,7 +4758,7 @@ function toStrString( test )
 
 //
 
-function toStrAtomic( test )
+function exportStringAtomic( test )
 {
   //  var desc = 'boolean, null, undefined test',
   //  src =
@@ -4848,7 +4847,7 @@ function toStrAtomic( test )
 
 //
 
-function toStrDate( test )
+function exportStringDate( test )
 {
   //  var desc = 'Date test',
   //  src =
@@ -4898,7 +4897,7 @@ function toStrDate( test )
 
 //
 
-function toStrRoutine( test )
+function exportStringRoutine( test )
 {
   //  var desc = 'Routine test',
   //  src =
@@ -4941,7 +4940,7 @@ function toStrRoutine( test )
 
 //
 
-function toStrThrow( test )
+function exportStringThrow( test )
 {
   if( Config.debug )
   {
@@ -4993,7 +4992,7 @@ function toStrThrow( test )
 
 //
 
-function toStrLimitElements( test )
+function exportStringLimitElements( test )
 {
   //  var desc = 'limitElementsNumber options test',
   //  src =
@@ -5236,7 +5235,7 @@ function toStrLimitElements( test )
 
 //
 
-function toStrMethods( test )
+function exportStringMethods( test )
 {
 
   test.case = 'converts routine to string default options';
@@ -5278,7 +5277,7 @@ function toStrMethods( test )
 
 //
 
-function toStrFields( test )
+function exportStringFields( test )
 {
   test.case = 'Fields default options';
   var got = _.entity.exportStringFields( [ 1, 2, 'text', undefined ] );
@@ -5329,7 +5328,7 @@ function toStrFields( test )
 
 //
 
-function toStrShort( test )
+function exportStringShort( test )
 {
   test.case = 'Array length test';
   var got = _.entity._exportStringShort( [ 1, 2, 'text', undefined ], {} );
@@ -5385,7 +5384,7 @@ function toStrShort( test )
 
 //
 
-function _toStrIsVisibleElement( test )
+function _exportStringIsVisibleElement( test )
 {
   test.case = 'default options';
   var got = _.entity._exportStringIsVisibleElement( 123, {} );
@@ -5430,7 +5429,7 @@ function _toStrIsVisibleElement( test )
 
 //
 
-function _toStrIsSimpleElement( test )
+function _exportStringIsSimpleElement( test )
 {
   test.case = 'default options';
   var got = _.entity._exportStringIsSimpleElement( 123, {} );
@@ -5485,7 +5484,7 @@ function _toStrIsSimpleElement( test )
 
 //
 
-function _toStrFromRoutine( test )
+function _exportStringFromRoutine( test )
 {
   test.case = 'routine test';
   var got = _.entity._exportStringFromRoutine( function a ( ) {}, {} );
@@ -5519,7 +5518,7 @@ function _toStrFromRoutine( test )
 
 //
 
-function _toStrFromNumber( test )
+function _exportStringFromNumber( test )
 {
   test.case = 'default options';
   var got = _.entity._exportStringFromNumber( 123, {} );
@@ -5581,7 +5580,7 @@ function _toStrFromNumber( test )
 
 //
 
-function _toStrFromNumber2( test )
+function _exportStringFromNumber2( test )
 {
 
   test.case = 'returns with precision until 5';
@@ -5653,7 +5652,7 @@ function _toStrFromNumber2( test )
 
 //
 
-function _toStrIsSimpleElement2( test )
+function _exportStringIsSimpleElement2( test )
 {
 
   test.case = 'argument\'s length is less than 40 symbols';
@@ -5713,7 +5712,7 @@ function _toStrIsSimpleElement2( test )
 
 //
 
-function _toStrFromStr( test )
+function _exportStringFromStr( test )
 {
   test.case = 'default options';
   var got = _.entity._exportStringFromStr( '123', {} );
@@ -5764,7 +5763,7 @@ function _toStrFromStr( test )
 
 //
 
-function _toStrFromArray( test )
+function _exportStringFromArray( test )
 {
 
   test.case = 'default options';
@@ -5822,7 +5821,7 @@ function _toStrFromArray( test )
 
 //
 
-function _toStrFromObject( test )
+function _exportStringFromObject( test )
 {
   var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0 };
 
@@ -5898,7 +5897,7 @@ function _toStrFromObject( test )
 
 //
 
-function _toStrFromContainer( test )
+function _exportStringFromContainer( test )
 {
   var o = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0, noSubObject : 0, prependTab : 1, jsonLike : 0, stringWrapper : '"' };
   var src = { a : 1, b : 2, c : 'text' };
@@ -6011,18 +6010,431 @@ function _toStrFromContainer( test )
 
 //
 
-function toStrNice( test )
+function exportStringNice( test )
 {
-  test.case = 'key and value is identical';
-  var src = { proto : 'proto' };
-  debugger;
-  var got = _.entity.exportStringNice( src );
-  test.identical( got, '  proto : proto' );
+  test.case = 'in - boolean';
+  var got = _.entity.exportStringNice( false, {} );
+  test.identical( got, 'false' );
 
-  test.case = 'key and value is different';
-  var src = { proto : 'aaa' };
-  var got = _.entity.exportStringNice( src );
-  test.identical( got, '  proto : aaa' );
+  test.case = 'in - number';
+  var got = _.entity.exportStringNice( 13, {} );
+  test.identical( got, '13' );
+
+  test.case = 'in - number, levels - 2';
+  var got = _.entity.exportStringNice( 0, { levels : 2 } );
+  test.identical( got, '0' );
+
+  test.case = 'in - Date, levels - 2';
+  var got = _.entity.exportStringNice( new Date( Date.UTC( 2020, 0, 13 ) ), { levels : 2 } );
+  test.identical( got, '2020-01-13T00:00:00.000Z' );
+
+  test.case = 'in - string, level - 2';
+  var got = _.entity.exportStringNice( 'text', { levels : 2 } );
+  test.identical( got, 'text' );
+
+  test.case = 'in - empty array, levels - 2';
+  var got = _.entity.exportStringNice( [], { levels : 2 } );
+  test.identical( got, '' );
+
+  test.case = 'in - array with empty maps, levels - 2';
+  var got = _.entity.exportStringNice( [ {}, {}, {} ], { levels : 2 } );
+  test.identical( got, '' );
+
+  test.case = 'in - array with numbers, levels - 2';
+  var got = _.entity.exportStringNice( [ 1, 2, 3, 4 ], { levels : 2 } );
+  test.identical( got, '  1\n  2\n  3\n  4' );
+
+  test.case = 'in - empty map, levels - 2';
+  var got = _.entity.exportStringNice( {}, { levels : 2 } );
+  test.identical( got, '' );
+
+  test.case = 'in - filled map, levels - 2';
+  var got = _.entity.exportStringNice( { a : {}, b : {} }, { levels : 2 } );
+  test.identical( got, '' );
+
+  test.case = 'in - filled map with strings values, levels - 2';
+  var got = _.entity.exportStringNice( { 1 : 'a', 2: 'b', 3: 'c' }, { levels : 2 } );
+  test.identical( got, '  1 : a\n  2 : b\n  3 : c' );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2';
+  var src = { 1 : 'a', 2 : [ 10, 20, 30 ], 3 : { 21 : 'aa', 22 : 'bb' } };
+  var got = _.entity.exportStringNice( src, { levels : 2 } );
+  var exp =
+  [
+    '  1 : a',
+    '  2 : \n    10\n    20\n    30',
+    '  3 : \n    21 : aa\n    22 : bb',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2 } );
+  var exp =
+  [
+    '  1 : a',
+    '  2 : \n    10\n    20\n    30',
+    '  3 : \n    21 : aa\n    22 : bb',
+    '  4 : \n    10\n    20\n    30',
+    '  5 : \n    10\n    20\n    30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2 } );
+  var exp =
+  [
+    '  1 : a',
+    '  2 : \n    10\n    20\n    30',
+    '  3 : \n    21 : aa\n    22 : bb',
+    '  4 : \n    10\n    20\n    30',
+    '  5 : \n    10\n    20\n    30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, levels - 2';
+  var src =
+  [
+    'a',
+    [ 10, 20, 30 ],
+    { 21 : 'aa', 22 : 'bb' },
+    { 31 : '111', 32 : '222' },
+    [ 10, 20, 30 ],
+    [ 10, 20, 30 ],
+  ];
+  var got = _.entity.exportStringNice( src, { levels : 2 } );
+  var exp =
+  [
+    '  a',
+    '    10\n    20\n    30',
+    '    21 : aa\n    22 : bb',
+    '    31 : 111\n    32 : 222',
+    '    10\n    20\n    30',
+    '    10\n    20\n    30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, levels - 3';
+  var src =
+  [
+    'a',
+    [ 10, 20, 30 ],
+    {
+      21 : [ 1, 2, 3 ],
+      22 : [ 1, 2, 3, 4 ],
+    },
+    {
+      31 : { a : 'a', b : 'b' },
+      32 : { a : 'a', b : 'b', c : 'c' }
+    },
+    [
+      [ 1, 2, 3 ],
+      [ 1, 2, 3, 4 ]
+    ],
+    [
+      { a : 'a', b : 'b' },
+      { a : 'a', b : 'b', c : 'c' }
+    ],
+  ];
+  var got = _.entity.exportStringNice( src, { levels : 3 } );
+  var exp =
+  [
+    '  a',
+    '    10\n    20\n    30',
+    '    21 : \n      1\n      2\n      3',
+    '    22 : \n      1\n      2\n      3\n      4',
+    '    31 : \n      a : a\n      b : b',
+    '    32 : \n      a : a\n      b : b\n      c : c',
+    '      1\n      2\n      3',
+    '      1\n      2\n      3\n      4',
+    '      a : a\n      b : b',
+    '      a : a\n      b : b\n      c : c',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, a few levels of nesting, levels - 5';
+  var src =
+  [
+    'a',
+    [ 10, 20, 30 ],
+    {
+      21 : [ 1, 2, 3 ],
+      22 : [ 1, 2, 3, 4 ],
+    },
+    {
+      31 :
+      {
+        a : { a : 'a', b : 'b' },
+        b : { a : 'a', b : 'b' }
+      },
+      32 :
+      {
+        a : 'a',
+        b : 'b',
+        c : { a : 'a', b : 'b' },
+      }
+    },
+    [
+      [
+        [ 100, 200 ],
+        [ 100, 200 ]
+      ],
+      [ 1, 2, 3, 4 ]
+    ],
+    [
+      { a : 'a', b : 'b' },
+      {
+        a : 'a',
+        b : 'b',
+        c : { a : 'a', b : 'b' }
+      }
+    ],
+  ];
+  var got = _.entity.exportStringNice( src, { levels : 5 } );
+  var exp =
+  [
+    '  a',
+    '    10\n    20\n    30',
+    '    21 : \n      1\n      2\n      3',
+    '    22 : \n      1\n      2\n      3\n      4',
+    '    31 : ',
+    '      a : \n        a : a\n        b : b',
+    '      b : \n        a : a\n        b : b',
+    '    32 : ',
+    '      a : a',
+    '      b : b',
+    '      c : \n        a : a\n        b : b',
+    '        100\n        200',
+    '        100\n        200',
+    '      1\n      2\n      3\n      4',
+    '      a : a\n      b : b',
+    '      a : a',
+    '      b : b',
+    '      c : \n        a : a\n        b : b',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, levels - 1';
+  var src =
+  [
+    'a',
+    [ 10, 20, 30 ],
+    { 21 : 'aa', 22 : 'bb' },
+    { 31 : '111', 32 : '222' },
+    [ 10, 20, 30 ],
+    [ 10, 20, 30 ],
+  ];
+  var got = _.entity.exportStringNice( src, { levels : 1 } );
+  var exp =
+  [
+    '  a',
+    '  {- Array with 3 elements -}',
+    '  {- Map.polluted with 2 elements -}',
+    '  {- Map.polluted with 2 elements -}',
+    '  {- Array with 3 elements -}',
+    '  {- Array with 3 elements -}',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, 3 levels of nesting, levels - 2';
+  var src =
+  [
+    'a',
+    [ 10, 20, 30 ],
+    {
+      21 : [ 1, 2, 3 ],
+      22 : [ 1, 2, 3, 4 ],
+    },
+    {
+      31 : { a : 'a', b : 'b' },
+      32 : { a : 'a', b : 'b', c : 'c' }
+    },
+    [
+      [ 1, 2, 3 ],
+      [ 1, 2, 3, 4 ]
+    ],
+    [
+      { a : 'a', b : 'b' },
+      { a : 'a', b : 'b', c : 'c' }
+    ],
+  ];
+  var got = _.entity.exportStringNice( src, { levels : 2 } );
+  var exp =
+  [
+    '  a',
+    '    10\n    20\n    30',
+    '    21 : {- Array with 3 elements -}',
+    '    22 : {- Array with 4 elements -}',
+    '    31 : {- Map.polluted with 2 elements -}',
+    '    32 : {- Map.polluted with 3 elements -}',
+    '    {- Array with 3 elements -}',
+    '    {- Array with 4 elements -}',
+    '    {- Map.polluted with 2 elements -}',
+    '    {- Map.polluted with 3 elements -}',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, tab - "-", dtab - "+"';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2, tab : '---', dtab : '+' } );
+  var exp =
+  [
+    '---+1 : a',
+    '---+2 : \n---++10\n---++20\n---++30',
+    '---+3 : \n---++21 : aa\n---++22 : bb',
+    '---+4 : \n---++10\n---++20\n---++30',
+    '---+5 : \n---++10\n---++20\n---++30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, wrap - 0, tab - "-", prependTab - 0';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2, wrap : 0, tab : '-', prependTab : 0 } );
+  var exp =
+  [
+    '  1 : a',
+    '-  2 : \n-    10\n-    20\n-    30',
+    '-  3 : \n-    21 : aa\n-    22 : bb',
+    '-  4 : \n-    10\n-    20\n-    30',
+    '-  5 : \n-    10\n-    20\n-    30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, wrap - 0, tab - "-", prependTab - 1';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2, wrap : 0, tab : '-', prependTab : 1 } );
+  var exp =
+  [
+    '-  1 : a',
+    '-  2 : \n-    10\n-    20\n-    30',
+    '-  3 : \n-    21 : aa\n-    22 : bb',
+    '-  4 : \n-    10\n-    20\n-    30',
+    '-  5 : \n-    10\n-    20\n-    30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, wrap - 1, tab - "-", prependTab - 0';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2, wrap : 1, tab : '-', prependTab : 0 } );
+  var exp =
+  [
+    '{',
+    '-  1 : a',
+    '-  2 : \n-  [\n-    10\n-    20\n-    30\n-  ]',
+    '-  3 : \n-  {\n-    21 : aa\n-    22 : bb\n-  }',
+    '-  4 : \n-  [\n-    10\n-    20\n-    30\n-  ]',
+    '-  5 : \n-  [\n-    10\n-    20\n-    30\n-  ]',
+    '-}',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, wrap - 1, tab - "-", prependTab - 1';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2, wrap : 1, tab : '-', prependTab : 1 } );
+  var exp =
+  [
+    '-{',
+    '-  1 : a',
+    '-  2 : \n-  [\n-    10\n-    20\n-    30\n-  ]',
+    '-  3 : \n-  {\n-    21 : aa\n-    22 : bb\n-  }',
+    '-  4 : \n-  [\n-    10\n-    20\n-    30\n-  ]',
+    '-  5 : \n-  [\n-    10\n-    20\n-    30\n-  ]',
+    '-}',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, noSubObject - 1, noArray - 1, dtab - "  "';
+  var src =
+  {
+    1 : [ 1, 2, 3 ],
+    2 : 'abc',
+    3 : 4,
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2, noSubObject : 1, noArray : 1, dtab : '  ' } );
+  var exp =
+  [
+    '  2 : abc',
+    '  3 : 4',
+  ].join( '\n' );
+  test.identical( got, exp );
 }
 
 // --
@@ -6041,49 +6453,49 @@ let Self =
     reportChars,
     // stringFromFile,
     // testFunction,
-    // _toStrJsonFromFile,
+    // _exportStringJsonFromFile,
   },
 
   tests :
   {
 
-    toStr,
-    toStrUnwrapped,
-    toStrError,
-    toStrArray,
-    toStrObject,
-    // toStrJson,
-    // toStrJsonFromFileU,
-    // toStrJsonFromFileA,
-    toStrStringWrapper,
-    toStrLevel,
-    toStrEnumerable,
-    toStrEmptyArgs,
-    toStrSymbol,
-    toStrNumber,
-    toStrString,
-    toStrAtomic,
-    toStrDate,
-    toStrRoutine,
-    toStrThrow,
-    toStrLimitElements,
+    exportString,
+    exportStringUnwrapped,
+    exportStringError,
+    exportStringArray,
+    exportStringObject,
+    // exportStringJson,
+    // exportStringJsonFromFileU,
+    // exportStringJsonFromFileA,
+    exportStringStringWrapper,
+    exportStringLevel,
+    exportStringEnumerable,
+    exportStringEmptyArgs,
+    exportStringSymbol,
+    exportStringNumber,
+    exportStringString,
+    exportStringAtomic,
+    exportStringDate,
+    exportStringRoutine,
+    exportStringThrow,
+    exportStringLimitElements,
 
-    toStrMethods,
-    toStrFields,
+    exportStringMethods,
+    exportStringFields,
 
-    toStrShort,
-    _toStrIsVisibleElement,
-    _toStrIsSimpleElement,
-    _toStrFromRoutine,
-    _toStrFromNumber,
-    _toStrFromNumber2,
-    _toStrIsSimpleElement2,
-    _toStrFromStr,
-    _toStrFromArray,
-    _toStrFromObject,
-    _toStrFromContainer,
+    exportStringShort,
+    _exportStringIsVisibleElement,
+    _exportStringIsSimpleElement,
+    _exportStringFromRoutine,
+    _exportStringFromNumber,
+    _exportStringFromNumber2,
+    _exportStringIsSimpleElement2,
+    _exportStringFromStr,
+    _exportStringFromArray,
+    _exportStringFromObject,
+    _exportStringFromContainer,
 
-    toStrNice,
+    exportStringNice,
 
   }
 
@@ -6093,4 +6505,4 @@ Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
-} )( );
+})();

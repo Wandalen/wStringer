@@ -9,4 +9,4 @@ var data =
   [ 4, 5, 6 ],
   [ 7, 8, 9 ],
 ]
-console.log( _.toStrNice( data, { levels : 2, multiline : 0 } ) );
+console.log( _.entity.exportStringNice( data, { levels : 2, multiline : 0 } ) );

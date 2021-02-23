@@ -4,6 +4,6 @@ require( 'wstringer' );
 
 let _ = wTools;
 
-console.log( _.toStr( [ 'a',3 ] ) );
+/* */
 
-/**/
+console.log( _.entity.exportString( [ 'a', 3 ] ) );
