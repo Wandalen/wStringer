@@ -124,7 +124,7 @@ function reportChars( )
 
 /* aaa : normalize test | Dmytro : normalized */
 
-function toStr( test )
+function exportString( test )
 {
   test.case = 'in - boolean';
   var got = _.entity.exportString( false, {} );
@@ -607,7 +607,7 @@ function toStr( test )
 // str unwrapped
 // --
 
-function toStrUnwrapped( test )
+function exportStringUnwrapped( test )
 {
   //var desc = 'Error test',
   //src =
@@ -1039,7 +1039,7 @@ function toStrUnwrapped( test )
 
 //
 
-function toStrError( test )
+function exportStringError( test )
 {
   //  var desc = 'Error test',
   //  src =
@@ -1158,7 +1158,7 @@ function toStrError( test )
 
 //
 
-function toStrArray( test )
+function exportStringArray( test )
 {
   //  var  desc = 'Array test',
   //  src =
@@ -1584,7 +1584,7 @@ function toStrArray( test )
   ////[ { a : 'string' }, [ true ], 1 ],
   ////{ levels : 2, wrap : 0, noString : 1, noNumber : 1, comma : '/ ' },
   //
-  //    /*51*/ // !!! please move to toStrUnwrapped
+  //    /*51*/ // !!! please move to exportStringUnwrapped
   //    [
   //      '    5||',
   //      '    4||',
@@ -2582,7 +2582,7 @@ function toStrArray( test )
 
 //
 
-function toStrObject( test )
+function exportStringObject( test )
 {
   //  var desc = 'Object test',
   //  src =
@@ -3920,7 +3920,7 @@ function toStrObject( test )
 
 //
 
-function toStrStringWrapper( test )
+function exportStringStringWrapper( test )
 {
   //   var desc = 'stringWrapper test',
   //   src =
@@ -4166,7 +4166,7 @@ function toStrStringWrapper( test )
 
 //
 
-function toStrLevel( test )
+function exportStringLevel( test )
 {
   //   var desc = 'level test',
   //   src =
@@ -4261,7 +4261,7 @@ function toStrLevel( test )
 
 //
 
-function toStrEnumerable( test )
+function exportStringEnumerable( test )
 {
   //   var desc = 'onlyEnumerable test',
   //   src =
@@ -4511,7 +4511,7 @@ function toStrEnumerable( test )
 
 // xxx
 
-function toStrEmptyArgs( test )
+function exportStringEmptyArgs( test )
 {
   //  var desc = 'empty arguments',
   //  src = [ {}, '', [] ],
@@ -4539,7 +4539,7 @@ function toStrEmptyArgs( test )
 
 //
 
-function toStrSymbol( test )
+function exportStringSymbol( test )
 {
   //  var desc = 'Symbol test',
   //  src =
@@ -4591,7 +4591,7 @@ function toStrSymbol( test )
 
 //
 
-function toStrNumber( test )
+function exportStringNumber( test )
 {
   //  var desc = 'Number test',
   //  src =
@@ -4674,7 +4674,7 @@ function toStrNumber( test )
 
 //
 
-function toStrString( test )
+function exportStringString( test )
 {
   //  var desc = 'String test',
   //  src =
@@ -4758,7 +4758,7 @@ function toStrString( test )
 
 //
 
-function toStrAtomic( test )
+function exportStringAtomic( test )
 {
   //  var desc = 'boolean, null, undefined test',
   //  src =
@@ -4847,7 +4847,7 @@ function toStrAtomic( test )
 
 //
 
-function toStrDate( test )
+function exportStringDate( test )
 {
   //  var desc = 'Date test',
   //  src =
@@ -4897,7 +4897,7 @@ function toStrDate( test )
 
 //
 
-function toStrRoutine( test )
+function exportStringRoutine( test )
 {
   //  var desc = 'Routine test',
   //  src =
@@ -4940,7 +4940,7 @@ function toStrRoutine( test )
 
 //
 
-function toStrThrow( test )
+function exportStringThrow( test )
 {
   if( Config.debug )
   {
@@ -4992,7 +4992,7 @@ function toStrThrow( test )
 
 //
 
-function toStrLimitElements( test )
+function exportStringLimitElements( test )
 {
   //  var desc = 'limitElementsNumber options test',
   //  src =
@@ -5235,7 +5235,7 @@ function toStrLimitElements( test )
 
 //
 
-function toStrMethods( test )
+function exportStringMethods( test )
 {
 
   test.case = 'converts routine to string default options';
@@ -5277,7 +5277,7 @@ function toStrMethods( test )
 
 //
 
-function toStrFields( test )
+function exportStringFields( test )
 {
   test.case = 'Fields default options';
   var got = _.entity.exportStringFields( [ 1, 2, 'text', undefined ] );
@@ -5328,7 +5328,7 @@ function toStrFields( test )
 
 //
 
-function toStrShort( test )
+function exportStringShort( test )
 {
   test.case = 'Array length test';
   var got = _.entity._exportStringShort( [ 1, 2, 'text', undefined ], {} );
@@ -5384,7 +5384,7 @@ function toStrShort( test )
 
 //
 
-function _toStrIsVisibleElement( test )
+function _exportStringIsVisibleElement( test )
 {
   test.case = 'default options';
   var got = _.entity._exportStringIsVisibleElement( 123, {} );
@@ -5429,7 +5429,7 @@ function _toStrIsVisibleElement( test )
 
 //
 
-function _toStrIsSimpleElement( test )
+function _exportStringIsSimpleElement( test )
 {
   test.case = 'default options';
   var got = _.entity._exportStringIsSimpleElement( 123, {} );
@@ -5484,7 +5484,7 @@ function _toStrIsSimpleElement( test )
 
 //
 
-function _toStrFromRoutine( test )
+function _exportStringFromRoutine( test )
 {
   test.case = 'routine test';
   var got = _.entity._exportStringFromRoutine( function a ( ) {}, {} );
@@ -5518,7 +5518,7 @@ function _toStrFromRoutine( test )
 
 //
 
-function _toStrFromNumber( test )
+function _exportStringFromNumber( test )
 {
   test.case = 'default options';
   var got = _.entity._exportStringFromNumber( 123, {} );
@@ -5580,7 +5580,7 @@ function _toStrFromNumber( test )
 
 //
 
-function _toStrFromNumber2( test )
+function _exportStringFromNumber2( test )
 {
 
   test.case = 'returns with precision until 5';
@@ -5652,7 +5652,7 @@ function _toStrFromNumber2( test )
 
 //
 
-function _toStrIsSimpleElement2( test )
+function _exportStringIsSimpleElement2( test )
 {
 
   test.case = 'argument\'s length is less than 40 symbols';
@@ -5712,7 +5712,7 @@ function _toStrIsSimpleElement2( test )
 
 //
 
-function _toStrFromStr( test )
+function _exportStringFromStr( test )
 {
   test.case = 'default options';
   var got = _.entity._exportStringFromStr( '123', {} );
@@ -5763,7 +5763,7 @@ function _toStrFromStr( test )
 
 //
 
-function _toStrFromArray( test )
+function _exportStringFromArray( test )
 {
 
   test.case = 'default options';
@@ -5821,7 +5821,7 @@ function _toStrFromArray( test )
 
 //
 
-function _toStrFromObject( test )
+function _exportStringFromObject( test )
 {
   var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0 };
 
@@ -5897,7 +5897,7 @@ function _toStrFromObject( test )
 
 //
 
-function _toStrFromContainer( test )
+function _exportStringFromContainer( test )
 {
   var o = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0, noSubObject : 0, prependTab : 1, jsonLike : 0, stringWrapper : '"' };
   var src = { a : 1, b : 2, c : 'text' };
@@ -6453,47 +6453,47 @@ let Self =
     reportChars,
     // stringFromFile,
     // testFunction,
-    // _toStrJsonFromFile,
+    // _exportStringJsonFromFile,
   },
 
   tests :
   {
 
-    toStr,
-    toStrUnwrapped,
-    toStrError,
-    toStrArray,
-    toStrObject,
-    // toStrJson,
-    // toStrJsonFromFileU,
-    // toStrJsonFromFileA,
-    toStrStringWrapper,
-    toStrLevel,
-    toStrEnumerable,
-    toStrEmptyArgs,
-    toStrSymbol,
-    toStrNumber,
-    toStrString,
-    toStrAtomic,
-    toStrDate,
-    toStrRoutine,
-    toStrThrow,
-    toStrLimitElements,
+    exportString,
+    exportStringUnwrapped,
+    exportStringError,
+    exportStringArray,
+    exportStringObject,
+    // exportStringJson,
+    // exportStringJsonFromFileU,
+    // exportStringJsonFromFileA,
+    exportStringStringWrapper,
+    exportStringLevel,
+    exportStringEnumerable,
+    exportStringEmptyArgs,
+    exportStringSymbol,
+    exportStringNumber,
+    exportStringString,
+    exportStringAtomic,
+    exportStringDate,
+    exportStringRoutine,
+    exportStringThrow,
+    exportStringLimitElements,
 
-    toStrMethods,
-    toStrFields,
+    exportStringMethods,
+    exportStringFields,
 
-    toStrShort,
-    _toStrIsVisibleElement,
-    _toStrIsSimpleElement,
-    _toStrFromRoutine,
-    _toStrFromNumber,
-    _toStrFromNumber2,
-    _toStrIsSimpleElement2,
-    _toStrFromStr,
-    _toStrFromArray,
-    _toStrFromObject,
-    _toStrFromContainer,
+    exportStringShort,
+    _exportStringIsVisibleElement,
+    _exportStringIsSimpleElement,
+    _exportStringFromRoutine,
+    _exportStringFromNumber,
+    _exportStringFromNumber2,
+    _exportStringIsSimpleElement2,
+    _exportStringFromStr,
+    _exportStringFromArray,
+    _exportStringFromObject,
+    _exportStringFromContainer,
 
     exportStringNice,
 
