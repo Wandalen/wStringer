@@ -558,6 +558,7 @@ exportStringNice.defaults =
   keyWrapper : '',
   tab : '',
   wrap : 0,
+  comma : '',
 }
 
 //
