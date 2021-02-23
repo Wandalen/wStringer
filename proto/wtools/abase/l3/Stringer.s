@@ -864,7 +864,7 @@ function _exportStringShort( src, o )
     }
     else
     {
-      result = _.entity.exportStringShortFine( src );
+      result = _.entity.exportStringShortDiagnostic( src );
     }
 
   }

@@ -4502,7 +4502,7 @@ function toStrEnumerable( test )
     '  propertyIsEnumerable : [ routine propertyIsEnumerable ], ',
     '  toString : [ routine toString ], ',
     '  valueOf : [ routine valueOf ], ',
-    '  __proto__ : {- MapLike.polluted.prototyped with 1 elements -}, ',
+    '  __proto__ : {- Aux.polluted.prototyped with 1 elements -}, ',
     '  toLocaleString : [ routine toLocaleString ]',
     '}',
   ].join( '\n' );
