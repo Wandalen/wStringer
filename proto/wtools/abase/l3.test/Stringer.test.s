@@ -1,4 +1,5 @@
-( function _Stringer_test_s_( ) {
+( function _Stringer_test_s_()
+{
 
 'use strict';
 
@@ -121,7 +122,7 @@ function reportChars( )
 // tests
 // --
 
-/* qqq : normalize test | Dmytro : normalized */
+/* aaa : normalize test | Dmytro : normalized */
 
 function toStr( test )
 {
@@ -138,9 +139,7 @@ function toStr( test )
   test.identical( got, '0' );
 
   test.case = 'in - Date, levels - 2';
-  debugger;
   var got = _.entity.exportString( new Date( Date.UTC( 2020, 0, 13 ) ), { levels : 2 } );
-  debugger;
   test.identical( got, '2020-01-13T00:00:00.000Z' );
 
   test.case = 'in - string, level - 2';
@@ -6011,18 +6010,431 @@ function _toStrFromContainer( test )
 
 //
 
-function toStrNice( test )
+function exportStringNice( test )
 {
-  test.case = 'key and value is identical';
-  var src = { proto : 'proto' };
-  debugger;
-  var got = _.entity.exportStringNice( src );
-  test.identical( got, '  proto : proto' );
+  test.case = 'in - boolean';
+  var got = _.entity.exportStringNice( false, {} );
+  test.identical( got, 'false' );
 
-  test.case = 'key and value is different';
-  var src = { proto : 'aaa' };
-  var got = _.entity.exportStringNice( src );
-  test.identical( got, '  proto : aaa' );
+  test.case = 'in - number';
+  var got = _.entity.exportStringNice( 13, {} );
+  test.identical( got, '13' );
+
+  test.case = 'in - number, levels - 2';
+  var got = _.entity.exportStringNice( 0, { levels : 2 } );
+  test.identical( got, '0' );
+
+  test.case = 'in - Date, levels - 2';
+  var got = _.entity.exportStringNice( new Date( Date.UTC( 2020, 0, 13 ) ), { levels : 2 } );
+  test.identical( got, '2020-01-13T00:00:00.000Z' );
+
+  test.case = 'in - string, level - 2';
+  var got = _.entity.exportStringNice( 'text', { levels : 2 } );
+  test.identical( got, 'text' );
+
+  test.case = 'in - empty array, levels - 2';
+  var got = _.entity.exportStringNice( [], { levels : 2 } );
+  test.identical( got, '' );
+
+  test.case = 'in - array with empty maps, levels - 2';
+  var got = _.entity.exportStringNice( [ {}, {}, {} ], { levels : 2 } );
+  test.identical( got, '' );
+
+  test.case = 'in - array with numbers, levels - 2';
+  var got = _.entity.exportStringNice( [ 1, 2, 3, 4 ], { levels : 2 } );
+  test.identical( got, '  1\n  2\n  3\n  4' );
+
+  test.case = 'in - empty map, levels - 2';
+  var got = _.entity.exportStringNice( {}, { levels : 2 } );
+  test.identical( got, '' );
+
+  test.case = 'in - filled map, levels - 2';
+  var got = _.entity.exportStringNice( { a : {}, b : {} }, { levels : 2 } );
+  test.identical( got, '' );
+
+  test.case = 'in - filled map with strings values, levels - 2';
+  var got = _.entity.exportStringNice( { 1 : 'a', 2: 'b', 3: 'c' }, { levels : 2 } );
+  test.identical( got, '  1 : a\n  2 : b\n  3 : c' );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2';
+  var src = { 1 : 'a', 2 : [ 10, 20, 30 ], 3 : { 21 : 'aa', 22 : 'bb' } };
+  var got = _.entity.exportStringNice( src, { levels : 2 } );
+  var exp =
+  [
+    '  1 : a',
+    '  2 : \n    10\n    20\n    30',
+    '  3 : \n    21 : aa\n    22 : bb',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2 } );
+  var exp =
+  [
+    '  1 : a',
+    '  2 : \n    10\n    20\n    30',
+    '  3 : \n    21 : aa\n    22 : bb',
+    '  4 : \n    10\n    20\n    30',
+    '  5 : \n    10\n    20\n    30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2 } );
+  var exp =
+  [
+    '  1 : a',
+    '  2 : \n    10\n    20\n    30',
+    '  3 : \n    21 : aa\n    22 : bb',
+    '  4 : \n    10\n    20\n    30',
+    '  5 : \n    10\n    20\n    30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, levels - 2';
+  var src =
+  [
+    'a',
+    [ 10, 20, 30 ],
+    { 21 : 'aa', 22 : 'bb' },
+    { 31 : '111', 32 : '222' },
+    [ 10, 20, 30 ],
+    [ 10, 20, 30 ],
+  ];
+  var got = _.entity.exportStringNice( src, { levels : 2 } );
+  var exp =
+  [
+    '  a',
+    '    10\n    20\n    30',
+    '    21 : aa\n    22 : bb',
+    '    31 : 111\n    32 : 222',
+    '    10\n    20\n    30',
+    '    10\n    20\n    30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, levels - 3';
+  var src =
+  [
+    'a',
+    [ 10, 20, 30 ],
+    {
+      21 : [ 1, 2, 3 ],
+      22 : [ 1, 2, 3, 4 ],
+    },
+    {
+      31 : { a : 'a', b : 'b' },
+      32 : { a : 'a', b : 'b', c : 'c' }
+    },
+    [
+      [ 1, 2, 3 ],
+      [ 1, 2, 3, 4 ]
+    ],
+    [
+      { a : 'a', b : 'b' },
+      { a : 'a', b : 'b', c : 'c' }
+    ],
+  ];
+  var got = _.entity.exportStringNice( src, { levels : 3 } );
+  var exp =
+  [
+    '  a',
+    '    10\n    20\n    30',
+    '    21 : \n      1\n      2\n      3',
+    '    22 : \n      1\n      2\n      3\n      4',
+    '    31 : \n      a : a\n      b : b',
+    '    32 : \n      a : a\n      b : b\n      c : c',
+    '      1\n      2\n      3',
+    '      1\n      2\n      3\n      4',
+    '      a : a\n      b : b',
+    '      a : a\n      b : b\n      c : c',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, a few levels of nesting, levels - 5';
+  var src =
+  [
+    'a',
+    [ 10, 20, 30 ],
+    {
+      21 : [ 1, 2, 3 ],
+      22 : [ 1, 2, 3, 4 ],
+    },
+    {
+      31 :
+      {
+        a : { a : 'a', b : 'b' },
+        b : { a : 'a', b : 'b' }
+      },
+      32 :
+      {
+        a : 'a',
+        b : 'b',
+        c : { a : 'a', b : 'b' },
+      }
+    },
+    [
+      [
+        [ 100, 200 ],
+        [ 100, 200 ]
+      ],
+      [ 1, 2, 3, 4 ]
+    ],
+    [
+      { a : 'a', b : 'b' },
+      {
+        a : 'a',
+        b : 'b',
+        c : { a : 'a', b : 'b' }
+      }
+    ],
+  ];
+  var got = _.entity.exportStringNice( src, { levels : 5 } );
+  var exp =
+  [
+    '  a',
+    '    10\n    20\n    30',
+    '    21 : \n      1\n      2\n      3',
+    '    22 : \n      1\n      2\n      3\n      4',
+    '    31 : ',
+    '      a : \n        a : a\n        b : b',
+    '      b : \n        a : a\n        b : b',
+    '    32 : ',
+    '      a : a',
+    '      b : b',
+    '      c : \n        a : a\n        b : b',
+    '        100\n        200',
+    '        100\n        200',
+    '      1\n      2\n      3\n      4',
+    '      a : a\n      b : b',
+    '      a : a',
+    '      b : b',
+    '      c : \n        a : a\n        b : b',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, levels - 1';
+  var src =
+  [
+    'a',
+    [ 10, 20, 30 ],
+    { 21 : 'aa', 22 : 'bb' },
+    { 31 : '111', 32 : '222' },
+    [ 10, 20, 30 ],
+    [ 10, 20, 30 ],
+  ];
+  var got = _.entity.exportStringNice( src, { levels : 1 } );
+  var exp =
+  [
+    '  a',
+    '  {- Array with 3 elements -}',
+    '  {- Map.polluted with 2 elements -}',
+    '  {- Map.polluted with 2 elements -}',
+    '  {- Array with 3 elements -}',
+    '  {- Array with 3 elements -}',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled array, complex values, 3 levels of nesting, levels - 2';
+  var src =
+  [
+    'a',
+    [ 10, 20, 30 ],
+    {
+      21 : [ 1, 2, 3 ],
+      22 : [ 1, 2, 3, 4 ],
+    },
+    {
+      31 : { a : 'a', b : 'b' },
+      32 : { a : 'a', b : 'b', c : 'c' }
+    },
+    [
+      [ 1, 2, 3 ],
+      [ 1, 2, 3, 4 ]
+    ],
+    [
+      { a : 'a', b : 'b' },
+      { a : 'a', b : 'b', c : 'c' }
+    ],
+  ];
+  var got = _.entity.exportStringNice( src, { levels : 2 } );
+  var exp =
+  [
+    '  a',
+    '    10\n    20\n    30',
+    '    21 : {- Array with 3 elements -}',
+    '    22 : {- Array with 4 elements -}',
+    '    31 : {- Map.polluted with 2 elements -}',
+    '    32 : {- Map.polluted with 3 elements -}',
+    '    {- Array with 3 elements -}',
+    '    {- Array with 4 elements -}',
+    '    {- Map.polluted with 2 elements -}',
+    '    {- Map.polluted with 3 elements -}',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, tab - "-", dtab - "+"';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2, tab : '---', dtab : '+' } );
+  var exp =
+  [
+    '---+1 : a',
+    '---+2 : \n---++10\n---++20\n---++30',
+    '---+3 : \n---++21 : aa\n---++22 : bb',
+    '---+4 : \n---++10\n---++20\n---++30',
+    '---+5 : \n---++10\n---++20\n---++30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, wrap - 0, tab - "-", prependTab - 0';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2, wrap : 0, tab : '-', prependTab : 0 } );
+  var exp =
+  [
+    '  1 : a',
+    '-  2 : \n-    10\n-    20\n-    30',
+    '-  3 : \n-    21 : aa\n-    22 : bb',
+    '-  4 : \n-    10\n-    20\n-    30',
+    '-  5 : \n-    10\n-    20\n-    30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, wrap - 0, tab - "-", prependTab - 1';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2, wrap : 0, tab : '-', prependTab : 1 } );
+  var exp =
+  [
+    '-  1 : a',
+    '-  2 : \n-    10\n-    20\n-    30',
+    '-  3 : \n-    21 : aa\n-    22 : bb',
+    '-  4 : \n-    10\n-    20\n-    30',
+    '-  5 : \n-    10\n-    20\n-    30',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, wrap - 1, tab - "-", prependTab - 0';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2, wrap : 1, tab : '-', prependTab : 0 } );
+  var exp =
+  [
+    '{',
+    '-  1 : a',
+    '-  2 : \n-  [\n-    10\n-    20\n-    30\n-  ]',
+    '-  3 : \n-  {\n-    21 : aa\n-    22 : bb\n-  }',
+    '-  4 : \n-  [\n-    10\n-    20\n-    30\n-  ]',
+    '-  5 : \n-  [\n-    10\n-    20\n-    30\n-  ]',
+    '-}',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, wrap - 1, tab - "-", prependTab - 1';
+  var src =
+  {
+    1 : 'a',
+    2 : [ 10, 20, 30 ],
+    3 : { 21 : 'aa', 22 : 'bb' },
+    4 : [ 10, 20, 30 ],
+    5 : [ 10, 20, 30 ],
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2, wrap : 1, tab : '-', prependTab : 1 } );
+  var exp =
+  [
+    '-{',
+    '-  1 : a',
+    '-  2 : \n-  [\n-    10\n-    20\n-    30\n-  ]',
+    '-  3 : \n-  {\n-    21 : aa\n-    22 : bb\n-  }',
+    '-  4 : \n-  [\n-    10\n-    20\n-    30\n-  ]',
+    '-  5 : \n-  [\n-    10\n-    20\n-    30\n-  ]',
+    '-}',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'in - filled map, complex values, levels - 2, noSubObject - 1, noArray - 1, dtab - "  "';
+  var src =
+  {
+    1 : [ 1, 2, 3 ],
+    2 : 'abc',
+    3 : 4,
+  };
+  var got = _.entity.exportStringNice( src, { levels : 2, noSubObject : 1, noArray : 1, dtab : '  ' } );
+  var exp =
+  [
+    '  2 : abc',
+    '  3 : 4',
+  ].join( '\n' );
+  test.identical( got, exp );
 }
 
 // --
@@ -6083,7 +6495,7 @@ let Self =
     _toStrFromObject,
     _toStrFromContainer,
 
-    toStrNice,
+    exportStringNice,
 
   }
 
@@ -6093,4 +6505,4 @@ Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
-} )( );
+})();
