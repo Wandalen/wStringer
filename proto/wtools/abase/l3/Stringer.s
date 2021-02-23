@@ -689,10 +689,10 @@ function _exportString( src, o )
     else throw _.err( 'unexpected' );
 
   }
-  else if( _.vectorAdapterIs( src ) )
-  {
-    result += _.vectorAdapter.exportString( src, o );
-  }
+  // else if( _.vectorAdapterIs( src ) )
+  // {
+  //   result += _.vectorAdapter.exportString( src, o );
+  // }
   else if( _.errIs( src ) )
   {
 
