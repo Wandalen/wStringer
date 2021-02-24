@@ -1335,7 +1335,7 @@ function _exportStringFromHashMap( src, o )
 
 function _exportStringFromSet( src, o )
 {
-  let result = _._exportStringFromArray( _.arrayFrom( src ), o );
+  let result = _exportStringFromArray( _.arrayFrom( src ), o );
   result.text = `new Set(${result.text})` ;
   return result;
 }
