@@ -6185,6 +6185,56 @@ function _exportStringFromStr( test )
 
 //
 
+function _exportStringFromSet( test )
+{
+  test.case = 'default options';
+  var options = { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 1 };
+  var got = _.entity._exportStringFromSet( new Set([ 1, 2, 3 ]), options ).text;
+  var expected = 'new Set([ 1, 2, 3 ])';
+  test.identical( got, expected );
+
+  test.case = 'wrap test';
+  var options = { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 0 };
+  var got = _.entity._exportStringFromSet( new Set([ 1, 2, 3 ]), options ).text;
+  var expected = 'new Set(   1, 2, 3)';
+  test.identical( got, expected );
+
+  test.case = 'levels 0 test';
+  var options = { tab : ' ', dtab : '   ', level : 0, levels : 0, comma : ', ', wrap : 1 };
+  var got = _.entity._exportStringFromSet( new Set([ 1, 2, 3 ]), options ).text;
+  var expected = 'new Set({- Array with 3 elements -})';
+  test.identical( got, expected );
+
+  test.case = 'dtab & multiline test';
+  var options = { tab : ' ', dtab : '-', level : 0, comma : ', ', wrap : 1, multiline : 1 };
+  var got = _.entity._exportStringFromSet( new Set([ 1, 2, 3 ]), options ).text;
+  var expected =
+  [
+    'new Set([',
+    ' -1, ',
+    ' -2, ',
+    ' -3',
+    ' ])',
+  ].join( '\n' );
+  test.identical( got, expected );
+
+  /* - */
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'without arguments';
+  test.shouldThrowErrorSync( () => _.entity._exportStringFromSet() );
+
+  test.case = 'invalid first argument type';
+  test.shouldThrowErrorSync( () => _.entity._exportStringFromSet( 2, {} ) );
+
+  test.case = 'invalid second argument type';
+  test.shouldThrowErrorSync( () => _.entity._exportStringFromSet( [], 2 ) );
+}
+
+//
+
 function _exportStringFromArray( test )
 {
 
@@ -6485,6 +6535,7 @@ let Self =
     _exportStringFromNumber,
     _exportStringFromNumber2,
     _exportStringFromStr,
+    _exportStringFromSet,
     _exportStringFromArray,
     _exportStringFromContainer,
     _exportStringFromObject,
