@@ -5384,632 +5384,6 @@ function exportStringShort( test )
 
 //
 
-function _exportStringIsVisibleElement( test )
-{
-  test.case = 'default options';
-  var got = _.entity._exportStringIsVisibleElement( 123, {} );
-  var expected = true;
-  test.identical( got, expected );
-
-  test.case = 'noAtomic';
-  var got = _.entity._exportStringIsVisibleElement( 'test', { noAtomic : 1 } );
-  var expected = false;
-  test.identical( got, expected );
-
-  test.case = 'noObject';
-  var got = _.entity._exportStringIsVisibleElement( { a : 'test' }, { noObject : 1 } );
-  var expected = false;
-  test.identical( got, expected );
-
-  /**/
-
-  if( Config.debug )
-  {
-
-    test.case = 'invalid arguments count';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringIsVisibleElement( '1' );
-    } );
-
-    // test.case = 'second argument is not a object';
-    // test.shouldThrowErrorOfAnyKind( function( )
-    // {
-    //   _.entity._exportStringIsVisibleElement( '1', 2 );
-    // } );
-
-    test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringIsVisibleElement( );
-    } );
-
-  }
-}
-
-//
-
-function _exportStringIsSimpleElement( test )
-{
-  test.case = 'default options';
-  var got = _.entity._exportStringIsSimpleElement( 123, {} );
-  var expected = true;
-  test.identical( got, expected );
-
-  test.case = 'string length > 40';
-  var got = _.entity._exportStringIsSimpleElement( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', {} );
-  var expected = false;
-  test.identical( got, expected );
-
-  test.case = 'object test';
-  var got = _.entity._exportStringIsSimpleElement( { a : 1 }, {} );
-  var expected = false;
-  test.identical( got, expected );
-
-  test.case = 'atomic test';
-  var got = _.entity._exportStringIsSimpleElement( undefined, {} );
-  var expected = true;
-  test.identical( got, expected );
-
-  test.case = 'escaping test';
-  var got = _.entity._exportStringIsSimpleElement( '\naaa', { escaping : 1 } );
-  var expected = true;
-  test.identical( got, expected );
-
-  /**/
-
-  if( Config.debug )
-  {
-
-    test.case = 'invalid arguments count';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringIsSimpleElement( '1' );
-    } );
-
-    test.case = 'second argument is not a object';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringIsSimpleElement( '1', 2 );
-    } );
-
-    test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringIsSimpleElement( );
-    } );
-
-  }
-}
-
-//
-
-function _exportStringFromRoutine( test )
-{
-  test.case = 'routine test';
-  var got = _.entity._exportStringFromRoutine( function a ( ) {}, {} );
-  var expected = '[ routine a ]';
-  test.identical( got, expected );
-
-  test.case = 'routine without name';
-  var got = _.entity._exportStringFromRoutine( function( ) {}, {} );
-  var expected = '[ routine without name ]';
-  test.identical( got, expected );
-
-  /**/
-
-  if( Config.debug )
-  {
-
-    test.case = 'invalid argument type';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromRoutine( '1' );
-    } );
-
-    test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromRoutine( );
-    } );
-
-  }
-}
-
-//
-
-function _exportStringFromNumber( test )
-{
-  test.case = 'default options';
-  var got = _.entity._exportStringFromNumber( 123, {} );
-  var expected = '123';
-  test.identical( got, expected );
-
-  test.case = 'number precision test';
-  var got = _.entity._exportStringFromNumber( 123, { precision : 2 } );
-  var expected = '1.2e+2';
-  test.identical( got, expected );
-
-  test.case = 'number fixed test';
-  var got = _.entity._exportStringFromNumber( 123, { fixed : 2 } );
-  var expected = '123.00';
-  test.identical( got, expected );
-
-  test.case = 'invalid option type';
-  var got = _.entity._exportStringFromNumber( 123, { fixed : '2' } );
-  var expected = '123';
-  test.identical( got, expected );
-
-  /**/
-
-  if( Config.debug )
-  {
-
-    test.case = 'invalid first argument type';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromNumber( '1', {} );
-    } );
-
-    test.case = 'invalid second argument type';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromNumber( 1, 2 );
-    } );
-
-    test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromNumber( );
-    } );
-
-    test.case = 'precision out of range';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromNumber( 1, { precision : 22 } );
-    } );
-
-    test.case = 'fixed out of range';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromNumber( 1, { fixed : 22 } );
-    } );
-
-  }
-}
-
-//
-
-function _exportStringFromNumber2( test )
-{
-
-  test.case = 'returns with precision until 5';
-  var options = { precision : 5 };
-  var got = _.entity._exportStringFromNumber( 3.123456, options );
-  var expected = '3.1235';
-  test.identical( got, expected );
-
-  test.case = 'returns with precision until 2';
-  var options = { precision : 2 };
-  var got = _.entity._exportStringFromNumber( 3.123456, options );
-  var expected = '3.1';
-  test.identical( got, expected );
-
-  test.case = 'is returned with four numbers after dot';
-  var options = { fixed : 4 };
-  var got = _.entity._exportStringFromNumber( 13.75, options );
-  var expected = '13.7500';
-  test.identical( got, expected );
-
-  test.case = 'is returned the rounded number to the top';
-  var options = { fixed : 0 };
-  var got = _.entity._exportStringFromNumber( 13.50, options );
-  var expected = '14';
-  test.identical( got, expected );
-
-  test.case = 'is returned the rounded number to the bottom';
-  var options = { fixed : 0 };
-  var got = _.entity._exportStringFromNumber( 13.49, options );
-  var expected = '13';
-  test.identical( got, expected );
-
-  test.case = 'returns string';
-  var options = {  };
-  var got = _.entity._exportStringFromNumber( 13.75, options );
-  var expected = '13.75';
-  test.identical( got, expected );
-
-  /**/
-
-  if( !Config.debug )
-  return;
-
-  test.case = 'no arguments';
-  test.shouldThrowErrorOfAnyKind( function( )
-  {
-    _.entity._exportStringFromNumber( );
-  } );
-
-  test.case = 'first argument is wrong';
-  test.shouldThrowErrorOfAnyKind( function( )
-  {
-    _.entity._exportStringFromNumber( 'wrong argument', { fixed : 3 } );
-  } );
-
-  test.case = 'second argument is not provided';
-  test.shouldThrowErrorOfAnyKind( function( )
-  {
-    _.entity._exportStringFromNumber( 13.75 );
-  } );
-
-  test.case = 'second argument is wrong precision must be between 1 and 21';
-  test.shouldThrowErrorOfAnyKind( function( )
-  {
-    _.entity._exportStringFromNumber( 13.75, { precision : 0 } );
-  } );
-
-};
-
-//
-
-function _exportStringIsSimpleElement2( test )
-{
-
-  test.case = 'argument\'s length is less than 40 symbols';
-  var got = _.entity._exportStringIsSimpleElement( 'test', {} );
-  var expected = true;
-  test.identical( got, expected );
-
-  test.case = 'argument is number';
-  var got = _.entity._exportStringIsSimpleElement( 13, {} );
-  var expected = true;
-  test.identical( got, expected );
-
-  test.case = 'argument is boolean';
-  var got = _.entity._exportStringIsSimpleElement( true, {} );
-  var expected = true;
-  test.identical( got, expected );
-
-  test.case = 'argument is null';
-  var got = _.entity._exportStringIsSimpleElement( null, {} );
-  var expected = true;
-  test.identical( got, expected );
-
-  test.case = 'argument is undefined';
-  var got = _.entity._exportStringIsSimpleElement( undefined, {} );
-  var expected = true;
-  test.identical( got, expected );
-
-  test.case = 'argument\'s length is greater than 40 symbols';
-  var got = _.entity._exportStringIsSimpleElement( 'test, test, test, test, test, test, test, test, test.', {} );
-  var expected = false;
-  test.identical( got, expected );
-
-  test.case = 'argument is an object';
-  var got = _.entity._exportStringIsSimpleElement( { a: 33 }, {} );
-  var expected = false;
-  test.identical( got, expected );
-
-  test.case = 'argument is an array';
-  var got = _.entity._exportStringIsSimpleElement( [ 1, 2, 3 ], {} );
-  var expected = false;
-  test.identical( got, expected );
-
-  test.case = 'argument is an array-like';
-  var arrLike = ( function( ) { return arguments; } )( 1, 2, 3 );
-  var got = _.entity._exportStringIsSimpleElement( arrLike, {} );
-  var expected = false;
-  test.identical( got, expected );
-
-  /**/
-
-  if( !Config.debug )
-  return;
-
-  /**/
-
-};
-
-//
-
-function _exportStringFromStr( test )
-{
-  test.case = 'default options';
-  var got = _.entity._exportStringFromStr( '123', {} );
-  var expected = '123';
-  test.identical( got, expected );
-
-  test.case = 'escaping';
-  var got = _.entity._exportStringFromStr( '\n123\u001b', { escaping : 1 } );
-  var expected = '\\n123\\u001b';
-  test.identical( got, expected );
-
-  test.case = 'stringWrapper';
-  var got = _.entity._exportStringFromStr( 'string', { stringWrapper : '"' } );
-  var expected = '"string"';
-  test.identical( got, expected );
-
-  test.case = 'multilinedString';
-  var got = _.entity._exportStringFromStr( 'string\nstring2', { stringWrapper : '`' } );
-  var expected = "`string\nstring2`";
-  test.identical( got, expected );
-
-
-  /**/
-
-  if( Config.debug )
-  {
-
-    test.case = 'invalid first argument type';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromStr( 2, {} );
-    } );
-
-    test.case = 'invalid second argument type';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromStr( '1', 2 );
-    } );
-
-    test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromStr( );
-    } );
-
-  }
-}
-
-//
-
-function _exportStringFromArray( test )
-{
-
-  test.case = 'default options';
-  var got = _.entity._exportStringFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 1 } ).text;
-  var expected = '[ 1, 2, 3 ]';
-  test.identical( got, expected );
-
-  test.case = 'wrap test';
-  var got = _.entity._exportStringFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 0 } ).text;
-  var expected = '   1, 2, 3';
-  test.identical( got, expected );
-
-  test.case = 'levels 0 test';
-  var got = _.entity._exportStringFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 0, levels : 0, comma : ', ', wrap : 1 } ).text;
-  var expected = '{- Array with 3 elements -}';
-  test.identical( got, expected );
-
-  test.case = 'dtab & multiline test';
-  var got = _.entity._exportStringFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '-', level : 0, comma : ', ', wrap : 1, multiline : 1 } ).text;
-  var expected =
-  [
-    '[',
-    ' -1, ',
-    ' -2, ',
-    ' -3',
-    ' ]',
-  ].join( '\n' );
-  test.identical( got, expected );
-
-  /**/
-
-  if( Config.debug )
-  {
-
-    test.case = 'invalid first argument type';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromArray( 2, {} );
-    } );
-
-    test.case = 'invalid second argument type';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromArray( [], 2 );
-    } );
-
-    test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromArray( );
-    } );
-
-  }
-}
-
-//
-
-function _exportStringFromObject( test )
-{
-  var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0 };
-
-  test.case = 'default options';
-  var got = _.entity._exportStringFromObject( { a : 1, b : 2 , c : 'text' }, def );
-  var expected = '{ a : 1, b : 2, c : text }';
-  test.identical( got.text, expected );
-
-  test.case = 'levels 0 test';
-  def.levels = 0;
-  var got = _.entity._exportStringFromObject( { a : 1, b : 2 , c : 'text' }, def );
-  var expected = '{- Map.polluted with 3 elements -}';
-  test.identical( got.text, expected );
-
-  test.case = 'wrap 0 test';
-  def.levels = 1;
-  def.wrap = 0;
-  var got = _.entity._exportStringFromObject( { a : 1, b : 2, c : 'text' }, def );
-  var expected = 'a : 1, b : 2, c : text';
-  test.identical( got.text, expected );
-
-  test.case = 'noObject test';
-  def.noObject = 1;
-  var got = _.entity._exportStringFromObject( { a : 1, b : 2, c : 'text' }, def );
-  var expected = undefined;
-  test.identical( got, expected );
-
-  test.case = 'dtab & prependTab & multiline test';
-  def.noObject = 0;
-  def.dtab = '*';
-  def.multiline  = 1;
-  def.prependTab = 1;
-  var got = _.entity._exportStringFromObject( { a : 1, b : 2, c : 'text' }, def );
-  var expected =
-  [
-    ' *a : 1, ',
-    ' *b : 2, ',
-    ' *c : text',
-  ].join( '\n' );
-  test.identical( got.text, expected );
-
-  /**/
-
-  if( Config.debug )
-  {
-
-    test.case = 'invalid first argument type';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromObject( 1, {} );
-    } );
-
-    test.case = 'empty options';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromObject( { a : 1 }, {} );
-    } );
-
-    test.case = 'invalid second argument type';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromObject( { a : 1 }, 2 );
-    } );
-
-    test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromObject( );
-    } );
-
-  }
-}
-
-//
-
-function _exportStringFromContainer( test )
-{
-  var o = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0, noSubObject : 0, prependTab : 1, jsonLike : 0, stringWrapper : '"' };
-  var src = { a : 1, b : 2, c : 'text' };
-  var names = _.mapOnlyOwnKeys( src );
-  var optionsItem = null;
-
-  function item_options( )
-  {
-  optionsItem = _.mapExtend( {}, o );
-  optionsItem.noObject = o.noSubObject ? 1 : 0;
-  optionsItem.tab = o.tab + o.dtab;
-  optionsItem.level = o.level + 1;
-  optionsItem.prependTab = 0;
-  };
-
-  test.case = 'default options';
-  item_options( );
-  var got = _.entity._exportStringFromContainer
-  ( {
-    values : src,
-    names,
-    optionsContainer : o,
-    optionsItem,
-    simple : !o.multiline,
-    prefix : '{',
-    postfix : '}',
-  } );
-  var expected = ' { a : 1, b : 2, c : "text" }';
-  test.identical( got, expected );
-
-  test.case = 'wrap 0, comma , dtab, multiline test';
-
-  o.wrap = 0;
-  o.comma = '_';
-  o.dtab = '*';
-  o.colon = ' | ';
-  o.multiline = 1;
-  item_options( );
-
-  var got = _.entity._exportStringFromContainer
-  ( {
-    values : src,
-    names,
-    optionsContainer : o,
-    optionsItem,
-    simple : !o.multiline,
-    prefix : '{',
-    postfix : '}',
-  } );
-  var expected =
-  [
-    ' *a | 1_',
-    ' *b | 2_',
-    ' *c | "text"',
-  ].join( '\n' );
-
-  test.identical( got, expected );
-
-  test.case = 'json test';
-
-  o.wrap = 1;
-  o.comma = ', ';
-  o.dtab = '  ';
-  o.multiline = 0;
-  o.colon = ' : ';
-  o.json = 1;
-  o.levels = 256;
-  item_options( );
-
-  var got = _.entity._exportStringFromContainer
-  ( {
-    values : src,
-    names,
-    optionsContainer : o,
-    optionsItem,
-    simple : !o.multiline,
-    prefix : '{',
-    postfix : '}',
-  } );
-  var expected = ' { "a" : 1, "b" : 2, "c" : "text" }';
-
-  test.identical( got, expected );
-
-  /**/
-
-  if( Config.debug )
-  {
-
-    test.case = 'invalid  argument type';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromContainer( 1 );
-    } );
-
-    test.case = 'empty object';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromContainer( { } );
-    } );
-
-    test.case = 'no arguments';
-    test.shouldThrowErrorOfAnyKind( function( )
-    {
-      _.entity._exportStringFromContainer( );
-    } );
-
-  }
-
-}
-
-//
-
 function exportStringNice( test )
 {
   test.case = 'in - boolean';
@@ -6437,6 +5811,675 @@ function exportStringNice( test )
   test.identical( got, exp );
 }
 
+//
+
+function _exportStringIsVisibleElement( test )
+{
+  test.case = 'default options';
+  var got = _.entity._exportStringIsVisibleElement( 123, {} );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.case = 'noAtomic';
+  var got = _.entity._exportStringIsVisibleElement( 'test', { noAtomic : 1 } );
+  var expected = false;
+  test.identical( got, expected );
+
+  test.case = 'noObject';
+  var got = _.entity._exportStringIsVisibleElement( { a : 'test' }, { noObject : 1 } );
+  var expected = false;
+  test.identical( got, expected );
+
+  /**/
+
+  if( Config.debug )
+  {
+
+    test.case = 'invalid arguments count';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringIsVisibleElement( '1' );
+    } );
+
+    // test.case = 'second argument is not a object';
+    // test.shouldThrowErrorOfAnyKind( function( )
+    // {
+    //   _.entity._exportStringIsVisibleElement( '1', 2 );
+    // } );
+
+    test.case = 'no arguments';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringIsVisibleElement( );
+    } );
+
+  }
+}
+
+//
+
+function _exportStringIsSimpleElement( test )
+{
+  test.case = 'default options';
+  var got = _.entity._exportStringIsSimpleElement( 123, {} );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.case = 'string length > 40';
+  var got = _.entity._exportStringIsSimpleElement( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', {} );
+  var expected = false;
+  test.identical( got, expected );
+
+  test.case = 'object test';
+  var got = _.entity._exportStringIsSimpleElement( { a : 1 }, {} );
+  var expected = false;
+  test.identical( got, expected );
+
+  test.case = 'atomic test';
+  var got = _.entity._exportStringIsSimpleElement( undefined, {} );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.case = 'escaping test';
+  var got = _.entity._exportStringIsSimpleElement( '\naaa', { escaping : 1 } );
+  var expected = true;
+  test.identical( got, expected );
+
+  /**/
+
+  if( Config.debug )
+  {
+
+    test.case = 'invalid arguments count';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringIsSimpleElement( '1' );
+    } );
+
+    test.case = 'second argument is not a object';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringIsSimpleElement( '1', 2 );
+    } );
+
+    test.case = 'no arguments';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringIsSimpleElement( );
+    } );
+
+  }
+}
+
+//
+
+function _exportStringIsSimpleElement2( test )
+{
+
+  test.case = 'argument\'s length is less than 40 symbols';
+  var got = _.entity._exportStringIsSimpleElement( 'test', {} );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.case = 'argument is number';
+  var got = _.entity._exportStringIsSimpleElement( 13, {} );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.case = 'argument is boolean';
+  var got = _.entity._exportStringIsSimpleElement( true, {} );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.case = 'argument is null';
+  var got = _.entity._exportStringIsSimpleElement( null, {} );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.case = 'argument is undefined';
+  var got = _.entity._exportStringIsSimpleElement( undefined, {} );
+  var expected = true;
+  test.identical( got, expected );
+
+  test.case = 'argument\'s length is greater than 40 symbols';
+  var got = _.entity._exportStringIsSimpleElement( 'test, test, test, test, test, test, test, test, test.', {} );
+  var expected = false;
+  test.identical( got, expected );
+
+  test.case = 'argument is an object';
+  var got = _.entity._exportStringIsSimpleElement( { a: 33 }, {} );
+  var expected = false;
+  test.identical( got, expected );
+
+  test.case = 'argument is an array';
+  var got = _.entity._exportStringIsSimpleElement( [ 1, 2, 3 ], {} );
+  var expected = false;
+  test.identical( got, expected );
+
+  test.case = 'argument is an array-like';
+  var arrLike = ( function( ) { return arguments; } )( 1, 2, 3 );
+  var got = _.entity._exportStringIsSimpleElement( arrLike, {} );
+  var expected = false;
+  test.identical( got, expected );
+}
+
+
+//
+
+function _exportStringFromRoutine( test )
+{
+  test.case = 'routine test';
+  var got = _.entity._exportStringFromRoutine( function a ( ) {}, {} );
+  var expected = '[ routine a ]';
+  test.identical( got, expected );
+
+  test.case = 'routine without name';
+  var got = _.entity._exportStringFromRoutine( function( ) {}, {} );
+  var expected = '[ routine without name ]';
+  test.identical( got, expected );
+
+  /**/
+
+  if( Config.debug )
+  {
+
+    test.case = 'invalid argument type';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromRoutine( '1' );
+    } );
+
+    test.case = 'no arguments';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromRoutine( );
+    } );
+
+  }
+}
+
+//
+
+function _exportStringFromNumber( test )
+{
+  test.case = 'default options';
+  var got = _.entity._exportStringFromNumber( 123, {} );
+  var expected = '123';
+  test.identical( got, expected );
+
+  test.case = 'number precision test';
+  var got = _.entity._exportStringFromNumber( 123, { precision : 2 } );
+  var expected = '1.2e+2';
+  test.identical( got, expected );
+
+  test.case = 'number fixed test';
+  var got = _.entity._exportStringFromNumber( 123, { fixed : 2 } );
+  var expected = '123.00';
+  test.identical( got, expected );
+
+  test.case = 'invalid option type';
+  var got = _.entity._exportStringFromNumber( 123, { fixed : '2' } );
+  var expected = '123';
+  test.identical( got, expected );
+
+  /**/
+
+  if( Config.debug )
+  {
+
+    test.case = 'invalid first argument type';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromNumber( '1', {} );
+    } );
+
+    test.case = 'invalid second argument type';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromNumber( 1, 2 );
+    } );
+
+    test.case = 'no arguments';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromNumber( );
+    } );
+
+    test.case = 'precision out of range';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromNumber( 1, { precision : 22 } );
+    } );
+
+    test.case = 'fixed out of range';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromNumber( 1, { fixed : 22 } );
+    } );
+
+  }
+}
+
+//
+
+function _exportStringFromNumber2( test )
+{
+
+  test.case = 'returns with precision until 5';
+  var options = { precision : 5 };
+  var got = _.entity._exportStringFromNumber( 3.123456, options );
+  var expected = '3.1235';
+  test.identical( got, expected );
+
+  test.case = 'returns with precision until 2';
+  var options = { precision : 2 };
+  var got = _.entity._exportStringFromNumber( 3.123456, options );
+  var expected = '3.1';
+  test.identical( got, expected );
+
+  test.case = 'is returned with four numbers after dot';
+  var options = { fixed : 4 };
+  var got = _.entity._exportStringFromNumber( 13.75, options );
+  var expected = '13.7500';
+  test.identical( got, expected );
+
+  test.case = 'is returned the rounded number to the top';
+  var options = { fixed : 0 };
+  var got = _.entity._exportStringFromNumber( 13.50, options );
+  var expected = '14';
+  test.identical( got, expected );
+
+  test.case = 'is returned the rounded number to the bottom';
+  var options = { fixed : 0 };
+  var got = _.entity._exportStringFromNumber( 13.49, options );
+  var expected = '13';
+  test.identical( got, expected );
+
+  test.case = 'returns string';
+  var options = {  };
+  var got = _.entity._exportStringFromNumber( 13.75, options );
+  var expected = '13.75';
+  test.identical( got, expected );
+
+  /**/
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'no arguments';
+  test.shouldThrowErrorOfAnyKind( function( )
+  {
+    _.entity._exportStringFromNumber( );
+  } );
+
+  test.case = 'first argument is wrong';
+  test.shouldThrowErrorOfAnyKind( function( )
+  {
+    _.entity._exportStringFromNumber( 'wrong argument', { fixed : 3 } );
+  } );
+
+  test.case = 'second argument is not provided';
+  test.shouldThrowErrorOfAnyKind( function( )
+  {
+    _.entity._exportStringFromNumber( 13.75 );
+  } );
+
+  test.case = 'second argument is wrong precision must be between 1 and 21';
+  test.shouldThrowErrorOfAnyKind( function( )
+  {
+    _.entity._exportStringFromNumber( 13.75, { precision : 0 } );
+  } );
+
+};
+
+//
+
+function _exportStringFromStr( test )
+{
+  test.case = 'default options';
+  var got = _.entity._exportStringFromStr( '123', {} );
+  var expected = '123';
+  test.identical( got, expected );
+
+  test.case = 'escaping';
+  var got = _.entity._exportStringFromStr( '\n123\u001b', { escaping : 1 } );
+  var expected = '\\n123\\u001b';
+  test.identical( got, expected );
+
+  test.case = 'stringWrapper';
+  var got = _.entity._exportStringFromStr( 'string', { stringWrapper : '"' } );
+  var expected = '"string"';
+  test.identical( got, expected );
+
+  test.case = 'multilinedString';
+  var got = _.entity._exportStringFromStr( 'string\nstring2', { stringWrapper : '`' } );
+  var expected = "`string\nstring2`";
+  test.identical( got, expected );
+
+
+  /**/
+
+  if( Config.debug )
+  {
+
+    test.case = 'invalid first argument type';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromStr( 2, {} );
+    } );
+
+    test.case = 'invalid second argument type';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromStr( '1', 2 );
+    } );
+
+    test.case = 'no arguments';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromStr( );
+    } );
+
+  }
+}
+
+//
+
+function _exportStringFromSet( test )
+{
+  test.case = 'default options';
+  var options = { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 1 };
+  var got = _.entity._exportStringFromSet( new Set([ 1, 2, 3 ]), options ).text;
+  var expected = 'new Set([ 1, 2, 3 ])';
+  test.identical( got, expected );
+
+  test.case = 'wrap test';
+  var options = { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 0 };
+  var got = _.entity._exportStringFromSet( new Set([ 1, 2, 3 ]), options ).text;
+  var expected = 'new Set(   1, 2, 3)';
+  test.identical( got, expected );
+
+  test.case = 'levels 0 test';
+  var options = { tab : ' ', dtab : '   ', level : 0, levels : 0, comma : ', ', wrap : 1 };
+  var got = _.entity._exportStringFromSet( new Set([ 1, 2, 3 ]), options ).text;
+  var expected = 'new Set({- Array with 3 elements -})';
+  test.identical( got, expected );
+
+  test.case = 'dtab & multiline test';
+  var options = { tab : ' ', dtab : '-', level : 0, comma : ', ', wrap : 1, multiline : 1 };
+  var got = _.entity._exportStringFromSet( new Set([ 1, 2, 3 ]), options ).text;
+  var expected =
+  [
+    'new Set([',
+    ' -1, ',
+    ' -2, ',
+    ' -3',
+    ' ])',
+  ].join( '\n' );
+  test.identical( got, expected );
+
+  /* - */
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'without arguments';
+  test.shouldThrowErrorSync( () => _.entity._exportStringFromSet() );
+
+  test.case = 'invalid first argument type';
+  test.shouldThrowErrorSync( () => _.entity._exportStringFromSet( 2, {} ) );
+
+  test.case = 'invalid second argument type';
+  test.shouldThrowErrorSync( () => _.entity._exportStringFromSet( [], 2 ) );
+}
+
+//
+
+function _exportStringFromArray( test )
+{
+
+  test.case = 'default options';
+  var got = _.entity._exportStringFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 1 } ).text;
+  var expected = '[ 1, 2, 3 ]';
+  test.identical( got, expected );
+
+  test.case = 'wrap test';
+  var got = _.entity._exportStringFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 1, comma : ', ', wrap : 0 } ).text;
+  var expected = '   1, 2, 3';
+  test.identical( got, expected );
+
+  test.case = 'levels 0 test';
+  var got = _.entity._exportStringFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '   ', level : 0, levels : 0, comma : ', ', wrap : 1 } ).text;
+  var expected = '{- Array with 3 elements -}';
+  test.identical( got, expected );
+
+  test.case = 'dtab & multiline test';
+  var got = _.entity._exportStringFromArray( [ 1, 2, 3 ], { tab : ' ', dtab : '-', level : 0, comma : ', ', wrap : 1, multiline : 1 } ).text;
+  var expected =
+  [
+    '[',
+    ' -1, ',
+    ' -2, ',
+    ' -3',
+    ' ]',
+  ].join( '\n' );
+  test.identical( got, expected );
+
+  /**/
+
+  if( Config.debug )
+  {
+
+    test.case = 'invalid first argument type';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromArray( 2, {} );
+    } );
+
+    test.case = 'invalid second argument type';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromArray( [], 2 );
+    } );
+
+    test.case = 'no arguments';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromArray( );
+    } );
+
+  }
+}
+
+//
+
+function _exportStringFromContainer( test )
+{
+  var o = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0, noSubObject : 0, prependTab : 1, jsonLike : 0, stringWrapper : '"' };
+  var src = { a : 1, b : 2, c : 'text' };
+  var names = _.mapOnlyOwnKeys( src );
+  var optionsItem = null;
+
+  function item_options( )
+  {
+  optionsItem = _.mapExtend( {}, o );
+  optionsItem.noObject = o.noSubObject ? 1 : 0;
+  optionsItem.tab = o.tab + o.dtab;
+  optionsItem.level = o.level + 1;
+  optionsItem.prependTab = 0;
+  };
+
+  test.case = 'default options';
+  item_options( );
+  var got = _.entity._exportStringFromContainer
+  ( {
+    values : src,
+    names,
+    optionsContainer : o,
+    optionsItem,
+    simple : !o.multiline,
+    prefix : '{',
+    postfix : '}',
+  } );
+  var expected = ' { a : 1, b : 2, c : "text" }';
+  test.identical( got, expected );
+
+  test.case = 'wrap 0, comma , dtab, multiline test';
+
+  o.wrap = 0;
+  o.comma = '_';
+  o.dtab = '*';
+  o.colon = ' | ';
+  o.multiline = 1;
+  item_options( );
+
+  var got = _.entity._exportStringFromContainer
+  ( {
+    values : src,
+    names,
+    optionsContainer : o,
+    optionsItem,
+    simple : !o.multiline,
+    prefix : '{',
+    postfix : '}',
+  } );
+  var expected =
+  [
+    ' *a | 1_',
+    ' *b | 2_',
+    ' *c | "text"',
+  ].join( '\n' );
+
+  test.identical( got, expected );
+
+  test.case = 'json test';
+
+  o.wrap = 1;
+  o.comma = ', ';
+  o.dtab = '  ';
+  o.multiline = 0;
+  o.colon = ' : ';
+  o.json = 1;
+  o.levels = 256;
+  item_options( );
+
+  var got = _.entity._exportStringFromContainer
+  ( {
+    values : src,
+    names,
+    optionsContainer : o,
+    optionsItem,
+    simple : !o.multiline,
+    prefix : '{',
+    postfix : '}',
+  } );
+  var expected = ' { "a" : 1, "b" : 2, "c" : "text" }';
+
+  test.identical( got, expected );
+
+  /**/
+
+  if( Config.debug )
+  {
+
+    test.case = 'invalid  argument type';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromContainer( 1 );
+    } );
+
+    test.case = 'empty object';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromContainer( { } );
+    } );
+
+    test.case = 'no arguments';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromContainer( );
+    } );
+
+  }
+
+}
+
+//
+
+function _exportStringFromObject( test )
+{
+  var def = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0 };
+
+  test.case = 'default options';
+  var got = _.entity._exportStringFromObject( { a : 1, b : 2 , c : 'text' }, def );
+  var expected = '{ a : 1, b : 2, c : text }';
+  test.identical( got.text, expected );
+
+  test.case = 'levels 0 test';
+  def.levels = 0;
+  var got = _.entity._exportStringFromObject( { a : 1, b : 2 , c : 'text' }, def );
+  var expected = '{- Map.polluted with 3 elements -}';
+  test.identical( got.text, expected );
+
+  test.case = 'wrap 0 test';
+  def.levels = 1;
+  def.wrap = 0;
+  var got = _.entity._exportStringFromObject( { a : 1, b : 2, c : 'text' }, def );
+  var expected = 'a : 1, b : 2, c : text';
+  test.identical( got.text, expected );
+
+  test.case = 'noObject test';
+  def.noObject = 1;
+  var got = _.entity._exportStringFromObject( { a : 1, b : 2, c : 'text' }, def );
+  var expected = undefined;
+  test.identical( got, expected );
+
+  test.case = 'dtab & prependTab & multiline test';
+  def.noObject = 0;
+  def.dtab = '*';
+  def.multiline  = 1;
+  def.prependTab = 1;
+  var got = _.entity._exportStringFromObject( { a : 1, b : 2, c : 'text' }, def );
+  var expected =
+  [
+    ' *a : 1, ',
+    ' *b : 2, ',
+    ' *c : text',
+  ].join( '\n' );
+  test.identical( got.text, expected );
+
+  /**/
+
+  if( Config.debug )
+  {
+
+    test.case = 'invalid first argument type';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromObject( 1, {} );
+    } );
+
+    test.case = 'empty options';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromObject( { a : 1 }, {} );
+    } );
+
+    test.case = 'invalid second argument type';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromObject( { a : 1 }, 2 );
+    } );
+
+    test.case = 'no arguments';
+    test.shouldThrowErrorOfAnyKind( function( )
+    {
+      _.entity._exportStringFromObject( );
+    } );
+
+  }
+}
+
 // --
 // declare test suite
 // --
@@ -6482,20 +6525,21 @@ let Self =
 
     exportStringMethods,
     exportStringFields,
-
     exportStringShort,
+    exportStringNice,
+
     _exportStringIsVisibleElement,
     _exportStringIsSimpleElement,
+    _exportStringIsSimpleElement2,
     _exportStringFromRoutine,
     _exportStringFromNumber,
     _exportStringFromNumber2,
-    _exportStringIsSimpleElement2,
     _exportStringFromStr,
+    _exportStringFromSet,
     _exportStringFromArray,
-    _exportStringFromObject,
     _exportStringFromContainer,
+    _exportStringFromObject,
 
-    exportStringNice,
 
   }
 
