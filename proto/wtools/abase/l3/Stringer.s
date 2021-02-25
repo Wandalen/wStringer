@@ -441,8 +441,8 @@ function _exportStringFine_functor()
 
   var routine = exportStringFine;
   routine.defaults = def;
-  routine.methods = exportStringMethods;
-  routine.fields = exportStringFields;
+  routine.methods = _.entity.exportStringMethods;
+  routine.fields = _.entity.exportStringFields;
   // routine.notMethod = 1;
   return routine;
 
@@ -513,7 +513,7 @@ function _exportStringFine_functor()
       _.assert( !o.multilinedString, 'Expects {-o.multilinedString-} false if either ( o.jsonLike ) or ( o.jsLike ) is true to make valid JSON' );
     }
 
-    var r = _exportString( src, o );
+    var r = _.entity._exportString( src, o );
 
     return r ? r.text : '';
   }
@@ -650,10 +650,10 @@ function _exportString( src, o )
 
   if( o.level >= o.levels )
   {
-    return { text : _exportStringShort( src, o ), simple : 1 };
+    return { text : _.entity._exportStringShort( src, o ), simple : 1 };
   }
 
-  if( !_exportStringIsVisibleElement( src, o ) )
+  if( !_.entity._exportStringIsVisibleElement( src, o ) )
   return;
 
   var isPrimitive = _.primitiveIs( src );
@@ -705,7 +705,7 @@ function _exportString( src, o )
     {
       if( o.onlyEnumerable === undefined )
       o.onlyEnumerable = 0;
-      var r = _exportStringFromObject( src, o );
+      var r = _.entity._exportStringFromObject( src, o );
       result += r.text;
       simple = r.simple;
     }
@@ -713,19 +713,19 @@ function _exportString( src, o )
   }
   else if( type === 'Function' )
   {
-    result += _exportStringFromRoutine( src, o );
+    result += _.entity._exportStringFromRoutine( src, o );
   }
   else if( type === 'Number' )
   {
-    result += _exportStringFromNumber( src, o );
+    result += _.entity._exportStringFromNumber( src, o );
   }
   else if( type === 'BigInt' )
   {
-    result += _exportStringFromBigInt( src, o );
+    result += _.entity._exportStringFromBigInt( src, o );
   }
   else if( type === 'String' )
   {
-    result += _exportStringFromStr( src, o );
+    result += _.entity._exportStringFromStr( src, o );
   }
   else if( type === 'Date' )
   {
@@ -738,47 +738,47 @@ function _exportString( src, o )
   }
   else if( type === 'Symbol' )
   {
-    result += _exportStringFromSymbol( src, o );
+    result += _.entity._exportStringFromSymbol( src, o );
   }
   else if( _.bufferRawIs( src ) )
   {
-    var r = _exportStringFromBufferRaw( src, o );
+    var r = _.entity._exportStringFromBufferRaw( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( _.bufferTypedIs( src ) )
   {
-    var r = _exportStringFromBufferTyped( src, o );
+    var r = _.entity._exportStringFromBufferTyped( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( _.bufferNodeIs( src ) )
   {
-    var r = _exportStringFromBufferNode( src, o );
+    var r = _.entity._exportStringFromBufferNode( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( isLong )
   {
-    var r = _exportStringFromArray( src, o );
+    var r = _.entity._exportStringFromArray( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( isObject )
   {
-    var r = _exportStringFromObject( src, o );
+    var r = _.entity._exportStringFromObject( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( _.hashMapLike( src ) )
   {
-    var r = _exportStringFromHashMap( src, o );
+    var r = _.entity._exportStringFromHashMap( src, o );
     result += r.text;
     simple = r.simple;
   }
   else if( _.setLike( src ) )
   {
-    var r = _exportStringFromSet( src, o );
+    var r = _.entity._exportStringFromSet( src, o );
     result += r.text;
     simple = r.simple;
   }
@@ -848,7 +848,7 @@ function _exportStringShort( src, o )
         infix : o.infix
 
       }
-      result = _exportStringFromStr( src, o2 );
+      result = _.entity._exportStringFromStr( src, o2 );
 
     }
     else if( _.errIs( src ) )
@@ -857,11 +857,11 @@ function _exportStringShort( src, o )
     }
     else if( _.routineIs( src ) )
     {
-      result += _exportStringFromRoutine( src, o );
+      result += _.entity._exportStringFromRoutine( src, o );
     }
     else if( _.numberIs( src ) )
     {
-      result += _exportStringFromNumber( src, o );
+      result += _.entity._exportStringFromNumber( src, o );
     }
     else
     {
@@ -962,7 +962,7 @@ function _exportStringIsVisibleElement( src, o )
 
     if( !o.wrap )
     {
-      src = _exportStringFromArrayFiltered( src, o );
+      src = _.entity._exportStringFromArrayFiltered( src, o );
       if( !src.length )
       return false;
     }
@@ -976,7 +976,7 @@ function _exportStringIsVisibleElement( src, o )
 
     if( !o.wrap )
     {
-      var keys = _exportStringFromObjectKeysFiltered( src, o );
+      var keys = _.entity._exportStringFromObjectKeysFiltered( src, o );
       if( !keys.length )
       return false;
     }
@@ -1290,7 +1290,7 @@ function _exportStringFromHashMap( src, o )
 
   /* get names */
 
-  var keys = _exportStringFromObjectKeysFiltered( src, o );
+  var keys = _.entity._exportStringFromObjectKeysFiltered( src, o );
 
   /* empty case */
 
@@ -1310,14 +1310,14 @@ function _exportStringFromHashMap( src, o )
   if( simple )
   for( var k in src )
   {
-    simple = _exportStringIsSimpleElement( src[ k ], optionsItem );
+    simple = _.entity._exportStringIsSimpleElement( src[ k ], optionsItem );
     if( !simple )
     break;
   }
 
   /* */
 
-  result += _exportStringFromContainer
+  result += _.entity._exportStringFromContainer
   ({
     values : src,
     names : keys,
@@ -1335,7 +1335,7 @@ function _exportStringFromHashMap( src, o )
 
 function _exportStringFromSet( src, o )
 {
-  let result = _exportStringFromArray( _.arrayFrom( src ), o );
+  let result = _.entity._exportStringFromArray( _.arrayFrom( src ), o );
   result.text = `new Set(${result.text})` ;
   return result;
 }
@@ -1352,7 +1352,7 @@ function _exportStringFromBufferTyped( src, o )
   {
     if( k !== 0 )
     result += ', ';
-    result += _exportStringFromNumber( e, o );
+    result += _.entity._exportStringFromNumber( e, o );
   });
 
   result = '( new ' + src.constructor.name + '([ ' + result + ' ]) )';
@@ -1421,7 +1421,7 @@ function _exportStringFromArrayFiltered( src, o )
   var length = src.length;
   for( var i = 0 ; i < length ; i++ )
   {
-    v += !!_exportStringIsVisibleElement( src[ i ], optionsItem );
+    v += !!_.entity._exportStringIsVisibleElement( src[ i ], optionsItem );
   }
 
   if( v !== length )
@@ -1431,7 +1431,7 @@ function _exportStringFromArrayFiltered( src, o )
     var src2 = _.longMakeUndefined( src, v );
     while( i < length )
     {
-      if( _exportStringIsVisibleElement( src[ i ], optionsItem ) )
+      if( _.entity._exportStringIsVisibleElement( src[ i ], optionsItem ) )
       {
         src2[ i2 ] = src[ i ];
         i2 += 1;
@@ -1495,7 +1495,7 @@ function _exportStringFromArray( src, o )
 
   if( o.level >= o.levels )
   {
-    return { text : _exportStringShort( src, o ), simple : 1 };
+    return { text : _.entity._exportStringShort( src, o ), simple : 1 };
   }
 
   /* item options */
@@ -1516,7 +1516,7 @@ function _exportStringFromArray( src, o )
 
   /* filter */
 
-  src = _exportStringFromArrayFiltered( src, o );
+  src = _.entity._exportStringFromArrayFiltered( src, o );
 
   /* is simple */
 
@@ -1527,14 +1527,14 @@ function _exportStringFromArray( src, o )
   if( simple )
   for( var i = 0 ; i < length ; i++ )
   {
-    simple = _exportStringIsSimpleElement( src[ i ], optionsItem );;
+    simple = _.entity._exportStringIsSimpleElement( src[ i ], optionsItem );;
     if( !simple )
     break;
   }
 
   /* */
 
-  result += _exportStringFromContainer
+  result += _.entity._exportStringFromContainer
   ({
     values : src,
     optionsContainer : o,
@@ -1660,9 +1660,9 @@ function _exportStringFromContainer( o )
     // console.log( _.process.memoryUsageInfo() );
 
     if( names )
-    r = _exportString( values[ names[ n ] ], optionsItem );
+    r = _.entity._exportString( values[ names[ n ] ], optionsItem );
     else
-    r = _exportString( values[ n ], optionsItem );
+    r = _.entity._exportString( values[ n ], optionsItem );
 
     _.assert( _.objectIs( r ) && _.strIs( r.text ) );
     _.assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
@@ -1761,7 +1761,7 @@ function _exportStringFromObjectKeysFiltered( src, o )
 
   for( var n = 0 ; n < keys.length ; n++ )
   {
-    if( !_exportStringIsVisibleElement( src[ keys[ n ] ], optionsItem ) )
+    if( !_.entity._exportStringIsVisibleElement( src[ keys[ n ] ], optionsItem ) )
     {
       keys.splice( n, 1 );
       n -= 1;
@@ -1813,7 +1813,7 @@ function _exportStringFromObject( src, o )
 
   if( o.level >= o.levels )
   {
-    return { text : _exportStringShort( src, o ), simple : 1 };
+    return { text : _.entity._exportStringShort( src, o ), simple : 1 };
   }
 
   if( o.noObject )
@@ -1829,7 +1829,7 @@ function _exportStringFromObject( src, o )
 
   /* get names */
 
-  var keys = _exportStringFromObjectKeysFiltered( src, o );
+  var keys = _.entity._exportStringFromObjectKeysFiltered( src, o );
 
   /* empty case */
 
@@ -1849,14 +1849,14 @@ function _exportStringFromObject( src, o )
   if( simple )
   for( var k in src )
   {
-    simple = _exportStringIsSimpleElement( src[ k ], optionsItem );
+    simple = _.entity._exportStringIsSimpleElement( src[ k ], optionsItem );
     if( !simple )
     break;
   }
 
   /* */
 
-  result += _exportStringFromContainer
+  result += _.entity._exportStringFromContainer
   ({
     values : src,
     names : keys,
@@ -1921,54 +1921,54 @@ let EntityExtension =
   Stringer : 1,
 }
 
-var ToolsExtension =
-{
-
-  // exportString,
-  // exportStringFine,
-  // exportStringMethods,
-  // exportStringFields,
-  // exportStringShort,
-  // exportStringNice,
-  // exportStringSolo,
-  // exportJson,
-  // exportJs,
-  //
-  // _exportStringFine_functor,
-  //
-  // _exportString,
-  // _exportStringShort,
-  //
-  // _exportStringIsVisibleElement,
-  // _exportStringIsSimpleElement,
-  //
-  // _exportStringFromRoutine,
-  // _exportStringFromNumber,
-  // _exportStringFromBigInt,
-  // _exportStringFromSymbol,
-  // _exportStringFromStr,
-  //
-  // _exportStringFromHashMap,
-  // _exportStringFromSet,
-  //
-  // _exportStringFromBufferRaw,
-  // _exportStringFromBufferNode,
-  // _exportStringFromBufferTyped,
-  //
-  // _exportStringFromArrayFiltered,
-  // _exportStringFromArray,
-  //
-  // _exportStringFromContainer,
-  //
-  // _exportStringFromObjectKeysFiltered,
-  // _exportStringFromObject,
-  //
-  // Stringer : 1,
-
-}
+// var ToolsExtension =
+// {
+//
+//   // exportString,
+//   // exportStringFine,
+//   // exportStringMethods,
+//   // exportStringFields,
+//   // exportStringShort,
+//   // exportStringNice,
+//   // exportStringSolo,
+//   // exportJson,
+//   // exportJs,
+//   //
+//   // _exportStringFine_functor,
+//   //
+//   // _exportString,
+//   // _exportStringShort,
+//   //
+//   // _exportStringIsVisibleElement,
+//   // _exportStringIsSimpleElement,
+//   //
+//   // _exportStringFromRoutine,
+//   // _exportStringFromNumber,
+//   // _exportStringFromBigInt,
+//   // _exportStringFromSymbol,
+//   // _exportStringFromStr,
+//   //
+//   // _exportStringFromHashMap,
+//   // _exportStringFromSet,
+//   //
+//   // _exportStringFromBufferRaw,
+//   // _exportStringFromBufferNode,
+//   // _exportStringFromBufferTyped,
+//   //
+//   // _exportStringFromArrayFiltered,
+//   // _exportStringFromArray,
+//   //
+//   // _exportStringFromContainer,
+//   //
+//   // _exportStringFromObjectKeysFiltered,
+//   // _exportStringFromObject,
+//   //
+//   // Stringer : 1,
+//
+// }
 
 _.mapExtend( _.entity, EntityExtension );
-_.mapExtend( _, ToolsExtension );
+// _.mapExtend( _, ToolsExtension );
 
 // var exportStringFine = Self.exportStringFine = Self._exportStringFine_functor();
 // var exportString = Self.exportString = Self.strFrom = exportStringFine;
