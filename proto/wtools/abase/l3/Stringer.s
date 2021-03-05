@@ -9,9 +9,6 @@
  @extends Tools
 */
 
-/**
- *  */
-
 if( typeof module !== 'undefined' )
 {
 
@@ -525,14 +522,14 @@ function _exportStringFine_functor()
 let exportStringFine = _exportStringFine_functor();
 let exportString = exportStringFine;
 
+// // yyy
 //
-
-function exportStringShort( src )
-{
-  _.assert( arguments.length === 1 );
-  var result = _.entity.exportString( src, { levels : 0 } );
-  return result;
-}
+// function exportStringShort( src )
+// {
+//   _.assert( arguments.length === 1 );
+//   var result = _.entity.exportString( src, { levels : 0 } );
+//   return result;
+// }
 
 //
 
@@ -675,7 +672,14 @@ function _exportString( src, o )
   if( !isPrimitive && 'exportString' in src && _.routineIs( src.exportString ) && _.instanceIs( src ) )
   {
 
-    var r = src.exportString( o );
+    _.assert
+    (
+      src.exportString.length === 0 || src.exportString.length === 1,
+      'Method exportString should expect either none or one argument'
+    );
+
+    // var r = src.exportString( o );
+    var r = src.exportString({ it : o });
     if( _.objectIs( r ) )
     {
       _.assert( r.simple !== undefined && r.text !== undefined );
@@ -1883,7 +1887,7 @@ let EntityExtension =
   exportStringFine,
   exportStringMethods,
   exportStringFields,
-  exportStringShort,
+  // exportStringShort,
   exportStringNice,
   exportStringSolo,
   exportJson,
@@ -1921,57 +1925,7 @@ let EntityExtension =
   Stringer : 1,
 }
 
-// var ToolsExtension =
-// {
-//
-//   // exportString,
-//   // exportStringFine,
-//   // exportStringMethods,
-//   // exportStringFields,
-//   // exportStringShort,
-//   // exportStringNice,
-//   // exportStringSolo,
-//   // exportJson,
-//   // exportJs,
-//   //
-//   // _exportStringFine_functor,
-//   //
-//   // _exportString,
-//   // _exportStringShort,
-//   //
-//   // _exportStringIsVisibleElement,
-//   // _exportStringIsSimpleElement,
-//   //
-//   // _exportStringFromRoutine,
-//   // _exportStringFromNumber,
-//   // _exportStringFromBigInt,
-//   // _exportStringFromSymbol,
-//   // _exportStringFromStr,
-//   //
-//   // _exportStringFromHashMap,
-//   // _exportStringFromSet,
-//   //
-//   // _exportStringFromBufferRaw,
-//   // _exportStringFromBufferNode,
-//   // _exportStringFromBufferTyped,
-//   //
-//   // _exportStringFromArrayFiltered,
-//   // _exportStringFromArray,
-//   //
-//   // _exportStringFromContainer,
-//   //
-//   // _exportStringFromObjectKeysFiltered,
-//   // _exportStringFromObject,
-//   //
-//   // Stringer : 1,
-//
-// }
-
 _.mapExtend( _.entity, EntityExtension );
-// _.mapExtend( _, ToolsExtension );
-
-// var exportStringFine = Self.exportStringFine = Self._exportStringFine_functor();
-// var exportString = Self.exportString = Self.strFrom = exportStringFine;
 
 // --
 // export
