@@ -647,7 +647,7 @@ function _exportString( src, o )
 
   if( o.level >= o.levels )
   {
-    return { text : _.entity._exportStringShort( src, o ), simple : 1 };
+    return { text : _.entity._exportStringShortAct( src, o ), simple : 1 };
   }
 
   if( !_.entity._exportStringIsVisibleElement( src, o ) )
@@ -822,15 +822,15 @@ function _exportString( src, o )
  *
  * @example
  * //returns [ Array with 3 elements ]
- * _._exportStringShort( [ function del(){}, 0, 'a' ], { levels : 0 } )
+ * _._exportStringShortAct( [ function del(){}, 0, 'a' ], { levels : 0 } )
  *
- * @function _exportStringShort
+ * @function _exportStringShortAct
  * @namespace Tools
  * @module Tools/base/Stringer
  *
  */
 
-function _exportStringShort( src, o )
+function _exportStringShortAct( src, o )
 {
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( _.objectIs( o ), 'Expects map {-o-}' );
@@ -1237,7 +1237,7 @@ function _exportStringFromStr( src, o )
     result = _.strShort
     ({
       src : _.strEscape( src ),
-      limit : o.limitStringLength,
+      widthLimit : o.limitStringLength,
       prefix : q ? q : o.prefix,
       postfix : q ? q : o.postfix,
       infix : o.infix ? o.infix : '',
@@ -1499,7 +1499,7 @@ function _exportStringFromArray( src, o )
 
   if( o.level >= o.levels )
   {
-    return { text : _.entity._exportStringShort( src, o ), simple : 1 };
+    return { text : _.entity._exportStringShortAct( src, o ), simple : 1 };
   }
 
   /* item options */
@@ -1817,7 +1817,7 @@ function _exportStringFromObject( src, o )
 
   if( o.level >= o.levels )
   {
-    return { text : _.entity._exportStringShort( src, o ), simple : 1 };
+    return { text : _.entity._exportStringShortAct( src, o ), simple : 1 };
   }
 
   if( o.noObject )
@@ -1896,7 +1896,7 @@ let EntityExtension =
   _exportStringFine_functor,
 
   _exportString,
-  _exportStringShort,
+  _exportStringShortAct,
 
   _exportStringIsVisibleElement,
   _exportStringIsSimpleElement,
