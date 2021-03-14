@@ -5331,28 +5331,28 @@ function exportStringFields( test )
 function exportStringShort( test )
 {
   test.case = 'Array length test';
-  var got = _.entity._exportStringShort( [ 1, 2, 'text', undefined ], {} );
+  var got = _.entity._exportStringShortAct( [ 1, 2, 'text', undefined ], {} );
   var expected = '{- Array with 4 elements -}';
   test.identical( got, expected );
 
   test.case = 'date to string';
-  var got = _.entity._exportStringShort( new Date( Date.UTC( 1993, 12, 12 ) ), {} );
+  var got = _.entity._exportStringShortAct( new Date( Date.UTC( 1993, 12, 12 ) ), {} );
   var expected = '1994-01-12T00:00:00.000Z';
   test.identical( got, expected );
 
   test.case = 'string length > 40, prefix, postfix, infix';
-  // var got = _.entity._exportStringShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
-  var got = _.entity._exportStringShort( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { prefix : '"', postfix : '"', infix : '...' } );
+  // var got = _.entity._exportStringShortAct( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
+  var got = _.entity._exportStringShortAct( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { prefix : '"', postfix : '"', infix : '...' } );
   var expected = '"toxtndmtmdbmmlzoir...nrrqfuvybuuvixyrx"';
   test.identical( got, expected );
 
   test.case = 'string with options';
-  var got = _.entity._exportStringShort( '\toxtndmtmdb', {} );
+  var got = _.entity._exportStringShortAct( '\toxtndmtmdb', {} );
   var expected = '\\toxtndmtmdb';
   test.identical( got, expected );
 
   test.case = 'error to string ';
-  var got = _.entity._exportStringShort( new Error( 'err', {} ), {} );
+  var got = _.entity._exportStringShortAct( new Error( 'err', {} ), {} );
   var expected = '[object Error]';
   test.identical( got, expected );
 
@@ -5364,19 +5364,19 @@ function exportStringShort( test )
     test.case = 'invalid second argument type';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.entity._exportStringShort( '1', 2 );
+      _.entity._exportStringShortAct( '1', 2 );
     } );
 
     test.case = 'only one argument provided';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.entity._exportStringShort( '1' );
+      _.entity._exportStringShortAct( '1' );
     } );
 
     test.case = 'no arguments';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.entity._exportStringShort( );
+      _.entity._exportStringShortAct( );
     } );
 
   }
