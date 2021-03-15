@@ -520,6 +520,7 @@ function _exportStringFine_functor()
 //
 
 let exportStringFine = _exportStringFine_functor();
+exportStringFine.functor = _exportStringFine_functor;
 let exportString = exportStringFine;
 
 // // yyy
