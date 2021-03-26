@@ -15,8 +15,9 @@ if( typeof module !== 'undefined' )
 
 }
 
-let _ = _global_.wTools;
-let fileProvider = _globals_.testing.wTools.fileProvider;
+const _ = _global_.wTools;
+const __ = _globals_.testing.wTools;
+let fileProvider = __.fileProvider;
 let path = fileProvider.path;
 
 // --
@@ -2361,7 +2362,7 @@ function fromFile( test )
 // test suite
 // --
 
-let Self =
+const Proto =
 {
 
   name : 'Tools.l4.String.ToJson',
@@ -2381,7 +2382,7 @@ let Self =
 
 }
 
-Self = wTestSuite( Self );
+const Self = wTestSuite( Proto );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 

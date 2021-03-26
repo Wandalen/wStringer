@@ -13,8 +13,9 @@ if( typeof module !== 'undefined' )
 
 }
 
-let _ = _global_.wTools;
-let fileProvider = _globals_.testing.wTools.fileProvider;
+const _ = _global_.wTools;
+const __ = _globals_.testing.wTools;
+let fileProvider = __.fileProvider;
 let path = fileProvider.path;
 
 // --
@@ -5328,7 +5329,7 @@ function exportStringFields( test )
 
 //
 
-function exportStringShort( test )
+function exportStringShallow( test )
 {
   test.case = 'Array length test';
   var got = _.entity._exportStringShortAct( [ 1, 2, 'text', undefined ], {} );
@@ -6484,7 +6485,7 @@ function _exportStringFromObject( test )
 // declare test suite
 // --
 
-let Self =
+const Proto =
 {
 
   name : 'Tools.l3.Stringer',
@@ -6525,7 +6526,7 @@ let Self =
 
     exportStringMethods,
     exportStringFields,
-    exportStringShort,
+    exportStringShallow,
     exportStringNice,
 
     _exportStringIsVisibleElement,
@@ -6545,7 +6546,7 @@ let Self =
 
 };
 
-Self = wTestSuite( Self );
+const Self = wTestSuite( Proto );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 

@@ -18,14 +18,14 @@ if( typeof module !== 'undefined' )
 
 //
 
-let Self = _global_.wTools;
-let _global = _global_;
-let _ = _global_.wTools;
+const Self = _global_.wTools;
+const _global = _global_;
+const _ = _global_.wTools;
 
 var _ArraySlice = Array.prototype.slice;
 var _FunctionBind = Function.prototype.bind;
 var _ObjectToString = Object.prototype.toString;
-var _ObjectHasOwnProperty = Object.hasOwnProperty;
+const _ObjectHasOwnProperty = Object.hasOwnProperty;
 
 // var __assert = _.assert;
 var _arraySlice = _.longSlice;
@@ -481,7 +481,7 @@ function _exportStringFine_functor()
     if( o.stringWrapper === undefined && o.multilinedString )
     o.stringWrapper = '`';
 
-    _.assertMapHasOnly( o, [ composes, primeFilter, optional ] );
+    _.map.assertHasOnly( o, [ composes, primeFilter, optional ] );
     o = _.mapSupplement( null, o, exportStringDefaults, composes, primeFilter );
 
     if( o.onlyRoutines )
@@ -522,15 +522,6 @@ function _exportStringFine_functor()
 let exportStringFine = _exportStringFine_functor();
 exportStringFine.functor = _exportStringFine_functor;
 let exportString = exportStringFine;
-
-// // yyy
-//
-// function exportStringShort( src )
-// {
-//   _.assert( arguments.length === 1 );
-//   var result = _.entity.exportString( src, { levels : 0 } );
-//   return result;
-// }
 
 //
 
@@ -870,7 +861,7 @@ function _exportStringShortAct( src, o )
     }
     else
     {
-      result = _.entity.exportStringShortDiagnostic( src );
+      result = _.entity.exportStringShallowDiagnostic( src );
     }
 
   }
@@ -1280,7 +1271,7 @@ function _exportStringFromHashMap( src, o )
   src.forEach( function( e, k )
   {
     // result += '\n' + k + ' : ' + e;
-    result += '\n' + k + ' : ' + _.entity.exportStringShort( e );
+    result += '\n' + k + ' : ' + _.entity.exportStringShallow( e );
   });
 
   return { text : result, simple : 0 };
@@ -1888,7 +1879,7 @@ let EntityExtension =
   exportStringFine,
   exportStringMethods,
   exportStringFields,
-  // exportStringShort,
+  // exportStringShallow,
   exportStringNice,
   exportStringSolo,
   exportJson,
