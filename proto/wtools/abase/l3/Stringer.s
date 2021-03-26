@@ -651,8 +651,6 @@ function _exportString( src, o )
   var isObject = !isLong && _.objectIs( src );
   var isObjectLike = !isLong && _.objectLike( src ) && !( 'toString' in src );
 
-  _.debugger;
-
   /* */
 
   // if( src && src.exportString && src.exportString.notMethod )
