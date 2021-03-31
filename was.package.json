@@ -5,7 +5,7 @@
   "author" : "Kostiantyn Wandalen <wanalen@01.school>",
   "license" : "MIT",
   "main" : "proto/wtools/abase/l3/Stringer.s",
-  "files" : [ "proto/wtools/abase/l3", "proto/wtools/Tools.s", "out" ],
+  "files" : [ "proto/wtools/abase/l3", "proto/wtools/Tools.s", "out", "proto/node_modules" ],
   "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-1", "docgen" : "wdocgen proto" },
   "repository" :
   {
@@ -17,6 +17,6 @@
     "url" : "https://github.com/Wandalen/wStringer/issues"
   },
   "dependencies" : { "wTools" : "" },
-  "devDependencies" : { "wTesting" : "", "wstringer" : "file:." },
+  "devDependencies" : { "wTesting" : "" },
   "keywords" : [ "wTools" ]
 }
