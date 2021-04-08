@@ -1515,6 +1515,4 @@ module:
       ../.im.will.yml:
         hash: 8d4c84b204cf205fbef5846218523338
         size: 4877
-      wStringer.out.will.yml:
-        hash: dd371cdc65fc8c480ad49048364cc05a
-        size: 39419
+      wStringer.out.will.yml: *ref_0
