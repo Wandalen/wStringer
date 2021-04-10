@@ -554,8 +554,9 @@ exportStringNice.defaults =
 
 function exportStringSolo( src, o )
 {
-  _.assert( arguments.length === 1 || arguments.length === 2 );
   o = _.routineOptions( exportStringSolo, o );
+  let result = _.entity.exportStringNice( src, o );
+  // return _.strReplace( result, '\n', ' ' );
   return _.entity.exportStringNice( src, o )
   .split( '\n' )
   .map( ( e ) => e.trim() )
@@ -565,6 +566,7 @@ function exportStringSolo( src, o )
 exportStringSolo.defaults =
 {
   ... exportStringNice.defaults,
+  levels : 1,
 }
 
 //
