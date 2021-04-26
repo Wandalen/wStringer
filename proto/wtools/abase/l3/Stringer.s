@@ -434,7 +434,7 @@ function _exportStringFine_functor()
   // if( _.prototypeUnitedInterface )
   // def = _.prototypeUnitedInterface([ primeFilter, composes, optional ]);
   // else
-  def = _.mapExtend( null, primeFilter, composes, optional );
+  def = _.props.extend( null, primeFilter, composes, optional );
 
   var routine = exportStringFine;
   routine.defaults = def;
@@ -482,7 +482,7 @@ function _exportStringFine_functor()
     o.stringWrapper = '`';
 
     _.map.assertHasOnly( o, [ composes, primeFilter, optional ] );
-    o = _.mapSupplement( null, o, exportStringDefaults, composes, primeFilter );
+    o = _.props.supplement( null, o, exportStringDefaults, composes, primeFilter );
 
     if( o.onlyRoutines )
     {
@@ -529,7 +529,7 @@ function exportStringNice( src, o )
 {
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
-  o = _.routineOptions( exportStringNice, o );
+  o = _.routine.options_( exportStringNice, o || null );
 
   var result = _.entity.exportString( src, o );
 
@@ -554,7 +554,7 @@ exportStringNice.defaults =
 
 function exportStringSolo( src, o )
 {
-  o = _.routineOptions( exportStringSolo, o );
+  o = _.routine.options_( exportStringSolo, o || null );
   let result = _.entity.exportStringNice( src, o );
   // return _.strReplace( result, '\n', ' ' );
   return _.entity.exportStringNice( src, o )
@@ -575,7 +575,7 @@ function exportJson( src, o )
 {
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
-  o = _.routineOptions( exportJson, o );
+  o = _.routine.options_( exportJson, o || null );
 
   if( o.cloning )
   src = _.cloneData({ src });
@@ -600,7 +600,7 @@ function exportJs( src, o )
 {
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
-  o = _.routineOptions( exportJs, o );
+  o = _.routine.options_( exportJs, o || null );
 
   var result = _.entity.exportString( src, o );
 
@@ -711,7 +711,7 @@ function _exportString( src, o )
   {
     result += _.entity._exportStringFromRoutine( src, o );
   }
-  else if( type === 'Number' )
+  else if( type === 'Number' && _.numberIs( src ) )
   {
     result += _.entity._exportStringFromNumber( src, o );
   }
@@ -1226,6 +1226,14 @@ function _exportStringFromStr( src, o )
 
   if( o.limitStringLength )
   {
+
+    if( o.prefix === undefined )
+    o.prefix = _.strShort.defaults.prefix;
+    if( o.postfix === undefined )
+    o.postfix = _.strShort.defaults.postfix;
+    if( o.infix === undefined )
+    o.infix = _.strShort.defaults.infix;
+
     result = _.strShort
     ({
       src : _.strEscape( src ),
@@ -1278,7 +1286,7 @@ function _exportStringFromHashMap( src, o )
 
   /* item options */
 
-  var optionsItem = _.mapExtend( null, o );
+  var optionsItem = _.props.extend( null, o );
   optionsItem.noObject = o.noSubObject ? 1 : optionsItem.noObject;
   optionsItem.tab = o.tab + o.dtab;
   optionsItem.level = o.level + 1;
@@ -1331,7 +1339,7 @@ function _exportStringFromHashMap( src, o )
 
 function _exportStringFromSet( src, o )
 {
-  let result = _.entity._exportStringFromArray( _.arrayFrom( src ), o );
+  let result = _.entity._exportStringFromArray( _.array.from( src ), o );
   result.text = `new Set(${result.text})` ;
   return result;
 }
@@ -1408,7 +1416,7 @@ function _exportStringFromArrayFiltered( src, o )
 
   /* item options */
 
-  var optionsItem = _.mapExtend( null, o );
+  var optionsItem = _.props.extend( null, o );
   optionsItem.level = o.level + 1;
 
   /* filter */
@@ -1424,7 +1432,7 @@ function _exportStringFromArrayFiltered( src, o )
   {
     var i2 = 0;
     var i = 0;
-    var src2 = _.longMakeUndefined( src, v );
+    var src2 = _.long.makeUndefined( src, v );
     while( i < length )
     {
       if( _.entity._exportStringIsVisibleElement( src[ i ], optionsItem ) )
@@ -1496,7 +1504,7 @@ function _exportStringFromArray( src, o )
 
   /* item options */
 
-  var optionsItem = _.mapExtend( null, o );
+  var optionsItem = _.props.extend( null, o );
   optionsItem.tab = o.tab + o.dtab;
   optionsItem.level = o.level + 1;
   optionsItem.prependTab = 0;
@@ -1741,12 +1749,12 @@ function _exportStringFromObjectKeysFiltered( src, o )
 
   /* item options */
 
-  var optionsItem = _.mapExtend( null, o );
+  var optionsItem = _.props.extend( null, o );
   optionsItem.noObject = o.noSubObject ? 1 : optionsItem.noObject;
 
   /* get keys */
 
-  var keys = _._mapKeys
+  var keys = _.props._keys
   ({
     srcMap : src,
     onlyOwn : o.onlyOwn,
@@ -1817,7 +1825,7 @@ function _exportStringFromObject( src, o )
 
   /* item options */
 
-  var optionsItem = _.mapExtend( null, o );
+  var optionsItem = _.props.extend( null, o );
   optionsItem.noObject = o.noSubObject ? 1 : optionsItem.noObject;
   optionsItem.tab = o.tab + o.dtab;
   optionsItem.level = o.level + 1;
@@ -1917,7 +1925,7 @@ let EntityExtension =
   Stringer : 1,
 }
 
-_.mapExtend( _.entity, EntityExtension );
+_.props.extend( _.entity, EntityExtension );
 
 // --
 // export

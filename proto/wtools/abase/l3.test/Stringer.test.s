@@ -6298,12 +6298,12 @@ function _exportStringFromContainer( test )
 {
   var o = { tab : ' ', dtab : '   ', level : 0, levels : 1, onlyEnumerable : 1, own : 1, colon : ' : ', comma : ', ', wrap : 1, noObject : 0, multiline : 0, noSubObject : 0, prependTab : 1, jsonLike : 0, stringWrapper : '"' };
   var src = { a : 1, b : 2, c : 'text' };
-  var names = _.mapOnlyOwnKeys( src );
+  var names = _.props.onlyOwnKeys( src );
   var optionsItem = null;
 
   function item_options( )
   {
-  optionsItem = _.mapExtend( {}, o );
+  optionsItem = _.props.extend( {}, o );
   optionsItem.noObject = o.noSubObject ? 1 : 0;
   optionsItem.tab = o.tab + o.dtab;
   optionsItem.level = o.level + 1;
