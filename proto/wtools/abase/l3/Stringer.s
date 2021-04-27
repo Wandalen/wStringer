@@ -841,8 +841,8 @@ function _exportStringShortAct( src, o )
         stringWrapper : o.stringWrapper,
         prefix : o.prefix,
         postfix : o.postfix,
-        infix : o.infix
-
+        infix : o.infix,
+        shortDelimeter : o.shortDelimeter,
       }
       result = _.entity._exportStringFromStr( src, o2 );
 
@@ -1227,21 +1227,27 @@ function _exportStringFromStr( src, o )
   if( o.limitStringLength )
   {
 
-    if( o.prefix === undefined )
-    o.prefix = _.strShort.defaults.prefix;
-    if( o.postfix === undefined )
-    o.postfix = _.strShort.defaults.postfix;
-    if( o.infix === undefined )
-    o.infix = _.strShort.defaults.infix;
+    // if( o.prefix === undefined )
+    // o.prefix = _.strShort_.defaults.prefix;
+    // if( o.postfix === undefined )
+    // o.postfix = _.strShort_.defaults.postfix;
+    // if( o.infix === undefined )
+    // o.infix = _.strShort_.defaults.infix;
 
-    result = _.strShort
+    if( o.shortDelimeter === undefined )
+    o.shortDelimeter = _.strShort_.defaults.delimeter;
+
+    debugger;
+    result = _.strShort_
     ({
       src : _.strEscape( src ),
       widthLimit : o.limitStringLength,
-      prefix : q ? q : o.prefix,
-      postfix : q ? q : o.postfix,
-      infix : o.infix ? o.infix : '',
-    });
+      delimeter : o.shortDelimeter,
+      // prefix : q ? q : o.prefix,
+      // postfix : q ? q : o.postfix,
+      // infix : o.infix ? o.infix : '',
+    }).result;
+    debugger;
 
     // return result;
     if( result.length > o.limitStringLength )
