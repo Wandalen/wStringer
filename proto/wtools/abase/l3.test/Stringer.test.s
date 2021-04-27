@@ -51,7 +51,6 @@ source : http://en.cppreference.com/w/cpp/language/escape
 function reportChars( )
 {
 
-  debugger;
   var r = '';
   for( var i = 0 ; i < 512 ; i++ )
   {
@@ -61,7 +60,6 @@ function reportChars( )
   }
 
   console.log( r );
-  debugger;
 
 }
 
@@ -111,12 +109,11 @@ function reportChars( )
 //    }
 //    else
 //    {
-//      test.identical( got, expected[ k ] ); debugger;
+//      test.identical( got, expected[ k ] );
 //    }
 //
 //  }
 //
-//  debugger;
 //}
 
 // --

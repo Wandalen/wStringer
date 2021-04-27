@@ -627,7 +627,6 @@ function _exportString( src, o )
   if( o.precision !== null )
   if( o.precision < 1 || o.precision > 21 )
   {
-    debugger;
     throw _.err( 'RangeError' );
   }
 
@@ -654,11 +653,6 @@ function _exportString( src, o )
   var isObjectLike = !isLong && _.objectLike( src ) && !( 'toString' in src );
 
   /* */
-
-  // if( src && src.exportString && src.exportString.notMethod )
-  // debugger;
-  // if( src && src.constructor && src.constructor.name === 'eGdcHeader' )
-  // debugger;
 
   // if( !isPrimitive && 'exportString' in src && _.routineIs( src.exportString ) && !src.exportString.notMethod && !_ObjectHasOwnProperty.call( src, 'constructor' ) )
   if( !isPrimitive && 'exportString' in src && _.routineIs( src.exportString ) && _.instanceIs( src ) )
@@ -867,7 +861,6 @@ function _exportStringShortAct( src, o )
   }
   catch( err )
   {
-    debugger;
     throw _.err( err );
   }
 
@@ -1071,7 +1064,6 @@ function _exportStringFromRoutine( src, o )
 {
   var result = '';
 
-  // debugger;
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( _.routineIs( src ), 'Expects routine {-src-}' );
 
@@ -1237,7 +1229,6 @@ function _exportStringFromStr( src, o )
     if( o.shortDelimeter === undefined )
     o.shortDelimeter = _.strShort_.defaults.delimeter;
 
-    debugger;
     result = _.strShort_
     ({
       src : _.strEscape( src ),
@@ -1247,7 +1238,6 @@ function _exportStringFromStr( src, o )
       // postfix : q ? q : o.postfix,
       // infix : o.infix ? o.infix : '',
     }).result;
-    debugger;
 
     // return result;
     if( result.length > o.limitStringLength )
@@ -1280,7 +1270,7 @@ function _exportStringFromHashMap( src, o )
   var result = 'HashMap\n';
   var simple = 0;
 
-  _.assert( src instanceof HashMap ); debugger;
+  _.assert( src instanceof HashMap );
 
   src.forEach( function( e, k )
   {
@@ -1603,7 +1593,6 @@ function _exportStringFromContainer( o )
 
   if( limit > 0 && limit < l )
   {
-    debugger;
     l = limit;
     optionsContainer.limitElementsNumber = 0;
   }
@@ -1739,7 +1728,6 @@ function _exportStringFromContainer( o )
 
   function other( length )
   {
-    debugger;
     return linePostfix + '[ ... other '+ ( length - l ) +' element(s) ]';
   }
 
