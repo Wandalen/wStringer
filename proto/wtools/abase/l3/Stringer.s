@@ -1034,7 +1034,7 @@ function _exportStringIsSimpleElement( element, o )
   else if( element && !_.objectIs( element ) && _.numberIs( element.length ) )
   return !element.length;
   else if( _.objectIs( element ) || _.objectLike( element ) )
-  return !_.entityLengthOf( element );
+  return !_.entity.lengthOf( element );
   else
   return _.primitiveIs( element );
 
