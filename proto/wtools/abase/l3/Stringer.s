@@ -447,12 +447,12 @@ function _exportStringFine_functor()
   {
 
     _.assert( arguments.length === 1 || arguments.length === 2 );
-    _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
+    _.assert( _.object.isBasic( o ) || o === undefined, 'Expects map {-o-}' );
 
     var o = o || Object.create( null );
     var exportStringDefaults = Object.create( null );
-    // if( !_.primitiveIs( src ) && 'exportString' in src && _.routineIs( src.exportString ) && !src.exportString.notMethod && _.objectIs( src.exportString.defaults ) )
-    if( !_.primitiveIs( src ) && 'exportString' in src && _.routineIs( src.exportString ) && _.instanceIs( src ) && _.objectIs( src.exportString.defaults ) )
+    // if( !_.primitiveIs( src ) && 'exportString' in src && _.routineIs( src.exportString ) && !src.exportString.notMethod && _.object.isBasic( src.exportString.defaults ) )
+    if( !_.primitiveIs( src ) && 'exportString' in src && _.routineIs( src.exportString ) && _.instanceIs( src ) && _.object.isBasic( src.exportString.defaults ) )
     exportStringDefaults = src.exportString.defaults;
 
     if( o.levels === undefined && ( o.jsonLike || o.jsLike ) )
@@ -649,7 +649,7 @@ function _exportString( src, o )
   var isPrimitive = _.primitiveIs( src );
   var isLong = _.longIs( src );
   var isArray = _.arrayIs( src );
-  var isObject = !isLong && _.objectIs( src );
+  var isObject = !isLong && _.object.isBasic( src );
   var isObjectLike = !isLong && _.objectLike( src ) && !( 'toString' in src );
 
   /* */
@@ -666,7 +666,7 @@ function _exportString( src, o )
 
     // var r = src.exportString( o );
     var r = src.exportString({ it : o });
-    if( _.objectIs( r ) )
+    if( _.object.isBasic( r ) )
     {
       _.assert( r.simple !== undefined && r.text !== undefined );
       simple = r.simple;
@@ -819,7 +819,7 @@ function _exportString( src, o )
 function _exportStringShortAct( src, o )
 {
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
-  _.assert( _.objectIs( o ), 'Expects map {-o-}' );
+  _.assert( _.object.isBasic( o ), 'Expects map {-o-}' );
 
   var result = '';
 
@@ -1021,7 +1021,7 @@ function _exportStringIsVisibleElement( src, o )
 function _exportStringIsSimpleElement( element, o )
 {
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
-  _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
+  _.assert( _.object.isBasic( o ) || o === undefined, 'Expects map {-o-}' );
 
   if( _.strIs( element ) )
   {
@@ -1031,9 +1031,9 @@ function _exportStringIsSimpleElement( element, o )
     return element.indexOf( '\n' ) === -1;
     return true;
   }
-  else if( element && !_.objectIs( element ) && _.numberIs( element.length ) )
+  else if( element && !_.object.isBasic( element ) && _.numberIs( element.length ) )
   return !element.length;
-  else if( _.objectIs( element ) || _.objectLike( element ) )
+  else if( _.object.isBasic( element ) || _.objectLike( element ) )
   return !_.entity.lengthOf( element );
   else
   return _.primitiveIs( element );
@@ -1120,7 +1120,7 @@ function _exportStringFromNumber( src, o )
   var result = '';
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
-  _.assert( _.numberIs( src ) && _.objectIs( o ) );
+  _.assert( _.numberIs( src ) && _.object.isBasic( o ) );
 
   if( o.precision !== null )
   if( o.precision < 1 || o.precision > 21 )
@@ -1211,7 +1211,7 @@ function _exportStringFromStr( src, o )
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( _.strIs( src ), 'Expects string {-src-}' );
-  _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
+  _.assert( _.object.isBasic( o ) || o === undefined, 'Expects map {-o-}' );
 
   //var q = o.multilinedString ? '`' : o.stringWrapper;
   var q = o.stringWrapper;
@@ -1490,7 +1490,7 @@ function _exportStringFromArray( src, o )
 
   _.assert( arguments.length === 2 );
   _.assert( src && _.numberIs( src.length ) );
-  _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
+  _.assert( _.object.isBasic( o ) || o === undefined, 'Expects map {-o-}' );
 
 
   if( o.level >= o.levels )
@@ -1576,7 +1576,7 @@ function _exportStringFromContainer( o )
   var result = '';
 
   _.assert( arguments.length );
-  _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
+  _.assert( _.object.isBasic( o ) || o === undefined, 'Expects map {-o-}' );
   _.assert( _.arrayIs( o.names ) || !o.names );
 
   var values = o.values;
@@ -1663,7 +1663,7 @@ function _exportStringFromContainer( o )
     else
     r = _.entity._exportString( values[ n ], optionsItem );
 
-    _.assert( _.objectIs( r ) && _.strIs( r.text ) );
+    _.assert( _.object.isBasic( r ) && _.strIs( r.text ) );
     _.assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
 
     if( written > 0 )
@@ -1806,7 +1806,7 @@ function _exportStringFromObject( src, o )
 
   _.assert( arguments.length === 2 );
   _.assert( _.objectLike( src ) || _.entity.strTypeSecondary( src ) === 'Error' );
-  _.assert( _.objectIs( o ) || o === undefined, 'Expects map {-o-}' );
+  _.assert( _.object.isBasic( o ) || o === undefined, 'Expects map {-o-}' );
 
 
   if( o.level >= o.levels )
