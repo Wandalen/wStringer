@@ -392,6 +392,8 @@ function _exportStringFine_functor()
     limitElementsNumber : 0,
     limitStringLength : 0,
 
+    format : 'string.diagnostic',
+
   }
 
   /**/
@@ -855,7 +857,7 @@ function _exportStringShortAct( src, o )
     }
     else
     {
-      result = _.entity.exportStringShallowDiagnostic( src );
+      result = _.entity.exportStringDiagnosticShallow( src );
     }
 
   }
@@ -1275,7 +1277,7 @@ function _exportStringFromHashMap( src, o )
   src.forEach( function( e, k )
   {
     // result += '\n' + k + ' : ' + e;
-    result += '\n' + k + ' : ' + _.entity.exportStringShallow( e );
+    result += '\n' + k + ' : ' + _.entity.exportStringDiagnosticShallow( e );
   });
 
   return { text : result, simple : 0 };
@@ -1881,7 +1883,7 @@ let EntityExtension =
   exportStringFine,
   exportStringMethods,
   exportStringFields,
-  // exportStringShallow,
+  // exportStringDiagnosticShallow,
   exportStringNice,
   exportStringSolo,
   exportJson,

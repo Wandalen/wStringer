@@ -5326,7 +5326,7 @@ function exportStringFields( test )
 
 //
 
-function exportStringShallow( test )
+function exportStringDiagnosticShallow( test )
 {
   test.case = 'Array length test';
   var got = _.entity._exportStringShortAct( [ 1, 2, 'text', undefined ], {} );
@@ -6523,7 +6523,7 @@ const Proto =
 
     exportStringMethods,
     exportStringFields,
-    exportStringShallow,
+    exportStringDiagnosticShallow,
     exportStringNice,
 
     _exportStringIsVisibleElement,
