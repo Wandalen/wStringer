@@ -3857,7 +3857,8 @@ function exportStringObject( test )
   test.case = 'object json like, escaping';
   var src = { "sequence" : "\vsample",  };
   var got = _.entity.exportString( src, { levels : 2, escaping : 1 } );
-  var expected = `{ sequence : '\\vsample' }`;
+  // var expected = `{ sequence : '\\vsample' }`;
+  var expected = `{ sequence : '\\u000bsample' }`;
   test.identical( got, expected );
 
   test.case = 'object json like, escaping';

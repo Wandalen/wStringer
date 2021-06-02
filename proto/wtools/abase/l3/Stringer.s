@@ -109,7 +109,7 @@ function exportStringFields( src, o )
 * @property {number} [ o.level=0 ] - Sets the min depth of looking into source object. Function starts from zero level by default.
 * @property {number} [ o.levels=1 ] - Restricts max depth of looking into source object. Looks only in one level by default.
 * @property {number} [ o.limitElementsNumber=0 ] - Outputs limited number of elements from object or array.
-* @property {number} [ o.limitStringLength=0 ] - Outputs limited number of characters from source string.
+* @property {number} [ o.widthLimit=0 ] - Outputs limited number of characters from source string.
 * @property {boolean} [ o.prependTab=true ] - Prepend tab before first line.
 * @property {boolean} [ o.errorAsMap=false ] - Interprets Error as Map if true.
 * @property {boolean} [ o.onlyOwn=true ] - Use only onlyOwn properties of ( src ), ignore properties of ( src ) prototype.
@@ -387,7 +387,8 @@ function _exportStringFine_functor()
     dtab : '  ',
     colon : ' : ',
     limitElementsNumber : 0,
-    limitStringLength : 0,
+    widthLimit : 0,
+    heightLimit : 0,
 
     format : 'string.diagnostic',
 
@@ -430,10 +431,6 @@ function _exportStringFine_functor()
 
   var def;
 
-  // /* yyy : remove dependency of prototypeUnitedInterface */
-  // if( _.prototypeUnitedInterface )
-  // def = _.prototypeUnitedInterface([ primeFilter, composes, optional ]);
-  // else
   def = _.props.extend( null, optional, primeFilter, composes );
 
   var routine = exportStringFine;
@@ -459,7 +456,7 @@ function _exportStringFine_functor()
     if( o.jsonLike || o.jsLike )
     o.levels = 1 << 20;
 
-    if( o.jsLike ) /* yyy */
+    if( o.jsLike )
     {
       if( o.escaping === undefined || o.escaping === null )
       o.escaping = 1;
@@ -843,7 +840,8 @@ function _exportStringShortAct( src, o )
       /* xxx : ? */
       var o2 =
       {
-        limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength, 40 ) : 40,
+        widthLimit : o.widthLimit ? Math.min( o.widthLimit, 40 ) : 40,
+        heightLimit : o.heightLimit || 0,
         stringWrapper : o.stringWrapper,
         prefix : o.prefix,
         postfix : o.postfix,
@@ -1184,7 +1182,7 @@ function _exportStringFromSymbol( src, o )
 
 /**
  * Adjusts source string. Takes string from argument( src ) and options from argument( o ).
- * Limits string length using option( o.limitStringLength ), disables escaping characters using option( o.escaping ),
+ * Limits string length using option( o.widthLimit ), disables escaping characters using option( o.escaping ),
  * wraps source into specified string using( o.stringWrapper ).
  * Returns result as new string or source string if no changes maded.
  *
@@ -1202,7 +1200,7 @@ function _exportStringFromSymbol( src, o )
  *
  * @example
  * //returns [ "t" ... "t" ]
- * _._exportStringFromStr( 'test', { limitStringLength: 2 } );
+ * _._exportStringFromStr( 'test', { widthLimit: 2 } );
  *
  * @example
  * //returns `test`
@@ -1230,7 +1228,7 @@ function _exportStringFromStr( src, o )
 
   var q = o.stringWrapper;
 
-  if( o.limitStringLength )
+  if( o.widthLimit )
   {
 
     if( o.shortDelimeter === undefined || o.shortDelimeter === null )
@@ -1239,11 +1237,12 @@ function _exportStringFromStr( src, o )
     result = _.strShort_
     ({
       src : _.strEscape( src ),
-      widthLimit : o.limitStringLength - q.length*2,
+      widthLimit : o.widthLimit - q.length*2,
+      heightLimit : o.heightLimit || 0,
       delimeter : o.shortDelimeter,
     }).result;
 
-    // if( result.length > o.limitStringLength )
+    // if( result.length > o.widthLimit )
     // {
     //   result = '[ ' + result + ' ]';
     //   q = '';
@@ -1260,13 +1259,13 @@ function _exportStringFromStr( src, o )
     result = src;
   }
 
-  // if( o.stringWrapper && !o.limitStringLength )
+  // if( o.stringWrapper && !o.widthLimit )
   // {
   //   result = q + result + q;
   // }
 
   if( q )
-  // if( !o.limitStringLength || result.length < o.limitStringLength )
+  // if( !o.widthLimit || result.length < o.widthLimit )
   {
     result = q + result + q;
   }
@@ -1693,7 +1692,6 @@ function _exportStringFromContainer( o )
       debugger;
       let name = _.strEscape({ src : names[ n ], stringWrapper : o.keyWrapper });
       if( optionsContainer.keyWrapper )
-      // result += optionsContainer.keyWrapper + String( names[ n ] ) + optionsContainer.keyWrapper + optionsContainer.colon; /* yyy */
       result += optionsContainer.keyWrapper + name + optionsContainer.keyWrapper + optionsContainer.colon;
       else
       result += name + optionsContainer.colon;
