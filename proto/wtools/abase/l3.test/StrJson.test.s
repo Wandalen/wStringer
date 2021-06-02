@@ -12,7 +12,6 @@ if( typeof module !== 'undefined' )
   _.include( 'wStringer' );
   _.include( 'wTesting' );
 
-
 }
 
 const _ = _global_.wTools;
@@ -2111,6 +2110,66 @@ var complexData =
 function trivial( test )
 {
 
+  test.case = `string`;
+  var src = 'abc';
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = `string with double quotes`;
+  var src = '"abc"';
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = `string with single quotes`;
+  var src = `'abc'`;
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = `string with template quotes`;
+  var src = '`abc`';
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = `vertical tab`;
+  var src = gen( 9, 9 );
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = `horizontal tab`;
+  var src = gen( 11, 11 );
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = `zero`;
+  var src = gen( 0, 0 );
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = `0-513`;
+  var src = gen( 0, 513 );
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = `all white spaces`;
+  var src = gen( 0, 32 );
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
+  test.case = `string with special chars`;
+  var src = '\n\r\t';
+  var got = _.entity.exportString( src, { jsonLike : 1 } );
+  var expected = src;
+  test.identical( JSON.parse( got ), expected );
+
   test.case = 'json with valid json as property';
   var src = { "a" : 100, "b" : "c", "c" : { "d" : true, "e" : null } };
   var got = _.entity.exportString( src, { jsonLike : 1 } );
@@ -2134,6 +2193,14 @@ function trivial( test )
   var got = _.entity.exportString( src, { jsonLike : 1 } );
   var expected = src;
   test.identical( JSON.parse( got ), expected );
+
+  function gen( l, r )
+  {
+    let result = '';
+    for( let i = l ; i <= r ; i++ )
+    result += String.fromCharCode( i );
+    return result;
+  }
 
 }
 
@@ -2260,7 +2327,9 @@ function fromFile( test )
 
     test.case = encoding + ' file1';
     var src = stringFromFile( 'file1', encoding );
+    debugger;
     var got = _.entity.exportString( src, { jsonLike : 1 } );
+    debugger;
     var expected = src;
     test.identical( JSON.parse( got ), expected );
 
