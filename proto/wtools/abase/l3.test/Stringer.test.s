@@ -76,8 +76,6 @@ function reportChars( )
 
 //
 
-/* qqq : eliminate that, please | Dmytro : eliminated a time ago */
-
 //function testFunction( test, desc, src, options, expected )
 //{
 //
@@ -120,10 +118,9 @@ function reportChars( )
 // tests
 // --
 
-/* aaa : normalize test | Dmytro : normalized */
-
 function exportString( test )
 {
+
   test.case = 'in - boolean';
   var got = _.entity.exportString( false, {} );
   test.identical( got, 'false' );
@@ -167,6 +164,38 @@ function exportString( test )
   test.case = 'in - filled map with strings values, levels - 2';
   var got = _.entity.exportString( { 1 : 'a', 2: 'b', 3: 'c' }, { levels : 2 } );
   test.identical( got, '{ 1 : \'a\', 2 : \'b\', 3 : \'c\' }' );
+
+  /* */
+
+  test.case = 'str';
+  var src = 'abc';
+  var got = _.entity.exportString( src, { levels : 2 } );
+  var exp = '\'abc\'';
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'str in map';
+  var src = { 'a' : 'b' };
+  var got = _.entity.exportString( src, { levels : 2 } );
+  var exp =
+  [
+    '{ a : \'b\' }',
+  ].join( '\n' );
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'str in map in map';
+  var src = { 'a' : { 'b' : 'c' } };
+  var got = _.entity.exportString( src, { levels : 2 } );
+  var exp =
+  [
+    '{',
+    '  a : { b : \'c\' }',
+    '}',
+  ].join( '\n' );
+  test.identical( got, exp );
 
   /* */
 
@@ -1120,13 +1149,30 @@ function exportStringError( test )
 
   test.case = 'map-error, onlyEnumerable';
   var got = _.entity.exportString( new Error( 'err message' ), { errorAsMap : 1, onlyEnumerable : 1 } );
-  var expected = '{}';
+  var expected = `{ stack : 'Error: err message.../timers.js:475:7)', message : 'err message' }`;
   test.identical( got, expected );
 
   test.case = 'map-error, onlyEnumerable own:0';
   var got = _.entity.exportString( new Error( 'my message' ), { errorAsMap : 1, onlyEnumerable : 1, onlyOwn : 0 } );
-  var expected = '{}';
-  test.identical( got, expected );
+  var expected =
+`{
+  stack : 'Error: my message\\.../timers.js:475:7)',\u0020
+  message : 'my message',\u0020
+  constructor : [ routine Error ],\u0020
+  name : 'Error',\u0020
+  toString : [ routine toString ],\u0020
+  __defineGetter__ : [ routine __defineGetter__ ],\u0020
+  __defineSetter__ : [ routine __defineSetter__ ],\u0020
+  hasOwnProperty : [ routine hasOwnProperty ],\u0020
+  __lookupGetter__ : [ routine __lookupGetter__ ],\u0020
+  __lookupSetter__ : [ routine __lookupSetter__ ],\u0020
+  isPrototypeOf : [ routine isPrototypeOf ],\u0020
+  propertyIsEnumerable : [ routine propertyIsEnumerable ],\u0020
+  valueOf : [ routine valueOf ],\u0020
+  __proto__ : {- Map.polluted with 0 elements -},\u0020
+  toLocaleString : [ routine toLocaleString ]
+}`;
+  test.identical( got, expected ); debugger;
 
   test.case = 'map-error stack';
   var src =
@@ -3811,7 +3857,7 @@ function exportStringObject( test )
   test.case = 'object json like, escaping';
   var src = { "sequence" : "\vsample",  };
   var got = _.entity.exportString( src, { levels : 2, escaping : 1 } );
-  var expected = '{ sequence : \'\\u000bsample\' }';
+  var expected = `{ sequence : '\\vsample' }`;
   test.identical( got, expected );
 
   test.case = 'object json like, escaping';
@@ -4082,10 +4128,11 @@ function exportStringStringWrapper( test )
   var got = _.entity.exportString( src, { levels : 2 } );
   var expected =
   [
-    '{',
-    '  a : \'test\', ',
-    '  b : Error: err',
-    '}'
+    `{ a : 'test', b : Error: err }`,
+    // '{',
+    // '  a : \'test\', ',
+    // '  b : Error: err',
+    // '}'
   ].join( '\n' );
   test.identical( got, expected );
 
@@ -5339,14 +5386,13 @@ function exportStringDiagnosticShallow( test )
   test.identical( got, expected );
 
   test.case = 'string length > 40, prefix, postfix, infix';
-  // var got = _.entity._exportStringShortAct( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
-  var got = _.entity._exportStringShortAct( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { prefix : '"', postfix : '"', infix : '...' } );
-  var expected = '"toxtndmtmdbmmlzoir...nrrqfuvybuuvixyrx"';
+  var got = _.entity._exportStringShortAct( 'toxtndmtmdbmmlzoirmfypyhnrrqfuvybuuvixyrx', { stringWrapper : '"' } );
+  var expected = `"toxtndmtmdbmmlzoir...nrrqfuvybuuvixyrx"`;
   test.identical( got, expected );
 
   test.case = 'string with options';
   var got = _.entity._exportStringShortAct( '\toxtndmtmdb', {} );
-  var expected = '\\toxtndmtmdb';
+  var expected = `'\\toxtndmtmdb'`;
   test.identical( got, expected );
 
   test.case = 'error to string ';
@@ -6134,14 +6180,15 @@ function _exportStringFromNumber2( test )
 
 function _exportStringFromStr( test )
 {
+
   test.case = 'default options';
   var got = _.entity._exportStringFromStr( '123', {} );
-  var expected = '123';
+  var expected = `'123'`;
   test.identical( got, expected );
 
   test.case = 'escaping';
   var got = _.entity._exportStringFromStr( '\n123\u001b', { escaping : 1 } );
-  var expected = '\\n123\\u001b';
+  var expected = `'\\n123\\u001b'`;
   test.identical( got, expected );
 
   test.case = 'stringWrapper';
@@ -6153,7 +6200,6 @@ function _exportStringFromStr( test )
   var got = _.entity._exportStringFromStr( 'string\nstring2', { stringWrapper : '`' } );
   var expected = "`string\nstring2`";
   test.identical( got, expected );
-
 
   /**/
 
@@ -6410,7 +6456,7 @@ function _exportStringFromObject( test )
 
   test.case = 'default options';
   var got = _.entity._exportStringFromObject( { a : 1, b : 2 , c : 'text' }, def );
-  var expected = '{ a : 1, b : 2, c : text }';
+  var expected = `{ a : 1, b : 2, c : 'text' }`;
   test.identical( got.text, expected );
 
   test.case = 'levels 0 test';
@@ -6423,7 +6469,7 @@ function _exportStringFromObject( test )
   def.levels = 1;
   def.wrap = 0;
   var got = _.entity._exportStringFromObject( { a : 1, b : 2, c : 'text' }, def );
-  var expected = 'a : 1, b : 2, c : text';
+  var expected = `a : 1, b : 2, c : 'text'`;
   test.identical( got.text, expected );
 
   test.case = 'noObject test';
@@ -6440,9 +6486,9 @@ function _exportStringFromObject( test )
   var got = _.entity._exportStringFromObject( { a : 1, b : 2, c : 'text' }, def );
   var expected =
   [
-    ' *a : 1, ',
-    ' *b : 2, ',
-    ' *c : text',
+    ` *a : 1, `,
+    ` *b : 2, `,
+    ` *c : 'text'`,
   ].join( '\n' );
   test.identical( got.text, expected );
 

@@ -22,14 +22,10 @@ const Self = _global_.wTools;
 const _global = _global_;
 const _ = _global_.wTools;
 
-var _ArraySlice = Array.prototype.slice;
-var _FunctionBind = Function.prototype.bind;
-var _ObjectToString = Object.prototype.toString;
+const _ArraySlice = Array.prototype.slice;
+const _FunctionBind = Function.prototype.bind;
+const _ObjectToString = Object.prototype.toString;
 const _ObjectHasOwnProperty = Object.hasOwnProperty;
-
-// var __assert = _.assert;
-var _arraySlice = _.longSlice;
-var strType = _.entity.strType;
 
 //
 
@@ -381,7 +377,8 @@ function _exportStringFine_functor()
     level : 0,
 
     wrap : 1,
-    stringWrapper : '\'',
+    // stringWrapper : '\'',
+    stringWrapper : null,
     keyWrapper : '',
     prependTab : 1,
     errorAsMap : 0,
@@ -411,9 +408,10 @@ function _exportStringFine_functor()
 
     precision : null,
     fixed : null,
-    comma : ', ',
+    // comma : ', ',
+    comma : null,
     multiline : 0,
-    multilinedString : 0,
+    multilinedString : null,
     escaping : 0,
     jsonLike : 0,
     jsLike : 0,
@@ -432,11 +430,11 @@ function _exportStringFine_functor()
 
   var def;
 
-  // /* xxx yyy : remove dependency of prototypeUnitedInterface */
+  // /* yyy : remove dependency of prototypeUnitedInterface */
   // if( _.prototypeUnitedInterface )
   // def = _.prototypeUnitedInterface([ primeFilter, composes, optional ]);
   // else
-  def = _.props.extend( null, primeFilter, composes, optional );
+  def = _.props.extend( null, optional, primeFilter, composes );
 
   var routine = exportStringFine;
   routine.defaults = def;
@@ -457,7 +455,8 @@ function _exportStringFine_functor()
     if( !_.primitiveIs( src ) && 'exportString' in src && _.routineIs( src.exportString ) && _.instanceIs( src ) && _.object.isBasic( src.exportString.defaults ) )
     exportStringDefaults = src.exportString.defaults;
 
-    if( o.levels === undefined && ( o.jsonLike || o.jsLike ) )
+    if( o.levels === undefined || o.levels === null )
+    if( o.jsonLike || o.jsLike )
     o.levels = 1 << 20;
 
     if( o.jsLike ) /* yyy */
@@ -480,11 +479,20 @@ function _exportStringFine_functor()
       o.stringWrapper = '"';
     }
 
-    if( o.stringWrapper === undefined && o.multilinedString )
-    o.stringWrapper = '`';
+    // _.map.assertHasOnly( o, [ composes, primeFilter, optional ] );
+    // o = _.props.supplement( null, o, exportStringDefaults, composes, primeFilter );
 
-    _.map.assertHasOnly( o, [ composes, primeFilter, optional ] );
-    o = _.props.supplement( null, o, exportStringDefaults, composes, primeFilter );
+    _.map.assertHasOnly( o, def );
+    o = _.props.supplement( o, def );
+
+    if( o.multilinedString === undefined || o.multilinedString === null )
+    o.multilinedString = o.stringWrapper === '`';
+
+    if( o.stringWrapper === undefined || o.stringWrapper === null )
+    if( o.multilinedString )
+    o.stringWrapper = '`';
+    else
+    o.stringWrapper = `'`;
 
     if( o.onlyRoutines )
     {
@@ -494,14 +502,14 @@ function _exportStringFine_functor()
       o.noRoutine = 0;
     }
 
-    if( o.comma === undefined )
-    o.comma = o.wrap ? optional.comma : ' ';
+    if( o.comma === undefined || o.comma === null )
+    o.comma = o.wrap ? ', ' : ' ';
 
     if( o.comma && !_.strIs( o.comma ) )
-    o.comma = optional.comma;
+    o.comma = ', ';
 
-    if( o.stringWrapper === '`' && o.multilinedString === undefined )
-    o.multilinedString = 1;
+    // if( o.stringWrapper === '`' && o.multilinedString === undefined )
+    // o.multilinedString = 1;
 
     _.assert( _.strIs( o.stringWrapper ), 'Expects string {-o.stringWrapper-}' );
 
@@ -524,6 +532,7 @@ function _exportStringFine_functor()
 let exportStringFine = _exportStringFine_functor();
 exportStringFine.functor = _exportStringFine_functor;
 let exportString = exportStringFine;
+_.assert( exportString.defaults.multilinedString !== undefined );
 
 //
 
@@ -616,8 +625,6 @@ exportJs.defaults =
   levels : 1 << 20,
   stringWrapper : null,
   keyWrapper : null,
-  // stringWrapper : '`',
-  // keyWrapper : '"',
   jsLike : 1,
 }
 
@@ -695,9 +702,11 @@ function _exportString( src, o )
     }
     else
     {
-      if( o.onlyEnumerable === undefined )
-      o.onlyEnumerable = 0;
-      var r = _.entity._exportStringFromObject( src, o );
+      if( o.onlyEnumerable === undefined || o.onlyEnumerable === null )
+      o.onlyEnumerable = 1;
+      var o2 = _.props.extend( null, o );
+      o2.onlyEnumerable = 0;
+      var r = _.entity._exportStringFromObject( src, o2 );
       result += r.text;
       simple = r.simple;
     }
@@ -831,6 +840,7 @@ function _exportStringShortAct( src, o )
     if( _.strIs( src ) )
     {
 
+      /* xxx : ? */
       var o2 =
       {
         limitStringLength : o.limitStringLength ? Math.min( o.limitStringLength, 40 ) : 40,
@@ -1215,41 +1225,34 @@ function _exportStringFromStr( src, o )
   _.assert( _.strIs( src ), 'Expects string {-src-}' );
   _.assert( _.object.isBasic( o ) || o === undefined, 'Expects map {-o-}' );
 
-  //var q = o.multilinedString ? '`' : o.stringWrapper;
+  if( o.stringWrapper === undefined )
+  o.stringWrapper = `\'`;
+
   var q = o.stringWrapper;
 
   if( o.limitStringLength )
   {
 
-    // if( o.prefix === undefined )
-    // o.prefix = _.strShort_.defaults.prefix;
-    // if( o.postfix === undefined )
-    // o.postfix = _.strShort_.defaults.postfix;
-    // if( o.infix === undefined )
-    // o.infix = _.strShort_.defaults.infix;
-
-    if( o.shortDelimeter === undefined )
-    o.shortDelimeter = _.strShort_.defaults.delimeter;
+    if( o.shortDelimeter === undefined || o.shortDelimeter === null )
+    o.shortDelimeter = _.strShort_.defaults.delimeter || '...';
 
     result = _.strShort_
     ({
       src : _.strEscape( src ),
-      widthLimit : o.limitStringLength,
+      widthLimit : o.limitStringLength - q.length*2,
       delimeter : o.shortDelimeter,
-      // prefix : q ? q : o.prefix,
-      // postfix : q ? q : o.postfix,
-      // infix : o.infix ? o.infix : '',
     }).result;
 
-    // return result;
-    if( result.length > o.limitStringLength )
-    {
-      result = '[ ' + result + ' ]';
-      q = '';
-    }
+    // if( result.length > o.limitStringLength )
+    // {
+    //   result = '[ ' + result + ' ]';
+    //   q = '';
+    // }
   }
   else if( o.escaping )
   {
+    if( o.stringWrapper === undefined )
+    debugger;
     result = _.strEscape({ src, stringWrapper : o.stringWrapper });
   }
   else
@@ -1257,7 +1260,13 @@ function _exportStringFromStr( src, o )
     result = src;
   }
 
-  if( o.stringWrapper && !o.limitStringLength )
+  // if( o.stringWrapper && !o.limitStringLength )
+  // {
+  //   result = q + result + q;
+  // }
+
+  if( q )
+  // if( !o.limitStringLength || result.length < o.limitStringLength )
   {
     result = q + result + q;
   }
@@ -1577,7 +1586,7 @@ function _exportStringFromContainer( o )
 {
   var result = '';
 
-  _.assert( arguments.length );
+  _.assert( arguments.length > 0 );
   _.assert( _.object.isBasic( o ) || o === undefined, 'Expects map {-o-}' );
   _.assert( _.arrayIs( o.names ) || !o.names );
 
@@ -1592,6 +1601,9 @@ function _exportStringFromContainer( o )
   var postfix = o.postfix;
   var limit = optionsContainer.limitElementsNumber;
   var l = length;
+
+  if( o.keyWrapper === undefined )
+  o.keyWrapper = '';
 
   if( limit > 0 && limit < l )
   {
@@ -1654,12 +1666,8 @@ function _exportStringFromContainer( o )
     _.assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
     _.assert( optionsItem.level === optionsContainer.level + 1 );
 
-    // if( _global.gc )
-    // _global.gc();
-    // else
-    // xxx;
-    // console.log( _.process.memoryUsageInfo() );
-
+    if( o.values.b === 'c' )
+    debugger;
     if( names )
     r = _.entity._exportString( values[ names[ n ] ], optionsItem );
     else
@@ -1681,6 +1689,8 @@ function _exportStringFromContainer( o )
 
     if( names )
     {
+      if( o.keyWrapper === undefined )
+      debugger;
       let name = _.strEscape({ src : names[ n ], stringWrapper : o.keyWrapper });
       if( optionsContainer.keyWrapper )
       // result += optionsContainer.keyWrapper + String( names[ n ] ) + optionsContainer.keyWrapper + optionsContainer.colon; /* yyy */
@@ -1754,7 +1764,7 @@ function _exportStringFromObjectKeysFiltered( src, o )
   ({
     srcMap : src,
     onlyOwn : o.onlyOwn,
-    onlyEnumerable : o.onlyEnumerable || o.onlyEnumerable === undefined || false,
+    onlyEnumerable : o.onlyEnumerable || o.onlyEnumerable === undefined || o.onlyEnumerable === null || false,
   });
 
   /* filter */
@@ -1921,7 +1931,7 @@ let EntityExtension =
   Stringer : 1,
 }
 
-_.props.extend( _.entity, EntityExtension );
+/* _.props.extend */Object.assign( _.entity, EntityExtension );
 
 // --
 // export
