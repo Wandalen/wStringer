@@ -1665,8 +1665,6 @@ function _exportStringFromContainer( o )
     _.assert( optionsItem.tab === optionsContainer.tab + optionsContainer.dtab );
     _.assert( optionsItem.level === optionsContainer.level + 1 );
 
-    if( o.values.b === 'c' )
-    debugger;
     if( names )
     r = _.entity._exportString( values[ names[ n ] ], optionsItem );
     else
