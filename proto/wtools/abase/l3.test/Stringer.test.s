@@ -1151,15 +1151,15 @@ function exportStringError( test )
   var got = _.entity.exportString( new Error( 'err message' ), { errorAsMap : 1, onlyEnumerable : 1 } );
   // var expected = `{ stack : 'Error: err message.../timers.js:475:7)', message : 'err message' }`;
   // test.identical( got, expected );
-  var expected = /\{ stack : \'Error: err message\.\.\.\/timers\.js:\d+:\d\)\', message : \'err message\' \}/;
+  var expected = /\{ stack : \'Error: err message\.\.\.\w*\/{0,1}timers(\.js){0,1}:\d+:\d+\)\', message : \'err message\' \}/;
   test.true( _.strHas( got, expected ) );
 
   test.case = 'map-error, onlyEnumerable own:0';
   var got = _.entity.exportString( new Error( 'my message' ), { errorAsMap : 1, onlyEnumerable : 1, onlyOwn : 0 } );
-  var lineCol = got.match( /\.\.\.\/timers\.js:(\d+:\d)/ )[ 1 ];
+  var fileWithLineCol = got.match( /\.\.\.\w*\/{0,1}timers(\.js){0,1}:(\d+:\d+)/ )[ 0 ];
   var expected =
 `{
-  stack : 'Error: my message\\.../timers.js:${ lineCol })',\u0020
+  stack : 'Error: my message\\${ fileWithLineCol })',\u0020
   message : 'my message',\u0020
   constructor : [ routine Error ],\u0020
   name : 'Error',\u0020
