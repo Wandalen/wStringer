@@ -643,8 +643,8 @@ function exportStringUnwrapped( test )
   //    /*01*/
   //    [
   //      [
-  //        "abc",
-  //        "edf",
+  //        'abc',
+  //        'edf',
   //        { a : 1 },
   //      ],
   //    ],
@@ -652,8 +652,8 @@ function exportStringUnwrapped( test )
   //    /*02*/
   //    [
   //      {
-  //        nameLong : "abc",
-  //        description : "edf",
+  //        nameLong : 'abc',
+  //        description : 'edf',
   //        rewardForVisitor : { a : 1 },
   //      },
   //    ],
@@ -662,8 +662,8 @@ function exportStringUnwrapped( test )
   //    {
   //      a :
   //      {
-  //        nameLong : "abc",
-  //        description : "edf",
+  //        nameLong : 'abc',
+  //        description : 'edf',
   //        rewardForVisitor : { a : 1 },
   //      },
   //    },
@@ -672,8 +672,8 @@ function exportStringUnwrapped( test )
   //    {
   //      a :
   //      [
-  //        "abc",
-  //        "edf",
+  //        'abc',
+  //        'edf',
   //        { a : 1 },
   //      ],
   //    },
@@ -681,8 +681,8 @@ function exportStringUnwrapped( test )
   //    /*05*/
   //    [
   //      [
-  //        "abc",
-  //        "edf",
+  //        'abc',
+  //        'edf',
   //        { a : 1 },
   //      ],
   //      1,
@@ -707,19 +707,19 @@ function exportStringUnwrapped( test )
   //      var structure =
   //      [
   //        {
-  //          nameLong : "abc",
-  //          description : "edf",
+  //          nameLong : 'abc',
+  //          description : 'edf',
   //          rewardForVisitor : { a : 1 },
   //          stationary : 1,
-  //          f : "f",
+  //          f : 'f',
   //          quantity : 1
   //        },
   //        {
-  //          nameLong : "abc2",
-  //          description : "edf2",
+  //          nameLong : 'abc2',
+  //          description : 'edf2',
   //          rewardForVisitor : { a : 1 },
   //          stationary : 1,
-  //          f : "f",
+  //          f : 'f',
   //          quantity : 1
   //        },
   //      ];
@@ -858,8 +858,8 @@ function exportStringUnwrapped( test )
   var src =
   [
     [
-      "abc",
-      "edf",
+      'abc',
+      'edf',
       { a : 1 },
     ],
   ];
@@ -876,8 +876,8 @@ function exportStringUnwrapped( test )
   var src =
   [
     {
-      nameLong : "abc",
-      description : "edf",
+      nameLong : 'abc',
+      description : 'edf',
       rewardForVisitor : { a : 1 },
     },
   ];
@@ -895,8 +895,8 @@ function exportStringUnwrapped( test )
   {
     a :
     {
-      nameLong : "abc",
-      description : "edf",
+      nameLong : 'abc',
+      description : 'edf',
       rewardForVisitor : { a : 1 },
     },
   };
@@ -915,8 +915,8 @@ function exportStringUnwrapped( test )
   {
     a :
     [
-      "abc",
-      "edf",
+      'abc',
+      'edf',
       { a : 1 },
     ],
   };
@@ -934,8 +934,8 @@ function exportStringUnwrapped( test )
   var src =
   [
     [
-      "abc",
-      "edf",
+      'abc',
+      'edf',
       { a : 1 },
     ],
     1,
@@ -1006,19 +1006,19 @@ function exportStringUnwrapped( test )
     var structure =
     [
       {
-        nameLong : "abc",
-        description : "edf",
+        nameLong : 'abc',
+        description : 'edf',
         rewardForVisitor : { a : 1 },
         stationary : 1,
-        f : "f",
+        f : 'f',
         quantity : 1
       },
       {
-        nameLong : "abc2",
-        description : "edf2",
+        nameLong : 'abc2',
+        description : 'edf2',
         rewardForVisitor : { a : 1 },
         stationary : 1,
-        f : "f",
+        f : 'f',
         quantity : 1
       },
     ];
@@ -1162,8 +1162,10 @@ function exportStringError( test )
   stack : 'Error: my message\\${ fileWithLineCol })',\u0020
   message : 'my message',\u0020
   constructor : [ routine Error ],\u0020
-  name : 'Error',\u0020
-  toString : [ routine toString ],\u0020
+  name : 'Error',\u0020`;
+  test.true( _.str.has( got, expected ) );
+  var expected =
+`  toString : [ routine toString ],\u0020
   __defineGetter__ : [ routine __defineGetter__ ],\u0020
   __defineSetter__ : [ routine __defineSetter__ ],\u0020
   hasOwnProperty : [ routine hasOwnProperty ],\u0020
@@ -1175,7 +1177,7 @@ function exportStringError( test )
   __proto__ : {- Map.polluted with 0 elements -},\u0020
   toLocaleString : [ routine toLocaleString ]
 }`;
-  test.identical( got, expected );
+  test.true( _.str.has( got, expected ) );
 
   test.case = 'map-error stack';
   var src =
@@ -3739,7 +3741,7 @@ function exportStringObject( test )
   test.identical( got, expected );
 
   test.case = 'object json like, escaping 1';
-  var src = { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  };
+  var src = { 'sequence' : '\u001b[A', 'name' : 'undefined', 'shift' : false, 'code' : '[A'  };
   var got = _.entity.exportString( src, { escaping : 1 } );
   var expected =
   [
@@ -3753,7 +3755,7 @@ function exportStringObject( test )
   test.identical( got, expected );
 
   test.case = 'object json like, escaping 0';
-  var src = { "sequence" : "\x7f[A", "name" : "undefined", "shift" : false, "code" : "[A"  };
+  var src = { 'sequence' : '\x7f[A', 'name' : 'undefined', 'shift' : false, 'code' : '[A'  };
   var got = _.entity.exportString( src, { escaping : 0 } );
   var expected =
   [
@@ -3767,7 +3769,7 @@ function exportStringObject( test )
   test.identical( got, expected );
 
   test.case = 'nested object json like, escaping 0';
-  var src = { "sequence" : "<\u001cb>text<\u001cb>", "data" : { "name" : "myname", "age" : 1 }, "shift" : false, "code" : "<b>text<b>"  };
+  var src = { 'sequence' : '<\u001cb>text<\u001cb>', 'data' : { 'name' : 'myname', 'age' : 1 }, 'shift' : false, 'code' : '<b>text<b>'  };
   var got = _.entity.exportString( src, { escaping : 0 } );
   var expected =
   [
@@ -3781,7 +3783,7 @@ function exportStringObject( test )
   test.identical( got, expected );
 
   test.case = 'object json like, multiline';
-  var src = { "sequence" : "\u0068\u0065\u004C\u004C\u006F", "shift" : false, "code" : "heLLo"  };
+  var src = { 'sequence' : '\u0068\u0065\u004C\u004C\u006F', 'shift' : false, 'code' : 'heLLo'  };
   var got = _.entity.exportString( src, { multiline : 1 } );
   var expected =
   [
@@ -3794,7 +3796,7 @@ function exportStringObject( test )
   test.identical( got, expected );
 
   test.case = 'object json like, multiline escaping';
-  var src = { "sequence" : "\n\u0061\u0062\u0063", "shift" : false, "code" : "abc"  };
+  var src = { 'sequence' : '\n\u0061\u0062\u0063', 'shift' : false, 'code' : 'abc'  };
   var got = _.entity.exportString( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
   [
@@ -3807,7 +3809,7 @@ function exportStringObject( test )
   test.identical( got, expected );
 
   test.case = 'object json like, multiline escaping';
-  var src = { "sequence" : "\t\u005b\u0063\u0062\u0061\u005d\t", "data" : 100, "code" : "\n[cba]\n"  };
+  var src = { 'sequence' : '\t\u005b\u0063\u0062\u0061\u005d\t', 'data' : 100, 'code' : '\n[cba]\n'  };
   var got = _.entity.exportString( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
   [
@@ -3820,7 +3822,7 @@ function exportStringObject( test )
   test.identical( got, expected );
 
   test.case = 'object json like, multiline escaping';
-  var src = { "sequence" : "\u005CABC\u005C", "data" : 100, "code" : "\\ABC\\"  };
+  var src = { 'sequence' : '\u005CABC\u005C', 'data' : 100, 'code' : '\\ABC\\'  };
   var got = _.entity.exportString( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
   [
@@ -3833,7 +3835,7 @@ function exportStringObject( test )
   test.identical( got, expected );
 
   test.case = 'object json like, multiline escaping';
-  var src = { "sequence" : "\u000Aline\u000A", "data" : null, "code" : "\nline\n"  };
+  var src = { 'sequence' : '\u000Aline\u000A', 'data' : null, 'code' : '\nline\n'  };
   var got = _.entity.exportString( src, { levels : 2, multiline : 1, escaping : 1 } );
   var expected =
   [
@@ -3846,26 +3848,26 @@ function exportStringObject( test )
   test.identical( got, expected );
 
   test.case = 'object json like, escaping levels 2';
-  var src = { "sequence" : "\rspace\r",  };
+  var src = { 'sequence' : '\rspace\r',  };
   var got = _.entity.exportString( src, { levels : 2, escaping : 1 } );
   var expected = '{ sequence : \'\\rspace\\r\' }';
   test.identical( got, expected );
 
   test.case = 'object json like, escaping';
-  var src = { "sequence" : "\btest",  };
+  var src = { 'sequence' : '\btest',  };
   var got = _.entity.exportString( src, { levels : 2, escaping : 1 } );
   var expected = '{ sequence : \'\\btest\' }';
   test.identical( got, expected );
 
   test.case = 'object json like, escaping';
-  var src = { "sequence" : "\vsample",  };
+  var src = { 'sequence' : '\vsample',  };
   var got = _.entity.exportString( src, { levels : 2, escaping : 1 } );
   // var expected = `{ sequence : '\\vsample' }`;
   var expected = `{ sequence : '\\u000bsample' }`;
   test.identical( got, expected );
 
   test.case = 'object json like, escaping';
-  var src = { "sequence" : "\ftest",  };
+  var src = { 'sequence' : '\ftest',  };
   var got = _.entity.exportString( src, { levels : 2, escaping : 1 } );
   var expected = '{ sequence : \'\\ftest\' }';
   test.identical( got, expected );
@@ -3951,7 +3953,7 @@ function exportStringObject( test )
   test.identical( got, expected );
 
   test.case = 'object json like';
-  var src = { "sequence" : "\u001b[A", "name" : "undefined", "shift" : false, "code" : "[A"  };
+  var src = { 'sequence' : '\u001b[A', 'name' : 'undefined', 'shift' : false, 'code' : '[A'  };
   var got = _.entity.exportString( src, { } );
   var expected =
   [
@@ -3973,14 +3975,14 @@ function exportStringStringWrapper( test )
   //   var desc = 'stringWrapper test',
   //   src =
   //   [
-  //     /*01*/ { a : "string", b : 1, c : null , d : undefined },
-  //     /*02*/ { a : "sample", b : 0, c : false , d : [ "a" ] },
-  //     /*03*/ { a : [ "example" ], b : 1, c : null , d : [ "b" ] },
-  //     /*04*/ { a : "test", b : new Error( "err" ) },
-  //     /*05*/ { a : "a", b : "b", c : { d : "d" } },
-  //     /*06*/ { a : { h : "a" }, b : "b", c : { d : "d" } },
-  //     /*07*/ { a : "line1\nline2\nline3" },
-  //     /*08*/ { a : "line1" },
+  //     /*01*/ { a : 'string', b : 1, c : null , d : undefined },
+  //     /*02*/ { a : 'sample', b : 0, c : false , d : [ 'a' ] },
+  //     /*03*/ { a : [ 'example' ], b : 1, c : null , d : [ 'b' ] },
+  //     /*04*/ { a : 'test', b : new Error( 'err' ) },
+  //     /*05*/ { a : 'a', b : 'b', c : { d : 'd' } },
+  //     /*06*/ { a : { h : 'a' }, b : 'b', c : { d : 'd' } },
+  //     /*07*/ { a : 'line1\nline2\nline3' },
+  //     /*08*/ { a : 'line1' },
   //   ],
   //   options =
   //   [
@@ -4087,7 +4089,7 @@ function exportStringStringWrapper( test )
   //testFunction( test, desc, src, options, expected );
 
   test.case = 'stringWrapper no quotes';
-  var got = _.entity.exportString( { a : "string", b : 1, c : null , d : undefined } , { stringWrapper : '' } );
+  var got = _.entity.exportString( { a : 'string', b : 1, c : null , d : undefined } , { stringWrapper : '' } );
   var expected =
   [
     '{',
@@ -4100,7 +4102,7 @@ function exportStringStringWrapper( test )
   test.identical( got, expected );
 
   test.case = 'stringWrapper no quotes, levels 2';
-  var src = { a : "sample", b : 0, c : false , d : [ "a" ] };
+  var src = { a : 'sample', b : 0, c : false , d : [ 'a' ] };
   var got = _.entity.exportString( src, { levels : 2, stringWrapper : '' } );
   var expected =
   [
@@ -4114,7 +4116,7 @@ function exportStringStringWrapper( test )
   test.identical( got, expected );
 
   test.case = 'stringWrapper no quotes, levels 3';
-  var src = { a : [ "example" ], b : 1, c : null , d : [ "b" ] };
+  var src = { a : [ 'example' ], b : 1, c : null , d : [ 'b' ] };
   var got = _.entity.exportString( src, { levels : 3, stringWrapper : '' } );
   var expected =
   [
@@ -4128,7 +4130,7 @@ function exportStringStringWrapper( test )
   test.identical( got, expected );
 
   test.case = 'stringWrapper with error';
-  var src = { a : "test", b : new Error( "err" ) };
+  var src = { a : 'test', b : new Error( 'err' ) };
   var got = _.entity.exportString( src, { levels : 2 } );
   var expected =
   [
@@ -4141,7 +4143,7 @@ function exportStringStringWrapper( test )
   test.identical( got, expected );
 
   // test.case = 'stringWrapper with object, levels 1'; // Dmytro : old test case, if key and value is identical, then routine write only key
-  // var src = { a : "a", b : "b", c : { d : "d" } };
+  // var src = { a : 'a', b : 'b', c : { d : 'd' } };
   // var got = _.entity.exportString( src, { stringWrapper: '', levels : 1 } );
   // var expected =
   // [
@@ -4154,7 +4156,7 @@ function exportStringStringWrapper( test )
   // test.identical( got, expected );
 
   test.case = 'stringWrapper with object, levels 1'; // Dmytro : new test case, if key and value is identical, routine write key and value
-  var src = { a : "a", b : "b", c : { d : "d" } };
+  var src = { a : 'a', b : 'b', c : { d : 'd' } };
   var got = _.entity.exportString( src, { stringWrapper: '', levels : 1 } );
   var expected =
   [
@@ -4167,7 +4169,7 @@ function exportStringStringWrapper( test )
   test.identical( got, expected );
 
   // test.case = 'stringWrapper with objects, levels 2'; // Dmytro : old test case, if key and value is identical, then routine write only key
-  // var src = { a : { h : "a" }, b : "b", c : { d : "d" } };
+  // var src = { a : { h : 'a' }, b : 'b', c : { d : 'd' } };
   // var got = _.entity.exportString( src, { stringWrapper: '', levels : 2 } );
   // var expected =
   // [
@@ -4180,7 +4182,7 @@ function exportStringStringWrapper( test )
   // test.identical( got, expected );
 
   test.case = 'stringWrapper with objects, levels 2'; // Dmytro : new test case, if key and value is identical, routine write key and value
-  var src = { a : { h : "a" }, b : "b", c : { d : "d" } };
+  var src = { a : { h : 'a' }, b : 'b', c : { d : 'd' } };
   var got = _.entity.exportString( src, { stringWrapper: '', levels : 2 } );
   var expected =
   [
@@ -4193,7 +4195,7 @@ function exportStringStringWrapper( test )
   test.identical( got, expected );
 
   test.case = 'stringWrapper multiline \\n, levels 2';
-  var src = { a : "line1\nline2\nline3" };
+  var src = { a : 'line1\nline2\nline3' };
   var got = _.entity.exportString( src, { levels : 2, multilinedString : 1 } );
   var expected =
   [
@@ -4206,7 +4208,7 @@ function exportStringStringWrapper( test )
   test.identical( got, expected );
 
   test.case = 'stringWrapper multiline, levels 2';
-  var src = { a : "line1" };
+  var src = { a : 'line1' };
   var got = _.entity.exportString( src, { levels : 2, multilinedString : 1 } );
   var expected = '{ a : `line1` }';
   test.identical( got, expected );
@@ -4220,10 +4222,10 @@ function exportStringLevel( test )
   //   var desc = 'level test',
   //   src =
   //   [
-  //     /*01*/ { a : "a", b : "b", c : { d : "d" } },
-  //     /*02*/ { a : { h : "a" }, b : "b", c : { d : "d" } },
-  //     /*03*/ { a : [ "example" ], b : 1, c : null , d : [ "b" ] },
-  //     /*04*/ { a : "a", b : "b", c : { d : "d" } },
+  //     /*01*/ { a : 'a', b : 'b', c : { d : 'd' } },
+  //     /*02*/ { a : { h : 'a' }, b : 'b', c : { d : 'd' } },
+  //     /*03*/ { a : [ 'example' ], b : 1, c : null , d : [ 'b' ] },
+  //     /*04*/ { a : 'a', b : 'b', c : { d : 'd' } },
   //   ],
   //   options =
   //   [
@@ -4269,13 +4271,13 @@ function exportStringLevel( test )
   //  testFunction( test, desc, src, options, expected );
 
   test.case = 'nested objects, level 0 and levels 0';
-  var src = { a : "a", b : "b", c : { d : "d" } };
+  var src = { a : 'a', b : 'b', c : { d : 'd' } };
   var got = _.entity.exportString( src, { level: 0, levels : 0 } );
   var expected = '{- Map.polluted with 3 elements -}';
   test.identical( got, expected );
 
   test.case = 'nested objects, level 1 levels 2';
-  var src = { a : { h : "a" }, b : "b", c : { d : "d" } };
+  var src = { a : { h : 'a' }, b : 'b', c : { d : 'd' } };
   var got = _.entity.exportString( src, { level: 1, levels : 2 } );
   var expected =
   [
@@ -4288,13 +4290,13 @@ function exportStringLevel( test )
   test.identical( got, expected );
 
   test.case = 'nested objects, level 1 levels 0';
-  var src = { a : [ "example" ], b : 1, c : null , d : [ "b" ] };
+  var src = { a : [ 'example' ], b : 1, c : null , d : [ 'b' ] };
   var got = _.entity.exportString( src, { level: 1, levels : 0 } );
   var expected = '{- Map.polluted with 4 elements -}';
   test.identical( got, expected );
 
   test.case = 'nested objects';
-  var src = { a : "a", b : "b", c : { d : "d" } };
+  var src = { a : 'a', b : 'b', c : { d : 'd' } };
   var got = _.entity.exportString( src, { } );
   var expected =
   [
@@ -4329,7 +4331,7 @@ function exportStringEnumerable( test )
   //             x.foo = 1;
   //
   //             var y = Object.create( x );
-  //             y.a = "string";
+  //             y.a = 'string';
   //
   //             return y;
   //
@@ -4349,7 +4351,7 @@ function exportStringEnumerable( test )
   //             x.foo = 1;
   //
   //             var y = Object.create( x );
-  //             y.a = "string";
+  //             y.a = 'string';
   //
   //             return y;
   //
@@ -4386,7 +4388,7 @@ function exportStringEnumerable( test )
   //          x.foo = 1;
   //
   //          var y = Object.create( x );
-  //          y.a = "string";
+  //          y.a = 'string';
   //
   //          return y;
   //
@@ -4456,7 +4458,7 @@ function exportStringEnumerable( test )
     x.foo = 1;
 
     var y = Object.create( x );
-    y.a = "string";
+    y.a = 'string';
 
     return y;
 
@@ -4481,7 +4483,7 @@ function exportStringEnumerable( test )
     x.foo = 1;
 
     var y = Object.create( x );
-    y.a = "string";
+    y.a = 'string';
 
     return y;
 
@@ -4528,7 +4530,7 @@ function exportStringEnumerable( test )
     x.foo = 1;
 
     var y = Object.create( x );
-    y.a = "string";
+    y.a = 'string';
 
     return y;
 
@@ -5026,13 +5028,13 @@ function exportStringThrow( test )
     test.case = 'invalid json if multilinedString is true`';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.entity.exportString( { a : 1, b : "text" }, { jsonLike : 1, multilinedString : 1 } );
+      _.entity.exportString( { a : 1, b : 'text' }, { jsonLike : 1, multilinedString : 1 } );
     } );
 
     test.case = 'onlyRoutines & noRoutine both true';
     test.shouldThrowErrorOfAnyKind( function( )
     {
-      _.entity.exportString( { a : function f( ){}, b : "text" }, { onlyRoutines : 1, noRoutine : 1 } );
+      _.entity.exportString( { a : function f( ){}, b : 'text' }, { onlyRoutines : 1, noRoutine : 1 } );
     } );
 
 
@@ -6202,7 +6204,7 @@ function _exportStringFromStr( test )
 
   test.case = 'multilinedString';
   var got = _.entity._exportStringFromStr( 'string\nstring2', { stringWrapper : '`' } );
-  var expected = "`string\nstring2`";
+  var expected = '`string\nstring2`';
   test.identical( got, expected );
 
   /**/
