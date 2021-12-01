@@ -3,8 +3,8 @@ root:
   - wStringer.out
 consistency:
   ../will.yml: &ref_0
-    hash: 6bce465768a42f5b0b54a5ede22af9c0
-    size: 6486
+    hash: d604c002aac21d1bf16bddff594bb8a1
+    size: 6494
 module:
   wStringer.out:
     about:
@@ -1463,5 +1463,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: 6bce465768a42f5b0b54a5ede22af9c0
-        size: 6486
+        hash: d604c002aac21d1bf16bddff594bb8a1
+        size: 6494
