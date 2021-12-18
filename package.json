@@ -1,6 +1,6 @@
 {
   "name": "wstringer",
-  "version": "0.3.307",
+  "version": "0.3.308",
   "description": "Stringer nicely stringifies structures does not matter how complex or cycled them are. Convenient tool for fast diagnostic and inspection of data during development and in production. Use it to see more, faster. Refactoring required.",
   "author": "Kostiantyn Wandalen <wandalen@obox.systems>",
   "license": "MIT",
@@ -24,10 +24,10 @@
     "url": "https://github.com/Wandalen/wStringer/issues"
   },
   "dependencies": {
-    "wTools": "delta"
+    "wTools": "alpha"
   },
   "devDependencies": {
-    "wTesting": "delta",
+    "wTesting": "alpha",
     "eslint": "7.32.0"
   },
   "keywords": [
