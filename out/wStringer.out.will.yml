@@ -3,7 +3,7 @@ root:
   - wStringer.out
 consistency:
   ../will.yml: &ref_0
-    hash: d604c002aac21d1bf16bddff594bb8a1
+    hash: 8ed767980432ca6db1fd56c2eddb5232
     size: 6494
 module:
   wStringer.out:
@@ -15,7 +15,7 @@ module:
         cycled them are. Convenient tool for fast diagnostic and inspection of
         data during development and in production. Use it to see more, faster.
         Refactoring required.
-      enabled: 1
+      enabled: 0
       version: 0.4.0
       license: MIT
       npm.name: wstringer
@@ -799,7 +799,7 @@ module:
         cycled them are. Convenient tool for fast diagnostic and inspection of
         data during development and in production. Use it to see more, faster.
         Refactoring required.
-      enabled: 1
+      enabled: 0
       version: 0.4.0
       license: MIT
       npm.name: wstringer
@@ -1463,5 +1463,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: d604c002aac21d1bf16bddff594bb8a1
+        hash: 8ed767980432ca6db1fd56c2eddb5232
         size: 6494
